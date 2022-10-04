@@ -126,4 +126,10 @@
   <data name="Inscription" xml:space="preserve">
     <value>Inscription</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mots de Passe</value>
+  </data>
+  <data name="Pseudo" xml:space="preserve">
+    <value>Pseudo</value>
+  </data>
 </root>

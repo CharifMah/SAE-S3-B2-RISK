@@ -26,5 +26,10 @@ namespace JurassicRisk.Views
             InitializeComponent();
             DataContext = new MainViewModel();
         }
+
+        private void ConnexionButton_Click(object sender, RoutedEventArgs e)
+        {
+           (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new Connexion());
+        }
     }
 }

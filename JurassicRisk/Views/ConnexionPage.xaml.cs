@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace JurassicRisk.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Connexion.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Connexion : Page
     {
-        
-        public MainWindow()
+        public Connexion()
         {
             InitializeComponent();
-            frame.NavigationService.Navigate(new HomePage());
         }
     }
 }

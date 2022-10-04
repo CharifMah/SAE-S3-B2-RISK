@@ -90,5 +90,27 @@ namespace JurassicRisk.Ressource {
                 return ResourceManager.GetString("Inscription", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Pseudo
+        /// </summary>
+        public static string Pseudo
+        {
+            get
+            {
+                return ResourceManager.GetString("Pseudo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Password
+        /// </summary>
+        public static string Password
+        {
+            get
+            {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
     }
 }
