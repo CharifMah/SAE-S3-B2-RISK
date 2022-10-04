@@ -18,9 +18,9 @@ namespace JurassicRisk.Views
     /// <summary>
     /// Interaction logic for Connexion.xaml
     /// </summary>
-    public partial class Connexion : Page
+    public partial class ConnexionPage : Page
     {
-        public Connexion()
+        public ConnexionPage()
         {
             InitializeComponent();
         }

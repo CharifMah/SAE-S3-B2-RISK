@@ -18,9 +18,9 @@ namespace JurassicRisk.Views
     /// <summary>
     /// Interaction logic for Inscription.xaml
     /// </summary>
-    public partial class Inscription : Page
+    public partial class InscriptionPage : Page
     {
-        public Inscription()
+        public InscriptionPage()
         {
             InitializeComponent();
         }

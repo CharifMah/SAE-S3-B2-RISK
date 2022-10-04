@@ -1,4 +1,4 @@
-﻿<Page x:Class="JurassicRisk.Views.Connexion"
+﻿<Page x:Class="JurassicRisk.Views.ConnexionPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,9 +16,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20" FontSize="20" Text="{x:Static Ressources:Strings.Pseudo}"/>
+        <TextBlock Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0" FontSize="20" Text="{x:Static Ressources:Strings.Pseudo}"/>
         <TextBox Grid.Row="1" VerticalAlignment="Center" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}"></TextBox>
-
+        <TextBlock Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0" FontSize="20" Text="{x:Static Ressources:Strings.Password}"/>
         <TextBox Grid.Row="2" VerticalAlignment="Center" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}"></TextBox>
     </Grid>
 </Page>
