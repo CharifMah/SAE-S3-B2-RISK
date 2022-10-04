@@ -1,0 +1,55 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="CustomButton" TargetType="Button">
+        <!--#region Setters Property-->
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#1C1C1C"/>
+        <Setter Property="FontFamily" Value="Segoe UI regular"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+         <!--#endregion-->
+            
+            <Setter.Value>
+               <ControlTemplate TargetType="Button">
+
+               <!--#region Border-->
+                    <Border Name="border" 
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}" 
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    CornerRadius="5" 
+                    Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+
+                    </Border>
+               <!--#endregion-->
+
+               <!--#region Triggers-->
+                    <ControlTemplate.Triggers>
+
+                        <!--MouseOver Trigger-->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="white" />
+                            <Setter Property="Opacity" Value="0.40"/>
+                            <Setter Property="Foreground" Value="#1C1C1C" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Content" Value="White"/>
+
+                        </Trigger>
+                        <!--IsPressed-->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="White" />
+                            <Setter Property="Foreground" Value="#1C1C1C" />
+                         
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+               <!--#endregion-->
+
+               </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

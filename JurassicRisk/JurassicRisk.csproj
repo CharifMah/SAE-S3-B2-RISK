@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <ProjectReference Include="..\Metier\Models.csproj" />
   </ItemGroup>
 
 </Project>

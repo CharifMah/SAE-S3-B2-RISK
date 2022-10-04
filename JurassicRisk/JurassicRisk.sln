@@ -5,6 +5,11 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JurassicRisk", "JurassicRisk.csproj", "{38B6F886-A155-4342-9BA4-3F0A3F2B4001}"
 EndProject
+<<<<<<< Updated upstream
+=======
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RISKAPI", "..\RISKAPI\RISKAPI.csproj", "{FD6B06A9-70B2-49BA-A6A9-E8481B4E4DEC}"
+EndProject
+>>>>>>> Stashed changes
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Metier\Models.csproj", "{3DDFE04B-1D57-4A24-9BB5-C8DB414F1DE2}"
 EndProject
 Global
