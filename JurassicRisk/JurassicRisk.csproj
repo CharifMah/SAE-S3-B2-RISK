@@ -194,6 +194,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Folder Include="ViewModels\" />
+    <ProjectReference Include="..\DBStorage\DBStorage.csproj" />
   </ItemGroup>
 
 </Project>

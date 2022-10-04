@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DBStorage;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,9 @@ namespace JurassicRisk
         
         public MainWindow()
         {
+            Connection connection = new Connection();
+            connection.Connect();
+            connection.CreateDatabase();
             InitializeComponent();
             frame.NavigationService.Navigate(new HomePage());
         }
