@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JurassicRisk", "JurassicRisk.csproj", "{38B6F886-A155-4342-9BA4-3F0A3F2B4001}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Metier\Models.csproj", "{3DDFE04B-1D57-4A24-9BB5-C8DB414F1DE2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38B6F886-A155-4342-9BA4-3F0A3F2B4001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38B6F886-A155-4342-9BA4-3F0A3F2B4001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38B6F886-A155-4342-9BA4-3F0A3F2B4001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38B6F886-A155-4342-9BA4-3F0A3F2B4001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DDFE04B-1D57-4A24-9BB5-C8DB414F1DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DDFE04B-1D57-4A24-9BB5-C8DB414F1DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DDFE04B-1D57-4A24-9BB5-C8DB414F1DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DDFE04B-1D57-4A24-9BB5-C8DB414F1DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE9497DE-B3DB-4AAB-8B0D-4A205409B392}
+	EndGlobalSection
+EndGlobal
