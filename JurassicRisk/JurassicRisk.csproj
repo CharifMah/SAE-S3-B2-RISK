@@ -193,6 +193,7 @@
     <Page Update="Style\CustomPolice.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>
