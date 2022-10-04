@@ -26,8 +26,8 @@ namespace JurassicRisk
         public MainWindow()
         {
             Connection connection = new Connection();
-            connection.Connect();
             connection.CreateDatabase();
+            connection.CreateUserTable();
             InitializeComponent();
             frame.NavigationService.Navigate(new HomePage());
         }
