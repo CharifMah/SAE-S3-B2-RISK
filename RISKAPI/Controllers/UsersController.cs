@@ -17,11 +17,11 @@ namespace RISKAPI.Controllers
             connection.CreateUser("romain");
             connection.SelectUser("romain");
 
-            Users personneDemandee = null;
+            Profil personneDemandee = null;
             switch (id)
             {
-                case 0: personneDemandee = new Users("Alice"); break;
-                case 1: personneDemandee = new Users("Bob"); break;
+                case 0: personneDemandee = new Profil("Alice"); break;
+                case 1: personneDemandee = new Profil("Bob"); break;
             }
 
             //Création de la réponse
