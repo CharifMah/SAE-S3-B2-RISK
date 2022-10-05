@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metier.Map
+namespace Models.Map
 {
     /// <summary>
     /// Classe représentant les différents continents du plateau
@@ -20,7 +20,7 @@ namespace Metier.Map
 
         public Continent(List<TerritoireBase> t)
         {
-            this.territoires = t;
-        }    
+            territoires = t;
+        }
     }
 }

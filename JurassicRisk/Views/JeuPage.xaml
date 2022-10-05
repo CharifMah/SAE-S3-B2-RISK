@@ -9,8 +9,48 @@
       Title="JeuPage">
 
     <Grid>
-        <Canvas>
-            
+        <Canvas x:Name="CarteCanvas">
+            <Image x:Name="___Sprites_Carte_1c1r_png" Height="176" Canvas.Left="55" Source="/Sprites/Carte/1c1r.png" Stretch="Fill" Canvas.Top="33" Width="80"/>
+            <Image x:Name="___Sprites_Carte_1c2r_png" Height="112" Canvas.Left="348" Source="/Sprites/Carte/1c2r.png" Stretch="Fill" Canvas.Top="312" Width="148"/>
+            <Image x:Name="___Sprites_Carte_1c3r_png" Height="184" Canvas.Left="348" Source="/Sprites/Carte/1c3r.png" Stretch="Fill" Canvas.Top="312" Width="225"/>
+            <Image x:Name="___Sprites_Carte_1c4r_png" Height="103" Canvas.Left="348" Source="/Sprites/Carte/1c4r.png" Stretch="Fill" Canvas.Top="312" Width="167"/>
+            <Image x:Name="___Sprites_Carte_1c5r_png" Height="210" Canvas.Left="348" Source="/Sprites/Carte/1c5r.png" Stretch="Fill" Canvas.Top="312" Width="172"/>
+            <Image x:Name="___Sprites_Carte_1c6r_png" Height="168" Canvas.Left="348" Source="/Sprites/Carte/1c6r.png" Stretch="Fill" Canvas.Top="312" Width="159"/>
+            <Image x:Name="___Sprites_Carte_1c7r_png" Height="173" Canvas.Left="348" Source="/Sprites/Carte/1c7r.png" Stretch="Fill" Canvas.Top="312" Width="252"/>
+            <Image x:Name="___Sprites_Carte_2c1r_png" Height="216" Canvas.Left="348" Source="/Sprites/Carte/2c1r.png" Stretch="Fill" Canvas.Top="312" Width="250"/>
+            <Image x:Name="___Sprites_Carte_2c2r_png" Height="260" Canvas.Left="348" Source="/Sprites/Carte/2c2r.png" Stretch="Fill" Canvas.Top="312" Width="183"/>
+            <Image x:Name="___Sprites_Carte_2c3r_png" Height="190" Canvas.Left="348" Source="/Sprites/Carte/2c3r.png" Stretch="Fill" Canvas.Top="312" Width="217"/>
+            <Image x:Name="___Sprites_Carte_2c4r_png" Height="211" Canvas.Left="348" Source="/Sprites/Carte/2c4r.png" Stretch="Fill" Canvas.Top="312" Width="185"/>
+            <Image x:Name="___Sprites_Carte_2c5r_png" Height="249" Canvas.Left="348" Source="/Sprites/Carte/2c5r.png" Stretch="Fill" Canvas.Top="312" Width="187"/>
+            <Image x:Name="___Sprites_Carte_2c6r_png" Height="348" Canvas.Left="348" Source="/Sprites/Carte/2c6r.png" Stretch="Fill" Canvas.Top="312" Width="169"/>
+            <Image x:Name="___Sprites_Carte_2c7r_png" Height="288" Canvas.Left="348" Source="/Sprites/Carte/2c7r.png" Stretch="Fill" Canvas.Top="312" Width="248"/>
+            <Image x:Name="___Sprites_Carte_3c1r_png" Height="205" Canvas.Left="348" Source="/Sprites/Carte/3c1r.png" Stretch="Fill" Canvas.Top="312" Width="216"/>
+            <Image x:Name="___Sprites_Carte_3c2r_png" Height="193" Canvas.Left="348" Source="/Sprites/Carte/3c2r.png" Stretch="Fill" Canvas.Top="312" Width="306"/>
+            <Image x:Name="___Sprites_Carte_3c3r_png" Height="209" Canvas.Left="348" Source="/Sprites/Carte/3c3r.png" Stretch="Fill" Canvas.Top="312" Width="186"/>
+            <Image x:Name="___Sprites_Carte_3c4r_png" Height="223" Canvas.Left="348" Source="/Sprites/Carte/3c4r.png" Stretch="Fill" Canvas.Top="312" Width="160"/>
+            <Image x:Name="___Sprites_Carte_3c5r_png" Height="232" Canvas.Left="348" Source="/Sprites/Carte/3c5r.png" Stretch="Fill" Canvas.Top="312" Width="274"/>
+            <Image x:Name="___Sprites_Carte_3c6r_png" Height="246" Canvas.Left="348" Source="/Sprites/Carte/3c6r.png" Stretch="Fill" Canvas.Top="312" Width="281"/>
+            <Image x:Name="___Sprites_Carte_3c7r_png" Height="144" Canvas.Left="348" Source="/Sprites/Carte/3c7r.png" Stretch="Fill" Canvas.Top="312" Width="315"/>
+            <Image x:Name="___Sprites_Carte_3c8r_png" Height="152" Canvas.Left="348" Source="/Sprites/Carte/3c8r.png" Stretch="Fill" Canvas.Top="312" Width="412"/>
+            <Image x:Name="___Sprites_Carte_4c1r_png" Height="235" Canvas.Left="348" Source="/Sprites/Carte/4c1r.png" Stretch="Fill" Canvas.Top="312" Width="169"/>
+            <Image x:Name="___Sprites_Carte_4c2r_png" Height="178" Canvas.Left="348" Source="/Sprites/Carte/4c2r.png" Stretch="Fill" Canvas.Top="312" Width="316"/>
+            <Image x:Name="___Sprites_Carte_4c3r_png" Height="282" Canvas.Left="348" Source="/Sprites/Carte/4c3r.png" Stretch="Fill" Canvas.Top="312" Width="229"/>
+            <Image x:Name="___Sprites_Carte_4c4r_png" Height="232" Canvas.Left="348" Source="/Sprites/Carte/4c4r.png" Stretch="Fill" Canvas.Top="312" Width="281"/>
+            <Image x:Name="___Sprites_Carte_4c5r_png" Height="165" Canvas.Left="289" Source="/Sprites/Carte/4c5r.png" Stretch="Fill" Canvas.Top="70" Width="244"/>
+            <Image x:Name="___Sprites_Carte_4c6r_png" Height="266" Canvas.Left="757" Source="/Sprites/Carte/4c6r.png" Stretch="Fill" Canvas.Top="356" Width="268"/>
+            <Image x:Name="___Sprites_Carte_4c7r_png" Height="345" Canvas.Left="95" Source="/Sprites/Carte/4c7r.png" Stretch="Fill" Canvas.Top="145" Width="215"/>
+            <Image x:Name="___Sprites_Carte_5c1r_png" Height="172" Canvas.Left="666" Source="/Sprites/Carte/5c1r.png" Stretch="Fill" Width="154" Canvas.Top="-90"/>
+            <Image x:Name="___Sprites_Carte_5c2r_png" Height="168" Canvas.Left="940" Source="/Sprites/Carte/5c2r.png" Stretch="Fill" Canvas.Top="200" Width="224"/>
+            <Image x:Name="___Sprites_Carte_5c3r_png" Height="196" Canvas.Left="616" Source="/Sprites/Carte/5c3r.png" Stretch="Fill" Canvas.Top="300" Width="307"/>
+            <Image x:Name="___Sprites_Carte_5c4r_png" Height="368" Canvas.Left="-33" Source="/Sprites/Carte/5c4r.png" Stretch="Fill" Canvas.Top="261" Width="220"/>
+            <Image x:Name="___Sprites_Carte_5c5r_png" Height="169" Canvas.Left="95" Source="/Sprites/Carte/5c5r.png" Stretch="Fill" Canvas.Top="453" Width="211"/>
+            <Image x:Name="___Sprites_Carte_6c1r_png" Height="156" Canvas.Left="654" Source="/Sprites/Carte/6c1r.png" Stretch="Fill" Canvas.Top="418" Width="331"/>
+            <Image x:Name="___Sprites_Carte_6c2r_png" Height="260" Canvas.Left="940" Source="/Sprites/Carte/6c2r.png" Stretch="Fill" Canvas.Top="394" Width="170"/>
+            <Image x:Name="___Sprites_Carte_6c3r_png" Height="258" Canvas.Left="-395" Source="/Sprites/Carte/6c3r.png" Stretch="Fill" Canvas.Top="49" Width="282"/>
+            <Image x:Name="___Sprites_Carte_6c4r_png" Height="220" Canvas.Left="940" Source="/Sprites/Carte/6c4r.png" Stretch="Fill" Canvas.Top="358" Width="356"/>
+            <Image x:Name="___Sprites_Carte_6c5r_png" Height="302" Canvas.Left="-283" Source="/Sprites/Carte/6c5r.png" Stretch="Fill" Canvas.Top="364" Width="299"/>
+            <Image x:Name="___Sprites_Carte_6c6r_png" Height="245" Canvas.Left="873" Source="/Sprites/Carte/6c6r.png" Stretch="Fill" Canvas.Top="341" Width="224"/>
+            <Image x:Name="___Sprites_Carte_6c7r_png" Height="251" Canvas.Left="555" Source="/Sprites/Carte/6c7r.png" Stretch="Fill" Canvas.Top="56" Width="245"/>
         </Canvas>
     </Grid>
 </Page>

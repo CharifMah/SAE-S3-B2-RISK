@@ -10,36 +10,36 @@ namespace JurassicRisk.ViewModels
     {
         #region Attributs
 
-        private Compte _selectedAccount;
+        private Compte _selectedProfil;
 
-        private ObservableCollection<Compte> _accounts;
+        private ObservableCollection<Compte> _Profils;
 
         #endregion
 
         #region Properties
 
-        public Compte SelectedAccount
+        public Compte SelectedProfil
         {
-            get { return _selectedAccount; }
+            get { return _selectedProfil; }
             set
             {
-                _selectedAccount = value;
-                NotifyPropertyChanged("SelectedAccount");
+                _selectedProfil = value;
+                NotifyPropertyChanged("SelectedProfil");
             }
         }
 
-        public ObservableCollection<Compte> Accounts
+        public ObservableCollection<Compte> Profils
         {
-            get { return _accounts; }
+            get { return _Profils; }
 
             set
             {
-                _accounts = value;
-                NotifyPropertyChanged("Accounts");
+                _Profils = value;
+                NotifyPropertyChanged("Profils");
             }
         }
 
-        public ICommand DisplayAccountCommand { get; }
+        public ICommand DisplayProfilCommand { get; }
 
         #endregion Properties
 
@@ -47,11 +47,11 @@ namespace JurassicRisk.ViewModels
 
         public MainViewModel()
         {
-            _accounts = new ObservableCollection<Compte>();
+            _Profils = new ObservableCollection<Compte>();
 
-            InitializeAccount();
+            InitializeProfil();
 
-            DisplayAccountCommand = new RelayCommand(o => DisplayAccount());
+            DisplayProfilCommand = new RelayCommand(o => DisplayProfil());
 
         }
 
@@ -59,26 +59,26 @@ namespace JurassicRisk.ViewModels
 
         #region Private methods
 
-        private void InitializeAccount()
+        private void InitializeProfil()
         {
-            _accounts.Add(new Compte("John", "Doe"));
+            _Profils.Add(new Compte("John", "Doe"));
 
-            _accounts.Add(new Compte("Alicia", "Davis"));
+            _Profils.Add(new Compte("Alicia", "Davis"));
 
-            _accounts.Add(new Compte("Mike", "Jones"));
+            _Profils.Add(new Compte("Mike", "Jones"));
 
-            _accounts.Add(new Compte("Justine", "Anderson"));
+            _Profils.Add(new Compte("Justine", "Anderson"));
         }
 
-        private void DisplayAccount()
+        private void DisplayProfil()
         {
-            if (SelectedAccount is null)
+            if (SelectedProfil is null)
 
                 MessageBox.Show("Please select a user before.");
 
             else
 
-                MessageBox.Show($"The selected user is {SelectedAccount.Pseudo} {SelectedAccount.Password}.");
+                MessageBox.Show($"The selected user is {SelectedProfil.Pseudo} {SelectedProfil.Password}.");
         }
 
         #endregion Private methods

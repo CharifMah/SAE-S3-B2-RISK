@@ -24,5 +24,10 @@ namespace JurassicRisk.Views
         {
             InitializeComponent();
         }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+        }
     }
 }

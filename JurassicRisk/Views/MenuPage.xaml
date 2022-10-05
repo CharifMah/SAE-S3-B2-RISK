@@ -27,7 +27,7 @@
             <Grid.Background>
                 <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
             </Grid.Background>
-        <Button Content="{x:Static Ressources:Strings.Play}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomButton}"/>
+        <Button Content="{x:Static Ressources:Strings.Play}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomButton}" Click="PlayButton_Click"/>
         <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" Foreground="DarkRed" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2"  >JURRASIC RISK</TextBlock>
 
 

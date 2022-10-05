@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metier.Map
+namespace Models.Map
 {
     /// <summary>
     /// Classe du plateau de jeu
@@ -20,7 +20,7 @@ namespace Metier.Map
 
         public Carte(List<Continent> c)
         {
-            this.continent = c;
+            continent = c;
         }
     }
 }

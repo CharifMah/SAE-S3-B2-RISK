@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Imaging;
 
-namespace Metier.Map
+namespace Models.Map
 {
     /// <summary>
     /// Classe représentant les prairies du plateau
