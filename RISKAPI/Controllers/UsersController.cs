@@ -16,7 +16,6 @@ namespace RISKAPI.Controllers
             connection.CreateUserTable();
             connection.CreateUser("romain");
             connection.SelectUser("romain");
-            connection.DeleteUser("romain");
 
             Users personneDemandee = null;
             switch (id)
