@@ -132,7 +132,13 @@
   <data name="Password" xml:space="preserve">
     <value>Mots de Passe :</value>
   </data>
+  <data name="Play" xml:space="preserve">
+    <value>Jouer</value>
+  </data>
   <data name="Pseudo" xml:space="preserve">
     <value>Pseudo :</value>
+  </data>
+  <data name="Sinscrire" xml:space="preserve">
+    <value>S'inscrire</value>
   </data>
 </root>

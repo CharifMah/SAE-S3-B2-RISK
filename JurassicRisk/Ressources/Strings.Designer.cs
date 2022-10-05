@@ -119,6 +119,21 @@ namespace JurassicRisk.Ressource {
                 return ResourceManager.GetString("Connecter", resourceCulture);
             }
         }
+        public static string Sinscrire
+        {
+            get
+            {
+                return ResourceManager.GetString("Sinscrire", resourceCulture);
+            }
+        }
+
+        public static string Play
+        {
+            get
+            {
+                return ResourceManager.GetString("Play", resourceCulture);
+            }
+        }
 
     }
 }

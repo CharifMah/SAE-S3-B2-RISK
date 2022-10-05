@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Connecter" xml:space="preserve">
-    <value>connect</value>
+    <value>Connect</value>
   </data>
   <data name="Connexion" xml:space="preserve">
     <value>Log in</value>
@@ -132,7 +132,13 @@
   <data name="Password" xml:space="preserve">
     <value>Password :</value>
   </data>
+  <data name="Play" xml:space="preserve">
+    <value>Play</value>
+  </data>
   <data name="Pseudo" xml:space="preserve">
     <value>Pseudo :</value>
+  </data>
+  <data name="Sinscrire" xml:space="preserve">
+    <value>Register</value>
   </data>
 </root>

@@ -4,11 +4,31 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
+      xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com" 
       Title="Inscription">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="/Background/trex.jpg"/>
+        </Grid.Background>
+        <TextBlock Grid.Row="2" VerticalAlignment="Center" Foreground="DarkRed" HorizontalAlignment="Right" Margin="20,0,0,0" FontSize="20" Style="{StaticResource Bloody}" Text="{x:Static Ressources:Strings.Pseudo}"/>
+        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}"></TextBox>
+        <Button Grid.Column="1" Grid.Row="3"  Content="{x:Static Ressources:Strings.Sinscrire}" VerticalAlignment="Center" Style="{StaticResource CustomButton}"></Button>
     </Grid>
 </Page>

@@ -16,18 +16,15 @@ using System.Windows.Shapes;
 namespace JurassicRisk.Views
 {
     /// <summary>
-    /// Interaction logic for Connexion.xaml
+    /// Logique d'interaction pour Jeu.xaml
     /// </summary>
-    public partial class ConnexionPage : Page
+    public partial class JeuPage : Page
     {
-        public ConnexionPage()
+        public JeuPage()
         {
             InitializeComponent();
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+
         }
     }
 }

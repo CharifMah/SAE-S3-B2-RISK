@@ -1,0 +1,36 @@
+﻿<Page x:Class="JurassicRisk.Views.MenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:JurassicRisk.Views"
+      mc:Ignorable="d" 
+      xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
+      d:DesignHeight="450" d:DesignWidth="800"
+
+      Title="MenuPage">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
+            </Grid.Background>
+        <Button Content="{x:Static Ressources:Strings.Play}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomButton}"/>
+        <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" Foreground="DarkRed" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2"  >JURRASIC RISK</TextBlock>
+
+
+
+        </Grid>
+</Page>
