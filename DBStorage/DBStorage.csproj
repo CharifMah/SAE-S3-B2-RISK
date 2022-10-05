@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.30" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="MySql.Data">
       <HintPath>..\..\..\..\R3.04-Qualité de développement\TP 01\MySQLNET6Connector\MySql.Data.dll</HintPath>
     </Reference>
