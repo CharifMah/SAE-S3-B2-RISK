@@ -4,5 +4,9 @@
         <Setter Property="TextElement.FontFamily" Value="/Polices/#Bloody terror">
         </Setter>
     </Style>
+    <Style x:Key="Bungee">
+        <Setter Property="TextElement.FontFamily" Value="/Polices/#Bungee Inline">
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

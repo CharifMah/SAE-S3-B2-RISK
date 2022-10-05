@@ -3,11 +3,13 @@
     <Style x:Key="CustomButton" TargetType="Button">
         <!--#region Setters Property-->
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#1C1C1C"/>
-        <Setter Property="FontFamily" Value="Segoe UI regular"/>
+        <Setter Property="Foreground" Value="DarkRed"/>
+        <Setter Property="FontFamily" Value="/Polices/#Bungee Inline"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="DarkRed"/>
         <Setter Property="Template">
+         
          <!--#endregion-->
             
             <Setter.Value>
@@ -19,7 +21,7 @@
                     Padding="{TemplateBinding Padding}" 
                     BorderBrush="{TemplateBinding BorderBrush}" 
                     CornerRadius="5" 
-                    Background="{TemplateBinding Background}">
+                    Background="{TemplateBinding Background}" >
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
 
@@ -31,11 +33,12 @@
 
                         <!--MouseOver Trigger-->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="white" />
-                            <Setter Property="Opacity" Value="0.40"/>
+                            <Setter Property="Background" Value="LightGray" />
+                            <Setter Property="Opacity" Value="0.20"/>
                             <Setter Property="Foreground" Value="#1C1C1C" />
                             <Setter Property="Cursor" Value="Hand" />
                             <Setter Property="Content" Value="White"/>
+                            <Setter Property="TextBlock.Background" Value="DarkRed"/>
 
                         </Trigger>
                         <!--IsPressed-->
@@ -50,6 +53,67 @@
                </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="ButtonStyle">
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="DarkRed"/>
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="/Font/#Bloody"/>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Foreground" Value="#1C1C1C" />
+        <Setter Property="Background" Value="white" />
+        <Setter Property="Opacity" Value="0.40"/>
+        <Setter Property="Foreground" Value="#1C1C1C" />
+        <Setter Property="BorderBrush" Value="DarkRed"/>
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Content" Value="White"/>
+        <Setter Property="Template">
+
+            <!--#endregion-->
+
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <!--#region Border-->
+                    <Border Name="border" 
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}" 
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    CornerRadius="5" 
+                    Background="{TemplateBinding Background}" >
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+
+                    </Border>
+                    <!--#endregion-->
+
+                    <!--#region Triggers-->
+                    <ControlTemplate.Triggers>
+
+                        <!--MouseOver Trigger-->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                            <Setter Property="Opacity" Value="0.20"/>
+                            <Setter Property="Foreground" Value="#1C1C1C" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Content" Value="White"/>
+
+                        </Trigger>
+                        <!--IsPressed-->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="White" />
+                            <Setter Property="Foreground" Value="#1C1C1C" />
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                    <!--#endregion-->
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
     </Style>
 
 </ResourceDictionary>
