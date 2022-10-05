@@ -12,6 +12,7 @@ namespace RISKAPI.Controllers
         public IActionResult Donne(int id)
         {
             Connection connection = new Connection();
+
             connection.CreateDatabase();
             connection.CreateUserTable();
             connection.CreateUser("romain");

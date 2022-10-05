@@ -13,16 +13,16 @@ namespace DBStorage
         /// <author>Brian VERCHERE</author>
         private void Connect()
         {
-            connString = "server=localhost;userid=root;password=;";
+            connString = "server=localhost;userid=root;password=root;";
             conn = new MySqlConnection(connString);
 
             conn.Open();
         }
 
         /// <summary>
-        /// Créer la base de donnée du jeu
+        /// Créer la base de donnée du jeu si il elle n'existe pas
         /// </summary>
-        /// <author>Brian VERCHERE</author>
+        /// <author>Brian VERCHERE,Charif Mahmoud</author>
         public void CreateDatabase()
         {
             Connect();
@@ -44,9 +44,9 @@ namespace DBStorage
         }
 
         /// <summary>
-        /// Créer la table gérant les comptes utilisateurs
+        /// Créer la table gérant les comptes utilisateurs si il elle n'existe pas
         /// </summary>
-        /// <author>Brian VERCHERE</author>
+        /// <author>Brian VERCHERE,Charif Mahmoud</author>
         public void CreateUserTable()
         {
             Connect();
