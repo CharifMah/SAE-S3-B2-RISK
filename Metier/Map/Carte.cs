@@ -17,5 +17,10 @@ namespace Metier.Map
         {
             this.continent = c;
         }
+
+        public List<Continent> Continent
+        {
+            get { return continent; }
+        }
     }
 }

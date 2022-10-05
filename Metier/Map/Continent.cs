@@ -17,5 +17,10 @@ namespace Metier.Map
         {
             this.territoires = t;
         }
+
+        public List<TerritoireBase> Territoires
+        {
+            get { return territoires; }
+        }
     }
 }
