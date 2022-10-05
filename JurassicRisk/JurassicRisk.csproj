@@ -8,11 +8,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Background\gif 12.gif" />
+    <None Remove="Background\JGLBACKG.jpg" />
+    <None Remove="Polices\Bloody terror.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Metier\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Sprites\Carte\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Background\gif 12.gif" />
+    <Resource Include="Background\JGLBACKG.jpg" />
+    <Resource Include="Polices\Bloody terror.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Style\CustomPolice.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
   </ItemGroup>
 
 </Project>

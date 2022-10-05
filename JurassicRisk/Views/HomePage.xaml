@@ -16,8 +16,20 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
+        </Grid.Background>
         <Button Content="{x:Static Ressources:Strings.Connexion}" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource CustomButton}" Click="ConnexionButton_Click"></Button>
         <Button Content="{x:Static Ressources:Strings.Inscription}" VerticalAlignment="Center" Grid.Row="2" Style="{StaticResource CustomButton}" Click="InscriptionButton_Click"></Button>
+        <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" Foreground="DarkRed" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2"  >JURRASIC RISK</TextBlock>
+
+
         <!--<ListView Grid.Row="0" Margin="5" ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}">
 
             <ListView.View>
