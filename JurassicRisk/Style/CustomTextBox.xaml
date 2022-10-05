@@ -6,7 +6,7 @@
     <Color x:Key="ControlReadOnlyForeground">#383838</Color>
     <Color x:Key="ControlDisabledForeground">#686868</Color>
 
-    <Color x:Key="ControlBackground">#f7f7f9</Color>
+    <Color x:Key="ControlBackground">transparent</Color>
     <Color x:Key="ControlHoveredBackground">#fafafc</Color>
     <Color x:Key="ControlFocusedBackground">#fdfdff</Color>
     <Color x:Key="ControlReadOnlyBackground">#f2f2f4</Color>
@@ -35,7 +35,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="5"/>
+        <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="BorderBrush" Value="Azure"/>
     </Style>
 

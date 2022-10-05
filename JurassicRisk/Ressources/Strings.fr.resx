@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Connecter" xml:space="preserve">
+    <value>Se connecter</value>
+  </data>
   <data name="Connexion" xml:space="preserve">
     <value>Connexion</value>
   </data>
@@ -127,9 +130,9 @@
     <value>Inscription</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Mots de Passe</value>
+    <value>Mots de Passe :</value>
   </data>
   <data name="Pseudo" xml:space="preserve">
-    <value>Pseudo</value>
+    <value>Pseudo :</value>
   </data>
 </root>

@@ -8,6 +8,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="BorderBrush" Value="DarkRed"/>
+        <Setter Property="FontSize" Value="24"/>
         <Setter Property="Template">
          
          <!--#endregion-->

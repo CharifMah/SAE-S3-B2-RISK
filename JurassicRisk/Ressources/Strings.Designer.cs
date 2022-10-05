@@ -112,5 +112,13 @@ namespace JurassicRisk.Ressource {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
+        public static string Connecter
+        {
+            get
+            {
+                return ResourceManager.GetString("Connecter", resourceCulture);
+            }
+        }
+
     }
 }

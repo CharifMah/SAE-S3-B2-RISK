@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Background\gif 12.gif" />
     <None Remove="Background\JGLBACKG.jpg" />
+    <None Remove="Background\trex.jpg" />
     <None Remove="Polices\Bloody terror.ttf" />
   </ItemGroup>
 
@@ -24,6 +25,7 @@
   <ItemGroup>
     <Resource Include="Background\gif 12.gif" />
     <Resource Include="Background\JGLBACKG.jpg" />
+    <Resource Include="Background\trex.jpg" />
     <Resource Include="Polices\Bloody terror.ttf" />
   </ItemGroup>
 
