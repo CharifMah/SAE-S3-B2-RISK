@@ -13,14 +13,14 @@ namespace Metier.Map
     {
         private List<Continent> continent;
 
-        public Carte(List<Continent> c)
-        {
-            this.continent = c;
-        }
-
         public List<Continent> Continent
         {
             get { return continent; }
+        }
+
+        public Carte(List<Continent> c)
+        {
+            this.continent = c;
         }
     }
 }

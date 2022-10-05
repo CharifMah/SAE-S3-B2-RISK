@@ -13,14 +13,14 @@ namespace Metier.Map
     {
         private List<TerritoireBase> territoires;
 
-        public Continent(List<TerritoireBase> t)
-        {
-            this.territoires = t;
-        }
-
         public List<TerritoireBase> Territoires
         {
             get { return territoires; }
         }
+
+        public Continent(List<TerritoireBase> t)
+        {
+            this.territoires = t;
+        }    
     }
 }

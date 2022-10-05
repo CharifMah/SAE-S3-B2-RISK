@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Media.Imaging;
 
 namespace Metier.Map
 {
@@ -12,7 +7,7 @@ namespace Metier.Map
     /// </summary>
     public class TerritoireForet : TerritoireBase
     {
-        public TerritoireForet(BitmapImage s) : base(s)
+        public TerritoireForet(BitmapImage s, double x, double y) : base(s, x, y)
         {
         }
     }
