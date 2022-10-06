@@ -10,15 +10,15 @@ namespace JurassicRisk.ViewModels
     {
         #region Attributs
 
-        private Compte _selectedProfil;
+        private Profil _selectedProfil;
 
-        private ObservableCollection<Compte> _Profils;
+        private ObservableCollection<Profil> _Profils;
 
         #endregion
 
         #region Properties
 
-        public Compte SelectedProfil
+        public Profil SelectedProfil
         {
             get { return _selectedProfil; }
             set
@@ -28,7 +28,7 @@ namespace JurassicRisk.ViewModels
             }
         }
 
-        public ObservableCollection<Compte> Profils
+        public ObservableCollection<Profil> Profils
         {
             get { return _Profils; }
 
@@ -47,7 +47,7 @@ namespace JurassicRisk.ViewModels
 
         public MainViewModel()
         {
-            _Profils = new ObservableCollection<Compte>();
+            _Profils = new ObservableCollection<Profil>();
 
             InitializeProfil();
 
@@ -61,13 +61,13 @@ namespace JurassicRisk.ViewModels
 
         private void InitializeProfil()
         {
-            _Profils.Add(new Compte("John", "Doe"));
+            _Profils.Add(new Profil("John"));
 
-            _Profils.Add(new Compte("Alicia", "Davis"));
+            _Profils.Add(new Profil("Alicia"));
 
-            _Profils.Add(new Compte("Mike", "Jones"));
+            _Profils.Add(new Profil("Mike"));
 
-            _Profils.Add(new Compte("Justine", "Anderson"));
+            _Profils.Add(new Profil("Justine"));
         }
 
         private void DisplayProfil()
@@ -78,7 +78,7 @@ namespace JurassicRisk.ViewModels
 
             else
 
-                MessageBox.Show($"The selected user is {SelectedProfil.Pseudo} {SelectedProfil.Password}.");
+                MessageBox.Show($"The selected user is {SelectedProfil.Pseudo}.");
         }
 
         #endregion Private methods

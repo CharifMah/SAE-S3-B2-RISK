@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Compte
+    public class Profil 
     {
-        public Compte(string pseudo, string password)
+        public Profil(string pseudo)
         {
             Pseudo = pseudo;
-            Password = password;
         }
 
         public string Pseudo { get; set; }
-        public string Password { get; set; }
     }
 }
