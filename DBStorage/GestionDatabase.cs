@@ -9,6 +9,16 @@ namespace DBStorage
         private MySqlConnection conn;
 
         /// <summary>
+        /// constructeur gestion database (create database and table)
+        /// </summary>
+        /// <autor>Romain BARABANT</autor>
+        public GestionDatabase()
+        {
+            CreateDatabase();
+            CreateUserTable();
+        }
+        
+        /// <summary>
         /// Connexion à la base de donnée
         /// </summary>
         /// <author>Brian VERCHERE</author>
