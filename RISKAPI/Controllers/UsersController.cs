@@ -40,7 +40,7 @@ namespace RISKAPI.Controllers
         [HttpGet("connexion")]
         public IActionResult connexion(string login)
         {
-            Connection connection = new Connection();
+            GestionDatabase connection = new GestionDatabase();
             Profil profilDemandee = null;
             Profil p = new Profil();
             p.Pseudo = connection.SelectUser(login);
