@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 
 namespace DBStorage
 {
@@ -13,7 +14,7 @@ namespace DBStorage
         /// <author>Brian VERCHERE</author>
         private void Connect()
         {
-            connString = "server=localhost;userid=root;password=root;";
+            connString = "server=localhost;userid=root;password=;";
             conn = new MySqlConnection(connString);
 
             conn.Open();
@@ -74,16 +75,23 @@ namespace DBStorage
         /// </summary>
         /// <param name="login">login du Users</param>
         /// <author>Romain BARABANT</author>
-        public void SelectUser(string login)
+        public string SelectUser(string login)
         {
             Connect();
-
+            string res = null;
             try
             {
                 MySqlCommand cmd = new MySqlCommand("use risk;", conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand("Select * from users where Pseudo = '" + login + "';", conn);
                 cmd.ExecuteNonQuery();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        res = (String.Format("{0}", reader["Pseudo"]));
+                    }
+                }
                 Console.WriteLine("Users " + login + " selectionne");
             }
             catch (Exception x)
@@ -94,6 +102,7 @@ namespace DBStorage
             {
                 conn.Close();
             }
+            return res;
         }
 
         /// <summary>
