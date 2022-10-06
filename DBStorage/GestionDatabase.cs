@@ -42,7 +42,7 @@ namespace DBStorage
             {
                 MySqlCommand cmd = new MySqlCommand("create database if not exists Risk", conn);
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("Database Risk created successfully");
+                Console.WriteLine("Database Risk created successfully or already existing");
             }
             catch (Exception x)
             {
@@ -68,7 +68,7 @@ namespace DBStorage
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand("create table if not exists Users (Pseudo varchar(50) PRIMARY KEY);", conn);
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("Table Users created successfully");
+                Console.WriteLine("Table Users created successfully or already existing");
             }
             catch (Exception x)
             {
