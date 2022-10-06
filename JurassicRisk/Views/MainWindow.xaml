@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:JurassicRisk.Views"
         mc:Ignorable="d"
         xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-        Title="{x:Static Ressources:Strings.GameTitle}" Height="450" Width="800" MinHeight="450" MinWidth="800">
+        Title="{x:Static Ressources:Strings.GameTitle}" Height="450" Width="800" MinHeight="1080" MinWidth="1920">
     
     <Grid>
         <Frame x:Name="frame" NavigationUIVisibility="Visible"/>
