@@ -14,14 +14,14 @@ namespace RISKAPI.Controllers
         /// <param name="jsonLogin">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("inscription")]
-        public IActionResult inscription([FromBody]string jsonLogin)
+        public IActionResult inscription(string login)
         {
             GestionDatabase connection = new GestionDatabase();
 
             IActionResult reponse = null;
             try
             {
-                Profil profil = JsonConvert.DeserializeObject<Profil>(jsonLogin);
+                Profil profil = new Profil(login);
                 reponse = new AcceptedResult();
                 connection.CreateUser(profil.Pseudo);
             }
