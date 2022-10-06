@@ -11,7 +11,7 @@ namespace RISKAPI.Controllers
         [HttpGet("Login")]
         public IActionResult Donne(int id)
         {
-            Connection connection = new Connection();
+            GestionDatabase connection = new GestionDatabase();
 
             connection.CreateDatabase();
             connection.CreateUserTable();

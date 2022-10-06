@@ -2,7 +2,7 @@
 
 namespace DBStorage
 {
-    public class Connection
+    public class GestionDatabase
     {
         private string connString;
         private MySqlConnection conn;
