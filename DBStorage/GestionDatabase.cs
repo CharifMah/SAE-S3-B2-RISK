@@ -26,8 +26,12 @@ namespace DBStorage
         private void Connect()
         {
             connString = "server=localhost;userid=root;password=admin;";
-            conn = new MySqlConnection(connString);
-            conn.Open();
+
+            if (conn.State != System.Data.ConnectionState.Closed)
+            {
+                conn = new MySqlConnection(connString);
+                conn.Open();
+            }
         }
 
         /// <summary>
