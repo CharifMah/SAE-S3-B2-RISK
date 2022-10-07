@@ -11,7 +11,7 @@ namespace RISKAPI.Controllers
         /// <summary>
         /// envoi un profil pour que l'API l'ajoute à la BDD
         /// </summary>
-        /// <param name="jsonLogin">profil a rajouter a la BDD</param>
+        /// <param name="pseudo">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("inscription")]
         public IActionResult inscription(string pseudo)
@@ -35,7 +35,7 @@ namespace RISKAPI.Controllers
         /// <summary>
         /// recupere un user dans la base de donnee
         /// </summary>
-        /// <param name="login">Pseudo du user a recuperer</param>
+        /// <param name="pseudo">Pseudo du user a recuperer</param>
         /// <autor>Romain BARABANT</autor>
         [HttpGet("connexion")]
         public IActionResult connexion(string pseudo)
