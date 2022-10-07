@@ -73,7 +73,6 @@ namespace JurassicRisk.ViewModels
 
         private async Task InitializeProfil(string pseudo)
         {
-            _selectedProfil = null;
 
             Profil response = await client.GetProfile($"https://localhost:7215/Users/connexion?login={pseudo}");
 
