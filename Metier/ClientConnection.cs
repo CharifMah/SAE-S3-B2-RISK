@@ -23,15 +23,16 @@ namespace Models
         }
 
         //méthode get => reponse
-        public async Task<object> Get(string adresseDemande)
+        public async Task<Profil> GetProfile(string adresseDemande)
         {
-            object obj = null;
+    
+            Profil obj = null;
             HttpResponseMessage ResponseMessage = await client.GetAsync(adresseDemande);
 
             if(ResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 string responseBody = await ResponseMessage.Content.ReadAsStringAsync();
-                obj = JsonConvert.DeserializeObject<object>(responseBody);
+                obj = JsonConvert.DeserializeObject<Profil>(responseBody);
             }
             return obj;
         }

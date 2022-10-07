@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JurassicRisk.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,18 @@ namespace JurassicRisk.Views
         public ConnexionPage()
         {
             InitializeComponent();
+            DataContext = MainViewModel.Get();
         }
 
         private void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+            (sender as Button).Command = MainViewModel.Get().GetRequestProfilCommand;
+            (sender as Button).Command.Execute(inputPseudo.Text);
+            if (MainViewModel.Get().SelectedProfil != null)
+            {
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+            }
+           
         }
     }
 }

@@ -29,7 +29,7 @@
             <ImageBrush ImageSource="/Background/trex.jpg"/>
         </Grid.Background>
         <TextBlock Grid.Row="2" VerticalAlignment="Center" Foreground="DarkRed" HorizontalAlignment="Right" Margin="20,0,0,0" FontSize="20" Style="{StaticResource Bloody}" Text="{x:Static Ressources:Strings.Pseudo}"/>
-        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}"></TextBox>
-        <Button Grid.Column="1" Grid.Row="3"  Content="{x:Static Ressources:Strings.Connecter}" VerticalAlignment="Center" Style="{StaticResource CustomButton}" Click="ConnectButton_Click" Command="{Binding DisplayProfilCommand}"></Button>
+        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputPseudo" Text="Brian"></TextBox>
+        <Button Grid.Column="1" Grid.Row="3"  Content="{x:Static Ressources:Strings.Connecter}" VerticalAlignment="Center" Style="{StaticResource CustomButton}" Click="ConnectButton_Click" CommandParameter="{Binding ElementName=inputPseudo,Path=Text}"></Button>
     </Grid>
 </Page>

@@ -1,7 +1,7 @@
 ﻿using JurassicRisk.Utilities;
 using Models;
 using System.Collections.ObjectModel;
-using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -42,35 +42,50 @@ namespace JurassicRisk.ViewModels
             }
         }
 
-        public ICommand DisplayProfilCommand { get; }
+        public ICommand GetRequestProfilCommand { get; }
 
         #endregion Properties
 
         #region Constructor
 
-        public MainViewModel()
+        private static MainViewModel _instance;
+        public static MainViewModel Get()
+        {
+            if (_instance == null)
+            {
+                _instance = new MainViewModel();
+            }
+            return _instance;
+        }
+
+        private MainViewModel()
         {
             _Profils = new ObservableCollection<Profil>();
             client = new ClientConnection();
 
 
-            DisplayProfilCommand = new RelayCommand(o => DisplayProfil());
+            GetRequestProfilCommand = new RelayCommand(o => InitializeProfil(o.ToString()));
         }
 
         #endregion Constructor
 
         #region Private methods
 
-        private void InitializeProfil()
+        private async Task InitializeProfil(string pseudo)
         {
-            _Profils.Add(client.Get("https://localhost:7215/Users/connexion?login=brian").Result as Profil);
 
-            _selectedProfil = _Profils[0];
-        }
+            Profil response = await client.GetProfile($"https://localhost:7215/Users/connexion?login={pseudo}");
 
-        private void DisplayProfil()
-        {
-            InitializeProfil();
+            if (response != null)
+            {
+                _Profils.Add(new Profil(response.Pseudo));
+
+                _selectedProfil = _Profils[0];
+            }
+            else
+            {
+                MessageBox.Show("Ce Profil n'existe pas \n");
+            }
         }
 
         #endregion Private methods

@@ -30,7 +30,6 @@ namespace JurassicRisk.Views
             connection.CreateDatabase();
             connection.CreateUserTable();
             InitializeComponent();
-            DataContext = new MainViewModel();
             frame.NavigationService.Navigate(new HomePage());
         }
     }
