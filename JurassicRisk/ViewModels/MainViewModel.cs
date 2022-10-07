@@ -15,8 +15,6 @@ namespace JurassicRisk.ViewModels
 
         private Profil _selectedProfil;
 
-        private ObservableCollection<Profil> _Profils;
-
         #endregion
 
         #region Properties
@@ -28,17 +26,6 @@ namespace JurassicRisk.ViewModels
             {
                 _selectedProfil = value;
                 NotifyPropertyChanged("SelectedProfil");
-            }
-        }
-
-        public ObservableCollection<Profil> Profils
-        {
-            get { return _Profils; }
-
-            set
-            {
-                _Profils = value;
-                NotifyPropertyChanged("Profils");
             }
         }
 
@@ -60,27 +47,22 @@ namespace JurassicRisk.ViewModels
 
         private MainViewModel()
         {
-            _Profils = new ObservableCollection<Profil>();
             client = new ClientConnection();
-
-
-            GetRequestProfilCommand = new RelayCommand(o => InitializeProfil(o.ToString()));
         }
 
         #endregion Constructor
 
         #region Private methods
 
-        private async Task InitializeProfil(string pseudo)
+        public async Task InitializeProfil(string pseudo)
         {
+            _selectedProfil = null;
 
             Profil response = await client.GetProfile($"https://localhost:7215/Users/connexion?login={pseudo}");
-
+        
             if (response != null)
             {
-                _Profils.Add(new Profil(response.Pseudo));
-
-                _selectedProfil = _Profils[0];
+                _selectedProfil = response;
             }
             else
             {

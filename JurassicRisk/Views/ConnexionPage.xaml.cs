@@ -27,10 +27,10 @@ namespace JurassicRisk.Views
             DataContext = MainViewModel.Get();
         }
 
-        private void ConnectButton_Click(object sender, RoutedEventArgs e)
+        private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            (sender as Button).Command = MainViewModel.Get().GetRequestProfilCommand;
-            (sender as Button).Command.Execute(inputPseudo.Text);
+            await MainViewModel.Get().InitializeProfil(inputPseudo.Text);
+
             if (MainViewModel.Get().SelectedProfil != null)
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
