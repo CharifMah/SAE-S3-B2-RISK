@@ -12,6 +12,7 @@
     <None Remove="Background\JGLBACKG.jpg" />
     <None Remove="Background\trex.jpg" />
     <None Remove="Polices\Bloody terror.ttf" />
+    <None Remove="Sprites\Capture.PNG" />
     <None Remove="Sprites\Carte\1c1r.png" />
     <None Remove="Sprites\Carte\1c2r.png" />
     <None Remove="Sprites\Carte\1c3r.png" />

@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace JurassicRisk.Views
 {
@@ -26,26 +17,34 @@ namespace JurassicRisk.Views
         {
             InitializeComponent();
             InitRegion();
-            
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).SizeChanged += JeuPage_SizeChanged; ;
+
         }
 
+        private void JeuPage_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //ViewboxCanvas.Width = (Window.GetWindow(App.Current.MainWindow) as MainWindow).ActualWidth;
+            //ViewboxCanvas.Height = (Window.GetWindow(App.Current.MainWindow) as MainWindow).ActualHeight;
+            //Canvas.SetLeft(ViewboxCanvas, 0);
+            //Canvas.SetLeft(CarteCanvas, 0);
 
-        private void DrawRegions(string imagePath,double x,double y,int height, int width )
+        }
+
+        private void DrawRegions(string imagePath, double x, double y, int height, int width)
         {
             theImage = new BitmapImage
                (new Uri("pack://application:,,,/Sprites/Carte/" + imagePath));
 
             ImageBrush myImageBrush = new ImageBrush(theImage);
-
             Canvas myCanvas = new Canvas();
-            myCanvas.Width = width;
-            myCanvas.Height = height;
+
             myCanvas.Background = myImageBrush;
+            myCanvas.Height = height;
+            myCanvas.Width = width;
             Canvas.SetLeft(myCanvas, x);
             Canvas.SetTop(myCanvas, y);
             CarteCanvas.Children.Add(myCanvas);
         }
-
         private void InitRegion()
         {
             DrawRegions("1c1r.png", 94, 51, 152, 70);

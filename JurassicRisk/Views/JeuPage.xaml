@@ -4,18 +4,22 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="JeuPage" MinHeight="1080" MinWidth="1920">
+      Title="JeuPage" Height="800" Width="1280">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
-            <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Canvas x:Name="CarteCanvas">
-            
+
+        <Canvas VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Red" Height="{Binding ElementName=MainWin,Path=ActualHeight}" Width="{Binding ElementName=MainWin,Path=ActualWidth}">
+            <Viewbox Stretch="Fill" ClipToBounds="True" Height="{Binding ElementName=MainWin,Path=ActualHeight}" Width="{Binding ElementName=MainWin,Path=ActualWidth}" x:Name="ViewboxCanvas">
+
+                <local:CustomCarteCanvas x:Name="CarteCanvas" Background="AliceBlue"/>
+
+            </Viewbox>
+
         </Canvas>
+        
     </Grid>
 </Page>

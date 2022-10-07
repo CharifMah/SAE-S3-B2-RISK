@@ -15,14 +15,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JurassicRisk
+namespace JurassicRisk.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         public MainWindow()
         {
             GestionDatabase connection = new GestionDatabase();
@@ -30,6 +30,11 @@ namespace JurassicRisk
             connection.CreateUserTable();
             InitializeComponent();
             frame.NavigationService.Navigate(new HomePage());
+        }
+
+        private void StartApi()
+        {
+
         }
     }
 }

@@ -25,27 +25,8 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
         </Grid.Background>
-        <Button Content="{x:Static Ressources:Strings.Connexion}" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource CustomButton}" Click="ConnexionButton_Click"></Button>
-        <Button Content="{x:Static Ressources:Strings.Inscription}" VerticalAlignment="Center" Grid.Row="2" Style="{StaticResource CustomButton}" Click="InscriptionButton_Click"></Button>
+        <Button Content="{x:Static Ressources:Strings.Connexion}" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource CustomButton}" Click="ConnexionButton_Click" Margin="10"></Button>
+        <Button Content="{x:Static Ressources:Strings.Inscription}" VerticalAlignment="Center" Grid.Row="2" Style="{StaticResource CustomButton}" Click="InscriptionButton_Click" Margin="10"></Button>
         <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" Foreground="DarkRed" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2"  >JURRASIC RISK</TextBlock>
-
-
-        <!--<ListView Grid.Row="0" Margin="5" ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}">
-
-            <ListView.View>
-
-                <GridView>
-
-                    <GridViewColumn Header="Pseudo" DisplayMemberBinding="{Binding Pseudo}" />
-
-                    <GridViewColumn Header="Password" DisplayMemberBinding="{Binding Password}" />
-
-                </GridView>
-
-            </ListView.View>
-
-        </ListView>
-
-        <Button Grid.Row="1" Width="150" VerticalAlignment="Center" Content="Display selected user" Command="{Binding DisplayAccountCommand}" Style="{StaticResource CustomButton}"/>-->
     </Grid>
 </Page>
