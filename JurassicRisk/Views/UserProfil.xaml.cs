@@ -24,7 +24,6 @@ namespace JurassicRisk.Views
         public UserProfil()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
         }
     }
 }

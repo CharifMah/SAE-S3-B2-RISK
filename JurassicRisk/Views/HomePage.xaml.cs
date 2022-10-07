@@ -24,7 +24,6 @@ namespace JurassicRisk.Views
         public HomePage()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
 
         private void ConnexionButton_Click(object sender, RoutedEventArgs e)

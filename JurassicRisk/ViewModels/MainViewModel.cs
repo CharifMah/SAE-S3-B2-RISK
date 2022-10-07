@@ -1,6 +1,7 @@
 ﻿using JurassicRisk.Utilities;
 using Models;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,6 +10,8 @@ namespace JurassicRisk.ViewModels
     public class MainViewModel : observable.Observable
     {
         #region Attributs
+
+        private ClientConnection client;
 
         private Profil _selectedProfil;
 
@@ -48,11 +51,10 @@ namespace JurassicRisk.ViewModels
         public MainViewModel()
         {
             _Profils = new ObservableCollection<Profil>();
+            client = new ClientConnection();
 
-            InitializeProfil();
 
             DisplayProfilCommand = new RelayCommand(o => DisplayProfil());
-
         }
 
         #endregion Constructor
@@ -61,26 +63,14 @@ namespace JurassicRisk.ViewModels
 
         private void InitializeProfil()
         {
-            _Profils.Add(new Profil("John"));
-
-            _Profils.Add(new Profil("Alicia"));
-
-            _Profils.Add(new Profil("Mike"));
-
-            _Profils.Add(new Profil("Justine"));
+            _Profils.Add(client.Get("https://localhost:7215/Users/connexion?login=brian").Result as Profil);
 
             _selectedProfil = _Profils[0];
         }
 
         private void DisplayProfil()
         {
-            if (SelectedProfil is null)
-
-                MessageBox.Show("Please select a user before.");
-
-            else
-
-                MessageBox.Show($"The selected user is {SelectedProfil.Pseudo}.");
+            InitializeProfil();
         }
 
         #endregion Private methods

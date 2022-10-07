@@ -1,4 +1,5 @@
 ﻿using DBStorage;
+using JurassicRisk.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -29,7 +30,8 @@ namespace JurassicRisk.Views
             connection.CreateDatabase();
             connection.CreateUserTable();
             InitializeComponent();
-            frame.NavigationService.Navigate(new MenuPage());
+            DataContext = new MainViewModel();
+            frame.NavigationService.Navigate(new HomePage());
         }
     }
 }
