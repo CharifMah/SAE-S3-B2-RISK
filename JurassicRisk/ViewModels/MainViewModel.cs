@@ -15,8 +15,6 @@ namespace JurassicRisk.ViewModels
 
         private Profil _selectedProfil;
 
-        private ObservableCollection<Profil> _Profils;
-
         #endregion
 
         #region Properties
@@ -28,17 +26,6 @@ namespace JurassicRisk.ViewModels
             {
                 _selectedProfil = value;
                 NotifyPropertyChanged("SelectedProfil");
-            }
-        }
-
-        public ObservableCollection<Profil> Profils
-        {
-            get { return _Profils; }
-
-            set
-            {
-                _Profils = value;
-                NotifyPropertyChanged("Profils");
             }
         }
 
@@ -60,7 +47,6 @@ namespace JurassicRisk.ViewModels
 
         private MainViewModel()
         {
-            _Profils = new ObservableCollection<Profil>();
             client = new ClientConnection();
         }
 
@@ -76,7 +62,7 @@ namespace JurassicRisk.ViewModels
         
             if (response != null)
             {
-                _selectedProfil = new Profil(response.Pseudo);
+                _selectedProfil = response;
             }
             else
             {
