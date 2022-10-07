@@ -9,40 +9,6 @@ namespace DBStorage
         private string connString;
         private MySqlConnection conn;
 
-
-        /// <summary>
-        /// lance le service mysql si il n'est pas lance
-        /// </summary>
-        /// <autor>Romain BARABANT</autor>
-        private void launchMySQL()
-        {
-            ServiceController sc = new ServiceController();
-            sc.ServiceName = "MySQL";
-            Console.WriteLine("The mysql service status is currently set to {0}",
-                               sc.Status.ToString());
-
-            if (sc.Status == ServiceControllerStatus.Stopped)
-            {
-                // Start the service if the current status is stopped.
-
-                Console.WriteLine("Starting the Alerter service...");
-                try
-                {
-                    // Start the service, and wait until its status is "Running".
-                    sc.Start();
-                    sc.WaitForStatus(ServiceControllerStatus.Running);
-
-                    // Display the current service status.
-                    Console.WriteLine("The Alerter service status is now set to {0}.",
-                                       sc.Status.ToString());
-                }
-                catch (InvalidOperationException)
-                {
-                    Console.WriteLine("Could not start the Alerter service.");
-                }
-            }
-        }
-
         /// <summary>
         /// constructeur gestion database (create database and table)
         /// </summary>
@@ -59,9 +25,8 @@ namespace DBStorage
         /// <author>Brian VERCHERE</author>
         private void Connect()
         {
-            connString = "server=localhost;userid=root;password=;";
+            connString = "server=localhost;userid=root;password=root;";
             conn = new MySqlConnection(connString);
-            launchMySQL();
             conn.Open();
         }
 
