@@ -13,21 +13,21 @@ namespace JurassicRisk.Views
     public partial class JeuPage : Page
     {
         private BitmapImage theImage;
+        private Window mainwindow;
         public JeuPage()
         {
             InitializeComponent();
             InitRegion();
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).SizeChanged += JeuPage_SizeChanged; ;
-
+            mainwindow = (Window.GetWindow(App.Current.MainWindow) as MainWindow);
+            mainwindow.SizeChanged += JeuPage_SizeChanged;
+            ViewboxCanvas.Width = mainwindow.ActualWidth;
+            ViewboxCanvas.Height = mainwindow.ActualHeight;
         }
 
         private void JeuPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            //ViewboxCanvas.Width = (Window.GetWindow(App.Current.MainWindow) as MainWindow).ActualWidth;
-            //ViewboxCanvas.Height = (Window.GetWindow(App.Current.MainWindow) as MainWindow).ActualHeight;
-            //Canvas.SetLeft(ViewboxCanvas, 0);
-            //Canvas.SetLeft(CarteCanvas, 0);
-
+            ViewboxCanvas.Width = mainwindow.ActualWidth;
+            ViewboxCanvas.Height = mainwindow.ActualHeight;
         }
 
         private void DrawRegions(string imagePath, double x, double y, int height, int width)

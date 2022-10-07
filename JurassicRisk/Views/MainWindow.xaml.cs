@@ -31,10 +31,5 @@ namespace JurassicRisk.Views
             InitializeComponent();
             frame.NavigationService.Navigate(new HomePage());
         }
-
-        private void StartApi()
-        {
-            
-        }
     }
 }
