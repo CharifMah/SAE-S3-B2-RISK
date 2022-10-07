@@ -58,6 +58,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Metier\Models.csproj" />
+    <ProjectReference Include="..\RISKAPI\RISKAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -195,7 +196,6 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Folder Include="ViewModels\" />
-    <ProjectReference Include="..\DBStorage\DBStorage.csproj" />
   </ItemGroup>
 
 </Project>
