@@ -14,6 +14,7 @@ namespace JurassicRisk.Views
     {
         private BitmapImage theImage;
         private Window mainwindow;
+        private int zi = 0;
         public JeuPage()
         {
             InitializeComponent();
@@ -43,8 +44,27 @@ namespace JurassicRisk.Views
             myCanvas.Width = width;
             Canvas.SetLeft(myCanvas, x);
             Canvas.SetTop(myCanvas, y);
+            myCanvas.MouseEnter += MyCanvas_MouseEnter;
+            myCanvas.MouseLeave += MyCanvas_MouseLeave;
             CarteCanvas.Children.Add(myCanvas);
         }
+
+        private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Canvas c = (sender as Canvas);
+            c.Width -= 10;
+            c.Height -= 10;
+        }
+
+        private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Canvas c = (sender as Canvas);
+            Canvas.SetZIndex(c, zi);
+            c.Width += 10;
+            c.Height += 10;
+            zi++;
+        }
+
         private void InitRegion()
         {
             DrawRegions("1c1r.png", 94, 51, 152, 70);
