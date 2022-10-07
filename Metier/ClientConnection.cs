@@ -13,17 +13,20 @@ namespace Models
     {
         private HttpClient client;
 
+        /// <summary>
+        /// Crée un connexion HTTPClient
+        /// </summary>
         public ClientConnection()
         {
             client = new HttpClient();
         }
 
-        public HttpClient Client
-        {
-            get { return client; }
-        }
-
-        //méthode get => reponse
+        /// <summary>
+        /// Fait un requete GET qui renvoie un json Deserialiser en Profil
+        /// </summary>
+        /// <param name="adresseDemande"></param>
+        /// <returns>awaitable Task avec comme result le Profil demander</returns>
+        /// <Author>Charif Mahmoud, Brian VERCHERE</Author>
         public async Task<Profil> GetProfile(string adresseDemande)
         {
     
@@ -38,7 +41,12 @@ namespace Models
             return obj;
         }
 
-        //methode post
+        /// <summary>
+        /// POST un profil dans la base de donnée 
+        /// </summary>
+        /// <param name="adresseDemande">Post Request Path</param>
+        /// <param name="p">Profil a envoyer</param>
+        /// <returns>awaitable Task</returns>
         public async Task PostProfile(string adresseDemande, Profil p)
         {
             string jsonString = JsonConvert.SerializeObject(p);
@@ -49,6 +57,11 @@ namespace Models
             }
         }
 
+        /// <summary>
+        /// GET un bool qui renvoie vrai si pseudo demander existe
+        /// </summary>
+        /// <param name="adresseDemande">Get Request Path for pseudo verification</param>
+        /// <returns>awaitable Task avec comme result un bool</returns>
         public async Task<bool> GetVerifUser(string adresseDemande)
         {
 

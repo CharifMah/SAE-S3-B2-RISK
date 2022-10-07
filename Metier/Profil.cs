@@ -8,6 +8,10 @@ namespace Models
 {
     public class Profil 
     {
+        /// <summary>
+        /// Crée un nouveau profil
+        /// </summary>
+        /// <param name="pseudo"></param>
         public Profil(string pseudo)
         {
             Pseudo = pseudo;

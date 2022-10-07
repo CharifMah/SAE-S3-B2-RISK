@@ -31,13 +31,19 @@ namespace JurassicRisk.ViewModels
             }
         }
 
-        public ICommand GetRequestProfilCommand { get; }
+        //public ICommand GetRequestProfilCommand { get; }
 
         #endregion Properties
 
         #region Constructor
 
         private static MainViewModel _instance;
+
+        /// <summary>
+        /// Singleton Instance du MainViewModel
+        /// </summary>
+        /// <returns>MainViewModel instance</returns>
+        /// <Author>Charif Mahmoud</Author>
         public static MainViewModel Get()
         {
             if (_instance == null)
@@ -54,8 +60,14 @@ namespace JurassicRisk.ViewModels
 
         #endregion Constructor
 
-        #region Private methods
+        #region Public methods
 
+        /// <summary>
+        /// Set Value of the selected profil
+        /// </summary>
+        /// <param name="pseudo">string pseudo</param>
+        /// <returns>awaitable Task</returns>
+        /// <Author>Charif Mahmoud</Author>
         public async Task SetSelectedProfil(string pseudo)
         {
             _selectedProfil = null;
@@ -72,11 +84,21 @@ namespace JurassicRisk.ViewModels
             }
         }
 
+        /// <summary>
+        /// Create Profil
+        /// </summary>
+        /// <param name="profil">Profil</param>
+        /// <returns>awaitable Task</returns>
         public async Task CreateProfil(Profil profil)
         {
             await client.PostProfile($"https://localhost:7215/Users/Inscription?pseudo={profil.Pseudo}", profil);
         }
 
+        /// <summary>
+        /// Verify if profil exist in database
+        /// </summary>
+        /// <param name="pseudo">string pseudo</param>
+        /// <returns>awaitable Task with Hresult bool</returns>
         public async Task<bool> VerifProfilCreation(string pseudo)
         {
             return await client.GetVerifUser($"https://localhost:7215/Users/verifUser?pseudo={pseudo}");

@@ -12,14 +12,12 @@ namespace JurassicRisk.ViewModels
 {
     public class ViewModelCarte : observable.Observable
     {
-
+         
         public ViewModelCarte()
         {
             CreationCarte();
 
         }
-
-
 
         public List<TerritoireBase> CreerTerritoire()
         {
@@ -232,7 +230,6 @@ namespace JurassicRisk.ViewModels
             territoire.Add(territoire41);
 
             return territoire;
-
         }
 
         public List<Continent> CreerContinent()

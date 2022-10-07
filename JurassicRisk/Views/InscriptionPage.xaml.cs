@@ -32,6 +32,7 @@ namespace JurassicRisk.Views
             {
                 await MainViewModel.Get().CreateProfil(new Models.Profil(inputPseudo.Text));
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+                await MainViewModel.Get().SetSelectedProfil(inputPseudo.Text);
             }
             else
             {          

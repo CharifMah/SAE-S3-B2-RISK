@@ -42,7 +42,7 @@ namespace RISKAPI.Controllers
         {
             GestionDatabase connection = new GestionDatabase();
             Profil profilDemandee = null;
-            Profil p = new Profil();
+            Profil p = new Profil("");
 
             p.Pseudo = connection.SelectUser(pseudo);
             if (p.Pseudo != null)
@@ -59,6 +59,12 @@ namespace RISKAPI.Controllers
             return actionResult;
         }
 
+        /// <summary>
+        /// Request to verify user if exist in database
+        /// </summary>
+        /// <param name="pseudo">string to find in database</param>
+        /// <returns>boolean</returns>
+        /// <Author>Charif Mahmoud,Brian VERCHERE</Author>
         [HttpGet("verifUser")]
         public IActionResult verifUser(string pseudo)
         {

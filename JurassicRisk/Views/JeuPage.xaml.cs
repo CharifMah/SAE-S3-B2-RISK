@@ -111,6 +111,6 @@ namespace JurassicRisk.Views
             DrawRegions("6c7r.png", 1475, 668, 218, 213);
         }
 
-        ViewModelCarte ViewModelCarte = new ViewModelCarte();
+        //ViewModelCarte ViewModelCarte = new ViewModelCarte();
     }
 }
