@@ -14,14 +14,14 @@ namespace RISKAPI.Controllers
         /// <param name="jsonLogin">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("inscription")]
-        public IActionResult inscription(string login)
+        public IActionResult inscription(string pseudo)
         {
             GestionDatabase connection = new GestionDatabase();
 
             IActionResult reponse = null;
             try
             {
-                Profil profil = new Profil(login);
+                Profil profil = new Profil(pseudo);
                 reponse = new AcceptedResult();
                 connection.CreateUser(profil.Pseudo);
             }
@@ -38,12 +38,12 @@ namespace RISKAPI.Controllers
         /// <param name="login">Pseudo du user a recuperer</param>
         /// <autor>Romain BARABANT</autor>
         [HttpGet("connexion")]
-        public IActionResult connexion(string login)
+        public IActionResult connexion(string pseudo)
         {
             GestionDatabase connection = new GestionDatabase();
             Profil profilDemandee = null;
             Profil p = new Profil();
-            p.Pseudo = connection.SelectUser(login);
+            p.Pseudo = connection.SelectUser(pseudo);
             if (p.Pseudo != null)
             {
                 profilDemandee = p;
@@ -58,5 +58,22 @@ namespace RISKAPI.Controllers
             return actionResult;
         }
 
+        [HttpGet("verifUser")]
+        public IActionResult verifUser(string pseudo)
+        {
+            IActionResult reponse = null;
+
+            GestionDatabase connection = new GestionDatabase();
+            bool res = connection.VerifUserCreation(pseudo);
+            if (res)
+            {
+                reponse = new AcceptedResult(); 
+            }
+            else
+            {
+                reponse = new BadRequestResult();
+            }
+            return reponse;
+        }
     }
 }

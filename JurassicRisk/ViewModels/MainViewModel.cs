@@ -1,9 +1,11 @@
 ﻿using JurassicRisk.Utilities;
 using Models;
+using RISKAPI;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Profil = Models.Profil;
 
 namespace JurassicRisk.ViewModels
 {
@@ -54,7 +56,7 @@ namespace JurassicRisk.ViewModels
 
         #region Private methods
 
-        public async Task InitializeProfil(string pseudo)
+        public async Task SetSelectedProfil(string pseudo)
         {
             _selectedProfil = null;
 
@@ -69,6 +71,16 @@ namespace JurassicRisk.ViewModels
 
                 MessageBox.Show("Ce Profil n'existe pas \n");
             }
+        }
+
+        public async Task CreateProfil(Profil profil)
+        {
+            await client.PostProfile($"https://localhost:7215/Users/Inscription?login={profil.Pseudo}", profil);
+        }
+
+        public async Task<bool> VerifProfilCreation(string pseudo)
+        {
+            return await client.GetVerifUser($"https://localhost:7215/Users/verifUser?login={pseudo}");
         }
 
         #endregion Private methods

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Models
 {
@@ -38,9 +39,33 @@ namespace Models
         }
 
         //methode post
-        public void Post(string adresseDemande, object o)
+        public async Task PostProfile(string adresseDemande, Profil p)
+        {
+            string jsonString = JsonConvert.SerializeObject(p);
+            HttpResponseMessage response = await HttpClientExtensions.PostAsJsonAsync<string>(client, adresseDemande, jsonString);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show("Votre profil a bien été créer !");
+            }
+            else
+            {
+                MessageBox.Show("Essayez de changer de pseudo !");
+            }
+        }
+
+        public async Task<bool> GetVerifUser(string adresseDemande)
         {
 
+            bool obj = false;
+            HttpResponseMessage ResponseMessage = await client.GetAsync(adresseDemande);
+
+            if (ResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                string responseBody = await ResponseMessage.Content.ReadAsStringAsync();
+                obj = JsonConvert.DeserializeObject<bool>(responseBody);
+            }
+            return obj;
         }
+
     }
 }

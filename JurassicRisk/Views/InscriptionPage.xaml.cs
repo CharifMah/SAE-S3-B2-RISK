@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JurassicRisk.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,21 @@ namespace JurassicRisk.Views
         public InscriptionPage()
         {
             InitializeComponent();
+        }
+
+        private async void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(await MainViewModel.Get().VerifProfilCreation(inputPseudo.Text))
+            {
+                MessageBox.Show("Ce pseudo existe déjà !");
+            }
+            else
+            {
+                await MainViewModel.Get().CreateProfil(new Models.Profil(inputPseudo.Text));
+            }
+            
+
+
         }
     }
 }

@@ -25,7 +25,7 @@ namespace DBStorage
         /// <author>Brian VERCHERE</author>
         private void Connect()
         {
-            connString = "server=localhost;userid=root;password=root;";
+            connString = "server=localhost;userid=root;password=admin;";
             conn = new MySqlConnection(connString);
             conn.Open();
         }
@@ -140,6 +140,35 @@ namespace DBStorage
             {
                 conn.Close();
             }
+        }
+
+        public bool VerifUserCreation(string pseudo)
+        {
+            Connect();
+            bool res = false;
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("use risk;", conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand($"SELECT * FROM users WHERE Pseudo = '{pseudo}';",conn);
+                cmd.ExecuteNonQuery();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (reader["Pseudo"].ToString() == pseudo)
+                        {
+                            res = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            conn.Close();
+            return res;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace JurassicRisk.Views
 
         private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            await MainViewModel.Get().InitializeProfil(inputPseudo.Text);
+            await MainViewModel.Get().SetSelectedProfil(inputPseudo.Text);
 
             if (MainViewModel.Get().SelectedProfil != null)
             {
