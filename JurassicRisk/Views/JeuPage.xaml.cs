@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JurassicRisk.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -109,5 +110,7 @@ namespace JurassicRisk.Views
             DrawRegions("6c6r.png", 1413, 550, 212, 194);
             DrawRegions("6c7r.png", 1475, 668, 218, 213);
         }
+
+        ViewModelCarte ViewModelCarte = new ViewModelCarte();
     }
 }

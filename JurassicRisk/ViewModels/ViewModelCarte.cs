@@ -19,11 +19,13 @@ namespace JurassicRisk.ViewModels
 
         }
 
-        List<TerritoireBase> territoire = new List<TerritoireBase>();
+
 
         public List<TerritoireBase> CreerTerritoire()
         {
-            BitmapImage theImage = new BitmapImage(new Uri("pack://application:.../Sprites/carte/1c1r.png"));
+            List<TerritoireBase> territoire = new List<TerritoireBase>();
+
+            BitmapImage theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/carte/1c1r.png"));
             TerritoireForet territoire1 = new TerritoireForet(theImage, 94, 51);
 
             territoire.Add(territoire1);
@@ -233,20 +235,12 @@ namespace JurassicRisk.ViewModels
 
         }
 
-        List<TerritoireBase> Listcontinents1 = new List<TerritoireBase>();
-        List<TerritoireBase> Listcontinents2 = new List<TerritoireBase>();
-        List<TerritoireBase> Listcontinents3 = new List<TerritoireBase>();
-        List<TerritoireBase> Listcontinents4 = new List<TerritoireBase>();
-        List<TerritoireBase> Listcontinents5 = new List<TerritoireBase>();
-        List<TerritoireBase> Listcontinents6 = new List<TerritoireBase>();
-
-
-
         public List<Continent> CreerContinent()
         {
+            List<TerritoireBase> territoire = CreerTerritoire();
             List<Continent> continentList = new List<Continent>();
 
-            Continent continent1 = new Continent(Listcontinents1);
+            Continent continent1 = new Continent();
 
             for (int i = 0; i < 7; i++)
             {
@@ -255,7 +249,7 @@ namespace JurassicRisk.ViewModels
             }
             continentList.Add(continent1);
 
-            Continent continent2 = new Continent(Listcontinents2);
+            Continent continent2 = new Continent();
 
             for (int i = 0; i < 7; i++)
             {
@@ -264,7 +258,7 @@ namespace JurassicRisk.ViewModels
             }
             continentList.Add(continent2);
 
-            Continent continent3 = new Continent(Listcontinents3);
+            Continent continent3 = new Continent();
 
             for (int i = 0; i < 8; i++)
             {
@@ -273,7 +267,7 @@ namespace JurassicRisk.ViewModels
             }
             continentList.Add(continent3);
 
-            Continent continent4 = new Continent(Listcontinents4);
+            Continent continent4 = new Continent();
 
             for (int i = 0; i < 7; i++)
             {
@@ -282,7 +276,7 @@ namespace JurassicRisk.ViewModels
             }
             continentList.Add(continent4);
 
-            Continent continent5 = new Continent(Listcontinents5);
+            Continent continent5 = new Continent();
 
             for (int i = 0; i < 5; i++)
             {
@@ -291,7 +285,7 @@ namespace JurassicRisk.ViewModels
             }
             continentList.Add(continent5);
 
-            Continent continent6 = new Continent(Listcontinents6);
+            Continent continent6 = new Continent();
 
             for (int i = 0; i < 7; i++)
             {
