@@ -29,7 +29,7 @@ namespace JurassicRisk.Views
             connection.CreateDatabase();
             connection.CreateUserTable();
             InitializeComponent();
-            frame.NavigationService.Navigate(new UserProfil());
+            frame.NavigationService.Navigate(new MenuPage());
         }
     }
 }

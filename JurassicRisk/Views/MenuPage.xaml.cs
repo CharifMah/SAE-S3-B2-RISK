@@ -30,6 +30,11 @@ namespace JurassicRisk.Views
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
         }
 
+        private void ProfilButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new UserProfil());
+        }
+
         //private void OptionButton_Click(object sender, RoutedEventArgs e)
         //{
         //    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new Options());

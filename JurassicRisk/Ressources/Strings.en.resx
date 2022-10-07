@@ -138,6 +138,9 @@
   <data name="Play" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="Profil" xml:space="preserve">
+    <value>Profile</value>
+  </data>
   <data name="Pseudo" xml:space="preserve">
     <value>Pseudo :</value>
   </data>

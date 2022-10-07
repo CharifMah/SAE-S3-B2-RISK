@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:JurassicRisk.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="UserProfil" Height="450" Width="800">
+      Title="UserProfil">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,8 +38,8 @@
             <FlowDocument>
                 <Table CellSpacing="0" BorderBrush="Purple" BorderThickness="5">
                     <Table.Columns>
-                        <TableColumn Width="250"/>
-                        <TableColumn Width="100"/>
+                        <TableColumn Width="*"/>
+                        <TableColumn Width="*"/>
                     </Table.Columns>
                     <TableRowGroup>
                         <TableRow>

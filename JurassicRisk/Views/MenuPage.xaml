@@ -32,6 +32,7 @@
         <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" Foreground="DarkRed" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2"  >JURRASIC RISK</TextBlock>
         <Button Content="{x:Static Ressources:Strings.Play}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomButton}" Click="PlayButton_Click"/>
         <!--<Button Content="{x:Static Ressources:Strings.Options}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomButton}" Click="OptionButton_Click"/>-->
+        <Button Content="{x:Static Ressources:Strings.Profil}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Style="{StaticResource CustomButton}" Click="ProfilButton_Click"/>
 
 
 

@@ -152,8 +152,14 @@ namespace JurassicRisk.Ressource
             {
                 return ResourceManager.GetString("Options", resourceCulture);
             }
+        }
 
-
+        public static string Profil
+        {
+            get
+            {
+                return ResourceManager.GetString("Profil", resourceCulture);
+            }
         }
     }
 }
