@@ -60,7 +60,7 @@ namespace JurassicRisk.ViewModels
         {
             _selectedProfil = null;
 
-            Profil response = await client.GetProfile($"https://localhost:7215/Users/connexion?login={pseudo}");
+            Profil response = await client.GetProfile($"https://localhost:7215/Users/connexion?pseudo={pseudo}");
         
             if (response != null)
             {
@@ -68,19 +68,18 @@ namespace JurassicRisk.ViewModels
             }
             else
             {
-
                 MessageBox.Show("Ce Profil n'existe pas \n");
             }
         }
 
         public async Task CreateProfil(Profil profil)
         {
-            await client.PostProfile($"https://localhost:7215/Users/Inscription?login={profil.Pseudo}", profil);
+            await client.PostProfile($"https://localhost:7215/Users/Inscription?pseudo={profil.Pseudo}", profil);
         }
 
         public async Task<bool> VerifProfilCreation(string pseudo)
         {
-            return await client.GetVerifUser($"https://localhost:7215/Users/verifUser?login={pseudo}");
+            return await client.GetVerifUser($"https://localhost:7215/Users/verifUser?pseudo={pseudo}");
         }
 
         #endregion Private methods

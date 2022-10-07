@@ -43,6 +43,7 @@ namespace RISKAPI.Controllers
             GestionDatabase connection = new GestionDatabase();
             Profil profilDemandee = null;
             Profil p = new Profil();
+
             p.Pseudo = connection.SelectUser(pseudo);
             if (p.Pseudo != null)
             {
@@ -65,14 +66,16 @@ namespace RISKAPI.Controllers
 
             GestionDatabase connection = new GestionDatabase();
             bool res = connection.VerifUserCreation(pseudo);
-            if (res)
-            {
-                reponse = new AcceptedResult(); 
-            }
-            else
+     
+            if (res == null)
             {
                 reponse = new BadRequestResult();
             }
+            else
+            {
+                reponse = new JsonResult(res);
+            }
+
             return reponse;
         }
     }

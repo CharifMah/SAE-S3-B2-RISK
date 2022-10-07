@@ -1,6 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using System.Data.SqlClient;
-using System.ServiceProcess;
 
 namespace DBStorage
 {
@@ -18,20 +16,19 @@ namespace DBStorage
             CreateDatabase();
             CreateUserTable();
         }
-        
+
         /// <summary>
         /// Connexion à la base de donnée
         /// </summary>
         /// <author>Brian VERCHERE</author>
         private void Connect()
         {
-            connString = "server=localhost;userid=root;password=admin;";
+            connString = "server=localhost;userid=root;password=root;";
 
-            if (conn.State != System.Data.ConnectionState.Closed)
-            {
-                conn = new MySqlConnection(connString);
-                conn.Open();
-            }
+            conn = null;
+            conn = new MySqlConnection(connString);
+            conn.Open();
+
         }
 
         /// <summary>
@@ -154,11 +151,11 @@ namespace DBStorage
             {
                 MySqlCommand cmd = new MySqlCommand("use risk;", conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand($"SELECT * FROM users WHERE Pseudo = '{pseudo}';",conn);
+                cmd = new MySqlCommand($"SELECT * FROM users WHERE Pseudo = '{pseudo}';", conn);
                 cmd.ExecuteNonQuery();
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
                         if (reader["Pseudo"].ToString() == pseudo)
                         {

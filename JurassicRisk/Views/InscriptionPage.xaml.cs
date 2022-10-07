@@ -28,17 +28,15 @@ namespace JurassicRisk.Views
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if(await MainViewModel.Get().VerifProfilCreation(inputPseudo.Text))
-            {
-                MessageBox.Show("Ce pseudo existe déjà !");
-            }
-            else
+            if(!await MainViewModel.Get().VerifProfilCreation(inputPseudo.Text))
             {
                 await MainViewModel.Get().CreateProfil(new Models.Profil(inputPseudo.Text));
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
             }
-            
-
-
+            else
+            {          
+                MessageBox.Show("1Ce pseudo existe déjà !");
+            }         
         }
     }
 }

@@ -47,10 +47,6 @@ namespace Models
             {
                 MessageBox.Show("Votre profil a bien été créer !");
             }
-            else
-            {
-                MessageBox.Show("Essayez de changer de pseudo !");
-            }
         }
 
         public async Task<bool> GetVerifUser(string adresseDemande)
@@ -61,8 +57,16 @@ namespace Models
 
             if (ResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                string responseBody = await ResponseMessage.Content.ReadAsStringAsync();
-                obj = JsonConvert.DeserializeObject<bool>(responseBody);
+                try
+                {
+                    string responseBody = await ResponseMessage.Content.ReadAsStringAsync();
+                    obj = JsonConvert.DeserializeObject<bool>(responseBody);
+                }
+                catch (Exception)
+                {
+                   obj = false;
+                }
+                
             }
             return obj;
         }
