@@ -1,15 +1,23 @@
-﻿using Models.Map;
+﻿using JurassicRisk.Utilities;
+using Models.Map;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace JurassicRisk.ViewModelsCarte
+namespace JurassicRisk.ViewModels
 {
-    internal class ViewModelCarte : observable.Observable
+    public class ViewModelCarte : observable.Observable
     {
+
+        public ViewModelCarte()
+        {
+            CreationCarte();
+
+        }
 
         List<TerritoireBase> territoire = new List<TerritoireBase>();
 
@@ -223,6 +231,90 @@ namespace JurassicRisk.ViewModelsCarte
 
             return territoire;
 
+        }
+
+        List<TerritoireBase> Listcontinents1 = new List<TerritoireBase>();
+        List<TerritoireBase> Listcontinents2 = new List<TerritoireBase>();
+        List<TerritoireBase> Listcontinents3 = new List<TerritoireBase>();
+        List<TerritoireBase> Listcontinents4 = new List<TerritoireBase>();
+        List<TerritoireBase> Listcontinents5 = new List<TerritoireBase>();
+        List<TerritoireBase> Listcontinents6 = new List<TerritoireBase>();
+
+
+
+        public List<Continent> CreerContinent()
+        {
+            List<Continent> continentList = new List<Continent>();
+
+            Continent continent1 = new Continent(Listcontinents1);
+
+            for (int i = 0; i < 7; i++)
+            {
+                continent1.Territoires.Add(territoire[0]);
+                territoire.Remove(territoire[0]);
+            }
+            continentList.Add(continent1);
+
+            Continent continent2 = new Continent(Listcontinents2);
+
+            for (int i = 0; i < 7; i++)
+            {
+                continent2.Territoires.Add(territoire[0]);
+                territoire.Remove(territoire[0]);
+            }
+            continentList.Add(continent2);
+
+            Continent continent3 = new Continent(Listcontinents3);
+
+            for (int i = 0; i < 8; i++)
+            {
+                continent3.Territoires.Add(territoire[0]);
+                territoire.Remove(territoire[0]);
+            }
+            continentList.Add(continent3);
+
+            Continent continent4 = new Continent(Listcontinents4);
+
+            for (int i = 0; i < 7; i++)
+            {
+                continent4.Territoires.Add(territoire[0]);
+                territoire.Remove(territoire[0]);
+            }
+            continentList.Add(continent4);
+
+            Continent continent5 = new Continent(Listcontinents5);
+
+            for (int i = 0; i < 5; i++)
+            {
+                continent5.Territoires.Add(territoire[0]);
+                territoire.Remove(territoire[0]);
+            }
+            continentList.Add(continent5);
+
+            Continent continent6 = new Continent(Listcontinents6);
+
+            for (int i = 0; i < 7; i++)
+            {
+                continent6.Territoires.Add(territoire[0]);
+                territoire.Remove(territoire[0]);
+            }
+            continentList.Add(continent6);
+
+            return continentList;
+        }
+
+        public Carte CreerMap()
+        {
+            Carte carte = new Carte(CreerContinent());
+
+            return carte;
+        }
+
+        public void CreationCarte()
+        {
+            CreerTerritoire();
+            CreerContinent();
+            CreerMap();
         }
     }
 }
