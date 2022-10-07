@@ -33,7 +33,7 @@ namespace JurassicRisk.Views
 
         private void DrawRegions(string imagePath, double x, double y, int height, int width)
         {
-            theImage = new BitmapImage
+           theImage = new BitmapImage
                (new Uri("pack://application:,,,/Sprites/Carte/" + imagePath));
 
             ImageBrush myImageBrush = new ImageBrush(theImage);

@@ -16,6 +16,7 @@ namespace Models.Map
         public List<TerritoireBase> Territoires
         {
             get { return territoires; }
+            set { territoires = value; }
         }
 
         public Continent(List<TerritoireBase> t)

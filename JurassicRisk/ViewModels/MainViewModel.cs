@@ -68,6 +68,8 @@ namespace JurassicRisk.ViewModels
             _Profils.Add(new Profil("Mike"));
 
             _Profils.Add(new Profil("Justine"));
+
+            _selectedProfil = _Profils[0];
         }
 
         private void DisplayProfil()

@@ -11,6 +11,8 @@
     <None Remove="Background\gif 12.gif" />
     <None Remove="Background\JGLBACKG.jpg" />
     <None Remove="Background\trex.jpg" />
+    <None Remove="Background\trexHead.png" />
+    <None Remove="Background\UserProfilBackground.jpg" />
     <None Remove="Polices\Bloody terror.ttf" />
     <None Remove="Sprites\Capture.PNG" />
     <None Remove="Sprites\Carte\1c1r.png" />
@@ -57,6 +59,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Background\trexHead.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Metier\Models.csproj" />
     <ProjectReference Include="..\RISKAPI\RISKAPI.csproj" />
   </ItemGroup>
@@ -64,6 +72,7 @@
   <ItemGroup>
     <Resource Include="Background\gif 12.gif" />
     <Resource Include="Background\JGLBACKG.jpg" />
+    <Resource Include="Background\UserProfilBackground.jpg" />
     <Resource Include="Background\trex.jpg" />
     <Resource Include="Polices\Bloody terror.ttf" />
     <Resource Include="Sprites\Carte\1c1r.png">

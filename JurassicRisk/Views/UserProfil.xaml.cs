@@ -1,7 +1,6 @@
-﻿using DBStorage;
+﻿using JurassicRisk.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,18 +17,14 @@ using System.Windows.Shapes;
 namespace JurassicRisk.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logique d'interaction pour UserProfil.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UserProfil : Page
     {
-
-        public MainWindow()
+        public UserProfil()
         {
-            GestionDatabase connection = new GestionDatabase();
-            connection.CreateDatabase();
-            connection.CreateUserTable();
             InitializeComponent();
-            frame.NavigationService.Navigate(new UserProfil());
+            this.DataContext = new MainViewModel();
         }
     }
 }
