@@ -19,9 +19,9 @@ namespace Models.Map
             set { territoires = value; }
         }
 
-        public Continent(List<TerritoireBase> t)
+        public Continent()
         {
-            territoires = t;
+            this.territoires = new List<TerritoireBase>();
         }
     }
 }
