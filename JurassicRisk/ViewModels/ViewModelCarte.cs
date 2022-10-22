@@ -133,8 +133,7 @@ namespace JurassicRisk.ViewModels
             DrawRegion(_territoires[38], 1592, 523, 262, 260);
             DrawRegion(_territoires[39], 1413, 550, 212, 194);
             DrawRegion(_territoires[40], 1475, 668, 218, 213);
-            _carte.Width = 10;
-            _carte.Height = 10;
+
             NotifyPropertyChanged("Carte");
         }
         
