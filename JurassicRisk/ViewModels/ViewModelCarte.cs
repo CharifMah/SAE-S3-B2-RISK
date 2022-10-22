@@ -1,311 +1,183 @@
-﻿using JurassicRisk.Utilities;
-using Models.Map;
+﻿using Models.Map;
 using System;
+using System.Resources;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using JurassicRisk.Ressources;
 
 namespace JurassicRisk.ViewModels
 {
+    /// <author>Charif</author>
     public class ViewModelCarte : observable.Observable
     {
-         
+        private List<TerritoireBase> _territoires;
+        private List<Continent> _continents;
+        private List<String> _fileEntries;
+        private Canvas _carte;
+        private int zi = 0;
+
+        public Canvas Carte
+        {
+            get
+            {
+                return _carte;
+            }
+        }
+
+        /// <summary>
+        /// Cree la carte et la dessine
+        /// </summary>
+        /// <author>Charif</author>
         public ViewModelCarte()
         {
-            CreationCarte();
-
+            _territoires = CreerTerritoire();
+            _continents = CreerContinent();
+            DrawCarte();
         }
 
-        public List<TerritoireBase> CreerTerritoire()
+        /// <summary>
+        /// Cree les territoire
+        /// </summary>
+        /// <returns>List de TerritoireBase</returns>
+        /// <Author>Charif</Author>
+        private List<TerritoireBase> CreerTerritoire()
         {
-            List<TerritoireBase> territoire = new List<TerritoireBase>();
+            List<TerritoireBase> territoires = new List<TerritoireBase>();
 
-            BitmapImage theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/carte/1c1r.png"));
-            TerritoireForet territoire1 = new TerritoireForet(theImage, 94, 51);
+            _fileEntries = GetResource.GetResourceFileName("carte");
+            foreach (string fileName in _fileEntries)
+            {
+                BitmapImage theImage = new BitmapImage(new Uri($"pack://application:,,,/Sprites/Carte/{fileName}"));
 
-            territoire.Add(territoire1);
+                TerritoireForet territoirex = new TerritoireForet(theImage, 0, 0);
+                territoires.Add(territoirex);                
+            }
 
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/1c2r.png"));
-            TerritoireForet territoire2 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire2);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/1c3r.png"));
-            TerritoireForet territoire3 = new TerritoireForet(theImage, 94, 51);
-
-
-            territoire.Add(territoire3);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/1c4r.png"));
-            TerritoireForet territoire4 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire4);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/1c5r.png"));
-            TerritoireForet territoire5 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire5);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/1c6r.png"));
-            TerritoireForet territoire6 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire6);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/1c7r.png"));
-            TerritoireForet territoire7 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire7);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/2c1r.png"));
-            TerritoireForet territoire8 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire8);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/2c2r.png"));
-            TerritoireDesert territoire9 = new TerritoireDesert(theImage, 94, 51);
-
-            territoire.Add(territoire9);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/2c3r.png"));
-            TerritoireDesert territoire10 = new TerritoireDesert(theImage, 94, 51);
-
-            territoire.Add(territoire10);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/2c4r.png"));
-            TerritoirePrairie territoire11 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire11);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/2c5r.png"));
-            TerritoirePrairie territoire12 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire12);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/2c6r.png"));
-            TerritoireDesert territoire13 = new TerritoireDesert(theImage, 94, 51);
-
-            territoire.Add(territoire13);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/2c7r.png"));
-            TerritoireDesert territoire14 = new TerritoireDesert(theImage, 94, 51);
-
-            territoire.Add(territoire14);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/3c1r.png"));
-            TerritoirePrairie territoire15 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire15);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/3c2r.png"));
-            TerritoirePrairie territoire16 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire16);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/3c3r.png"));
-            TerritoireForet territoire17 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire17);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/3c4r.png"));
-            TerritoireForet territoire18 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire18);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/3c5r.png"));
-            TerritoireForet territoire19 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire19);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/3c6r.png"));
-            TerritoireForet territoire20 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire20);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/3c7r.png"));
-            TerritoireForet territoire21 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire21);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/3c8r.png"));
-            TerritoireForet territoire22 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire22);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/4c1r.png"));
-            TerritoireForet territoire23 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire23);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/4c2r.png"));
-            TerritoireForet territoire24 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire24);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/4c3r.png"));
-            TerritoireForet territoire25 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire25);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/4c4r.png"));
-            TerritoirePrairie territoire26 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire26);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/4c5r.png"));
-            TerritoirePrairie territoire27 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire27);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/4c6r.png"));
-            TerritoirePrairie territoire28 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire28);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/4c7r.png"));
-            TerritoirePrairie territoire29 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire29);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/5c1r.png"));
-            TerritoireForet territoire30 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire30);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/5c2r.png"));
-            TerritoireForet territoire31 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire31);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/5c3r.png"));
-            TerritoireForet territoire32 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire32);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/5c4r.png"));
-            TerritoireForet territoire33 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire33);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/5c5r.png"));
-            TerritoireForet territoire34 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire34);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/6c1r.png"));
-            TerritoireForet territoire35 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire35);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/6c2r.png"));
-            TerritoireForet territoire36 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire36);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/6c3r.png"));
-            TerritoireForet territoire37 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire37);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/6c4r.png"));
-            TerritoireForet territoire38 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire38);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/6c5r.png"));
-            TerritoireForet territoire39 = new TerritoireForet(theImage, 94, 51);
-
-            territoire.Add(territoire39);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/6c6r.png"));
-            TerritoirePrairie territoire40 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire40);
-
-            theImage = new BitmapImage(new Uri("pack://application:,,,/Sprites/Carte/6c7r.png"));
-            TerritoirePrairie territoire41 = new TerritoirePrairie(theImage, 94, 51);
-
-            territoire.Add(territoire41);
-
-            return territoire;
+            return territoires;
         }
 
-        public List<Continent> CreerContinent()
+        /// <summary>
+        /// Cree les contient avec la liste des territoires grace aux noms des image
+        /// </summary>
+        /// <returns>List de continent</returns>
+        /// <Author>Charif</Author>
+        private List<Continent> CreerContinent()
         {
-            List<TerritoireBase> territoire = CreerTerritoire();
-            List<Continent> continentList = new List<Continent>();
+            List<Continent> continents = new List<Continent>();
 
-            Continent continent1 = new Continent();
-
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 6; i++)
             {
-                continent1.Territoires.Add(territoire[0]);
-                territoire.Remove(territoire[0]);
+                Continent continent = new Continent();
+
+                for (int ii = 0; ii < _fileEntries.Where(c => c[0] == (char)i).Count(); i++)
+                {
+                    continent.Territoires.Add(_territoires[ii]);
+                }
+                continents.Add(continent);
             }
-            continentList.Add(continent1);
 
-            Continent continent2 = new Continent();
-
-            for (int i = 0; i < 7; i++)
-            {
-                continent2.Territoires.Add(territoire[0]);
-                territoire.Remove(territoire[0]);
-            }
-            continentList.Add(continent2);
-
-            Continent continent3 = new Continent();
-
-            for (int i = 0; i < 8; i++)
-            {
-                continent3.Territoires.Add(territoire[0]);
-                territoire.Remove(territoire[0]);
-            }
-            continentList.Add(continent3);
-
-            Continent continent4 = new Continent();
-
-            for (int i = 0; i < 7; i++)
-            {
-                continent4.Territoires.Add(territoire[0]);
-                territoire.Remove(territoire[0]);
-            }
-            continentList.Add(continent4);
-
-            Continent continent5 = new Continent();
-
-            for (int i = 0; i < 5; i++)
-            {
-                continent5.Territoires.Add(territoire[0]);
-                territoire.Remove(territoire[0]);
-            }
-            continentList.Add(continent5);
-
-            Continent continent6 = new Continent();
-
-            for (int i = 0; i < 7; i++)
-            {
-                continent6.Territoires.Add(territoire[0]);
-                territoire.Remove(territoire[0]);
-            }
-            continentList.Add(continent6);
-
-            return continentList;
+            return continents;
         }
 
-        public Carte CreerMap()
+        /// <summary>
+        /// Add all region to the Canvas (Carte) with DrawRegion
+        /// </summary>
+        /// <Author>Charif</Author>
+        private void DrawCarte()
         {
-            Carte carte = new Carte(CreerContinent());
+            _carte = new Canvas();
+            DrawRegion(_territoires[0], 94, 51, 152, 70);
+            DrawRegion(_territoires[1], 114, 149, 97, 130);
+            DrawRegion(_territoires[2], 148, 1, 160, 194);
+            DrawRegion(_territoires[3], 268, 32, 90, 146);
+            DrawRegion(_territoires[4], 332, 38, 182, 150);
+            DrawRegion(_territoires[5], 222, 114, 146, 138);
+            DrawRegion(_territoires[6], 290, 157, 151, 220);
+            DrawRegion(_territoires[7], 112, 580, 188, 217);
+            DrawRegion(_territoires[8], 107, 735, 226, 158);
+            DrawRegion(_territoires[9], 163, 807, 165, 188);
+            DrawRegion(_territoires[10], 249, 637, 182, 161);
+            DrawRegion(_territoires[11], 388, 620, 215, 161);
+            DrawRegion(_territoires[12], 296, 735, 302, 146);
+            DrawRegion(_territoires[13], 400, 751, 250, 215);
+            DrawRegion(_territoires[14], 510, 424, 177, 188);
+            DrawRegion(_territoires[15], 641, 484, 168, 266);
+            DrawRegion(_territoires[16], 745, 332, 184, 162);
+            DrawRegion(_territoires[17], 635, 302, 193, 139);
+            DrawRegion(_territoires[18], 617, 127, 201, 238);
+            DrawRegion(_territoires[19], 728, 184, 214, 244);
+            DrawRegion(_territoires[20], 921, 202, 125, 272);
+            DrawRegion(_territoires[21], 837, 120, 132, 357);
+            DrawRegion(_territoires[22], 895, 321, 205, 145);
+            DrawRegion(_territoires[23], 998, 287, 154, 274);
+            DrawRegion(_territoires[24], 1123, 327, 245, 199);
+            DrawRegion(_territoires[25], 911, 389, 201, 244);
+            DrawRegion(_territoires[26], 746, 516, 142, 212);
+            DrawRegion(_territoires[27], 893, 571, 231, 232);
+            DrawRegion(_territoires[28], 1049, 502, 300, 186);
+            DrawRegion(_territoires[29], 1415, 130, 149, 134);
+            DrawRegion(_territoires[30], 1440, 194, 146, 194);
+            DrawRegion(_territoires[31], 1519, 40, 170, 267);
+            DrawRegion(_territoires[32], 1709, 49, 319, 191);
+            DrawRegion(_territoires[33], 1587, 182, 146, 182);
+            DrawRegion(_territoires[34], 1549, 296, 136, 286);
+            DrawRegion(_territoires[35], 1740, 326, 225, 148);
+            DrawRegion(_territoires[36], 1416, 349, 224, 245);
+            DrawRegion(_territoires[37], 1493, 422, 191, 309);
+            DrawRegion(_territoires[38], 1592, 523, 262, 260);
+            DrawRegion(_territoires[39], 1413, 550, 212, 194);
+            DrawRegion(_territoires[40], 1475, 668, 218, 213);
+            _carte.Width = 10;
+            _carte.Height = 10;
+            NotifyPropertyChanged("Carte");
+        }
+        
+        /// <summary>
+        /// Dessine les regions et les ajoute a la carte
+        /// </summary>
+        /// <param name="territoire">Territoire</param>
+        /// <param name="x">x</param>
+        /// <param name="y">y</param>
+        /// <param name="height">hauteur</param>
+        /// <param name="width">largeur</param>
+        /// <Author>Charif</Author>
+        private void DrawRegion(TerritoireBase territoire, int x, int y, int height, int width)
+        {
+            ImageBrush myImageBrush = new ImageBrush(territoire.Sprite);
+            Canvas myCanvas = new Canvas();
 
-            return carte;
+            myCanvas.Background = myImageBrush;
+            myCanvas.Height = height;
+            myCanvas.Width = width;
+            Canvas.SetLeft(myCanvas, x);
+            Canvas.SetTop(myCanvas, y);
+            myCanvas.MouseEnter += MyCanvas_MouseEnter; ;
+            myCanvas.MouseLeave += MyCanvas_MouseLeave; ;
+            _carte.Children.Add(myCanvas);
         }
 
-        public void CreationCarte()
+        private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            CreerTerritoire();
-            CreerContinent();
-            CreerMap();
+            Canvas c = (sender as Canvas);
+            c.Width -= 10;
+            c.Height -= 10;
+            NotifyPropertyChanged("Carte");
+        }
+
+        private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Canvas c = (sender as Canvas);
+            Canvas.SetZIndex(c, zi);
+            c.Width += 10;
+            c.Height += 10;
+            zi++;
+            NotifyPropertyChanged("Carte");
         }
     }
 }

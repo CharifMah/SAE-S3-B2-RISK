@@ -1,5 +1,4 @@
-﻿using JurassicRisk.Utilities;
-using Models;
+﻿using Models;
 using RISKAPI;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -30,8 +29,6 @@ namespace JurassicRisk.ViewModels
                 NotifyPropertyChanged("SelectedProfil");
             }
         }
-
-        //public ICommand GetRequestProfilCommand { get; }
 
         #endregion Properties
 
