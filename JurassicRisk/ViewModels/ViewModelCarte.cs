@@ -50,7 +50,7 @@ namespace JurassicRisk.ViewModels
         {
             List<TerritoireBase> territoires = new List<TerritoireBase>();
 
-            _fileEntries = GetResource.GetResourceFileName("carte");
+            _fileEntries = GetResource.GetResourceFileName("carte/");
             foreach (string fileName in _fileEntries)
             {
                 BitmapImage theImage = new BitmapImage(new Uri($"pack://application:,,,/Sprites/Carte/{fileName}"));

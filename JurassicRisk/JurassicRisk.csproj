@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Background\gif 12.gif" />
+    <None Remove="Background\FondCarte.gif" />
     <None Remove="Background\JGLBACKG.jpg" />
     <None Remove="Background\trex.jpg" />
     <None Remove="Background\trexHead.png" />
@@ -65,12 +65,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Metier\Models.csproj" />
     <ProjectReference Include="..\RISKAPI\RISKAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Background\gif 12.gif" />
+    <Resource Include="Background\FondCarte.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Background\JGLBACKG.jpg" />
     <Resource Include="Background\UserProfilBackground.jpg" />
     <Resource Include="Background\trex.jpg" />
@@ -198,6 +204,12 @@
     <Resource Include="Sprites\Carte\6c7r.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Background\gif 12.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
