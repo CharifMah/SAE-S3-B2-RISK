@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:JurassicRisk.Views"
       mc:Ignorable="d" 
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="1080" d:DesignWidth="1920">
 
     <Grid>
 
@@ -25,8 +25,8 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
         </Grid.Background>
-        <Button Content="{x:Static Ressources:Strings.Connexion}" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource CustomButton}" Click="ConnexionButton_Click" Margin="10"></Button>
-        <Button Content="{x:Static Ressources:Strings.Inscription}" VerticalAlignment="Center" Grid.Row="2" Style="{StaticResource CustomButton}" Click="InscriptionButton_Click" Margin="10"></Button>
+        <Button Content="{x:Static Ressources:Strings.Connexion}" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource CustomAnimationButton}" Click="ConnexionButton_Click" Margin="10"></Button>
+        <Button Content="{x:Static Ressources:Strings.Inscription}" VerticalAlignment="Center" Grid.Row="2" Style="{StaticResource CustomAnimationButton}" Click="InscriptionButton_Click" Margin="10"></Button>
         <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Top" Text="JURRASIC RISK">
 
         </TextBlock>

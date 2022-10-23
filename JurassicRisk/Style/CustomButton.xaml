@@ -10,13 +10,13 @@
         <Setter Property="BorderBrush" Value="DarkRed"/>
         <Setter Property="FontSize" Value="24"/>
         <Setter Property="Template">
-         
-         <!--#endregion-->
-            
-            <Setter.Value>
-               <ControlTemplate TargetType="Button">
 
-               <!--#region Border-->
+            <!--#endregion-->
+
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <!--#region Border-->
                     <Border Name="border" 
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Padding="{TemplateBinding Padding}" 
@@ -27,14 +27,14 @@
 
 
                     </Border>
-               <!--#endregion-->
+                    <!--#endregion-->
 
-               <!--#region Triggers-->
+                    <!--#region Triggers-->
                     <ControlTemplate.Triggers>
 
                         <!--MouseOver Trigger-->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="LightGray" />
+                            <Setter Property="Background" Value="LightCyan" />
                             <Setter Property="Opacity" Value="0.20"/>
                             <Setter Property="Foreground" Value="#1C1C1C" />
                             <Setter Property="Cursor" Value="Hand" />
@@ -46,14 +46,79 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="White" />
                             <Setter Property="Foreground" Value="#1C1C1C" />
-                         
+
                         </Trigger>
                     </ControlTemplate.Triggers>
-               <!--#endregion-->
+                    <!--#endregion-->
 
-               </ControlTemplate>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="CustomAnimationButton" TargetType="{x:Type Button}">
+        <!--#region Setters Property-->
+        <Setter Property="Background" Value="Transparent"/>
+
+        <Setter Property="Foreground" Value="DarkRed"/>
+
+
+        <Setter Property="FontFamily" Value="/Polices/#Bungee Inline"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="DarkRed"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="Template">
+
+            <!--#endregion-->
+
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <!--#region Border-->
+                    <Border Name="border" 
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}" 
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    CornerRadius="5" 
+                    Background="{TemplateBinding Background}" >
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <!--#endregion-->
+
+                    <!--#region ControlTemplateTriggers-->
+                    <ControlTemplate.Triggers>
+
+                        <!--MouseOver Trigger-->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="1,0">
+                                        <GradientStop Color="Transparent" Offset="0"/>
+                                        <GradientStop Color="#FF8A0B0B" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Content" Value="White"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation 
+                                            Storyboard.TargetProperty="Background.(LinearGradientBrush.GradientStops)[0].(GradientStop.Offset)"
+                                            From="1" To="0" Duration="0:0:0.2" DecelerationRatio="0.1">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                    <!--#endregion-->
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
     </Style>
 
     <Style TargetType="Button" x:Key="ButtonStyle">

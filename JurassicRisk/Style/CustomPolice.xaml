@@ -11,6 +11,8 @@
             </Setter.Value>
         </Setter>
 
+
+
         <Style.Triggers>
             <EventTrigger  RoutedEvent="TextBlock.Loaded">
                 <EventTrigger.Actions>
@@ -28,7 +30,7 @@
             <EventTrigger RoutedEvent="TextBlock.Unloaded">
                 <EventTrigger.Actions>
                     <RemoveStoryboard BeginStoryboardName="BeginStoryBoard">
-                        
+
                     </RemoveStoryboard>
                 </EventTrigger.Actions>
             </EventTrigger>
