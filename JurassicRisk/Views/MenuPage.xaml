@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:JurassicRisk.Views"
       mc:Ignorable="d" 
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="1920"
 
       Title="MenuPage">
 
@@ -30,7 +30,7 @@
             <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
         </Grid.Background>
 
-        <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top" Text="JURRASIC RISK">
+        <TextBlock Style="{StaticResource Bloody}" FontSize="105" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top" Text="JURRASIC RISK">
       
         </TextBlock>
         <Button Content="{x:Static Ressources:Strings.Play}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="PlayButton_Click"/>

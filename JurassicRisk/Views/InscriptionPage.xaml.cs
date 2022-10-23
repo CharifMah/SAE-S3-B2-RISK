@@ -1,4 +1,4 @@
-﻿using JurassicRisk.ViewModels;
+﻿using JurassicRisk.ViewsModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

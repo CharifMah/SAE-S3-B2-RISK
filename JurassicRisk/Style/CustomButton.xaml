@@ -58,7 +58,7 @@
 
     <Style x:Key="CustomAnimationButton" TargetType="{x:Type Button}">
         <!--#region Setters Property-->
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="White"/>
 
         <Setter Property="Foreground" Value="DarkRed"/>
 
@@ -80,7 +80,7 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Padding="{TemplateBinding Padding}" 
                     BorderBrush="{TemplateBinding BorderBrush}" 
-                    CornerRadius="5" 
+                    CornerRadius="25" 
                     Background="{TemplateBinding Background}" >
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
@@ -93,9 +93,9 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background">
                                 <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0,1" StartPoint="1,0">
-                                        <GradientStop Color="Transparent" Offset="0"/>
-                                        <GradientStop Color="#FF8A0B0B" Offset="1"/>
+                                    <LinearGradientBrush EndPoint="0,5" StartPoint="1,0">
+                                        <GradientStop Color="DarkRed" Offset="0"/>
+                                        <GradientStop Color="White" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>

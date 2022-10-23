@@ -1,17 +1,13 @@
-﻿using Models.Map;
+﻿using JurassicRisk.Ressources;
+using Models.Map;
 using System;
-using System.Resources;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using JurassicRisk.Ressources;
 
-namespace JurassicRisk.ViewModels
+namespace JurassicRisk.ViewsModels
 {
     /// <author>Charif</author>
     public class ViewModelCarte : observable.Observable
@@ -19,10 +15,19 @@ namespace JurassicRisk.ViewModels
         private List<TerritoireBase> _territoires;
         private List<Continent> _continents;
         private List<String> _fileEntries;
-        private Canvas _carte;
+        private Canvas _carteCanvas;
+        private Carte _carte;
         private int zi = 0;
 
-        public Canvas Carte
+        public Canvas CarteCanvas
+        {
+            get
+            {
+                return _carteCanvas;
+            }
+        }
+
+        public Carte Carte
         {
             get
             {
@@ -38,7 +43,7 @@ namespace JurassicRisk.ViewModels
         {
             _territoires = CreerTerritoire();
             _continents = CreerContinent();
-            DrawCarte();
+            _carte = DrawCarte();
         }
 
         /// <summary>
@@ -56,7 +61,7 @@ namespace JurassicRisk.ViewModels
                 BitmapImage theImage = new BitmapImage(new Uri($"pack://application:,,,/Sprites/Carte/{fileName}"));
 
                 TerritoireForet territoirex = new TerritoireForet(theImage, 0, 0);
-                territoires.Add(territoirex);                
+                territoires.Add(territoirex);
             }
 
             return territoires;
@@ -86,12 +91,12 @@ namespace JurassicRisk.ViewModels
         }
 
         /// <summary>
-        /// Add all region to the Canvas (Carte) with DrawRegion
+        /// Add all region to the Canvas (CarteCanvas) with DrawRegion
         /// </summary>
         /// <Author>Charif</Author>
-        private void DrawCarte()
+        private Carte DrawCarte()
         {
-            _carte = new Canvas();
+            _carteCanvas = new Canvas();
             DrawRegion(_territoires[0], 94, 51, 152, 70);
             DrawRegion(_territoires[1], 114, 149, 97, 130);
             DrawRegion(_territoires[2], 148, 1, 160, 194);
@@ -135,8 +140,9 @@ namespace JurassicRisk.ViewModels
             DrawRegion(_territoires[40], 1475, 668, 218, 213);
 
             NotifyPropertyChanged("Carte");
+            return new Carte(_continents);
         }
-        
+
         /// <summary>
         /// Dessine les regions et les ajoute a la carte
         /// </summary>
@@ -158,7 +164,7 @@ namespace JurassicRisk.ViewModels
             Canvas.SetTop(myCanvas, y);
             myCanvas.MouseEnter += MyCanvas_MouseEnter; ;
             myCanvas.MouseLeave += MyCanvas_MouseLeave; ;
-            _carte.Children.Add(myCanvas);
+            _carteCanvas.Children.Add(myCanvas);
         }
 
         private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)

@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Sprites\Carte\1c1r.png" />
+    <None Remove="Sprites\Carte\1c2r.png" />
+    <None Remove="Sprites\Carte\1c3r.png" />
+    <None Remove="Sprites\Carte\1c4r.png" />
+    <None Remove="Sprites\Carte\1c5r.png" />
+    <None Remove="Sprites\Carte\1c6r.png" />
+    <None Remove="Sprites\Carte\1c7r.png" />
+    <None Remove="Sprites\Carte\2c1r.png" />
+    <None Remove="Sprites\Carte\2c2r.png" />
+    <None Remove="Sprites\Carte\2c3r.png" />
+    <None Remove="Sprites\Carte\2c4r.png" />
+    <None Remove="Sprites\Carte\2c5r.png" />
+    <None Remove="Sprites\Carte\2c6r.png" />
+    <None Remove="Sprites\Carte\2c7r.png" />
+    <None Remove="Sprites\Carte\3c1r.png" />
+    <None Remove="Sprites\Carte\3c2r.png" />
+    <None Remove="Sprites\Carte\3c3r.png" />
+    <None Remove="Sprites\Carte\3c4r.png" />
+    <None Remove="Sprites\Carte\3c5r.png" />
+    <None Remove="Sprites\Carte\3c6r.png" />
+    <None Remove="Sprites\Carte\3c7r.png" />
+    <None Remove="Sprites\Carte\3c8r.png" />
+    <None Remove="Sprites\Carte\4c1r.png" />
+    <None Remove="Sprites\Carte\4c2r.png" />
+    <None Remove="Sprites\Carte\4c3r.png" />
+    <None Remove="Sprites\Carte\4c4r.png" />
+    <None Remove="Sprites\Carte\4c5r.png" />
+    <None Remove="Sprites\Carte\4c6r.png" />
+    <None Remove="Sprites\Carte\4c7r.png" />
+    <None Remove="Sprites\Carte\5c1r.png" />
+    <None Remove="Sprites\Carte\5c2r.png" />
+    <None Remove="Sprites\Carte\5c3r.png" />
+    <None Remove="Sprites\Carte\5c4r.png" />
+    <None Remove="Sprites\Carte\5c5r.png" />
+    <None Remove="Sprites\Carte\6c1r.png" />
+    <None Remove="Sprites\Carte\6c2r.png" />
+    <None Remove="Sprites\Carte\6c3r.png" />
+    <None Remove="Sprites\Carte\6c4r.png" />
+    <None Remove="Sprites\Carte\6c5r.png" />
+    <None Remove="Sprites\Carte\6c6r.png" />
+    <None Remove="Sprites\Carte\6c7r.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JurassicRisk\JurassicRisk.csproj" />
+  </ItemGroup>
+
+</Project>

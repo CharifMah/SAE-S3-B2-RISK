@@ -1,12 +1,9 @@
 ﻿using Models;
-using RISKAPI;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using Profil = Models.Profil;
 
-namespace JurassicRisk.ViewModels
+namespace JurassicRisk.ViewsModels
 {
     public class MainViewModel : observable.Observable
     {
@@ -70,7 +67,7 @@ namespace JurassicRisk.ViewModels
             _selectedProfil = null;
 
             Profil response = await client.GetProfile($"https://localhost:7215/Users/connexion?pseudo={pseudo}");
-        
+
             if (response != null)
             {
                 _selectedProfil = response;
