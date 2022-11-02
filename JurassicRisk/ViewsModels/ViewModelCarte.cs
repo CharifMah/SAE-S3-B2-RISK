@@ -44,6 +44,8 @@ namespace JurassicRisk.ViewsModels
             _territoires = CreerTerritoire();
             _continents = CreerContinent();
             _carte = DrawCarte();
+
+            NotifyPropertyChanged("Carte");
         }
 
         /// <summary>
@@ -138,8 +140,7 @@ namespace JurassicRisk.ViewsModels
             DrawRegion(_territoires[38], 1592, 523, 262, 260);
             DrawRegion(_territoires[39], 1413, 550, 212, 194);
             DrawRegion(_territoires[40], 1475, 668, 218, 213);
-
-            NotifyPropertyChanged("Carte");
+         
             return new Carte(_continents);
         }
 

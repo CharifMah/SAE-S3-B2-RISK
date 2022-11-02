@@ -15,8 +15,7 @@
             
             <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="-50,0,20,70">
 
-                <ContentPresenter Content="{Binding Carte}" />
-
+                <ContentPresenter Content="{Binding CarteCanvas}" />
 
             </Canvas>
         </Viewbox>

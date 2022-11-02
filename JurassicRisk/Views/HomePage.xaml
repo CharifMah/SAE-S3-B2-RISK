@@ -19,9 +19,16 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
         </Grid.Background>
-        <Button Content="{x:Static Ressources:Strings.Connexion}" Margin="50,0,50,0" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Style="{StaticResource CustomAnimationButton}" Click="ConnexionButton_Click"></Button>
+        <Button Content="{x:Static Ressources:Strings.Connexion}" Margin="50,0,50,0" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Style="{StaticResource CustomAnimationButton}" Click="ConnexionButton_Click">
+            <!--<Button.Background>
+                <LinearGradientBrush StartPoint="0.5,0.5" EndPoint="1,1" SpreadMethod="Reflect" MappingMode="RelativeToBoundingBox">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="DarkRed" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>-->
+        </Button>
         <Button Content="{x:Static Ressources:Strings.Inscription}" Margin="50,0,50,0" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="InscriptionButton_Click"></Button>
-        <TextBlock Style="{StaticResource Bloody}" FontSize="105" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Top" Text="JURRASIC RISK">
+        <TextBlock Style="{StaticResource Bloody}" FontSize="85" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Top" Grid.RowSpan="2" Text="JURRASIC RISK">
 
         </TextBlock>
     </Grid>
