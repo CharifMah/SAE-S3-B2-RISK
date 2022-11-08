@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JurassicRisk.ViewsModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,12 @@ namespace JurassicRisk.Views
         private void ProfilButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new UserProfil());
+        }
+
+        private void DeconnectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
+            MainViewModel.Get().SelectedProfil = null;
         }
 
         //private void OptionButton_Click(object sender, RoutedEventArgs e)

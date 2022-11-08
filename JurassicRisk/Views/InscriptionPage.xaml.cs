@@ -36,8 +36,13 @@ namespace JurassicRisk.Views
             }
             else
             {          
-                MessageBox.Show("1Ce pseudo existe déjà !");
+                MessageBox.Show("Ce pseudo existe déjà !");
             }         
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
         }
     }
 }

@@ -161,5 +161,29 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("Profil", resourceCulture);
             }
         }
+
+        public static string Menu
+        {
+            get
+            {
+                return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+
+        public static string Deconnexion
+        {
+            get
+            {
+                return ResourceManager.GetString("Deconnexion", resourceCulture);
+            }
+        }
+
+        public static string Back
+        {
+            get
+            {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
     }
 }
