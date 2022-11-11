@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.Background>
-            <ImageBrush ImageSource="/Background/trex.jpg"/>
+            <ImageBrush ImageSource="/Sprites/Background/Background2.jpg"/>
         </Grid.Background>
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Top" ></Button>
 

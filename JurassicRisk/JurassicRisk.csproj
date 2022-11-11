@@ -8,12 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Background\FondCarte.gif" />
-    <None Remove="Background\JGLBACKG.jpg" />
-    <None Remove="Background\trex.jpg" />
-    <None Remove="Background\trexHead.png" />
-    <None Remove="Background\UserProfilBackground.jpg" />
+    <None Remove="Sprites\Background\Background1.jpg" />
+    <None Remove="Sprites\Background\Background2.jpg" />
+    <None Remove="Sprites\Background\Background3.jpg" />
+    <None Remove="Sprites\Background\FondCarte.gif" />
+    <None Remove="Sprites\Background\TreeBackground.jpg" />
+    <None Remove="Sprites\Background\trex.jpg" />
+    <None Remove="Sprites\Background\trexHead.png" />
+    <None Remove="Sprites\Background\UserProfilBackground.jpg" />
     <None Remove="Polices\Bloody terror.ttf" />
+    <None Remove="Sprites\Background\water.gif" />
+    <None Remove="Sprites\Background\WaterOceanPixel.gif" />
     <None Remove="Sprites\Capture.PNG" />
     <None Remove="Sprites\Carte\1c1r.png" />
     <None Remove="Sprites\Carte\1c2r.png" />
@@ -59,7 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Background\trexHead.png">
+    <Content Include="Sprites\Background\trexHead.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -75,13 +80,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Background\FondCarte.gif">
+    <Resource Include="Sprites\Background\Background1.jpg" />
+    <Resource Include="Sprites\Background\Background2.jpg" />
+    <Resource Include="Sprites\Background\Background3.jpg" />
+    <Resource Include="Sprites\Background\FondCarte.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Background\JGLBACKG.jpg" />
-    <Resource Include="Background\UserProfilBackground.jpg" />
-    <Resource Include="Background\trex.jpg" />
+    <Resource Include="Sprites\Background\TreeBackground.jpg" />
+    <Resource Include="Sprites\Background\UserProfilBackground.jpg" />
+    <Resource Include="Sprites\Background\trex.jpg" />
     <Resource Include="Polices\Bloody terror.ttf" />
+    <Resource Include="Sprites\Background\water.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Background\WaterOceanPixel.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Sprites\Carte\1c1r.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -205,12 +219,6 @@
     <Resource Include="Sprites\Carte\6c7r.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Background\gif 12.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

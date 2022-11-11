@@ -17,7 +17,7 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
+            <ImageBrush ImageSource="/Sprites/Background/Background1.jpg"/>
         </Grid.Background>
         <Button Content="{x:Static Ressources:Strings.Connexion}" Margin="50,0,50,0" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Style="{StaticResource CustomAnimationButton}" Click="ConnexionButton_Click">
             <!--<Button.Background>

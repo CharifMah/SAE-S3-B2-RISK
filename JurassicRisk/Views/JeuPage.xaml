@@ -10,7 +10,7 @@
       Title="JeuPage">
 
     <Grid>
-        <Image gif:ImageBehavior.AnimatedSource="/Background/FondCarte.gif" Stretch="Fill" />
+        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif" Stretch="Fill" />
         <Viewbox Stretch="Fill" x:Name="ViewboxCanvas">
             
             <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="-50,0,20,70">

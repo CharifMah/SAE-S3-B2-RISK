@@ -27,7 +27,7 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="/Background/JGLBACKG.jpg"/>
+            <ImageBrush ImageSource="/Sprites/Background/Background3.jpg"/>
         </Grid.Background>
 
         <TextBlock Style="{StaticResource Bloody}" FontSize="85" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Top" Text="JURRASIC RISK">
