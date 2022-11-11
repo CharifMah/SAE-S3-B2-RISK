@@ -11,7 +11,7 @@
     <None Remove="Background\FondCarte.gif" />
     <None Remove="Background\JGLBACKG.jpg" />
     <None Remove="Background\trex.jpg" />
-    <None Remove="Background\trexHead.png"/>
+    <None Remove="Background\trexHead.png" />
     <None Remove="Background\UserProfilBackground.jpg" />
     <None Remove="Polices\Bloody terror.ttf" />
     <None Remove="Sprites\Capture.PNG" />
@@ -70,6 +70,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\Reseaux\Réseaux.csproj" />
     <ProjectReference Include="..\RISKAPI\RISKAPI.csproj" />
   </ItemGroup>
 
