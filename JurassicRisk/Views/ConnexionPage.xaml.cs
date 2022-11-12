@@ -37,7 +37,7 @@ namespace JurassicRisk.Views
             }
             else
             {
-                Existe.Visibility = Visibility.Visible;
+                Error.Visibility = Visibility.Visible;
             }
            
         }

@@ -30,13 +30,18 @@ namespace JurassicRisk.Views
         {
             if(!await MainViewModel.Get().VerifProfilCreation(inputPseudo.Text))
             {
-                await MainViewModel.Get().CreateProfil(new Models.Profil(inputPseudo.Text));
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-                await MainViewModel.Get().SetSelectedProfil(inputPseudo.Text);
+                if (inputPseudo.Text != "")
+                {
+                    await MainViewModel.Get().CreateProfil(new Models.Profil(inputPseudo.Text));
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+                    await MainViewModel.Get().SetSelectedProfil(inputPseudo.Text);
+                }
+                else
+                {
+                    Error.Text = "Veuillez entrer votre pseudo";
+                    Error.Visibility = Visibility.Visible;
+                }
             }
-            else
-            {          
-            }         
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

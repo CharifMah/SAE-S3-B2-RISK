@@ -71,10 +71,6 @@ namespace JurassicRisk.ViewsModels
             {
                 _selectedProfil = response;
             }
-            else
-            {
-                
-            }
         }
 
         /// <summary>
