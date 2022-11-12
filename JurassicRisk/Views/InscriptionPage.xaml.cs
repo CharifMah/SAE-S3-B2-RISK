@@ -1,4 +1,5 @@
-﻿using JurassicRisk.ViewsModels;
+﻿using JurassicRisk.Ressource;
+using JurassicRisk.ViewsModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace JurassicRisk.Views
                 }
                 else
                 {
-                    Error.Text = "{x:Static Ressources:Strings.NoExiste}";
+                    Error.Text = Strings.NoPseudoEnter;
                     Error.Visibility = Visibility.Visible;
                 }
             }
