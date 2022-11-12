@@ -13,6 +13,8 @@ namespace JurassicRisk.ViewsModels
 
         private Profil _selectedProfil;
 
+        private string _ip;
+
         #endregion
 
         #region Properties
@@ -49,6 +51,7 @@ namespace JurassicRisk.ViewsModels
 
         private MainViewModel()
         {
+            _ip = "localhost:7215";
             client = new ClientConnection();
         }
 
@@ -65,7 +68,7 @@ namespace JurassicRisk.ViewsModels
         public async Task SetSelectedProfil(string pseudo)
         {
             _selectedProfil = null;
-            Profil response = await client.Get<Profil>($"https://localhost:7215/Users/connexion?pseudo={pseudo}");
+            Profil response = await client.Get<Profil>($"https://{_ip}/Users/connexion?pseudo={pseudo}");
 
             if (response != null)
             {
@@ -80,7 +83,7 @@ namespace JurassicRisk.ViewsModels
         /// <returns>awaitable Task</returns>
         public async Task CreateProfil(Profil profil)
         {
-            await client.Post<Profil>($"https://localhost:7215/Users/Inscription?pseudo={profil.Pseudo}", profil);
+            await client.Post<Profil>($"https://{_ip}/Users/Inscription?pseudo={profil.Pseudo}", profil);
         }
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace JurassicRisk.ViewsModels
         /// <returns>awaitable Task with Hresult bool</returns>
         public async Task<bool> VerifProfilCreation(string pseudo)
         {
-            return await client.Get<bool>($"https://localhost:7215/Users/verifUser?pseudo={pseudo}");
+            return await client.Get<bool>($"https://{_ip}/Users/verifUser?pseudo={pseudo}");
         }
 
         #endregion Private methods
