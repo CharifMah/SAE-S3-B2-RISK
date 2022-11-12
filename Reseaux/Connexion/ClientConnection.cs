@@ -19,7 +19,10 @@ namespace Réseaux.Connexion
         /// </summary>
         public ClientConnection()
         {
-            client = new HttpClient();
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            client = new HttpClient(clientHandler);
         }
 
         /// <summary>
