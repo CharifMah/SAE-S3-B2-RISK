@@ -142,7 +142,7 @@
     <value>this account does not existe</value>
   </data>
   <data name="NoPseudoEnter" xml:space="preserve">
-    <value>You need to enter a password</value>
+    <value>You need to enter a pseudo</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
