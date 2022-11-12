@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Polices\BungeeInline-Regular.ttf" />
+    <None Remove="Polices\University.otf" />
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
     <None Remove="Sprites\Background\Background3.jpg" />
@@ -80,6 +82,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Polices\BungeeInline-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Polices\University.otf" />
     <Resource Include="Sprites\Background\Background1.jpg" />
     <Resource Include="Sprites\Background\Background2.jpg" />
     <Resource Include="Sprites\Background\Background3.jpg" />

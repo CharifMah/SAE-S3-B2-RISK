@@ -36,7 +36,6 @@ namespace JurassicRisk.Views
             }
             else
             {          
-                MessageBox.Show("Ce pseudo existe déjà !");
             }         
         }
 

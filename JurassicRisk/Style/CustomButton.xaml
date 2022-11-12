@@ -56,7 +56,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Foreground" Value="DarkRed"/>
-        <Setter Property="FontFamily" Value="/Polices/#Bungee Inline"/>
+        <Setter Property="FontFamily" Value="/Polices/#BungeeInline-Regular"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="BorderBrush" Value="DarkRed"/>

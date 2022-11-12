@@ -73,7 +73,7 @@ namespace JurassicRisk.ViewsModels
             }
             else
             {
-                MessageBox.Show("Ce Profil n'existe pas \n");
+                
             }
         }
 

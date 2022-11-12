@@ -39,8 +39,7 @@
     </Style>
 
     <Style x:Key="Bungee">
-        <Setter Property="TextElement.FontFamily" Value="/Polices/#Bungee Inline">
-        </Setter>
+        <Setter Property="TextElement.FontFamily" Value="/Polices/#University.otf"></Setter>
     </Style>
 
 </ResourceDictionary>

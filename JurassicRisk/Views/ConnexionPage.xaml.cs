@@ -35,6 +35,10 @@ namespace JurassicRisk.Views
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
             }
+            else
+            {
+                Existe.Visibility = Visibility.Visible;
+            }
            
         }
 
