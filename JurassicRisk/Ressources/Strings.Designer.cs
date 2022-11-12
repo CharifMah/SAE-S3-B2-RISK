@@ -185,5 +185,22 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("Back", resourceCulture);
             }
         }
+
+        public static string NoExiste
+        {
+            get
+            {
+                return ResourceManager.GetString("NoExist",resourceCulture);
+            }
+        }
+
+        public static string NoPseudoEnter
+        {
+            get
+            {
+                return ResourceManager.GetString("NoPseudoEnter", resourceCulture);
+            }
+        }
+
     }
 }

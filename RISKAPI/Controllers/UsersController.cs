@@ -23,7 +23,14 @@ namespace RISKAPI.Controllers
             {
                 Profil profil = new Profil(pseudo);
                 reponse = new AcceptedResult();
-                connection.CreateUser(profil.Pseudo);
+                if (connection.VerifUserCreation(pseudo) == false)
+                {
+                    connection.CreateUser(profil.Pseudo);
+                }
+                else
+                {
+                    reponse = new BadRequestResult();
+                }
             }
             catch (Exception e)
             {

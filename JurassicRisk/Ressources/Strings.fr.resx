@@ -138,6 +138,12 @@
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="NoExiste" xml:space="preserve">
+    <value>Ce compte n'éxiste pas</value>
+  </data>
+  <data name="NoPseudoEnter" xml:space="preserve">
+    <value>Veuillez entrer votre pseudo</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
   </data>
