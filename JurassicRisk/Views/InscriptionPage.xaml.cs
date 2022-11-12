@@ -38,7 +38,7 @@ namespace JurassicRisk.Views
                 }
                 else
                 {
-                    Error.Text = "Veuillez entrer votre pseudo";
+                    Error.Text = "{x:Static Ressources:Strings.NoExiste}";
                     Error.Visibility = Visibility.Visible;
                 }
             }

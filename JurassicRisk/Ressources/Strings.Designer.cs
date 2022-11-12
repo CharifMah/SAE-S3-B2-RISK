@@ -190,7 +190,7 @@ namespace JurassicRisk.Ressource
         {
             get
             {
-                return ResourceManager.GetString("NoExist",resourceCulture);
+                return ResourceManager.GetString("NoExiste",resourceCulture);
             }
         }
 
