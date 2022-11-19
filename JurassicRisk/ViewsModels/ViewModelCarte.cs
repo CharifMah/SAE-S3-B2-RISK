@@ -162,7 +162,9 @@ namespace JurassicRisk.ViewsModels
             myCanvas.Height = height;
             myCanvas.Width = width;
             Canvas.SetLeft(myCanvas, x);
-            Canvas.SetTop(myCanvas, y);
+            Canvas.SetTop(myCanvas, y);     
+            myCanvas.ToolTip = $"X: {x} Y: {y}";
+            ToolTipService.SetInitialShowDelay(myCanvas, 0);
             myCanvas.MouseEnter += MyCanvas_MouseEnter; ;
             myCanvas.MouseLeave += MyCanvas_MouseLeave; ;
             _carteCanvas.Children.Add(myCanvas);
