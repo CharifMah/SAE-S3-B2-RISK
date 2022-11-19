@@ -30,8 +30,8 @@
             <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                 
                 <StackPanel >
-                    <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Play}" />
-                    <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Deconnexion}"/>
+                    <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Play}" Click="PlayButton_Click"/>
+                    <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Deconnexion}" Click="LogOutButton_Click"/>
                 </StackPanel>
                 
             </Grid>

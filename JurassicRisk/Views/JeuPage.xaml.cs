@@ -50,5 +50,16 @@ namespace JurassicRisk.Views
             ViewboxCanvas.Width = mainwindow.ActualWidth;
             ViewboxCanvas.Height = mainwindow.ActualHeight;
         }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            GroupBoxPause.Visibility = Visibility.Hidden;
+            ViewboxCanvas.IsEnabled = true;
+        }
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+        }
     }
 }
