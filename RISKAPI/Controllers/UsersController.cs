@@ -20,7 +20,7 @@ namespace RISKAPI.Controllers
             factory =  MySqlDAOFactory.GetInstance();
         }
         /// <summary>
-        /// envoi un profil pour que l'API l'ajoute à la BDD
+        /// envoi un profil pour que l'API l'ajoute ï¿½ la BDD
         /// </summary>
         /// <param name="pseudo">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
@@ -75,7 +75,7 @@ namespace RISKAPI.Controllers
                 profilDemande = profil;
             }
 
-            //Création de la réponse
+            //Crï¿½ation de la rï¿½ponse
             IActionResult actionResult = new NoContentResult();
             if (profilDemande != null)
             {
