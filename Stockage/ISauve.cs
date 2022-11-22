@@ -12,7 +12,7 @@ namespace Stockage
         /// <summary>
         /// Sauvagarde le dictionnaire
         /// </summary>
-        void Sauver(NameValueCollection collection);
+        void Sauver(NameValueCollection data, string FileName);
 
     }
 }
