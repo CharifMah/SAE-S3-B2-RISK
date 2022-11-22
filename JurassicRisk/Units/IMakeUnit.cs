@@ -8,6 +8,6 @@ namespace JurassicRisk.Units
 {
     public interface IMakeUnit
     {
-
+        public void MakeUnit();
     }
 }
