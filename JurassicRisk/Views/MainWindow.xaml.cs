@@ -11,9 +11,6 @@ namespace JurassicRisk.Views
 
         public MainWindow()
         {
-            GestionDatabase connection = new GestionDatabase();
-            connection.CreateDatabase();
-            connection.CreateUserTable();
             InitializeComponent();
             frame.NavigationService.Navigate(new HomePage());
         }
