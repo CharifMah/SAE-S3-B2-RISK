@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Models.Map
 {
-    public enum Teams
+    internal class TerritoireDésert : TerritoireBase
     {
-        ROUGE,BLEU,VERT,JAUNE,NEUTRE
+        public TerritoireDésert()
+        {
+
+        }
     }
 }

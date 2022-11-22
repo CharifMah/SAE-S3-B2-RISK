@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,16 +12,19 @@ namespace Models.Map
     /// </summary>
     public class Carte
     {
-        private List<Continent> continent;
-
-        public List<Continent> Continent
+        private Dictionary<int, Continent> dicoContinents;
+        public Dictionary<int, Continent> DicoContinents
         {
-            get { return continent; }
+            get { return dicoContinents; }
         }
 
-        public Carte(List<Continent> c)
+        public Carte(List<Continent> continent)
         {
-            continent = c;
-        }
+            dicoContinents = new Dictionary<int, Continent>();
+            for (int i = 0; i < continent.Count; i++)
+            {
+                dicoContinents.Add(i, continent[i]);
+            }
+        }    
     }
 }
