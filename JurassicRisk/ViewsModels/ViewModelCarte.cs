@@ -77,16 +77,16 @@ namespace JurassicRisk.ViewsModels
         {
             List<Continent> continents = new List<Continent>();
 
-            for (int i = 0; i < 6; i++)
-            {
-                Continent continent = new Continent();
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    Continent continent = new Continent();
 
-                for (int ii = 0; ii < _fileEntries.Where(c => c[0] == (char)i).Count(); i++)
-                {
-                    continent.Territoires.Add(new TerritoireBase());
-                }
-                continents.Add(continent);
-            }
+            //    for (int ii = 0; ii < _fileEntries.Where(c => c[0] == (char)i).Count(); i++)
+            //    {
+            //        continent.Territoires.Add(new TerritoireBase());
+            //    }
+            //    continents.Add(continent);
+            //}
 
             return continents;
         }
