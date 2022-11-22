@@ -15,10 +15,6 @@ namespace JurassicRisk.Views
 
         public MainWindow()
         {
-
-            GestionDatabase connection = new GestionDatabase();
-            connection.CreateDatabase();
-            connection.CreateUserTable();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
 
