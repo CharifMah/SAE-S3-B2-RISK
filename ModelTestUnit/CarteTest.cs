@@ -16,5 +16,11 @@ namespace ModelTestUnit
             ViewModelCarte MC = new ViewModelCarte();
             Assert.Equal(6, MC.Carte.Continent.Count);
         }
+
+        [Fact]
+        public void TestTeams()
+        {
+            
+        }
     }
 }
