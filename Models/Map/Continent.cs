@@ -13,15 +13,24 @@ namespace Models.Map
     {
         private List<TerritoireBase> territoires;
 
+        Dictionary<int, TerritoireBase> dicoTerritoires;
+
         public List<TerritoireBase> Territoires
         {
             get { return territoires; }
             set { territoires = value; }
         }
 
-        public Continent()
+        public Continent(List<TerritoireBase> territoires)
         {
-            this.territoires = new List<TerritoireBase>();
+            dicoTerritoires = new Dictionary<int, TerritoireBase>();
+            this.territoires = territoires;
+            for (int i = 0; i < territoires.Count; i++)
+            {
+                dicoTerritoires.Add(i, territoires[i]);
+            }
         }
+
+
     }
 }
