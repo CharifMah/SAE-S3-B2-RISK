@@ -9,15 +9,12 @@ namespace Models.Map
     {
         private List<Unite> troupe;
         private Teams _teams;
-        public Teams Team
-        {
-            get => _teams;
 
         public Teams Team { get => this._teams; set => this._teams = value; }
-        public List<IMakeUnit> Units
+        public List<Unite> Units
         {
-            get => this._makeUnits;
-            set => this._makeUnits = value;
+            get => this.troupe;
+            set => this.troupe = value;
         }
 
         public List<Unite> Troupe
@@ -29,12 +26,12 @@ namespace Models.Map
         public TerritoireBase()
         {
             this._teams = Teams.NEUTRE;
-            this._makeUnits = new List<IMakeUnit>();
+            this.troupe = new List<Unite>();
         }
-        public TerritoireBase(List<IMakeUnit> makeUnits)
+        public TerritoireBase(List<Unite> makeUnits)
         {
             this._teams = Teams.NEUTRE;
-            this._makeUnits = makeUnits;
+            this.troupe = makeUnits;
         }
     }
 }
