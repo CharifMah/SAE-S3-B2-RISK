@@ -11,17 +11,11 @@ namespace DBStorage
 {
     public class ProfilMySqlDAO : ProfilDAO
     {
-
-        public void Delete(Profil profil)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string FindAll()
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// find a profil by id
+        /// </summary>
+        /// <param name="id">the id of the profil that you lookig for</param>
+        /// <returns>the pseudo of the profil</returns>
         public string FindByIdProfil(int id)
         {
             string res = null;
@@ -52,6 +46,11 @@ namespace DBStorage
 
         }
 
+        /// <summary>
+        /// find the id of a profil by his pseudo
+        /// </summary>
+        /// <param name="pseudo">the pseudo of the profil that you lookig for</param>
+        /// <returns>the id of the profil</returns>
         public int FindIdByPseudoProfil(string pseudo)
         {
             int res = 0;
@@ -82,6 +81,10 @@ namespace DBStorage
 
         }
 
+        /// <summary>
+        /// insert a profil in the database
+        /// </summary>
+        /// <param name="profil">the profil toinsert</param>
         public void Insert(Profil profil)
         {
             try
@@ -102,11 +105,11 @@ namespace DBStorage
             }
         }
 
-        public void Update(Profil profil)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// verify if the profil exist inthe database
+        /// </summary>
+        /// <param name="profil">profil to verify</param>
+        /// <returns>true if it exist in the database</returns>
         public bool VerifUserCreation(Profil profil)
         {
             bool res = false;

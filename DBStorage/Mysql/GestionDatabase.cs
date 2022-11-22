@@ -7,6 +7,9 @@ namespace DBStorage.Mysql
         private string connString;
         private MySqlConnection conn;
 
+        /// <summary>
+        /// get Mysql connection
+        /// </summary>
         public MySqlConnection Conn { get { return conn; }}
         private static GestionDatabase Instance = null;
 
@@ -17,6 +20,10 @@ namespace DBStorage.Mysql
             Connect();
         }
 
+        /// <summary>
+        /// Get the instance of gestion database
+        /// </summary>
+        /// <returns>the instance</returns>
         public static GestionDatabase GetInstance()
         {
             if (Instance == null)

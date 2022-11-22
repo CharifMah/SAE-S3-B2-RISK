@@ -8,6 +8,10 @@ namespace DBStorage
 {
     public interface DAOFactory
     {
+        /// <summary>
+        /// create the good factory
+        /// </summary>
+        /// <returns>factory of type asked</returns>
         ProfilDAO CreerProfil();
     }
 }
