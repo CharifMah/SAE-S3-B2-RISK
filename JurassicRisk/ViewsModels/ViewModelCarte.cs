@@ -97,38 +97,37 @@ namespace JurassicRisk.ViewsModels
             Canvas myCanvas = new Canvas();
 
             myCanvas.Background = myImageBrush;
-            myCanvas.Height = _decorations[territoire.TerritoireBase.ID].Width;
-            myCanvas.Width = _decorations[territoire.TerritoireBase.ID].Height;
-            Canvas.SetLeft(myCanvas, _decorations[territoire.TerritoireBase.ID].x);
-            Canvas.SetTop(myCanvas, _decorations[territoire.TerritoireBase.ID].y);
-            myCanvas.ToolTip = $"X: {_decorations[territoire.TerritoireBase.ID].x} Y: {_decorations[territoire.TerritoireBase.ID].y} t : {_decorations[territoire.TerritoireBase.ID].Team}";
+            myCanvas.Height = territoire.Width;
+            myCanvas.Width = territoire.Height;
+            Canvas.SetLeft(myCanvas, territoire.x);
+            Canvas.SetTop(myCanvas, territoire.y);
+            myCanvas.ToolTip = $"X: {territoire.x} Y: {territoire.y} t : {territoire.Team}";
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire,myCanvas);
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
             myCanvas.MouseEnter += MyCanvas_MouseEnter;
             myCanvas.MouseLeave += MyCanvas_MouseLeave;
-            myCanvas.PreviewMouseDown += MyCanvas_PreviewMouseDown;
-            myCanvas.PreviewMouseUp += MyCanvas_PreviewMouseUp; ;
+            myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender,e,territoire);
+            myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
             _carteCanvas.Children.Add(myCanvas);
         }
 
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
         {
-            canvas.ToolTip = $"X: {_decorations[territoire.TerritoireBase.ID].x} Y: {_decorations[territoire.TerritoireBase.ID].y} t : {_decorations[territoire.TerritoireBase.ID].Team}";
+            canvas.ToolTip = $"X: {territoire.x} Y: {territoire.y} t : {territoire.Team}";
         }
 
-        private void MyCanvas_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MyCanvas_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
-            _decorations.Find(res => res.x == Canvas.GetLeft(c) && res.y == Canvas.GetTop(c)).Team = Models.Teams.NEUTRE;
             DropShadowEffect shadow = new DropShadowEffect();
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
         }
 
-        private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
-            _decorations.Find(res => res.x == Canvas.GetLeft(c) && res.y == Canvas.GetTop(c)).Team = Models.Teams.ROUGE;
+            territoire.Team = Models.Teams.ROUGE;
             DropShadowEffect shadow = new DropShadowEffect();
             shadow.Color = Brushes.Red.Color;
             c.Effect = shadow;
