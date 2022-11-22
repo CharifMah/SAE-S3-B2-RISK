@@ -12,6 +12,10 @@ namespace DBStorage
         private static MySqlDAOFactory Instance;
         private MySqlDAOFactory() { }
 
+        /// <summary>
+        /// get the instance of the factory
+        /// </summary>
+        /// <returns>the instance</returns>
         public static MySqlDAOFactory GetInstance()
         {
             if (Instance == null)
@@ -20,6 +24,11 @@ namespace DBStorage
             }
             return Instance;
         }
+
+        /// <summary>
+        /// create a new ProfilMySqlDAO
+        /// </summary>
+        /// <returns>the new ProfilMySqlDAO</returns>
         public ProfilDAO CreerProfil()
         {
             try
