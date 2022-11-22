@@ -7,6 +7,10 @@ namespace Stockage
     {
         private string _path;
 
+        /// <summary>
+        /// Sauvgarde
+        /// </summary>
+        /// <param name="path">Directory Path</param>
         public SauveCollection(string path)
         {
             this._path = path;

@@ -17,7 +17,6 @@ namespace JurassicRisk.ViewsModels
     {
 
         private List<Continent> _continents;
-        private List<String> _fileEntries;
         private List<TerritoireDecorator> _decorations;
         private Canvas _carteCanvas;
         private Carte _carte;
@@ -71,10 +70,7 @@ namespace JurassicRisk.ViewsModels
                 _territoiresBase.Add(territoireDecorator.TerritoireBase);
                 DrawRegion(territoireDecorator);
             }
-
-            return _sprites;
-        }
-
+     
             _continents.Add(new Continent(_territoiresBase.Take(7).ToList()));
             _continents.Add(new Continent(_territoiresBase.Skip(7).Take(7).ToList()));
             _continents.Add(new Continent(_territoiresBase.Skip(14).Take(8).ToList()));
@@ -106,8 +102,8 @@ namespace JurassicRisk.ViewsModels
             Canvas.SetTop(myCanvas, territoire.y);
             myCanvas.ToolTip = $"X: {territoire.x} Y: {territoire.y} t : {territoire.Team}";
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
-            myCanvas.MouseEnter += MyCanvas_MouseEnter; ;
-            myCanvas.MouseLeave += MyCanvas_MouseLeave; ;
+            myCanvas.MouseEnter += MyCanvas_MouseEnter;
+            myCanvas.MouseLeave += MyCanvas_MouseLeave;
             _carteCanvas.Children.Add(myCanvas);
         }
       
