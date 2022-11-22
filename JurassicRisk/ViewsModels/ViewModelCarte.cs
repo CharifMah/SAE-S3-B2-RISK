@@ -79,8 +79,6 @@ namespace JurassicRisk.ViewsModels
             _continents.Add(new Continent(_territoiresBase.Skip(29).Take(5).ToList()));
             _continents.Add(new Continent(_territoiresBase.Skip(34).Take(7).ToList()));
 
-            NotifyPropertyChanged("Carte");
-
             return new Carte(_continents);
         }
 
