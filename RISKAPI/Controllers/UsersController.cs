@@ -1,4 +1,6 @@
 using DBStorage;
+using DBStorage.ClassMetier;
+using DBStorage.Mysql;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -8,6 +10,12 @@ namespace RISKAPI.Controllers
     [Route("Users")]
     public class UsersController
     {
+        private static DAOFactory factory;
+
+        public UsersController()
+        {
+            factory =  MySqlDAOFactory.GetInstance();
+        }
         /// <summary>
         /// envoi un profil pour que l'API l'ajoute à la BDD
         /// </summary>
@@ -16,16 +24,15 @@ namespace RISKAPI.Controllers
         [HttpPost("inscription")]
         public IActionResult inscription(string pseudo)
         {
-            GestionDatabase connection = new GestionDatabase();
-
             IActionResult reponse = null;
             try
             {
                 Profil profil = new Profil(pseudo);
+                ProfilDAO profilDAO = factory.CreerProfil();
                 reponse = new AcceptedResult();
-                if (connection.VerifUserCreation(pseudo) == false)
+                if (profilDAO.VerifUserCreation(profil) == false)
                 {
-                    connection.CreateUser(profil.Pseudo);
+                    profilDAO.Insert(profil);
                 }
                 else
                 {
@@ -47,11 +54,11 @@ namespace RISKAPI.Controllers
         [HttpGet("connexion")]
         public IActionResult connexion(string pseudo)
         {
-            GestionDatabase connection = new GestionDatabase();
             Profil profilDemandee = null;
             Profil p = new Profil("");
+            ProfilDAO profilDAO = factory.CreerProfil();
 
-            p.Pseudo = connection.SelectUser(pseudo);
+            p.Pseudo = profilDAO.FindByIdProfil(pseudo);
             if (p.Pseudo != null)
             {
                 profilDemandee = p;
@@ -73,12 +80,12 @@ namespace RISKAPI.Controllers
         /// <returns>boolean</returns>
         /// <Author>Charif Mahmoud,Brian VERCHERE</Author>
         [HttpGet("verifUser")]
-        public IActionResult verifUser(string pseudo)
+        public IActionResult verifUser(Profil profil)
         {
             IActionResult reponse = null;
+            ProfilDAO profilDAO = factory.CreerProfil();
 
-            GestionDatabase connection = new GestionDatabase();
-            bool res = connection.VerifUserCreation(pseudo);
+            bool res = profilDAO.VerifUserCreation(profil);
      
             if (res == null)
             {
