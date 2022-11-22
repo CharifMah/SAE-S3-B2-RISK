@@ -13,7 +13,11 @@ namespace Models.Map
         {
             get => _teams;
 
-            set {_teams = value;}
+        public Teams Team { get => this._teams; set => this._teams = value; }
+        public List<IMakeUnit> Units
+        {
+            get => this._makeUnits;
+            set => this._makeUnits = value;
         }
 
         public List<Unite> Troupe
@@ -24,15 +28,13 @@ namespace Models.Map
 
         public TerritoireBase()
         {
-            troupe = new List<Unite>();
+            this._teams = Teams.NEUTRE;
+            this._makeUnits = new List<IMakeUnit>();
         }
-
-        public void MaJTroupe(List<Unite> unites)
+        public TerritoireBase(List<IMakeUnit> makeUnits)
         {
-            foreach(var unit in unites)
-            {
-                troupe.Add(unit);
-            }
+            this._teams = Teams.NEUTRE;
+            this._makeUnits = makeUnits;
         }
     }
 }
