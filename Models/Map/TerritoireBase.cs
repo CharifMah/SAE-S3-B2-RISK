@@ -1,13 +1,17 @@
 ﻿using Models.Units;
+using System.Runtime.Serialization;
 
 namespace Models.Map
 {
     /// <summary>
     /// Classe générique des territoires
     /// </summary>
-    public class TerritoireBase
+    [DataContract]
+    public class TerritoireBase : ITerritoireBase
     {
+        [DataMember]
         protected Teams _teams;
+        [DataMember]
         protected List<IMakeUnit> _makeUnits;
 
         public Teams Team { get => this._teams; set => this._teams = value; }
