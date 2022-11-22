@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,20 +12,17 @@ namespace Models.Map
     /// </summary>
     public class Continent
     {
-        private List<TerritoireBase> territoires;
+        private Dictionary<int, TerritoireBase> dicoTerritoires;
 
-        Dictionary<int, TerritoireBase> dicoTerritoires;
-
-        public List<TerritoireBase> Territoires
+        public Dictionary<int, TerritoireBase> DicoTerritoires
         {
-            get { return territoires; }
-            set { territoires = value; }
+            get { return dicoTerritoires; }
+            set { dicoTerritoires = value; }
         }
 
         public Continent(List<TerritoireBase> territoires)
         {
             dicoTerritoires = new Dictionary<int, TerritoireBase>();
-            this.territoires = territoires;
             for (int i = 0; i < territoires.Count; i++)
             {
                 dicoTerritoires.Add(i, territoires[i]);

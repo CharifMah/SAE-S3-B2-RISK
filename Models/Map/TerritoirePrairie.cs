@@ -10,7 +10,7 @@ namespace Models.Map
     {
         public TerritoirePrairie()
         {
-
+            
         }
     }
 }
