@@ -1,4 +1,4 @@
-﻿using DBStorage;
+using DBStorage;
 using Google.Protobuf.WellKnownTypes;
 using Models;
 using System;
