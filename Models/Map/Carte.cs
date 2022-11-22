@@ -12,15 +12,21 @@ namespace Models.Map
     public class Carte
     {
         private List<Continent> continent;
+        Dictionary<int, Continent> dicoContinents;
 
         public List<Continent> Continent
         {
             get { return continent; }
         }
 
-        public Carte(List<Continent> c)
+        public Carte(List<Continent> continent)
         {
-            continent = c;
+            dicoContinents = new Dictionary<int, Continent>();
+            this.continent = continent;
+            for (int i = 0; i < continent.Count; i++)
+            {
+                dicoContinents.Add(i, continent[i]);
+            }
         }
     }
 }
