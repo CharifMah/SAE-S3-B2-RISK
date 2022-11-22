@@ -58,9 +58,11 @@ namespace RISKAPI.Controllers
             Profil p = new Profil("");
             ProfilDAO profilDAO = factory.CreerProfil();
 
-            p.Pseudo = profilDAO.FindByIdProfil(pseudo);
-            if (p.Pseudo != null)
+            p.Id = profilDAO.FindIdByPseudoProfil(pseudo);
+      
+            if (p.Id != 0)
             {
+                p.Pseudo = pseudo;
                 profilDemandee = p;
             }
 
@@ -76,7 +78,7 @@ namespace RISKAPI.Controllers
         /// <summary>
         /// Request to verify user if exist in database
         /// </summary>
-        /// <param name="pseudo">string to find in database</param>
+        /// <param name="profil">profil to find in database</param>
         /// <returns>boolean</returns>
         /// <Author>Charif Mahmoud,Brian VERCHERE</Author>
         [HttpGet("verifUser")]
