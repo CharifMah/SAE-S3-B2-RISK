@@ -1,12 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Net.Http.Json;
 
 namespace Réseaux.Connexion
 {
@@ -50,7 +43,7 @@ namespace Réseaux.Connexion
         /// <param name="adresseDemande">Post Request Path</param>
         /// <param name="p">Profil a envoyer</param>
         /// <returns>awaitable Task</returns>
-        public async Task Post<T>(string adresseDemande,T p)
+        public async Task Post<T>(string adresseDemande, T p)
         {
             string jsonString = JsonConvert.SerializeObject(p);
             HttpResponseMessage response = await client.PostAsJsonAsync(adresseDemande, jsonString);
