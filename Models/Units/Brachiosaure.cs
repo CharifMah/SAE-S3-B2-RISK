@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JurassicRisk.Units
+namespace Models.Units
 {
-    public class Brachiosaure: Unite
+    public class Brachiosaure : Unite
     {
 
     }
