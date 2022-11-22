@@ -22,9 +22,39 @@ namespace DBStorage
             throw new NotImplementedException();
         }
 
-        public string FindByIdProfil(string pseudo)
+        public string FindByIdProfil(int id)
         {
             string res = null;
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand("Select * from users where Pseudo = '" + id + "';", GestionDatabase.GetInstance().Conn);
+                cmd.ExecuteNonQuery();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        res = string.Format("{0}", reader["Pseudo"]);
+                    }
+                }
+                Console.WriteLine("Users " + id + " selectionne");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine("An error occured: {0}", x.Message);
+            }
+            finally
+            {
+                GestionDatabase.GetInstance().Disconnect();
+            }
+            return res;
+
+        }
+
+        public int FindIdByPseudoProfil(string pseudo)
+        {
+            int res = 0;
             try
             {
                 MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
@@ -35,7 +65,7 @@ namespace DBStorage
                 {
                     if (reader.Read())
                     {
-                        res = string.Format("{0}", reader["Pseudo"]);
+                        res = reader.GetInt32("IdProfil");
                     }
                 }
                 Console.WriteLine("Users " + pseudo + " selectionne");
@@ -58,7 +88,7 @@ namespace DBStorage
             {
                 MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand("insert into users values ('" + profil.Pseudo + "');", GestionDatabase.GetInstance().Conn);
+                cmd = new MySqlCommand("insert into users (Pseudo) values ('" + profil.Pseudo + "');", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("users " + profil.Pseudo + " creer");
             }
