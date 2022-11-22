@@ -1,4 +1,4 @@
-﻿using JurassicRisk.Ressources;
+﻿using Models.Map;
 using Stockage;
 using System;
 using System.Collections.Generic;
@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace Models.Map
+namespace JurassicRisk.ViewsModels
 {
     public class SaveMap
     {
-        private List<String> _fileEntries;
+        private List<string> _fileEntries;
         private List<TerritoireDecorator> _decorations;
-
+        private int i = 0;
         public SaveMap()
         {
             SaveCarte();
@@ -88,7 +88,8 @@ namespace Models.Map
 
         public void SerializeConf(string Urisource, int x, int y, int width, int height)
         {
-            _decorations.Add(new TerritoireDecorator(new TerritoireBase(), x, y, width, height, Urisource));
+            _decorations.Add(new TerritoireDecorator(i, new TerritoireBase(i), x, y, width, height, Urisource));
+            i++;
         }
     }
 }

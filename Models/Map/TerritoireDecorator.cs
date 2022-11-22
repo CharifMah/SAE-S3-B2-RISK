@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 namespace Models.Map
 {
     [DataContract]
-    public class TerritoireDecorator : TerritoireBase, ITerritoireBase
+    public class TerritoireDecorator : TerritoireBase
     {
         [DataMember]
         protected TerritoireBase _territoire;
@@ -25,7 +25,7 @@ namespace Models.Map
         [DataMember]
         protected string _UriSource;
 
-        public TerritoireDecorator(TerritoireBase territoire, int x, int y, int width, int height, string UriSource)
+        public TerritoireDecorator(int id, TerritoireBase territoire, int x, int y, int width, int height, string UriSource) : base(id)
         {
             this._territoire = territoire;
             _x = x;
