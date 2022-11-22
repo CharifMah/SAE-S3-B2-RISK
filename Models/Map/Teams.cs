@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Models.Map
 {
-    public enum ContientType
+    public enum Teams
     {
-        Khak, Tiarv, Ghed, Golk, Daab, Kroottoc
+        ROUGE,BLEU,VERT,JAUNE,NEUTRE
     }
 }
