@@ -12,8 +12,9 @@ namespace DBStorage
         public void Insert(Profil profil);
         public void Update(Profil profil);
         public void Delete(Profil profil);
-        public string FindByIdProfil(string pseudo);
+        public string FindByIdProfil(int id);
         public string FindAll();
         public bool VerifUserCreation(Profil profil);
+        public int FindIdByPseudoProfil(string pseudo);
     }
 }
