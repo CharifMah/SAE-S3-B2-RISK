@@ -12,7 +12,7 @@ namespace DBStorage
         private static MySqlDAOFactory Instance;
         private MySqlDAOFactory() { }
 
-        public static MySqlDAOFactory getInstance()
+        public static MySqlDAOFactory GetInstance()
         {
             if (Instance == null)
             {
