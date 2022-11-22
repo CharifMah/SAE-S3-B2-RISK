@@ -85,8 +85,9 @@ namespace DBStorage.Mysql
             {
                 MySqlCommand cmd = new MySqlCommand("use risk;", conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand("create table if not exists Users (Pseudo varchar(50) PRIMARY KEY);", conn);
+                cmd = new MySqlCommand("create table if not exists Users (IdProfil integer(5) PRIMARY KEY AUTO_INCREMENT, Pseudo varchar(50) NOT NULL UNIQUE, Mdp varchar(20));", conn);
                 cmd.ExecuteNonQuery();
+
                 Console.WriteLine("Table Users created successfully or already existing");
             }
             catch (Exception x)
