@@ -10,6 +10,11 @@ namespace Models.Units
     {
         private Dictionary<string, IMakeUnit> constructors = new Dictionary<string, IMakeUnit>();
 
+        public FabriqueUnite()
+        {
+            constructors["brachiosaure"] = new ConstructBrachiosaure();
+        }
+
         public Unite Create(string type)
         {
             if (constructors.ContainsKey(type))

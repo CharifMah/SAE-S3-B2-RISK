@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Map
+namespace Models
 {
     public enum Teams
     {
-        ROUGE,BLEU,VERT,JAUNE,NEUTRE
+        ROUGE, BLEU, VERT, JAUNE, NEUTRE
     }
 }
