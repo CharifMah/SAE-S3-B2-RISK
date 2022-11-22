@@ -72,6 +72,9 @@ namespace JurassicRisk.ViewsModels
                 DrawRegion(territoireDecorator);
             }
 
+            return _sprites;
+        }
+
             _continents.Add(new Continent(_territoiresBase.Take(7).ToList()));
             _continents.Add(new Continent(_territoiresBase.Skip(7).Take(7).ToList()));
             _continents.Add(new Continent(_territoiresBase.Skip(14).Take(8).ToList()));
