@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace JurassicRisk.Units
 {
-    public interface IMakeUnit
+    public class ConstructBrachiosaure : IMakeUnit
     {
-        public Unite MakeUnit();
+        public Unite MakeUnit()
+        {
+            return new Brachiosaure();
+        }
     }
 }
