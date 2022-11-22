@@ -15,7 +15,7 @@ namespace Stockage
         /// <summary>
         /// Charge le dictionnaire
         /// </summary>
-        /// <returns>le dictionnaire chargé</returns>
-        NameValueCollection Charger(string FileName);
+        /// <returns>ficher chargé</returns>
+        T Charger<T>(string FileName);
     }
 }

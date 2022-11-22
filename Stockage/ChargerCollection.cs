@@ -1,6 +1,6 @@
-﻿using System.Collections.Specialized;
-using static System.Formats.Asn1.AsnWriter;
+﻿
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace Stockage
 {
@@ -8,20 +8,32 @@ namespace Stockage
     {
         private string _path;
 
+        /// <summary>
+        /// Charger un object 
+        /// </summary>
+        /// <param name="path">Chemin du fichier</param>
+        /// <Author>Charif</Author>
         public ChargerCollection(string path)
         {
             this._path = path;
         }
 
-        public NameValueCollection Charger(string FileName)
+        /// <summary>
+        /// Charger un fichier
+        /// </summary>
+        /// <typeparam name="T">Generic Type</typeparam>
+        /// <param name="FileName">nom du fichier .json</param>
+        /// <returns>Data Cast in Generic Type</returns>
+        /// <Author>Charif</Author>
+        public T Charger<T>(string FileName)
         {
-            NameValueCollection d2 = null;
+            T d2 = default;
             if (File.Exists(Path.Combine(_path, $"{FileName}.json")))
             {
                 using (FileStream stream = File.OpenRead(Path.Combine(_path, $"{FileName}.json")))
                 {
-                    DataContractSerializer ser = new DataContractSerializer(typeof(NameValueCollection));
-                    d2 = ser.ReadObject(stream) as NameValueCollection;
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
+                    d2 = (T?)ser.ReadObject(stream);
                 }
 
             }
