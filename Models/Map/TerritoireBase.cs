@@ -7,20 +7,27 @@ namespace Models.Map
     /// </summary>
     public class TerritoireBase
     {
-        private List<IMakeUnit> troupe;
+        private List<Unite> troupe;
         private Teams _teams;
         public Teams Team
         {
-            get => Teams.NEUTRE;
+            get => _teams;
 
             set {_teams = value;}
         }
-        public TerritoireBase()
+
+        public List<Unite> Troupe
         {
-            troupe = new List<IMakeUnit>();
+            get { return troupe; }
+            set { troupe = value; }
         }
 
-        public void MaJTroupe(List<IMakeUnit> unites)
+        public TerritoireBase()
+        {
+            troupe = new List<Unite>();
+        }
+
+        public void MaJTroupe(List<Unite> unites)
         {
             foreach(var unit in unites)
             {

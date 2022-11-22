@@ -1,4 +1,5 @@
-﻿using Models.Map;
+﻿using Models.Exceptions;
+using Models.Map;
 using Models.Units;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Models
     public class Joueur : IGestionTroupe
     {
         private Teams equipe;
-        private List<IMakeUnit> troupe;
+        private List<Unite> troupe;
 
         public Teams Equipe
         {
@@ -19,7 +20,7 @@ namespace Models
             set { equipe = value; }
         }
 
-        public List<IMakeUnit> Troupe
+        public List<Unite> Troupe
         {
             get { return troupe; }
             set { troupe = value; }
@@ -27,29 +28,29 @@ namespace Models
 
         public Joueur()
         {
-            troupe = new List<IMakeUnit>();
+            troupe = new List<Unite>();
         }
 
-        public void PositionnerTroupe(List<IMakeUnit> unites, TerritoireBase territoire)
+        public void PositionnerTroupe(List<Unite> unites, TerritoireBase territoire)
         {
             if(equipe.ToString() == territoire.Team.ToString())
             {
                 foreach(var unit in unites)
                 {
-                    if (troupe.Contains(unit))
+                    if(troupe.Contains(unit))
                     {
                         troupe.Remove(unit);
                     }
                     else
                     {
-                        throw new Exception("Not enough unit !");
+                        throw new NotEnoughUnitException("Not enough unit !");
                     }
                 }
                 territoire.MaJTroupe(unites);
             }
             else
             {
-                throw new Exception("Not your territory !")
+                throw new NotYourTerritoryException("Not your territory !");
             }
         }
     }
