@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
+﻿
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Stockage
 {
@@ -21,9 +15,9 @@ namespace Stockage
         /// <summary>
         /// Crée un fichier Json avec les Settings
         /// </summary>
-        /// <param name="NameValueCollection">data a sauvgarde</param>
+        /// <param name="T">data a sauvgarde</param>
         /// <Author>Charif</Author>
-        public void Sauver(NameValueCollection data,string FileName)
+        public void Sauver<T>(T data,string FileName)
         {
             if (Directory.Exists(_path))
             {
@@ -33,7 +27,7 @@ namespace Stockage
                 }
                 using (FileStream stream = File.OpenWrite(Path.Combine(_path,  $"{FileName}.json")))
                 {
-                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(NameValueCollection));
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
                     ser.WriteObject(stream, data);
                 }
             }
