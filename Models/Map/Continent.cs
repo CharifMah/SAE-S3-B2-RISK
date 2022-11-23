@@ -12,17 +12,17 @@ namespace Models.Map
     /// </summary>
     public class Continent
     {
-        private Dictionary<int, TerritoireBase> dicoTerritoires;
+        private Dictionary<int, ITerritoireBase> dicoTerritoires;
 
-        public Dictionary<int, TerritoireBase> DicoTerritoires
+        public Dictionary<int, ITerritoireBase> DicoTerritoires
         {
             get { return dicoTerritoires; }
             set { dicoTerritoires = value; }
         }
 
-        public Continent(List<TerritoireBase> territoires)
+        public Continent(List<ITerritoireBase> territoires)
         {
-            dicoTerritoires = new Dictionary<int, TerritoireBase>();
+            dicoTerritoires = new Dictionary<int, ITerritoireBase>();
             for (int i = 0; i < territoires.Count; i++)
             {
                 dicoTerritoires.Add(i, territoires[i]);

@@ -12,4 +12,14 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Stockage\Stockage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Map\Cartee.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
