@@ -1,44 +1,42 @@
-﻿using System.Windows.Media.Imaging;
-
+﻿using Models.Units;
+using System.Runtime.Serialization;
 
 namespace Models.Map
 {
     /// <summary>
     /// Classe générique des territoires
     /// </summary>
-    public class TerritoireBase
+    [DataContract]
+    public class TerritoireBase : ITerritoireBase
     {
-        protected BitmapImage sprite;
-        protected double x;
-        protected double y;
+        [DataMember]
+        protected Teams _teams;
+        [DataMember]
+        protected List<Unite> _troupe;
+        [DataMember]
+        protected int _id;
 
-        public BitmapImage Sprite
+        public Teams Team { get => this._teams; set => this._teams = value; }
+        public int ID { get => this._id; set => this._id = value; }
+
+        public List<Unite> Units
         {
-            get { return sprite; }
+            get => this._troupe;
+            set => this._troupe = value;
         }
 
-        public double X
+        public TerritoireBase(int id)
         {
-            get { return x; }
-            set { x = value; }
+            this._id = id;
+            this._teams = Teams.NEUTRE;
+            this._troupe = new List<Unite>();
         }
 
-        public double Y
+        public TerritoireBase(List<Unite> troupe, int id)
         {
-            get { return y; }
-            set { y = value; }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public TerritoireBase(BitmapImage s, double x, double y)
-        {
-            sprite = s;
-            this.x = x;
-            this.y = y;
+            this._id = id;
+            this._teams = Teams.NEUTRE;
+            this._troupe = troupe;
         }
     }
 }

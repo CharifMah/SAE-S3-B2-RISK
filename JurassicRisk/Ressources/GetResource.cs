@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Resources;
 
-namespace JurassicRisk.Ressources
+namespace Models.Map
 {
     public static class GetResource
     {
-        public static List<String> GetResourceFileName(string PathContain)
+        public static List<string> GetResourceFileName(string PathContain)
         {
-            List<String> filesNames = new List<String>();
+            List<string> filesNames = new List<string>();
             Assembly resourceAssembly = Assembly.GetExecutingAssembly();
-            String[] manifests = resourceAssembly.GetManifestResourceNames();
+            string[] manifests = resourceAssembly.GetManifestResourceNames();
             using (ResourceReader reader = new ResourceReader(resourceAssembly.GetManifestResourceStream(manifests[0])))
             {
                 System.Collections.IDictionaryEnumerator dict = reader.GetEnumerator();
@@ -20,7 +20,7 @@ namespace JurassicRisk.Ressources
                 {
                     if (dict.Key.ToString().Contains(PathContain))
                     {
-                        filesNames.Add((dict.Key as String).Remove(0, 14));
+                        filesNames.Add((dict.Key as string).Remove(0, 14));
                     }
                 }
             }
