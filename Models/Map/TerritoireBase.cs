@@ -1,37 +1,39 @@
 ﻿using Models.Units;
+using System.Runtime.Serialization;
 
 namespace Models.Map
 {
     /// <summary>
     /// Classe générique des territoires
     /// </summary>
-    public class TerritoireBase
+    [DataContract]
+    public class TerritoireBase : ITerritoireBase
     {
-        private List<Unite> troupe;
-        private Teams _teams;
+        [DataMember]
+        protected Teams _teams;
+        [DataMember]
+        protected List<Unite> _troupe;
+        [DataMember]
+        protected int _id;
 
         public Teams Team { get => this._teams; set => this._teams = value; }
         public List<Unite> Units
         {
-            get => this.troupe;
-            set => this.troupe = value;
+            get => this._troupe;
+            set => this._troupe = value;
         }
-
-        public List<Unite> Troupe
+        public int ID { get => this._id; set => this._id = value; }
+        public TerritoireBase(int id)
         {
-            get { return troupe; }
-            set { troupe = value; }
-        }
-
-        public TerritoireBase()
-        {
+            this._id = id;
             this._teams = Teams.NEUTRE;
-            this.troupe = new List<Unite>();
+            this._troupe = new List<Unite>();
         }
-        public TerritoireBase(List<Unite> makeUnits)
+        public TerritoireBase(List<Unite> troupe, int id)
         {
+            this._id = id;
             this._teams = Teams.NEUTRE;
-            this.troupe = makeUnits;
+            this._troupe = troupe;
         }
     }
 }
