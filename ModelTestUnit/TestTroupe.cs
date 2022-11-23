@@ -15,9 +15,9 @@ namespace ModelTestUnit
         [Fact]
         public void TestPositionnement()
         {
-            TerritoireBase t1 = new TerritoireBase();
+            TerritoireBase t1 = new TerritoireBase(0);
             t1.Team = Models.Teams.ROUGE;
-            TerritoireBase t2 = new TerritoireBase();
+            TerritoireBase t2 = new TerritoireBase(0);
             t2.Team = Models.Teams.VERT;
             Joueur j1 = new Joueur();
             j1.Equipe = Teams.VERT;

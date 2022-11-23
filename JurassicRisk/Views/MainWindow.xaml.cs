@@ -16,6 +16,7 @@ namespace JurassicRisk.Views
             connection.CreateUserTable();
             InitializeComponent();
             frame.NavigationService.Navigate(new HomePage());
+
         }
     }
 }

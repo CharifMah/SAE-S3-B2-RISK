@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Style\CustomCheckBox.xaml"/>
                 <ResourceDictionary Source="Style\CustomTextBox.xaml"/>
                 <ResourceDictionary Source="Style\CustomPolice.xaml"/>
+                <ResourceDictionary Source="Style\CustomDataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

@@ -1,4 +1,6 @@
 ﻿using Réseaux.Connexion;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using Profil = Models.Profil;
@@ -15,6 +17,8 @@ namespace JurassicRisk.ViewsModels
 
         private string _ip;
 
+        private ObservableCollection<Profil> _profils;
+
         #endregion
 
         #region Properties
@@ -28,7 +32,15 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("SelectedProfil");
             }
         }
-
+        public ObservableCollection<Profil> SelectedListProfil
+        {
+            get { return _profils; }
+            set
+            {
+                _profils = value;
+                NotifyPropertyChanged("SelectedListProfil");
+            }
+        }
         #endregion Properties
 
         #region Constructor
@@ -53,6 +65,13 @@ namespace JurassicRisk.ViewsModels
         {
             _ip = "localhost:7215";
             client = new ClientConnection();
+            _profils = new ObservableCollection<Profil>();
+            this._selectedProfil = new Profil("Adam");
+            for (int i = 0; i < 5; i++)
+            {
+                _profils.Add(SelectedProfil);
+            }
+            
         }
 
         #endregion Constructor
