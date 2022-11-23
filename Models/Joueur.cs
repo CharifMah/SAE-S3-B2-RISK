@@ -46,7 +46,7 @@ namespace Models
                         throw new NotEnoughUnitException("Not enough unit !");
                     }
                 }
-                territoire.MaJTroupe(unites);
+                territoire.Units = unites;
             }
             else
             {

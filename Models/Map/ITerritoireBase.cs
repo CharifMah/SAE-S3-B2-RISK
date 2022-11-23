@@ -5,6 +5,6 @@ namespace Models.Map
     public interface ITerritoireBase
     {
         Teams Team { get; set; }
-        List<IMakeUnit> Units { get; set; }
+        List<Unite> Units { get; set; }
     }
 }

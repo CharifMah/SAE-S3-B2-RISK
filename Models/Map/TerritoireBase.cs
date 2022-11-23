@@ -27,7 +27,7 @@ namespace Models.Map
         {
             this._id = id;
             this._teams = Teams.NEUTRE;
-            this._troupe = new List<IMakeUnit>();
+            this._troupe = new List<Unite>();
         }
         public TerritoireBase(List<Unite> troupe, int id)
         {
