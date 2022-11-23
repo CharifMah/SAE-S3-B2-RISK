@@ -28,7 +28,7 @@ namespace Models
             (int, int) comparaison = CompareLances(resAttaque,resDefense);
             int attaqueReussie = comparaison.Item1;
             int nombreAttaque = comparaison.Item2;
-            RemoveAllUnits(attaqueReussie, nombreAttaque, territoireAttaquant, cible);
+            RemoveUnits(attaqueReussie, nombreAttaque, territoireAttaquant, cible);
         }
 
         public int Attaquer(List<Unite> attaquant, TerritoireBase cible, Joueur assaillant)
@@ -145,7 +145,7 @@ namespace Models
             return (attaqueReussie, nbAttaque);
         }
 
-        public void RemoveAllUnits(int attaqueReussie, int nbAttaque, TerritoireBase territoireAttaquant, TerritoireBase cible)
+        public void RemoveUnits(int attaqueReussie, int nbAttaque, TerritoireBase territoireAttaquant, TerritoireBase cible)
         {
             List<Unite> troupe = cible.Units;
             for(int i=0; i < attaqueReussie; i++)
