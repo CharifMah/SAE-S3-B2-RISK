@@ -1,4 +1,6 @@
 ﻿using JurassicRisk.ViewsModels;
+using Stockage;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,9 +11,13 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class OptionsPage : Page
     {
+        SettingsViewModel settingVm;
+        SauveCollection _save;
         public OptionsPage()
         {
-            this.DataContext = new SettingsViewModel();
+            _save = new SauveCollection(Environment.CurrentDirectory);
+            settingVm = new SettingsViewModel();
+            this.DataContext = settingVm;
             InitializeComponent();
         }
 
@@ -27,6 +33,8 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            _save.Sauver(settingVm.Settings, "Settings");
+            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
     }
