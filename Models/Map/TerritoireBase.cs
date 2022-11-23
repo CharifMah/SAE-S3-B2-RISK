@@ -25,7 +25,6 @@ namespace Models.Map
             set => this._troupe = value;
         }
 
-        public int ID { get => this._id; set => this._id = value; }
         public TerritoireBase(int id)
         {
             this._id = id;
