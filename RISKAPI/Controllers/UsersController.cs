@@ -3,6 +3,9 @@ using DBStorage.ClassMetier;
 using DBStorage.Mysql;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text.Json;
+using Ubiety.Dns.Core;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RISKAPI.Controllers
 {
@@ -22,17 +25,25 @@ namespace RISKAPI.Controllers
         /// <param name="pseudo">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("inscription")]
-        public IActionResult inscription(string pseudo)
+        public IActionResult inscription(string pseudo,string mdp)
         {
             IActionResult reponse = null;
             try
             {
-                Profil profil = new Profil(pseudo);
+                Profil profil = new Profil(pseudo,mdp);
                 ProfilDAO profilDAO = factory.CreerProfil();
                 reponse = new AcceptedResult();
                 if (profilDAO.VerifUserCreation(profil) == false)
                 {
-                    profilDAO.Insert(profil);
+                    if (mdp.Length < 4)
+                    {
+                        profilDAO.Insert(profil);
+                    }
+                    else
+                    {
+                        reponse = new JsonResult("password too short");
+                        
+                    }
                 }
                 else
                 {
@@ -49,29 +60,29 @@ namespace RISKAPI.Controllers
         /// <summary>
         /// recupere un user dans la base de donnee
         /// </summary>
-        /// <param name="pseudo">Pseudo du user a recuperer</param>
+        /// <param name="profil">user a recuperer</param>
         /// <autor>Romain BARABANT</autor>
-        [HttpGet("connexion")]
-        public IActionResult connexion(string pseudo)
+        [HttpPost("connexion")]
+        public IActionResult connexion( Profil profil)
         {
-            Profil profilDemandee = null;
-            Profil p = new Profil("");
+            Profil profilDemande = null;
             ProfilDAO profilDAO = factory.CreerProfil();
 
-            p.Id = profilDAO.FindIdByPseudoProfil(pseudo);
+            profil.Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
       
-            if (p.Id != 0)
+            if (profil.Id != 0)
             {
-                p.Pseudo = pseudo;
-                profilDemandee = p;
+                profilDemande = profil;
             }
 
             //Création de la réponse
             IActionResult actionResult = new NoContentResult();
-            if (profilDemandee != null)
+            if (profilDemande != null)
             {
-                actionResult = new JsonResult(profilDemandee);
+                string s = JsonSerializer.Serialize<Profil>(profilDemande);
+                actionResult = new JsonResult(profilDemande);
             }
+            
             return actionResult;
         }
 
