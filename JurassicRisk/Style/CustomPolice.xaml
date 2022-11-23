@@ -4,10 +4,23 @@
         <Setter Property="TextElement.FontFamily" Value="/Polices/#Bloody terror"/>
         <Setter Property="Foreground">
             <Setter.Value>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" >
                     <GradientStop x:Name="GradientStopW" Color="White" Offset="0"/>
+                    <GradientStop x:Name="GradientStopS" Color="#781330" Offset="0" />
                     <GradientStop x:Name="GradientStopR" Color="#FF8A0B0B" Offset="1"/>
                 </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect>
+                    <DropShadowEffect.Color>
+                        <Color>Black</Color>
+                    </DropShadowEffect.Color>
+                    <DropShadowEffect.Opacity>
+                        0.79
+                    </DropShadowEffect.Opacity>
+                </DropShadowEffect>
             </Setter.Value>
         </Setter>
 
@@ -18,13 +31,29 @@
                 <EventTrigger.Actions>
                     <BeginStoryboard x:Name="BeginStoryBoard">
                         <Storyboard AutoReverse="True">
+                            
                             <DoubleAnimation 
                                 Storyboard.TargetProperty=".Foreground.(LinearGradientBrush.GradientStops)[0].(GradientStop.Offset)"
-                                From="0" To="1" Duration="0:0:10" 
+                                From="0" To="1" Duration="0:0:5" 
                                 RepeatBehavior="Forever" AutoReverse="True">
                             </DoubleAnimation>
+
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty=".Foreground.(LinearGradientBrush.GradientStops)[1].(GradientStop.Offset)"
+                                From="0" To="0.5" Duration="0:0:5" 
+                                RepeatBehavior="Forever" AutoReverse="True">
+                            </DoubleAnimation>
+
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty=".Foreground.(LinearGradientBrush.GradientStops)[2].(GradientStop.Offset)"
+                                From="0.5" To="1" Duration="0:0:5" 
+                                RepeatBehavior="Forever" AutoReverse="True">
+                            </DoubleAnimation>
+
+
                         </Storyboard>
                     </BeginStoryboard>
+                    
                 </EventTrigger.Actions>
             </EventTrigger>
             <EventTrigger RoutedEvent="TextBlock.Unloaded">
