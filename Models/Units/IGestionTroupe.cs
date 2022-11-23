@@ -9,6 +9,12 @@ namespace Models.Units
 {
     public interface IGestionTroupe
     {
-        public void PositionnerTroupe(List<Unite> unites, TerritoireBase territoire);
+        public void AddUnit(Unite unit);
+
+        public void AddUnit(List<Unite> unites, TerritoireBase territoire);
+
+        public void RemoveUnit(Unite unit);
+
+        public void RemoveUnit(List<Unite> unites, TerritoireBase territoire);
     }
 }
