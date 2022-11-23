@@ -129,6 +129,9 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Log out</value>
   </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>FullScreen :</value>
+  </data>
   <data name="GameTitle" xml:space="preserve">
     <value>JurassicRisk</value>
   </data>
@@ -138,6 +141,9 @@
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="Musique" xml:space="preserve">
+    <value>Music :</value>
+  </data>
   <data name="NoExiste" xml:space="preserve">
     <value>this account does not existe</value>
   </data>
@@ -146,6 +152,9 @@
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="PartieJoué" xml:space="preserve">
+    <value>Game played</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password :</value>
@@ -161,5 +170,17 @@
   </data>
   <data name="Sinscrire" xml:space="preserve">
     <value>Register</value>
+  </data>
+  <data name="TConquis" xml:space="preserve">
+    <value>Conquered territory</value>
+  </data>
+  <data name="TConquisSmlt" xml:space="preserve">
+    <value>Simultaneously conquered territory</value>
+  </data>
+  <data name="TrpPerdus" xml:space="preserve">
+    <value>Lost troops</value>
+  </data>
+  <data name="TrpVaincus" xml:space="preserve">
+    <value>Defeated Troops </value>
   </data>
 </root>
