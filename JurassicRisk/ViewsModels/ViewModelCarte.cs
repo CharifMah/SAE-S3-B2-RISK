@@ -1,9 +1,12 @@
-﻿using Models.Map;
+﻿using Models;
+using Models.Map;
+using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -22,7 +25,10 @@ namespace JurassicRisk.ViewsModels
         List<ITerritoireBase> _territoiresBase;
         private Canvas _carteCanvas;
         private Carte _carte;
+        private Joueur j = new Joueur();
+        private FabriqueUnite f = new FabriqueUnite();
         private int zi = 0;
+        
 
         public Canvas CarteCanvas
         {
@@ -46,6 +52,7 @@ namespace JurassicRisk.ViewsModels
         /// <author>Charif</author>
         public ViewModelCarte()
         {
+            new SaveMap();
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             _decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");     
@@ -53,6 +60,7 @@ namespace JurassicRisk.ViewsModels
             _continents = new List<Continent>();
             _carte = DrawCarte();
             NotifyPropertyChanged("Carte");
+            j.Equipe = Teams.ROUGE;
         }
 
         /// <summary>
@@ -110,7 +118,7 @@ namespace JurassicRisk.ViewsModels
 
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
         {
-            canvas.ToolTip = $"Units: {territoire.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
+            canvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} X: {territoire.x} Y: {territoire.y} t : {territoire.Team}";
         }
 
         private void MyCanvas_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
@@ -124,10 +132,22 @@ namespace JurassicRisk.ViewsModels
         private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
-            territoire.Team = Models.Teams.ROUGE;
-            DropShadowEffect shadow = new DropShadowEffect();
-            shadow.Color = Brushes.Red.Color;
-            c.Effect = shadow;
+            if(territoire.Team == Teams.NEUTRE)
+            {
+                territoire.SetTeam(Teams.ROUGE);
+                DropShadowEffect shadow = new DropShadowEffect();
+                shadow.Color = Brushes.Red.Color;
+                c.Effect = shadow;
+            }
+            else
+            {
+                List<Unite> renforts = new List<Unite>();
+                var unit = f.Create("Brachiosaure");
+                renforts.Add(unit);
+                j.Troupe.Add(unit);
+                j.PositionnerTroupe(renforts, territoire.TerritoireBase);
+                MessageBox.Show("Troupes ajoutées");
+            }
         }
 
         private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)

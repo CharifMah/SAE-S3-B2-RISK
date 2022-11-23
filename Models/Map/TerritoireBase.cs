@@ -25,6 +25,7 @@ namespace Models.Map
             set => this._troupe = value;
         }
 
+        public int ID { get => this._id; set => this._id = value; }
         public TerritoireBase(int id)
         {
             this._id = id;
@@ -32,11 +33,10 @@ namespace Models.Map
             this._troupe = new List<Unite>();
         }
 
-        public TerritoireBase(List<Unite> troupe, int id)
+
+        public void AddUnit(Unite unit)
         {
-            this._id = id;
-            this._teams = Teams.NEUTRE;
-            this._troupe = troupe;
+            _troupe.Add(unit);
         }
     }
 }
