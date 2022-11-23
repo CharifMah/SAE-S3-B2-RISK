@@ -84,14 +84,14 @@ namespace DBStorage
         /// <summary>
         /// insert a profil in the database
         /// </summary>
-        /// <param name="profil">the profil toinsert</param>
+        /// <param name="profil">the profil to insert</param>
         public void Insert(Profil profil)
         {
             try
             {
                 MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand("insert into users (Pseudo) values ('" + profil.Pseudo + "');", GestionDatabase.GetInstance().Conn);
+                cmd = new MySqlCommand("insert into users (Pseudo,Mdp) values (\"" + profil.Pseudo + "\",\"" + profil.Password + "\");", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("users " + profil.Pseudo + " creer");
             }
