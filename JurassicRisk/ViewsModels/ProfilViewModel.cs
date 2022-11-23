@@ -35,8 +35,12 @@ namespace JurassicRisk.ViewsModels
         #endregion Properties
 
         #region Constructor
-
-        public ProfilViewModel()
+        private static ProfilViewModel _instance;
+        public static ProfilViewModel Instance
+        {
+            get { return _instance ?? (_instance = new ProfilViewModel()); }
+        }
+        private ProfilViewModel()
         {
             _ip = "localhost:7215";
             client = new ClientConnection();           

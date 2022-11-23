@@ -23,22 +23,20 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class InscriptionPage : Page
     {
-        private ProfilViewModel p;
         public InscriptionPage()
         {
             InitializeComponent();
-            p = new ProfilViewModel();
         }
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if(!await p.VerifProfilCreation(inputPseudo.Text))
+            if(!await ProfilViewModel.Instance.VerifProfilCreation(inputPseudo.Text))
             {
                 if (inputPseudo.Text != "")
                 {
-                    await p.CreateProfil(new Models.Profil(inputPseudo.Text));
+                    await ProfilViewModel.Instance.CreateProfil(new Models.Profil(inputPseudo.Text));
                     (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-                    await p.SetSelectedProfil(inputPseudo.Text);
+                    await ProfilViewModel.Instance.SetSelectedProfil(inputPseudo.Text);
                 }
                 else
                 {
