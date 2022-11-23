@@ -1,4 +1,5 @@
 
+using Models;
 using Models.Map;
 using Models.Units;
 using Stockage;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -24,10 +26,9 @@ namespace JurassicRisk.ViewsModels
         List<ITerritoireBase> _territoiresBase;
         private Canvas _carteCanvas;
         private Carte _carte;
-        private Joueur j = new Joueur();
-        private FabriqueUnite f = new FabriqueUnite();
+        private FabriqueUnite f;
         private int zi = 0;
-        
+        private Joueur j;
 
         public Canvas CarteCanvas
         {
@@ -53,8 +54,9 @@ namespace JurassicRisk.ViewsModels
         {
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
-            _decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");     
-            
+            _decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");
+            f = new FabriqueUnite();
+            j = new Joueur();
             _continents = new List<Continent>();
             _carte = DrawCarte();
             NotifyPropertyChanged("Carte");
@@ -133,7 +135,7 @@ namespace JurassicRisk.ViewsModels
             
             if(territoire.Team == Teams.NEUTRE)
             {
-                territoire.SetTeam(Teams.ROUGE);
+                territoire.Team = (Teams.ROUGE);
                 DropShadowEffect shadow = new DropShadowEffect();
                 shadow.Color = Brushes.Red.Color;
                 c.Effect = shadow;
