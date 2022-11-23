@@ -2,6 +2,7 @@
 using Models.Map;
 using Models.Units;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace Models
             troupe = new List<Unite>();
         }
 
-        public void PositionnerTroupe(List<Unite> unites, TerritoireBase territoire)
+        public void AddUnit(List<Unite> unites, TerritoireBase territoire)
         {
             if(equipe.ToString() == territoire.Team.ToString())
             {
@@ -51,6 +52,27 @@ namespace Models
             else
             {
                 throw new NotYourTerritoryException("Not your territory !");
+            }
+        }
+
+        public void AddUnit(Unite unit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveUnit(Unite unit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveUnit(List<Unite> unites, TerritoireBase territoire)
+        {
+            foreach (var unit in unites)
+            {
+                if (troupe.Contains(unit))
+                {
+                    territoire.RemoveUnit(unit);
+                }
             }
         }
     }

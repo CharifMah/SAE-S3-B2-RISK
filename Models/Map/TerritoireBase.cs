@@ -7,7 +7,7 @@ namespace Models.Map
     /// Classe générique des territoires
     /// </summary>
     [DataContract]
-    public class TerritoireBase : ITerritoireBase
+    public class TerritoireBase : ITerritoireBase, IGestionTroupe
     {
         [DataMember]
         protected Teams _teams;
@@ -36,6 +36,23 @@ namespace Models.Map
         public void AddUnit(Unite unit)
         {
             _troupe.Add(unit);
+        }
+
+
+        public void RemoveUnit(Unite unit)
+        {
+            _troupe.Remove(unit);
+        }
+
+
+        public void AddUnit(List<Unite> unites, TerritoireBase territoire)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveUnit(List<Unite> unites, TerritoireBase territoire)
+        {
+            throw new NotImplementedException();
         }
     }
 }
