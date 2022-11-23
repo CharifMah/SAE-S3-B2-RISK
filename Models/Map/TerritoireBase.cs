@@ -38,5 +38,14 @@ namespace Models.Map
             this._teams = Teams.NEUTRE;
             this._troupe = troupe;
         }
+
+        /// <summary>
+        /// Ajoute une unite
+        /// </summary>
+        /// <param name="unite">Unite</param>
+        public void AddUnit(Unite unite)
+        {
+            _troupe.Add(unite);
+        }
     }
 }
