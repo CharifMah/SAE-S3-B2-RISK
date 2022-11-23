@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Name="CheckBullet" x:Key="CustomCheckBox" TargetType="CheckBox">
+    <Style x:Key="CustomCheckBox" TargetType="CheckBox">
         <Setter Property="Background" Value="Red"/>
+        <Setter Property="TextBlock.FontFamily" Value="/Polices/#Fruit Days"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">

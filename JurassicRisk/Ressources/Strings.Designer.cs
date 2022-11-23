@@ -202,5 +202,58 @@ namespace JurassicRisk.Ressource
             }
         }
 
+        public static string PartieJoué
+        {
+            get
+            {
+                return ResourceManager.GetString("PartieJoué", resourceCulture);
+            }
+        }
+
+        public static string TrpVaincus
+        {
+            get
+            {
+                return ResourceManager.GetString("TrpVaincus", resourceCulture);
+            }
+        }
+
+        public static string TrpPerdus
+        {
+            get
+            {
+                return ResourceManager.GetString("TrpPerdus", resourceCulture);
+            }
+        }
+        public static string TConquis
+        {
+            get
+            {
+                return ResourceManager.GetString("TConquis", resourceCulture);
+            }
+        }
+        public static string TConquisSmlt
+        {
+            get
+            {
+                return ResourceManager.GetString("TConquisSmlt", resourceCulture);
+            }
+        }
+
+        public static string FullScreen
+        {
+            get
+            {
+                return ResourceManager.GetString("FullScreen", resourceCulture);
+            }
+        }
+        public static string Musique
+        {
+            get
+            {
+                return ResourceManager.GetString("Musique", resourceCulture);
+            }
+        }
+
     }
 }

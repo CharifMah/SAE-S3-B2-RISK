@@ -60,7 +60,6 @@ namespace JurassicRisk.ViewsModels
             _continents = new List<Continent>();
             _carte = DrawCarte();
             NotifyPropertyChanged("Carte");
-            j.Equipe = Teams.ROUGE;
         }
 
         /// <summary>
@@ -125,6 +124,7 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
+            
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
         }

@@ -3,9 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:JurassicRisk.Views" xmlns:ViewsModels="clr-namespace:JurassicRisk.ViewsModels" d:DataContext="{d:DesignInstance Type=ViewsModels:MainViewModel}"
-      mc:Ignorable="d" 
+      xmlns:local="clr-namespace:JurassicRisk.Views" xmlns:ViewsModels="clr-namespace:JurassicRisk.ViewsModels"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
+      mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserProfil">
 
@@ -22,7 +22,7 @@
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="/Sprites/Background/UserProfilBackground.jpg"/>
+            <ImageBrush ImageSource="/Sprites/Background/ChillBack.jpg"/>
         </Grid.Background>
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Top"></Button>
         <Ellipse Height="100" Width="100" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Stroke="Red" StrokeThickness="4">
@@ -31,79 +31,25 @@
             </Ellipse.Fill>
         </Ellipse>
 
-        <TextBlock x:Name="pseudoText" Text="{Binding SelectedProfil.Pseudo}" FontSize="21" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource Bloody}">
+        <TextBlock x:Name="pseudoText" Text="{Binding SelectedProfil.Pseudo}" FontSize="21" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource FruitDays}">
             <TextBlock.Effect>
                 <DropShadowEffect/>
             </TextBlock.Effect>
         </TextBlock>
 
-        <FlowDocumentScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" VerticalScrollBarVisibility="Hidden">
-            <FlowDocument>
-                <Table CellSpacing="0" BorderBrush="Purple" BorderThickness="5">
-                    <Table.Columns>
-                        <TableColumn Width="*"/>
-                        <TableColumn Width="*"/>
-                    </Table.Columns>
-                    <TableRowGroup>
-                        <TableRow>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Parties gagnées</Paragraph>
-                            </TableCell>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">15</Paragraph>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Troupes vaincues</Paragraph>
-                            </TableCell>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">1420</Paragraph>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Troupes Perdues</Paragraph>
-                            </TableCell>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">15</Paragraph>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Nombre de territoires conquis</Paragraph>
-                            </TableCell>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">500</Paragraph>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Nombre de territoires max possédé</Paragraph>
-                            </TableCell>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">41</Paragraph>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Carte gagnées</Paragraph>
-                            </TableCell>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">320</Paragraph>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Carte échangés</Paragraph>
-                            </TableCell>
-                            <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">105</Paragraph>
-                            </TableCell>
-                        </TableRow>
-                    </TableRowGroup>
-                </Table>
-            </FlowDocument>
-        </FlowDocumentScrollViewer>
+        <!--<DataGrid Name="dataGrid1" ItemsSource="{ Binding SelectedListProfil}" ItemBindingGroup="{Binding SelectedListProfil}" Style="{StaticResource CustomDataGrid}" >
+            
+        </DataGrid>-->
+
+        <DataGrid Name="DataGrid1" AutoGenerateColumns="False" ItemsSource="{Binding SelectedListStatistique}" ItemBindingGroup="{Binding SelectedListStatistique}" VerticalAlignment="Center"  HorizontalAlignment="Center" Width="577" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Height="205">
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="{x:Static Ressources:Strings.PartieJoué}" Binding="{Binding PartyPlay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static Ressources:Strings.TrpVaincus}" Binding="{Binding TrpVaincus}"></DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static Ressources:Strings.TrpPerdus}" Binding="{Binding TrpPerdu}"></DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static Ressources:Strings.TConquis}" Binding="{Binding Conquis}"></DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static Ressources:Strings.TConquisSmlt}" Binding="{Binding ConquisSmlt}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Page>

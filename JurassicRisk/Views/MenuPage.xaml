@@ -26,7 +26,7 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        <Grid.Background>
+        <Grid.Background >
             <ImageBrush ImageSource="/Sprites/Background/Background3.jpg"/>
         </Grid.Background>
 
@@ -34,9 +34,9 @@
       
         </TextBlock>
         <Button Content="{x:Static Ressources:Strings.Play}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="PlayButton_Click"/>
-        <!--<Button Content="{x:Static Ressources:Strings.Options}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomButton}" Click="OptionButton_Click"/>-->
-        <Button Content="{x:Static Ressources:Strings.Profil}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="ProfilButton_Click"/>
-        <Button Content="{x:Static Ressources:Strings.Deconnexion}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="DeconnectionButton_Click"/>
+        <Button Content="{x:Static Ressources:Strings.Options}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="OptionButton_Click"/>
+        <Button Content="{x:Static Ressources:Strings.Profil}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="ProfilButton_Click"/>
+        <Button Content="{x:Static Ressources:Strings.Deconnexion}" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="DeconnectionButton_Click"/>
 
 
 

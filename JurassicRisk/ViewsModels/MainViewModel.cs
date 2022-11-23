@@ -1,4 +1,7 @@
-﻿using Réseaux.Connexion;
+﻿using Models;
+using Réseaux.Connexion;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using Profil = Models.Profil;
@@ -28,7 +31,7 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("SelectedProfil");
             }
         }
-
+       
         #endregion Properties
 
         #region Constructor
@@ -52,7 +55,7 @@ namespace JurassicRisk.ViewsModels
         private MainViewModel()
         {
             _ip = "localhost:7215";
-            client = new ClientConnection();
+            client = new ClientConnection();           
         }
 
         #endregion Constructor

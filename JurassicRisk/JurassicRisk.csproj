@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -8,11 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Polices\BungeeInline-Regular.ttf" />
+    <None Remove="Polices\FruitDays.ttf" />
     <None Remove="Polices\University.otf" />
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
     <None Remove="Sprites\Background\Background3.jpg" />
+    <None Remove="Sprites\Background\ChillBack.jpg" />
+    <None Remove="Sprites\Background\Background4.jpg" />
     <None Remove="Sprites\Background\FondCarte.gif" />
     <None Remove="Sprites\Background\TreeBackground.jpg" />
     <None Remove="Sprites\Background\trex.jpg" />
@@ -83,20 +85,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Polices\BungeeInline-Regular.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    <Resource Include="Polices\FruitDays.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Polices\University.otf" />
+    <Resource Include="Polices\University.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Sprites\Background\Background1.jpg" />
     <Resource Include="Sprites\Background\Background2.jpg" />
     <Resource Include="Sprites\Background\Background3.jpg" />
+    <Resource Include="Sprites\Background\ChillBack.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Background\Background4.jpg" />
     <Resource Include="Sprites\Background\FondCarte.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Sprites\Background\TreeBackground.jpg" />
     <Resource Include="Sprites\Background\UserProfilBackground.jpg" />
     <Resource Include="Sprites\Background\trex.jpg" />
-    <Resource Include="Polices\Bloody terror.ttf" />
+    <Resource Include="Polices\Bloody terror.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Sprites\Background\water.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
