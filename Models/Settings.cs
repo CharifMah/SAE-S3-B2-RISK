@@ -79,8 +79,7 @@ namespace Models
             _availableCulture = new List<string>() { "fr-FR", "en-US" };
             _pleinEcran = false;
             _culturename = Thread.CurrentThread.CurrentCulture.Name;
-            _loadSettings = new ChargerCollection(Environment.CurrentDirectory);
-            LoadSettings();
+            LoadSettings();       
         }
 
         #endregion
@@ -90,9 +89,17 @@ namespace Models
             _saveSettings = new SauveCollection(Environment.CurrentDirectory);
         }
 
-        public void LoadSettings()
+        private void LoadSettings()
         {
-            _instance = _loadSettings.Charger<Settings>("Settings");
+            _loadSettings = new ChargerCollection(Environment.CurrentDirectory);
+            Settings instance = _loadSettings.Charger<Settings>("Settings");
+            if (instance != null)
+            {
+                this._culturename = instance._culturename;
+                this._pleinEcran = instance._pleinEcran;
+            }
+
+            
         }
     }
 }

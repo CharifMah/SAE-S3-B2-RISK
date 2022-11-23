@@ -49,6 +49,12 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
+        public Settings Settings
+        {
+            get { return Settings.Get(); }
+
+        }
+
         public List<string> Culturenames
         {
             get
@@ -59,7 +65,8 @@ namespace JurassicRisk.ViewsModels
 
         public SettingsViewModel()
         {
-
+            this.NotifyPropertyChanged("PLeinEcran");
+            this.NotifyPropertyChanged("Culturename");
         }
     }
 }
