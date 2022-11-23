@@ -40,21 +40,15 @@
         <!--<DataGrid Name="dataGrid1" ItemsSource="{ Binding SelectedListProfil}" ItemBindingGroup="{Binding SelectedListProfil}" Style="{StaticResource CustomDataGrid}" >
             
         </DataGrid>-->
-        <Grid Margin="10">
-            <DataGrid Name="DataGrid1" AutoGenerateColumns="False" Margin="0,0,-448,0" ItemsSource="{Binding SelectedListProfil}" ItemBindingGroup="{Binding SelectedListProfil}" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Partie Joué" Binding="{Binding SelectedListProfil.Pseudo}" />
-                    <DataGridTextColumn Header="Troupes Vaincus" Binding="{Binding Vaincus}" />
-                    <DataGridTextColumn Header="Troupes Perdus" Binding="{Binding Perdu}" />
-                    <DataGridTextColumn Header="Nombre de Territoires conquis" Binding="{Binding Conquis}" />
-                    <DataGridTextColumn Header="Nombre de territoire conquis en simultanée max" Binding="{Binding Simultanee}" />
-                </DataGrid.Columns>
-                <DataGrid.RowDetailsTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Details}" Margin="10" />
-                    </DataTemplate>
-                </DataGrid.RowDetailsTemplate>
-            </DataGrid>
-        </Grid>
+
+        <DataGrid Name="DataGrid1" AutoGenerateColumns="False" ItemsSource="{Binding SelectedListProfil}" ItemBindingGroup="{Binding SelectedListProfil}" VerticalAlignment="Center"  HorizontalAlignment="Center" Width="366" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Height="205">
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="First Name1" Binding="{Binding Pseudo}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Last Name2" Binding="{Binding Pseudo1}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Last Name3" Binding="{Binding Pseudo2}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Last Name4" Binding="{Binding Pseudo3}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Page>

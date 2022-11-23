@@ -66,12 +66,15 @@ namespace JurassicRisk.ViewsModels
             _ip = "localhost:7215";
             client = new ClientConnection();
             _profils = new ObservableCollection<Profil>();
-            this._selectedProfil = new Profil("Adam");
+         
             for (int i = 0; i < 5; i++)
             {
+                this._selectedProfil = new Profil($"Adam{i}");
                 _profils.Add(SelectedProfil);
             }
-            
+
+            NotifyPropertyChanged("SelectedListProfil");
+
         }
 
         #endregion Constructor
