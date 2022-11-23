@@ -57,12 +57,12 @@ namespace Models
 
         public void AddUnit(Unite unit)
         {
-            throw new NotImplementedException();
+            this.troupe.Add(unit);
         }
 
         public void RemoveUnit(Unite unit)
         {
-            throw new NotImplementedException();
+            this.troupe.Remove(unit);
         }
 
         public void RemoveUnit(List<Unite> unites, TerritoireBase territoire)
