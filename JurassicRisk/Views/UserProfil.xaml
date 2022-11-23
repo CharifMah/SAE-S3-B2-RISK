@@ -32,9 +32,6 @@
         </Ellipse>
 
         <TextBlock x:Name="pseudoText" Text="{Binding SelectedProfil.Pseudo}" FontSize="21" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource FruitDays}">
-            <TextBlock.Effect>
-                <DropShadowEffect/>
-            </TextBlock.Effect>
         </TextBlock>
 
         <!--<DataGrid Name="dataGrid1" ItemsSource="{ Binding SelectedListProfil}" ItemBindingGroup="{Binding SelectedListProfil}" Style="{StaticResource CustomDataGrid}" >
@@ -50,6 +47,5 @@
                 <DataGridTextColumn Header="{x:Static Ressources:Strings.TConquisSmlt}" Binding="{Binding ConquisSmlt}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </Page>

@@ -32,10 +32,11 @@ namespace Models.Map
             this._troupe = new List<Unite>();
         }
 
-
-        public void AddUnit(Unite unit)
+        public TerritoireBase(List<Unite> troupe, int id)
         {
-            _troupe.Add(unit);
+            this._id = id;
+            this._teams = Teams.NEUTRE;
+            this._troupe = troupe;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Models;
+
 using Models.Map;
 using Models.Units;
 using Stockage;
@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -52,7 +51,6 @@ namespace JurassicRisk.ViewsModels
         /// <author>Charif</author>
         public ViewModelCarte()
         {
-            new SaveMap();
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             _decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");     
@@ -117,7 +115,7 @@ namespace JurassicRisk.ViewsModels
 
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
         {
-            canvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} X: {territoire.x} Y: {territoire.y} t : {territoire.Team}";
+            canvas.ToolTip = $"Units: {territoire.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
         }
 
         private void MyCanvas_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
@@ -132,6 +130,7 @@ namespace JurassicRisk.ViewsModels
         private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
+            
             if(territoire.Team == Teams.NEUTRE)
             {
                 territoire.SetTeam(Teams.ROUGE);
