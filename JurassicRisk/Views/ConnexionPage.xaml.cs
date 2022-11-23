@@ -1,4 +1,6 @@
-﻿using JurassicRisk.ViewsModels;
+﻿using DBStorage.ClassMetier;
+using JurassicRisk.ViewsModels;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +31,8 @@ namespace JurassicRisk.Views
 
         private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            await MainViewModel.Get().SetSelectedProfil(inputPseudo.Text);
+            Models.Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
+            await MainViewModel.Get().SetSelectedProfil(profil);
 
             if (MainViewModel.Get().SelectedProfil != null)
             {
