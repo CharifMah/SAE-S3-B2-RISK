@@ -13,7 +13,7 @@ namespace Models.Map
     public class TerritoireDecorator : TerritoireBase
     {
         [DataMember]
-        protected TerritoireBase _territoire;
+        private TerritoireBase _territoire;
         [DataMember]
         protected int _x;
         [DataMember]
@@ -33,14 +33,12 @@ namespace Models.Map
             _UriSource = UriSource;
             Width = width;
             Height = height;
+
         }
 
         public TerritoireBase TerritoireBase { get { return _territoire; } }
-
         public int x => this._x;
-
         public int y => this._y;
-
         public string UriSource { get => this._UriSource; set => this._UriSource = value; }
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
