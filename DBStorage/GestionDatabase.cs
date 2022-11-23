@@ -23,7 +23,7 @@ namespace DBStorage
         /// <author>Brian VERCHERE</author>
         private void Connect()
         {
-            connString = "server=localhost;uid=root;password=;";
+            connString = "server=localhost;uid=root;password=root;";
 
             conn = null;
             conn = new MySqlConnection(connString);
