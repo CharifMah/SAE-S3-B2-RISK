@@ -45,6 +45,13 @@ namespace Models.Map
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
 
+        public void SetTeam(Teams team)
+        {
+            this.Team = team;
+            TerritoireBase.Team = team;
+        }
+
+
         public override string? ToString()
         {
             return $"{x},{y}";

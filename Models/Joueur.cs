@@ -40,13 +40,13 @@ namespace Models
                     if(troupe.Contains(unit))
                     {
                         troupe.Remove(unit);
+                        territoire.AddUnit(unit);
                     }
                     else
                     {
                         throw new NotEnoughUnitException("Not enough unit !");
                     }
                 }
-                territoire.Units = unites;
             }
             else
             {
