@@ -41,7 +41,7 @@
             
         </DataGrid>-->
 
-        <DataGrid Name="DataGrid1" AutoGenerateColumns="False" ItemsSource="{Binding SelectedListStatistique}" ItemBindingGroup="{Binding SelectedListStatistique}" VerticalAlignment="Center"  HorizontalAlignment="Center" Width="366" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Height="205">
+        <DataGrid Name="DataGrid1" AutoGenerateColumns="False" ItemsSource="{Binding SelectedListStatistique}" ItemBindingGroup="{Binding SelectedListStatistique}" VerticalAlignment="Center"  HorizontalAlignment="Center" Width="577" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Height="205">
             <DataGrid.Columns >
                 <DataGridTextColumn Header="{x:Static Ressources:Strings.PartieJoué}" Binding="{Binding PartyPlay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static Ressources:Strings.TrpVaincus}" Binding="{Binding TrpVaincus}"></DataGridTextColumn>

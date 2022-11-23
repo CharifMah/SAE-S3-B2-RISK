@@ -25,7 +25,6 @@ namespace JurassicRisk.Views
         {
             InitializeComponent();
             DataGrid1.DataContext = new StatsViewModel();
-            DataContext = MainViewModel.Get();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
