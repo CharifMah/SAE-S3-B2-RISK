@@ -66,7 +66,7 @@
 
     </Style>
 
-    <Style x:Key="FruitDays" TargetType="{x:Type TextBlock}">
+    <Style x:Key="FruitDays">
         <Setter Property="TextElement.FontFamily" Value="/Polices/#Fruit Days"></Setter>
     </Style>
 
