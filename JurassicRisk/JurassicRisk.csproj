@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -13,6 +13,7 @@
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
     <None Remove="Sprites\Background\Background3.jpg" />
+    <None Remove="Sprites\Background\ChillBack.jpg" />
     <None Remove="Sprites\Background\Background4.jpg" />
     <None Remove="Sprites\Background\FondCarte.gif" />
     <None Remove="Sprites\Background\TreeBackground.jpg" />
@@ -93,6 +94,9 @@
     <Resource Include="Sprites\Background\Background1.jpg" />
     <Resource Include="Sprites\Background\Background2.jpg" />
     <Resource Include="Sprites\Background\Background3.jpg" />
+    <Resource Include="Sprites\Background\ChillBack.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Sprites\Background\Background4.jpg" />
     <Resource Include="Sprites\Background\FondCarte.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

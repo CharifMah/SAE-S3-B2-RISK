@@ -58,7 +58,11 @@
                   VerticalAlignment="Center" 
                   />
 
+
         <TextBlock Text="Musique : "
+
+        <TextBlock Text="{x:Static Ressources:Strings.Musique}"
+
                    Grid.Column="2" 
                    Grid.Row="3" 
                    FontSize="20"
@@ -75,7 +79,10 @@
                   VerticalAlignment="Center" 
                   IsChecked="{Binding Path=PleinEcran}"/>
 
+
         <TextBlock Text="FullScreen : " 
+
+        <TextBlock Text="{x:Static Ressources:Strings.FullScreen}"
                    Grid.Column="2"
                    Grid.Row="2" 
                    HorizontalAlignment="Center" 

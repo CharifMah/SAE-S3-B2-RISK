@@ -1,4 +1,4 @@
-﻿<Application x:Class="JurassicRisk.App"
+<Application x:Class="JurassicRisk.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:JurassicRisk"
@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Style\CustomCheckBox.xaml"/>
                 <ResourceDictionary Source="Style\CustomTextBox.xaml"/>
                 <ResourceDictionary Source="Style\CustomPolice.xaml"/>
+                <ResourceDictionary Source="Style\CustomDataGrid.xaml"/>
                 <ResourceDictionary Source="Style\CustomComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

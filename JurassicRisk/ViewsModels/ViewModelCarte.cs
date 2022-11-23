@@ -1,4 +1,6 @@
-﻿using Models.Map;
+
+using Models.Map;
+using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,10 @@ namespace JurassicRisk.ViewsModels
         List<ITerritoireBase> _territoiresBase;
         private Canvas _carteCanvas;
         private Carte _carte;
+        private Joueur j = new Joueur();
+        private FabriqueUnite f = new FabriqueUnite();
         private int zi = 0;
+        
 
         public Canvas CarteCanvas
         {
@@ -53,8 +58,6 @@ namespace JurassicRisk.ViewsModels
             _continents = new List<Continent>();
             _carte = DrawCarte();
             NotifyPropertyChanged("Carte");
-
-            
         }
 
         /// <summary>
@@ -127,10 +130,23 @@ namespace JurassicRisk.ViewsModels
         private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
-            territoire.Team = Models.Teams.ROUGE;
-            DropShadowEffect shadow = new DropShadowEffect();
-            shadow.Color = Brushes.Red.Color;
-            c.Effect = shadow;
+            
+            if(territoire.Team == Teams.NEUTRE)
+            {
+                territoire.SetTeam(Teams.ROUGE);
+                DropShadowEffect shadow = new DropShadowEffect();
+                shadow.Color = Brushes.Red.Color;
+                c.Effect = shadow;
+            }
+            else
+            {
+                List<Unite> renforts = new List<Unite>();
+                var unit = f.Create("Brachiosaure");
+                renforts.Add(unit);
+                j.Troupe.Add(unit);
+                j.PositionnerTroupe(renforts, territoire.TerritoireBase);
+                MessageBox.Show("Troupes ajoutées");
+            }
         }
 
         private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
