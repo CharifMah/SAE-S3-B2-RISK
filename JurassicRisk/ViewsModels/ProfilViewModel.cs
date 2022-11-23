@@ -1,9 +1,17 @@
-﻿using Models;
+using Models;
 using Réseaux.Connexion;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Org.BouncyCastle.Bcpg.OpenPgp;
+using Réseaux.Connexion;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using Ubiety.Dns.Core;
 using Profil = Models.Profil;
 
 namespace JurassicRisk.ViewsModels
@@ -12,7 +20,7 @@ namespace JurassicRisk.ViewsModels
     {
         #region Attributs
 
-        private ClientConnection client;
+        private HttpClient client;
 
         private Profil _selectedProfil;
 
@@ -43,7 +51,12 @@ namespace JurassicRisk.ViewsModels
         private ProfilViewModel()
         {
             _ip = "localhost:7215";
-            client = new ClientConnection();           
+            client = new HttpClient();
+            _profils = new ObservableCollection<Profil>();
+         
+            NotifyPropertyChanged("SelectedListProfil");
+
+
         }
 
         #endregion Constructor
@@ -56,14 +69,18 @@ namespace JurassicRisk.ViewsModels
         /// <param name="pseudo">string pseudo</param>
         /// <returns>awaitable Task</returns>
         /// <Author>Charif Mahmoud</Author>
-        public async Task SetSelectedProfil(string pseudo)
+        public async Task SetSelectedProfil(Profil profil)
         {
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); 
             _selectedProfil = null;
-            Profil response = await client.Get<Profil>($"https://{_ip}/Users/connexion?pseudo={pseudo}");
-
-            if (response != null)
-            {
-                _selectedProfil = response;
+            HttpResponseMessage response = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/connexion", profil);
+            if (response.IsSuccessStatusCode)
+           {
+                var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
+                Profil profilDemande = JsonSerializer.Deserialize<Profil>(response.Content.ReadAsStringAsync().Result,options);
+                string t = response.Content.ReadAsStringAsync().Result;
+                _selectedProfil = profilDemande;
             }
         }
 
@@ -74,7 +91,7 @@ namespace JurassicRisk.ViewsModels
         /// <returns>awaitable Task</returns>
         public async Task CreateProfil(Profil profil)
         {
-            await client.Post<Profil>($"https://{_ip}/Users/Inscription?pseudo={profil.Pseudo}", profil);
+            await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription?pseudo={profil.Pseudo}&mdp={profil.Password}", profil);
         }
 
         /// <summary>
@@ -84,7 +101,13 @@ namespace JurassicRisk.ViewsModels
         /// <returns>awaitable Task with Hresult bool</returns>
         public async Task<bool> VerifProfilCreation(string pseudo)
         {
-            return await client.Get<bool>($"https://{_ip}/Users/verifUser?pseudo={pseudo}");
+            bool res = false;
+            HttpResponseMessage reponseMessage =  await client.GetAsync($"https://{_ip}/Users/verifUser?pseudo={pseudo}");
+            if (reponseMessage.IsSuccessStatusCode)
+            {
+                res = await reponseMessage.Content.ReadAsAsync<bool>();
+            }
+            return res;
         }
 
         #endregion Private methods
