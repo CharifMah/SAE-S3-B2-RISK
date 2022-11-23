@@ -11,9 +11,8 @@
       Title="JeuPage">
 
     <Grid >
-        
         <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif" Stretch="Fill" />
-
+        
         <Viewbox Stretch="Fill" x:Name="ViewboxCanvas">
             <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="-50,0,20,70">
 
@@ -22,20 +21,18 @@
             </Canvas>
         </Viewbox>
 
-        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Height="214" Width="324">
             <GroupBox.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"/>
             </GroupBox.Background>
-            
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-                
-                <StackPanel >
-                    <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Play}" Click="PlayButton_Click"/>
+            <Grid>
+                <StackPanel UseLayoutRounding="True"  >
+                    <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Play}" Click="PlayButton_Click" />
                     <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Deconnexion}" Click="LogOutButton_Click"/>
                 </StackPanel>
-                
+
             </Grid>
         </GroupBox>
-        
+
     </Grid>
 </Page>

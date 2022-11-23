@@ -42,9 +42,9 @@ namespace JurassicRisk.Views
             MainViewModel.Get().SelectedProfil = null;
         }
 
-        //private void OptionButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new Options());
-        //}
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new Options());
+        }
     }
 }
