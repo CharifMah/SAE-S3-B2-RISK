@@ -59,6 +59,7 @@
         <Setter Property="MinWidth" Value="120"/>
         <Setter Property="MinHeight" Value="20"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="/Polices/#Fruit Days"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">

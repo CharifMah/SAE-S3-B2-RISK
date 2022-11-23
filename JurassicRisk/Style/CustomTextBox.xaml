@@ -37,6 +37,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="BorderBrush" Value="Azure"/>
+        <Setter Property="TextBlock.FontFamily" Value="/Polices/#Fruit Days"/>
     </Style>
 
     <!-- and if you want to all TextBox `es to use this style, you have to add this line of code: --><!--

@@ -31,7 +31,7 @@
             </Ellipse.Fill>
         </Ellipse>
 
-        <TextBlock x:Name="pseudoText" Text="{Binding SelectedProfil.Pseudo}" FontSize="21" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource Bloody}">
+        <TextBlock x:Name="pseudoText" Text="{Binding SelectedProfil.Pseudo}" FontSize="21" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource FruitDays}">
             <TextBlock.Effect>
                 <DropShadowEffect/>
             </TextBlock.Effect>
