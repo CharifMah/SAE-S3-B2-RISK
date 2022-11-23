@@ -12,28 +12,28 @@ namespace Models.Map
         [DataMember]
         protected Teams _teams;
         [DataMember]
-        protected List<IMakeUnit> _makeUnits;
+        protected List<Unite> _troupe;
         [DataMember]
         protected int _id;
 
         public Teams Team { get => this._teams; set => this._teams = value; }
-        public List<IMakeUnit> Units
+        public List<Unite> Units
         {
-            get => this._makeUnits;
-            set => this._makeUnits = value;
+            get => this._troupe;
+            set => this._troupe = value;
         }
         public int ID { get => this._id; set => this._id = value; }
         public TerritoireBase(int id)
         {
             this._id = id;
             this._teams = Teams.NEUTRE;
-            this._makeUnits = new List<IMakeUnit>();
+            this._troupe = new List<Unite>();
         }
-        public TerritoireBase(List<IMakeUnit> makeUnits, int id)
+        public TerritoireBase(List<Unite> troupe, int id)
         {
             this._id = id;
             this._teams = Teams.NEUTRE;
-            this._makeUnits = makeUnits;
+            this._troupe = troupe;
         }
     }
 }
