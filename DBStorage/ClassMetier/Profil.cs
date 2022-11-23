@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace DBStorage.ClassMetier
 {
     public class Profil
@@ -15,15 +17,21 @@ namespace DBStorage.ClassMetier
         /// <summary>
         /// Password of the profil
         /// </summary>
-        public string Mdp { get; set; }
+        public string Password { get; set; }
 
         /// <summary>
         /// create a profil
         /// </summary>
         /// <param name="login">of the profil</param>
-        public Profil(string login) 
+        public Profil(string Pseudo, string Password) 
         {
-            Pseudo = login; 
+            this.Pseudo = Pseudo; 
+            this.Password = Password;
+        }
+
+        [JsonConstructor]
+        public Profil()
+        {
         }
 
     }
