@@ -21,17 +21,19 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class ConnexionPage : Page
     {
+        private ProfilViewModel p;
         public ConnexionPage()
         {
             InitializeComponent();
-            DataContext = MainViewModel.Get();
+            p = new ProfilViewModel();
+            DataContext = p;
         }
 
         private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            await MainViewModel.Get().SetSelectedProfil(inputPseudo.Text);
+            await p.SetSelectedProfil(inputPseudo.Text);
 
-            if (MainViewModel.Get().SelectedProfil != null)
+            if (p.SelectedProfil != null)
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
             }

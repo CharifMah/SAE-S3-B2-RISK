@@ -11,35 +11,56 @@ namespace Models
 {
     public class Joueur : IGestionTroupe
     {
-        private Teams equipe;
-        private List<Unite> troupe;
+        #region Attribute
+
+        private Teams _equipe;
+        private List<Unite> _troupe;
+        private Profil _profil;
+
+        #endregion
+
+        #region Property
 
         public Teams Equipe
         {
-            get { return equipe; }
-            set { equipe = value; }
+            get { return _equipe; }
+            set { _equipe = value; }
         }
 
         public List<Unite> Troupe
         {
-            get { return troupe; }
-            set { troupe = value; }
+            get { return _troupe; }
+            set { _troupe = value; }
         }
 
-        public Joueur()
+        public Profil Profil
         {
-            troupe = new List<Unite>();
+            get { return _profil; }
+            set { _profil = value; }
         }
+
+        #endregion
+
+        #region Constructor
+
+        public Joueur(Profil profil, List<Unite> troupe, Teams equipe)
+        {
+            _troupe = troupe;
+            _profil = profil;
+            _equipe = equipe;
+        }
+
+        #endregion
 
         public void PositionnerTroupe(List<Unite> unites, TerritoireBase territoire)
         {
-            if(equipe.ToString() == territoire.Team.ToString())
+            if(_equipe == territoire.Team)
             {
                 foreach(var unit in unites)
                 {
-                    if(troupe.Contains(unit))
+                    if(_troupe.Contains(unit))
                     {
-                        troupe.Remove(unit);
+                        _troupe.Remove(unit);
 
                         territoire.AddUnit(unit);
                     }

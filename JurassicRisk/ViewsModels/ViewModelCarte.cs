@@ -56,7 +56,7 @@ namespace JurassicRisk.ViewsModels
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             _decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");
             f = new FabriqueUnite();
-            j = new Joueur();
+            j = new Joueur(new Profil("s"),new List<Unite>() { new Unite()},Teams.NEUTRE);
             _continents = new List<Continent>();
             _carte = DrawCarte();
             NotifyPropertyChanged("Carte");

@@ -39,7 +39,6 @@ namespace JurassicRisk.Views
         private void DeconnectionButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
-            MainViewModel.Get().SelectedProfil = null;
         }
 
         private void OptionButton_Click(object sender, RoutedEventArgs e)

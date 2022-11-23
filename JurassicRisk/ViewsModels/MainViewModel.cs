@@ -8,7 +8,7 @@ using Profil = Models.Profil;
 
 namespace JurassicRisk.ViewsModels
 {
-    public class MainViewModel : observable.Observable
+    public class ProfilViewModel : observable.Observable
     {
         #region Attributs
 
@@ -36,23 +36,7 @@ namespace JurassicRisk.ViewsModels
 
         #region Constructor
 
-        private static MainViewModel _instance;
-
-        /// <summary>
-        /// Singleton Instance du MainViewModel
-        /// </summary>
-        /// <returns>MainViewModel instance</returns>
-        /// <Author>Charif Mahmoud</Author>
-        public static MainViewModel Get()
-        {
-            if (_instance == null)
-            {
-                _instance = new MainViewModel();
-            }
-            return _instance;
-        }
-
-        private MainViewModel()
+        public ProfilViewModel()
         {
             _ip = "localhost:7215";
             client = new ClientConnection();           

@@ -1,5 +1,6 @@
 ﻿using JurassicRisk.Ressource;
 using JurassicRisk.ViewsModels;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,20 +23,22 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class InscriptionPage : Page
     {
+        private ProfilViewModel p;
         public InscriptionPage()
         {
             InitializeComponent();
+            p = new ProfilViewModel();
         }
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if(!await MainViewModel.Get().VerifProfilCreation(inputPseudo.Text))
+            if(!await p.VerifProfilCreation(inputPseudo.Text))
             {
                 if (inputPseudo.Text != "")
                 {
-                    await MainViewModel.Get().CreateProfil(new Models.Profil(inputPseudo.Text));
+                    await p.CreateProfil(new Models.Profil(inputPseudo.Text));
                     (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-                    await MainViewModel.Get().SetSelectedProfil(inputPseudo.Text);
+                    await p.SetSelectedProfil(inputPseudo.Text);
                 }
                 else
                 {
