@@ -8,9 +8,8 @@ namespace Models.Map
 {
     internal class TerritoireDésert : TerritoireBase
     {
-        public TerritoireDésert()
+        public TerritoireDésert(int id) : base(id)
         {
-
         }
     }
 }
