@@ -10,6 +10,10 @@ using System.Windows.Media.Imaging;
 
 namespace Models.Map
 {
+    /// <summary>
+    /// Save the Map in Json file
+    /// </summary>
+    /// <Author>Charif</Author>
     public class SaveMap
     {
         private List<String> _fileEntries;
@@ -20,6 +24,11 @@ namespace Models.Map
             SaveCarte();
         }
 
+        /// <summary>
+        /// Get image Territoire from ressource 
+        /// </summary>
+        /// <returns>List<BitmapImage></returns>
+        /// <Author>Charif</Author>
         private List<BitmapImage> GetImagesTerritoires()
         {
             List<BitmapImage> _sprites = new List<BitmapImage>();
@@ -33,9 +42,8 @@ namespace Models.Map
         }
 
         /// <summary>
-        /// Add all region to the Canvas (CarteCanvas) with DrawRegion
+        /// Save the map into list of territoire decorator
         /// </summary>
-        /// <Author>Charif</Author>
         private void SaveCarte()
         {
             _decorations = new List<TerritoireDecorator>();
