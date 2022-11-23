@@ -13,7 +13,7 @@ namespace ModelTestUnit
         {
             UriParser.Register(new GenericUriParser(GenericUriParserOptions.GenericAuthority), "pack", -1);
             ViewModelCarte MC = new ViewModelCarte();
-            Assert.Equal(6, MC.Carte.Continent.Count);
+            Assert.Equal(6, MC.Carte.DicoContinents.Count);
         }
 
         [Fact]
@@ -35,33 +35,27 @@ namespace ModelTestUnit
 
             }
             Carte carte = new Carte(continent);
-            Assert.Equal(carte.Continent.Values.ElementAt(0).Territores.ElementAt(0).Value.Team, Models.Teams.ROUGE);
+            Assert.Equal(carte.DicoContinents.Values.ElementAt(0).DicoTerritoires.ElementAt(0).Value.Team, Models.Teams.ROUGE);
 
 
         }
-        [Fact]
-        public void TestDoublons()
-        {
-            List<Continent> continent = new List<Continent>();
-            List<Continent> continent1 = new List<Continent>();
+        //[Fact]
+        //public void TestID()
+        //{
+        //    List<Continent> continent = new List<Continent>();
+        //    Dictionary<int, TerritoireBase> dicoTerritoires = new Dictionary<int, TerritoireBase>();
+        //    Dictionary<int, Continent> dicoContinent = new Dictionary<int, Continent>();
+        //    continent.Add(new Continent(new List<TerritoireBase>() { new TerritoireBase() }));
+        //    continent.Add(new Continent(new List<TerritoireBase>() { new TerritoireBase() }));
 
-            List<TerritoireBase> territoires = new List<TerritoireBase>();
-            Dictionary<int, Continent> dicoContinents;
-            dicoContinents = new Dictionary<int, Continent>();
+        //    for (int i = 0; i < continent.Count - 1; i++)
+        //    {
 
-            for (int i = 0; i < 2; i++)
-            {
-                continent.Add(new Continent(territoires));
-                continent1.Add(new Continent(territoires));
-
-            }
-
-            Carte carte = new Carte(continent);
-            Carte carte1 = new Carte(continent);
-
-            Assert.NotEqual(carte.Continent.Values.ElementAt(0).Territores.ElementAt(0).Key, carte1.Continent.Values.ElementAt(0).Territores.ElementAt(0).Key);
+        //    }
+        //    Carte carte = new Carte(continent);
+        //    Assert.NotEqual(carte.DicoContinents.Values.ElementAt(0).DicoTerritoires.ElementAt(0).Key, carte.DicoContinents.Values.ElementAt(1).DicoTerritoires.ElementAt(1).Key);
 
 
-        }
+        //}
     }
 }
