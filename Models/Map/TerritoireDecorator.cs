@@ -33,6 +33,10 @@ namespace Models.Map
             _UriSource = UriSource;
             Width = width;
             Height = height;
+            if (territoire.Team != this.Team)
+            {
+                throw new Exception();
+            }
 
         }
 
@@ -42,7 +46,6 @@ namespace Models.Map
         public string UriSource { get => this._UriSource; set => this._UriSource = value; }
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
-
         public override string? ToString()
         {
             return $"{x},{y}";

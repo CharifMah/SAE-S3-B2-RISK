@@ -146,7 +146,7 @@ namespace JurassicRisk.ViewsModels
                 var unit = f.Create("Brachiosaure");
                 renforts.Add(unit);
                 j.Troupe.Add(unit);
-                j.PositionnerTroupe(renforts, territoire.TerritoireBase);
+                j.PositionnerTroupe(renforts, territoire);
                 MessageBox.Show("Troupes ajoutées");
             }
         }
