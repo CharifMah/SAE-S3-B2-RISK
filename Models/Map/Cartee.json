@@ -7,7 +7,7 @@
     "_territoire": {
       "_id": 0,
       "_teams": 4,
-      "_troupe": []
+      "_troupe": [],
     },
     "_x": 94,
     "_y": 51,
@@ -22,7 +22,7 @@
     "_territoire": {
       "_id": 1,
       "_teams": 4,
-      "_troupe": []
+      "_troupe": [],
     },
     "_x": 114,
     "_y": 149,
@@ -602,7 +602,6 @@
   {
     "_id": 40,
     "_teams": 4,
-    "_troupe": [],
     "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/6c7r.png",
     "_territoire": {
       "_id": 40,

@@ -25,6 +25,7 @@ namespace Models.Map
             {
                 dicoContinents.Add(i, continent[i]);
             }
+
         }    
     }
 }

@@ -17,6 +17,8 @@ namespace Models.Map
         protected int _id;
 
         public Teams Team { get => this._teams; set => this._teams = value; }
+        public int ID { get => this._id; set => this._id = value; }
+
         public List<Unite> Units
         {
             get => this._troupe;
@@ -30,6 +32,7 @@ namespace Models.Map
             this._teams = Teams.NEUTRE;
             this._troupe = new List<Unite>();
         }
+
 
         public void AddUnit(Unite unit)
         {
