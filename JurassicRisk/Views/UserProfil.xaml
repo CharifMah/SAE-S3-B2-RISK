@@ -31,7 +31,7 @@
             </Ellipse.Fill>
         </Ellipse>
 
-        <TextBlock x:Name="pseudoText" Text="{Binding SelectedProfil.Pseudo}" FontSize="21" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource Bloody}">
+        <TextBlock x:Name="pseudoText" Text="{Binding SelectedProfil.Pseudo}" FontSize="21" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource FruitDays}">
             <TextBlock.Effect>
                 <DropShadowEffect/>
             </TextBlock.Effect>
@@ -47,58 +47,58 @@
                     <TableRowGroup>
                         <TableRow>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Parties gagnées</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">Parties gagnées</Paragraph>
                             </TableCell>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">15</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">15</Paragraph>
                             </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Troupes vaincues</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">Troupes vaincues</Paragraph>
                             </TableCell>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">1420</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">1420</Paragraph>
                             </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Troupes Perdues</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">Troupes Perdues</Paragraph>
                             </TableCell>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">15</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">15</Paragraph>
                             </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Nombre de territoires conquis</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">Nombre de territoires conquis</Paragraph>
                             </TableCell>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">500</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">500</Paragraph>
                             </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Nombre de territoires max possédé</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">Nombre de territoires max possédé</Paragraph>
                             </TableCell>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">41</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">41</Paragraph>
                             </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Carte gagnées</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">Carte gagnées</Paragraph>
                             </TableCell>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">320</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">320</Paragraph>
                             </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">Carte échangés</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">Carte échangés</Paragraph>
                             </TableCell>
                             <TableCell BorderThickness="4" BorderBrush="DarkGreen" TextAlignment="Center">
-                                <Paragraph FontWeight="Bold" Style="{StaticResource Bungee}" Foreground="DarkRed">105</Paragraph>
+                                <Paragraph FontWeight="Bold" Style="{StaticResource FruitDays}" Foreground="DarkRed">105</Paragraph>
                             </TableCell>
                         </TableRow>
                     </TableRowGroup>

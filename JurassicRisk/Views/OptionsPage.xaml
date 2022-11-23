@@ -64,6 +64,7 @@
                    FontSize="20"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
+                   Style="{StaticResource FruitDays}"
                    />
 
         <CheckBox x:Name="checkBoxFullScreen" 
@@ -76,10 +77,10 @@
 
         <TextBlock Text="FullScreen : " 
                    Grid.Column="2"
-                   FontSize="20" 
                    Grid.Row="2" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
+                   Style="{StaticResource FruitDays}"
                    />
 
         <ComboBox x:Name="LangueComboBox" 
@@ -88,6 +89,7 @@
                   Grid.Column="1" 
                   HorizontalAlignment="Stretch" 
                   Grid.Row="2"
+                  FontSize="17"
                   VerticalAlignment="Center" 
                   Margin="20,0,20,0" ItemsSource="{Binding Culturenames}">
         </ComboBox>
