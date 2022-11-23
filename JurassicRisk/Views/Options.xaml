@@ -10,6 +10,9 @@
       Title="Options">
 
     <Grid>
-        <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" Foreground="DarkRed" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2" Text="{x:Static Ressources:Strings.Options}"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Sprites/Background/Background4.jpg"/>
+        </Grid.Background>
+        <TextBlock Style="{StaticResource Bloody}" FontSize="45" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2" Text="{x:Static Ressources:Strings.Options}"/>
     </Grid>
 </Page>
