@@ -63,13 +63,10 @@ namespace JurassicRisk.ViewsModels
         {
             _carteCanvas = new Canvas();
             _territoiresBase = new List<ITerritoireBase>();
-            int i = 0;
             foreach (TerritoireDecorator territoireDecorator in _decorations)
             {
-                territoireDecorator.TerritoireBase.ID = i;
                 _territoiresBase.Add(territoireDecorator.TerritoireBase);
                 DrawRegion(territoireDecorator);
-                i++;
             }
      
             _continents.Add(new Continent(_territoiresBase.Take(7).ToList()));
@@ -101,7 +98,7 @@ namespace JurassicRisk.ViewsModels
             myCanvas.Width = territoire.Height;
             Canvas.SetLeft(myCanvas, territoire.x);
             Canvas.SetTop(myCanvas, territoire.y);
-            myCanvas.ToolTip = $"X: {territoire.x} Y: {territoire.y} t : {territoire.Team}";
+            myCanvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire,myCanvas);
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
             myCanvas.MouseEnter += MyCanvas_MouseEnter;
@@ -113,7 +110,7 @@ namespace JurassicRisk.ViewsModels
 
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
         {
-            canvas.ToolTip = $"X: {territoire.x} Y: {territoire.y} t : {territoire.Team}";
+            canvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
         }
 
         private void MyCanvas_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
