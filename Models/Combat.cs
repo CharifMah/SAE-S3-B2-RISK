@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Models
 {
-    public class Combat
+    public class Combat : ICombat
     {
         public Combat(List<Unite> attaquant, List<Unite> defenseur, TerritoireBase territoireAttaquant, TerritoireBase cible, Joueur assaillant, Joueur victime)
         {
@@ -18,14 +18,14 @@ namespace Models
 
         public void DerouleCombat(List<Unite> attaquant, List<Unite> defenseur, TerritoireBase territoireAttaquant, TerritoireBase cible, Joueur assaillant, Joueur victime)
         {
-            int nbAttaque = Attaquer(attaquant,cible,assaillant);
+            int nbAttaque = Attaquer(attaquant, cible, assaillant);
             int nbDefense = Defendre(defenseur, territoireAttaquant, victime);
             List<int> resAttaque = LancerDes(nbAttaque);
             List<int> resDefense = LancerDes(nbDefense);
-            (List<int>,List<int>) res = TriLances(resAttaque, resDefense);
+            (List<int>, List<int>) res = TriLances(resAttaque, resDefense);
             resAttaque = res.Item1;
             resDefense = res.Item2;
-            (int, int) comparaison = CompareLances(resAttaque,resDefense);
+            (int, int) comparaison = CompareLances(resAttaque, resDefense);
             int attaqueReussie = comparaison.Item1;
             int nombreAttaque = comparaison.Item2;
             RemoveUnits(attaqueReussie, nombreAttaque, territoireAttaquant, cible);
@@ -81,7 +81,7 @@ namespace Models
             return res;
         }
 
-        public (List<int>,List<int>) TriLances(List<int> attaqueScore, List<int> defenseScore)
+        public (List<int>, List<int>) TriLances(List<int> attaqueScore, List<int> defenseScore)
         {
             (int, int) max = (attaqueScore[0], 0);
             for (int i = 0; i < attaqueScore.Count; i++)
@@ -113,18 +113,18 @@ namespace Models
                 }
             }
 
-            return (attaqueScore,defenseScore);
+            return (attaqueScore, defenseScore);
         }
 
-        public (int,int) CompareLances(List<int> lanceAttaque, List<int> lanceDefense)
+        public (int, int) CompareLances(List<int> lanceAttaque, List<int> lanceDefense)
         {
             int attaqueReussie = 0;
             int nbAttaque = 0;
-            if(lanceAttaque.Count < lanceDefense.Count)
+            if (lanceAttaque.Count < lanceDefense.Count)
             {
-                for(int i = 0; i < lanceAttaque.Count; i++)
+                for (int i = 0; i < lanceAttaque.Count; i++)
                 {
-                    if(lanceAttaque[i] > lanceDefense[i])
+                    if (lanceAttaque[i] > lanceDefense[i])
                     {
                         attaqueReussie++;
                     }
@@ -148,12 +148,12 @@ namespace Models
         public void RemoveUnits(int attaqueReussie, int nbAttaque, TerritoireBase territoireAttaquant, TerritoireBase cible)
         {
             List<Unite> troupe = cible.Units;
-            for(int i=0; i < attaqueReussie; i++)
+            for (int i = 0; i < attaqueReussie; i++)
             {
                 cible.RemoveUnit(troupe[0]);
             }
             troupe = territoireAttaquant.Units;
-            for(int i=0; i < nbAttaque - attaqueReussie; i++)
+            for (int i = 0; i < nbAttaque - attaqueReussie; i++)
             {
                 territoireAttaquant.RemoveUnit(troupe[0]);
             }
