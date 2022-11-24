@@ -73,13 +73,6 @@ namespace JurassicRisk.ViewsModels
             _ip = "localhost:7215";
             client = new HttpClient();
             _profils = new ObservableCollection<Profil>();
-         
-            for (int i = 0; i < 5; i++)
-            {
-                this._selectedProfil = new Profil($"Adam{i}");
-                _profils.Add(SelectedProfil);
-            }
-
             NotifyPropertyChanged("SelectedListProfil");
 
 
@@ -107,6 +100,10 @@ namespace JurassicRisk.ViewsModels
                 Profil profilDemande = JsonSerializer.Deserialize<Profil>(response.Content.ReadAsStringAsync().Result,options);
                 string t = response.Content.ReadAsStringAsync().Result;
                 _selectedProfil = profilDemande;
+            }
+            else
+            {
+                string error = response.Content.ReadAsStringAsync().Result;
             }
         }
 
