@@ -1,5 +1,6 @@
 ﻿using DBStorage.ClassMetier;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,38 +8,76 @@ using System.Text;
 using System.Threading.Tasks;
 using Ubiety.Dns.Core;
 using Xunit.Sdk;
+using Profil = Models.Profil;
 
 namespace ModelTestUnit
 {
     public class TestControllerApiUsers
     {
         [Fact]
-        public void connexionTest()
+        public async void connexionTest()
         {
+            string _ip = "localhost:7215";
+            HttpClient client = new HttpClient();
+
             var controller = new RISKAPI.Controllers.UsersController();
+            Profil profil = new Profil("","");
 
-            var c = controller.connexion("") as JsonResult;
-            
-            Assert.Null(c);
+            HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Connexion", profil);
 
-            var c1 = controller.connexion("romain") as JsonResult;
+            string res = reponse.Content.ReadAsStringAsync().Result;
 
-            Assert.NotNull(c1);
-            c1 = controller.connexion("romain") as JsonResult;
-            Profil p = new Profil("romain");
-            p.Id = 1;
-            Assert.Equal(c1.Value.ToString(), p.ToString());
+            Assert.Equal("this account do not exist try to register or use an ather pseudo", res);
+
+
+            profil = new Profil("romain", "12345");
+
+            await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Connexion", profil);
+
+
+            reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Connexion", profil);
+
+
+            Assert.True(reponse.IsSuccessStatusCode);
+
+            profil.Password = "azerty";
+
+            reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Connexion", profil);
+
+            res = reponse.Content.ReadAsStringAsync().Result;
+
+            Assert.Equal("wrong password", res);
 
         }
 
         [Fact]
-        public void inscriptionTest()
+        public async void inscriptionTest()
         {
-            string pseudo = "oui";
+            string _ip = "localhost:7215";
+            HttpClient client = new HttpClient();
+
             var controller = new RISKAPI.Controllers.UsersController();
+            Profil profil = new Profil("", "");
 
-            var ins = controller.inscription(pseudo);
+            HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
 
+            string res = reponse.Content.ReadAsStringAsync().Result;
+
+            Assert.Equal("password too short", res);
+
+
+            profil = new Profil("romain", "12345");
+
+            await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
+
+            reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
+
+
+            Assert.True(!reponse.IsSuccessStatusCode);
+
+            res = reponse.Content.ReadAsStringAsync().Result;
+
+            Assert.Equal("pseudo already used", res);
         }
     }
 }
