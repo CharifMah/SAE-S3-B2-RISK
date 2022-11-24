@@ -10,6 +10,7 @@
 
 namespace JurassicRisk.Ressource
 {
+    using Org.BouncyCastle.Bcpg.OpenPgp;
     using System;
 
 
@@ -255,6 +256,21 @@ namespace JurassicRisk.Ressource
             }
         }
 
+        public static string ConfimationMdp
+        {
+            get
+            {
+                return ResourceManager.GetString("ConfirationMdp", resourceCulture);
+            }
+        }
+
+        public static string PasswordNotMatch
+        {
+            get
+            {
+                return ResourceManager.GetString("PasswordNotMatch", resourceCulture);
+            }
+        }
         public static string PauseEm
         {
             get

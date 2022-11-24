@@ -1,6 +1,12 @@
 using DBStorage;
+using DBStorage.ClassMetier;
+using DBStorage.Mysql;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text.Json;
+using Ubiety.Dns.Core;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RISKAPI.Controllers
 {
@@ -8,33 +14,46 @@ namespace RISKAPI.Controllers
     [Route("Users")]
     public class UsersController
     {
+        private static DAOFactory factory;
+
+        public UsersController()
+        {
+            factory =  MySqlDAOFactory.GetInstance();
+        }
         /// <summary>
-        /// envoi un profil pour que l'API l'ajoute à la BDD
+        /// envoi un profil pour que l'API l'ajoute ï¿½ la BDD
         /// </summary>
         /// <param name="pseudo">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("inscription")]
-        public IActionResult inscription(string pseudo)
+        public IActionResult inscription(Profil profil)
         {
-            GestionDatabase connection = new GestionDatabase();
-
             IActionResult reponse = null;
             try
             {
-                Profil profil = new Profil(pseudo);
+                ProfilDAO profilDAO = factory.CreerProfil();
                 reponse = new AcceptedResult();
-                if (connection.VerifUserCreation(pseudo) == false)
+                if (profilDAO.VerifUserCreation(profil) == false)
                 {
-                    connection.CreateUser(profil.Pseudo);
+                    if (profil.Password.Length > 4)
+                    {
+                        PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
+                        profil.Password = passwordHasher.HashPassword(profil, profil.Password);
+                        profilDAO.Insert(profil);
+                    }
+                    else
+                    {
+                        reponse = new BadRequestObjectResult("password too short");
+                    }
                 }
                 else
                 {
-                    reponse = new BadRequestResult();
+                    reponse = new BadRequestObjectResult("pseudo already used");
                 }
             }
             catch (Exception e)
             {
-                reponse = new BadRequestResult();
+                reponse = new BadRequestObjectResult(e.Message);
             }
             return reponse;
         }
@@ -42,43 +61,57 @@ namespace RISKAPI.Controllers
         /// <summary>
         /// recupere un user dans la base de donnee
         /// </summary>
-        /// <param name="pseudo">Pseudo du user a recuperer</param>
+        /// <param name="profil">user a recuperer</param>
         /// <autor>Romain BARABANT</autor>
-        [HttpGet("connexion")]
-        public IActionResult connexion(string pseudo)
+        [HttpPost("connexion")]
+        public IActionResult connexion( Profil profil)
         {
-            GestionDatabase connection = new GestionDatabase();
-            Profil profilDemandee = null;
-            Profil p = new Profil("");
-
-            p.Pseudo = connection.SelectUser(pseudo);
-            if (p.Pseudo != null)
+            IActionResult reponse = null;
+            try
             {
-                profilDemandee = p;
+                Profil profilDemande = null;
+                ProfilDAO profilDAO = factory.CreerProfil();
+                int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
+                if (Id != 0)
+                {
+                    string[] properties = profilDAO.FindByIdProfil(Id).Split(',');
+                    profilDemande = new Profil(properties[1], properties[2]);
+                    PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
+                    if (passwordHasher.VerifyHashedPassword(profilDemande, profilDemande.Password, profil.Password) != 0)
+                    {
+                        reponse = new JsonResult(profilDemande);
+                    }
+                    else
+                    {
+                        reponse = new BadRequestObjectResult("wrong password");
+                    }
+                }
+                else
+                {
+                    reponse = new BadRequestObjectResult("this account do not exist try to register or use an ather pseudo");
+                }
+            }
+            catch (Exception e)
+            {
+                reponse = new BadRequestObjectResult(e.Message);
             }
 
-            //Création de la réponse
-            IActionResult actionResult = new NoContentResult();
-            if (profilDemandee != null)
-            {
-                actionResult = new JsonResult(profilDemandee);
-            }
-            return actionResult;
+            return reponse;
         }
 
         /// <summary>
         /// Request to verify user if exist in database
         /// </summary>
-        /// <param name="pseudo">string to find in database</param>
+        /// <param name="profil">profil to find in database</param>
         /// <returns>boolean</returns>
         /// <Author>Charif Mahmoud,Brian VERCHERE</Author>
         [HttpGet("verifUser")]
-        public IActionResult verifUser(string pseudo)
+        public IActionResult verifUser(Profil profil)
         {
             IActionResult reponse = null;
+            ProfilDAO profilDAO = factory.CreerProfil();
 
-            GestionDatabase connection = new GestionDatabase();
-            bool res = connection.VerifUserCreation(pseudo);
+            bool res = profilDAO.VerifUserCreation(profil);
      
             if (res == null)
             {

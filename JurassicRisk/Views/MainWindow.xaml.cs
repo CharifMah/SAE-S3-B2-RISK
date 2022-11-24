@@ -1,8 +1,9 @@
-﻿using DBStorage;
+using DBStorage;
 using Google.Protobuf.WellKnownTypes;
 using Models;
 using System;
 using System.Globalization;
+﻿using DBStorage.Mysql;
 using System.Windows;
 
 namespace JurassicRisk.Views
@@ -14,10 +15,6 @@ namespace JurassicRisk.Views
     {
         public MainWindow()
         {
-
-            GestionDatabase connection = new GestionDatabase();
-            connection.CreateDatabase();
-            connection.CreateUserTable();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
 

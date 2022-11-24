@@ -12,11 +12,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -29,10 +30,17 @@
         </Grid.Background>
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Top" Margin="20"></Button>
 
-        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" FontSize="20" Style="{StaticResource FruitDays}" Text="{x:Static Ressources:Strings.Pseudo}"/>
-        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputPseudo"></TextBox>
-        <TextBlock x:Name="Error" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Center" Text="" Visibility="Hidden"  Margin="0,65,0,0"  Height="25" Style="{StaticResource FruitDays}"></TextBlock>
+        <TextBlock Grid.Row="1" VerticalAlignment="center" HorizontalAlignment="Right" Margin="20,0,0,15" FontSize="20" Style="{StaticResource FruitDays}" Text="{x:Static Ressources:Strings.Pseudo}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10,0,10,0" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputPseudo"></TextBox>
 
-        <Button Grid.Column="1" Grid.Row="3"  Content="{x:Static Ressources:Strings.Sinscrire}" VerticalAlignment="Center" Style="{StaticResource CustomAnimationButton}" Click="RegisterButton_Click" ></Button>
+        <TextBlock Grid.Row="2" VerticalAlignment="center" HorizontalAlignment="Right" Margin="20,0,0,0" FontSize="20" Style="{StaticResource FruitDays}" Text="{x:Static Ressources:Strings.Password}"/>
+        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10,0,10,0" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputPassword"></TextBox>
+
+        <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" FontSize="20" Style="{StaticResource FruitDays}" Text="{x:Static Ressources:Strings.ConfimationMdp}"/>
+        <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10,0,10,0" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputConfirmPassword"></TextBox>
+
+        <TextBlock x:Name="Error" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom" FontSize="18" HorizontalAlignment="Center" Text="Error" Visibility="Hidden"  Margin="0,65,0,0" Style="{StaticResource FruitDays}"></TextBlock>
+
+        <Button Grid.Column="1" Grid.Row="4"  Content="{x:Static Ressources:Strings.Sinscrire}" VerticalAlignment="Center" Style="{StaticResource CustomAnimationButton}" Click="RegisterButton_Click" ></Button>
     </Grid>
 </Page>

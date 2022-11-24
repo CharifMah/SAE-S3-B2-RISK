@@ -1,4 +1,6 @@
-﻿using JurassicRisk.ViewsModels;
+﻿using DBStorage.ClassMetier;
+using JurassicRisk.ViewsModels;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,17 +31,19 @@ namespace JurassicRisk.Views
 
         private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            await ProfilViewModel.Instance.SetSelectedProfil(inputPseudo.Text);
+            Models.Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
+            string connexion = await ProfilViewModel.Instance.SetSelectedProfil(profil);
 
-            if (ProfilViewModel.Instance.SelectedProfil != null)
+            if (connexion == "Ok")
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
             }
             else
             {
+                Error.Text = connexion;
                 Error.Visibility = Visibility.Visible;
             }
-           
+
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
