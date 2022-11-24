@@ -18,18 +18,22 @@ namespace DBStorage
         /// <returns>the pseudo of the profil</returns>
         public string FindByIdProfil(int id)
         {
-            string res = null;
+            string res = "";
             try
             {
                 MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand("Select * from users where Pseudo = '" + id + "';", GestionDatabase.GetInstance().Conn);
+                cmd = new MySqlCommand("Select * from users where IdProfil = '" + id + "';", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        res = string.Format("{0}", reader["Pseudo"]);
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            res += reader.GetString(i) + ",";
+
+                        }
                     }
                 }
                 Console.WriteLine("Users " + id + " selectionne");
