@@ -21,7 +21,7 @@ namespace ModelTestUnit
             t1.Team = Models.Teams.ROUGE;
             TerritoireBase t2 = new TerritoireBase(0);
             t2.Team = Models.Teams.VERT;
-            Joueur j1 = new Joueur(new Profil("test"),new List<Unite>() { new Unite()},Teams.NEUTRE);
+            Joueur j1 = new Joueur(new Profil("test","azerty"),new List<Unite>() { new Unite()},Teams.NEUTRE);
             j1.Equipe = Teams.VERT;
 
             FabriqueUnite f = new FabriqueUnite();
