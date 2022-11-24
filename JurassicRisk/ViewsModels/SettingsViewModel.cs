@@ -3,16 +3,16 @@ using Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace JurassicRisk.ViewsModels
 {
     public class SettingsViewModel : observable.Observable
     {
-
+        
         /// <summary>
         /// True if full screen else False
         /// </summary>
@@ -42,17 +42,12 @@ namespace JurassicRisk.ViewsModels
             get { return Settings.Get().Culturename; }
             set
             {
+
                 Settings.Get().Culturename = value;
-                System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(value);
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage());
+                ChangeLanguage(value);
                 this.NotifyPropertyChanged("Culturename");
+
             }
-        }
-
-        public Settings Settings
-        {
-            get { return Settings.Get(); }
-
         }
 
         public List<string> Culturenames
@@ -67,6 +62,26 @@ namespace JurassicRisk.ViewsModels
         {
             this.NotifyPropertyChanged("PLeinEcran");
             this.NotifyPropertyChanged("Culturename");
+        }
+
+        /// <summary>
+        /// Changes the language according to the given culture.
+        /// </summary>
+        /// <param name="culture">The culture.</param>
+        public void ChangeLanguage(string culture)
+        {
+            Ressource.Strings.Culture = new CultureInfo(culture);
+            Page currentPage = (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Content as Page;
+
+            if (currentPage.Name == "Options")
+            {
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage());
+            }
+            else if (currentPage.Name == "OptionInGame")
+            {
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new GameOptionPage());
+            }
+            
         }
     }
 }

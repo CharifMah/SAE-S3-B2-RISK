@@ -20,14 +20,15 @@
 
             </Canvas>
         </Viewbox>
-
-        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Height="214" Width="324">
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Height="50" Margin="30" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click"></Button>
+        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Height="306" Width="324">
             <GroupBox.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"/>
             </GroupBox.Background>
             <Grid>
                 <StackPanel UseLayoutRounding="True"  >
                     <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Play}" Click="PlayButton_Click" />
+                    <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Options}" Click="OptionButton_Click"/>
                     <Button Style="{StaticResource CustomAnimationButton}" Margin="20" Content="{x:Static Ressources:Strings.Deconnexion}" Click="LogOutButton_Click"/>
                 </StackPanel>
 

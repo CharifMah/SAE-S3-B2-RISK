@@ -51,7 +51,6 @@ namespace Models
                 _availableCulture = value;
             }
         }
-
         #endregion
 
         #region Singleton

@@ -31,15 +31,13 @@ namespace JurassicRisk.Views
                 //Pause
                 if (GroupBoxPause.Visibility == Visibility.Hidden && !Pressed)
                 {
-                    GroupBoxPause.Visibility = Visibility.Visible;
-                    ViewboxCanvas.IsEnabled = false;
+                    Pause();
                     Pressed = true;
                 }
                 //Resume
                 if (GroupBoxPause.Visibility == Visibility.Visible && !Pressed)
                 {
-                    GroupBoxPause.Visibility = Visibility.Hidden;
-                    ViewboxCanvas.IsEnabled = true;
+                    Resume();
                     Pressed = true;
                 }
             }
@@ -53,13 +51,46 @@ namespace JurassicRisk.Views
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            GroupBoxPause.Visibility = Visibility.Hidden;
-            ViewboxCanvas.IsEnabled = true;
+            Resume();
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+        }
+
+        private void Pause()
+        {
+            GroupBoxPause.Visibility = Visibility.Visible;
+            ViewboxCanvas.IsEnabled = false;
+        }
+
+        private void Resume()
+        {
+            GroupBoxPause.Visibility = Visibility.Hidden;
+            ViewboxCanvas.IsEnabled = true;
+        }
+
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool Pressed = false;
+            //Pause
+            if (GroupBoxPause.Visibility == Visibility.Hidden && !Pressed)
+            {
+                Pause();
+                Pressed = true;
+            }
+            //Resume
+            if (GroupBoxPause.Visibility == Visibility.Visible && !Pressed)
+            {
+                Resume();
+                Pressed = true;
+            }
+        }
+
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new GameOptionPage());
         }
     }
 }

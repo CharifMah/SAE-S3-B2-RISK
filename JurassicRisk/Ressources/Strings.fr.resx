@@ -164,6 +164,8 @@
   </data>
   <data name="PasswordNotMatch" xml:space="preserve">
     <value>Le mot de passe de confirmation et le mot de passe sont differents</value>
+  <data name="PauseEm" xml:space="preserve">
+    <value>⏸</value>
   </data>
   <data name="Play" xml:space="preserve">
     <value>Jouer</value>

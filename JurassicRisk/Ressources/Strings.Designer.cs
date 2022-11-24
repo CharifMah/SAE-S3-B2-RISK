@@ -271,5 +271,13 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("PasswordNotMatch", resourceCulture);
             }
         }
+        public static string PauseEm
+        {
+            get
+            {
+                return ResourceManager.GetString("PauseEm", resourceCulture);
+            }
+        }
+
     }
 }
