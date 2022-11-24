@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Ubiety.Dns.Core;
 using Xunit.Sdk;
-using Profil = Models.Profil;
 
 namespace ModelTestUnit
 {

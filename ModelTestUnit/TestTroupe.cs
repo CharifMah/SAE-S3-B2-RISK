@@ -21,14 +21,14 @@ namespace ModelTestUnit
             t1.Team = Models.Teams.ROUGE;
             TerritoireBase t2 = new TerritoireBase(0);
             t2.Team = Models.Teams.VERT;
-            Joueur j1 = new Joueur(new Profil("test","qsd"),new List<UniteBase>() { new UniteBase(0)},Teams.NEUTRE);
+            Joueur j1 = new Joueur(new Profil("test","qsd"),new List<UniteBase>() { new UniteBase()},Teams.NEUTRE);
             j1.Equipe = Teams.VERT;
 
             FabriqueUniteBase f = new FabriqueUniteBase();
             List<UniteBase> renforts = new List<UniteBase>();
             for(int i =0; i < 10; i++)
             {
-                UniteBase u = new UniteBase(0);
+                UniteBase u = new UniteBase();
                 renforts.Add(u);
                 j1.Troupe.Add(u);
             }
