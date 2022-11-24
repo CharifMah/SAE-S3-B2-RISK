@@ -25,34 +25,33 @@ namespace RISKAPI.Controllers
         /// <param name="pseudo">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("inscription")]
-        public IActionResult inscription(string pseudo,string mdp)
+        public IActionResult inscription(Profil profil)
         {
             IActionResult reponse = null;
             try
             {
-                Profil profil = new Profil(pseudo,mdp);
                 ProfilDAO profilDAO = factory.CreerProfil();
                 reponse = new AcceptedResult();
                 if (profilDAO.VerifUserCreation(profil) == false)
                 {
-                    if (mdp.Length < 4)
+                    if (profil.Password.Length > 4)
                     {
                         profilDAO.Insert(profil);
                     }
                     else
                     {
-                        reponse = new JsonResult("password too short");
+                        reponse = new BadRequestObjectResult("password too short");
                         
                     }
                 }
                 else
                 {
-                    reponse = new BadRequestResult();
+                    reponse = new BadRequestObjectResult("pseudo already used");
                 }
             }
             catch (Exception e)
             {
-                reponse = new BadRequestResult();
+                reponse = new BadRequestObjectResult(e.Message);
             }
             return reponse;
         }
