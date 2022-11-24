@@ -7,9 +7,11 @@ namespace Models
     public class Settings
     {
         #region Attribute
-        private ChargerCollection _loadSettings;
-        private SauveCollection _saveSettings;
+        
         private string actualPageName = "";
+        private ICharge _loadSettings;
+        private ISauve _saveSettings;
+
         [DataMember]
         private bool _pleinEcran;
         [DataMember]
