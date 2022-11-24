@@ -159,6 +159,9 @@
   <data name="Password" xml:space="preserve">
     <value>Password :</value>
   </data>
+  <data name="PauseEm" xml:space="preserve">
+    <value>⏸</value>
+  </data>
   <data name="Play" xml:space="preserve">
     <value>Play</value>
   </data>

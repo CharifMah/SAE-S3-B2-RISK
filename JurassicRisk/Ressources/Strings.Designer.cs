@@ -255,5 +255,13 @@ namespace JurassicRisk.Ressource
             }
         }
 
+        public static string PauseEm
+        {
+            get
+            {
+                return ResourceManager.GetString("PauseEm", resourceCulture);
+            }
+        }
+
     }
 }
