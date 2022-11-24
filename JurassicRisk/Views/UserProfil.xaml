@@ -24,7 +24,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Sprites/Background/ChillBack.jpg"/>
         </Grid.Background>
-        <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Top"></Button>
+        <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Top" Margin="20"></Button>
         <Ellipse Height="100" Width="100" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Stroke="Red" StrokeThickness="4">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="/Sprites/Background/trexHead.png"/>
