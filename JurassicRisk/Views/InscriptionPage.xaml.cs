@@ -34,16 +34,13 @@ namespace JurassicRisk.Views
             {
                 if (inputPseudo.Text != "")
                 {
-                    Models.Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
-                    string inscription = await ProfilViewModel.Instance.CreateProfil(profil);
-                    if (inscription == "Ok")
+                    if (inputConfirmPassword.Text == inputPassword.Text)
                     {
-                        (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-                        await ProfilViewModel.Instance.SetSelectedProfil(profil);
+                        inscription();
                     }
                     else
                     {
-                        Error.Text = inscription;
+                        Error.Text = Strings.PasswordNotMatch;
                         Error.Visibility = Visibility.Visible;
                     }
                 }
@@ -58,6 +55,22 @@ namespace JurassicRisk.Views
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
+        }
+
+        private async void inscription()
+        {
+            Models.Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
+            string inscription = await ProfilViewModel.Instance.CreateProfil(profil);
+            if (inscription == "Ok")
+            {
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+                await ProfilViewModel.Instance.SetSelectedProfil(profil);
+            }
+            else
+            {
+                Error.Text = inscription;
+                Error.Visibility = Visibility.Visible;
+            }
         }
     }
 }
