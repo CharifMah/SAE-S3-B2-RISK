@@ -60,7 +60,7 @@ namespace JurassicRisk.ViewsModels
 
         #region Public methods
 
-/// <summary>
+        /// <summary>
         /// Set Value of the selected profil
         /// </summary>
         /// <param name="pseudo">string pseudo</param>
@@ -87,7 +87,7 @@ namespace JurassicRisk.ViewsModels
             return res;
         }
 
-/// <summary>
+        /// <summary>
         /// Create Profil
         /// </summary>
         /// <param name="profil">Profil</param>
@@ -106,7 +106,6 @@ namespace JurassicRisk.ViewsModels
             }
             return res;
         }
-
             /// <summary>
             /// Verify if profil exist in database
             /// </summary>
