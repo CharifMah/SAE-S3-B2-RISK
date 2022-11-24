@@ -117,7 +117,11 @@ namespace JurassicRisk.ViewsModels
         /// <returns>awaitable Task</returns>
         public async Task CreateProfil(Profil profil)
         {
-            await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription?pseudo={profil.Pseudo}&mdp={profil.Password}", profil);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _selectedProfil = null;
+
+            HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
         }
 
         /// <summary>
