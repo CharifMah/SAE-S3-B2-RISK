@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Models
+namespace Models.Joueur
 {
-    public class Profil 
+    public class Profil
     {
         /// <summary>
         /// Crée un nouveau profil
@@ -15,8 +15,8 @@ namespace Models
         /// <param name="pseudo"></param>
         public Profil(string pseudo, string password)
         {
-            this.Pseudo = pseudo;
-            this.Password = password;
+            Pseudo = pseudo;
+            Password = password;
         }
 
         public int Id { get; set; }

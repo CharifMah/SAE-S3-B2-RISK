@@ -1,5 +1,6 @@
 
 using Models;
+using Models.Fabrique;
 using Models.Map;
 using Models.Units;
 using Stockage;

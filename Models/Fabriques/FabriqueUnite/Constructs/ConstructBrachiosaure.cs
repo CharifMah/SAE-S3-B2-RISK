@@ -1,11 +1,11 @@
-﻿using Models.Units;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.Fabrique.FabriqueUnite;
 
-namespace Models.Units
+namespace Models.Units.Constructs
 {
     public class ConstructBrachiosaure : IMakeUnit
     {

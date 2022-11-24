@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.Units;
 
-namespace Models.Units
+namespace Models.Fabrique.FabriqueUnite
 {
     public interface IMakeUnit
     {

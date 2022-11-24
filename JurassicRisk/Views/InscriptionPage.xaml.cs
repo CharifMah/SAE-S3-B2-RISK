@@ -1,6 +1,6 @@
 ﻿using JurassicRisk.Ressource;
 using JurassicRisk.ViewsModels;
-using Models;
+using Models.Joueur;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +59,7 @@ namespace JurassicRisk.Views
 
         private async void inscription()
         {
-            Models.Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
+            Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
             string inscription = await ProfilViewModel.Instance.CreateProfil(profil);
             if (inscription == "Ok")
             {

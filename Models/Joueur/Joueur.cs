@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models
+namespace Models.Joueur
 {
     public class Joueur : IGestionTroupe
     {
@@ -54,11 +54,11 @@ namespace Models
 
         public void PositionnerTroupe(List<Unite> unites, ITerritoireBase territoire)
         {
-            if(_equipe == territoire.Team)
+            if (_equipe == territoire.Team)
             {
-                foreach(var unit in unites)
+                foreach (var unit in unites)
                 {
-                    if(_troupe.Contains(unit))
+                    if (_troupe.Contains(unit))
                     {
                         _troupe.Remove(unit);
 

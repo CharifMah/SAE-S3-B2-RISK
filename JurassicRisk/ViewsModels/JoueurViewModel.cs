@@ -1,5 +1,5 @@
 ﻿using JurassicRisk.observable;
-using Models;
+using Models.Joueur;
 using System;
 using System.Collections.Generic;
 using System.Linq;
