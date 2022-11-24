@@ -87,5 +87,10 @@ namespace JurassicRisk.Views
                 Pressed = true;
             }
         }
+
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new GameOptionPage());
+        }
     }
 }

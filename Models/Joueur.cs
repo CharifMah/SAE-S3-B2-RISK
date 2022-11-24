@@ -52,7 +52,7 @@ namespace Models
 
         #endregion
 
-        public void PositionnerTroupe(List<Unite> unites, TerritoireBase territoire)
+        public void PositionnerTroupe(List<Unite> unites, ITerritoireBase territoire)
         {
             if(_equipe == territoire.Team)
             {
