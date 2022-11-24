@@ -32,7 +32,7 @@ namespace JurassicRisk.Views
         private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
             Models.Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
-            await MainViewModel.Get().SetSelectedProfil(profil);
+            await ProfilViewModel.Instance.SetSelectedProfil(profil);
 
             if (ProfilViewModel.Instance.SelectedProfil != null)
             {

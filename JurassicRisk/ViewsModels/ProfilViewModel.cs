@@ -50,10 +50,6 @@ namespace JurassicRisk.ViewsModels
         {
             _ip = "localhost:7215";
             client = new HttpClient();
-            _profils = new ObservableCollection<Profil>();
-            NotifyPropertyChanged("SelectedListProfil");
-
-
         }
 
         #endregion Constructor
