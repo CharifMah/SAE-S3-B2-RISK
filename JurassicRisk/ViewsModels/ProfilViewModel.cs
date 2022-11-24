@@ -1,4 +1,5 @@
 using Models.Joueur;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -57,20 +58,28 @@ namespace JurassicRisk.ViewsModels
         public async Task<string> SetSelectedProfil(Profil profil)
         {
             string res = "Ok";
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _selectedProfil = null;
-            HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/connexion", profil);
-            if (reponse.IsSuccessStatusCode)
+            try
             {
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                Profil profilDemande = JsonSerializer.Deserialize<Profil>(reponse.Content.ReadAsStringAsync().Result, options);
-                string t = reponse.Content.ReadAsStringAsync().Result;
-                _selectedProfil = profilDemande;
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                _selectedProfil = null;
+                HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/connexion", profil);
+                if (reponse.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    Profil profilDemande = JsonSerializer.Deserialize<Profil>(reponse.Content.ReadAsStringAsync().Result, options);
+                    string t = reponse.Content.ReadAsStringAsync().Result;
+                    _selectedProfil = profilDemande;
+                }
+                else
+                {
+                    res = reponse.Content.ReadAsStringAsync().Result;
+                }
+
             }
-            else
+            catch (Exception e)
             {
-                res = reponse.Content.ReadAsStringAsync().Result;
+                res = e.Message;
             }
             return res;
         }
@@ -83,14 +92,22 @@ namespace JurassicRisk.ViewsModels
         public async Task<string> CreateProfil(Profil profil)
         {
             string res = "Ok";
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _selectedProfil = null;
-
-            HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
-            if (!reponse.IsSuccessStatusCode)
+            try
             {
-                res = reponse.Content.ReadAsStringAsync().Result; ;
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                _selectedProfil = null;
+
+                HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
+                if (!reponse.IsSuccessStatusCode)
+                {
+                    res = reponse.Content.ReadAsStringAsync().Result; ;
+                }
+
+            }
+            catch(Exception e)
+            {
+                res = e.Message;
             }
             return res;
         }
