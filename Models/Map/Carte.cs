@@ -10,8 +10,10 @@ namespace Models.Map
     /// <summary>
     /// Classe du plateau de jeu
     /// </summary>
+    [DataContract]
     public class Carte
     {
+        [DataMember]
         private Dictionary<int, Continent> dicoContinents;
         public Dictionary<int, Continent> DicoContinents
         {

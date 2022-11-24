@@ -9,7 +9,7 @@ namespace Models
         #region Attribute
         private ChargerCollection _loadSettings;
         private SauveCollection _saveSettings;
-
+        private string actualPageName = "";
         [DataMember]
         private bool _pleinEcran;
         [DataMember]
@@ -51,6 +51,8 @@ namespace Models
                 _availableCulture = value;
             }
         }
+
+        public string ActualPageName { get => actualPageName; set => actualPageName = value; }
         #endregion
 
         #region Singleton
@@ -96,9 +98,7 @@ namespace Models
             {
                 this._culturename = instance._culturename;
                 this._pleinEcran = instance._pleinEcran;
-            }
-
-            
+            }           
         }
     }
 }

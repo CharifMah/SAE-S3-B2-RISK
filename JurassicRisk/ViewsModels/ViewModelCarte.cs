@@ -20,10 +20,6 @@ namespace JurassicRisk.ViewsModels
     /// <author>Charif</author>
     public class ViewModelCarte : observable.Observable
     {
-
-        private List<Continent> _continents;
-        private List<TerritoireDecorator> _decorations;
-        List<ITerritoireBase> _territoiresBase;
         private Canvas _carteCanvas;
         private Carte _carte;
         private FabriqueUnite f;
@@ -52,38 +48,28 @@ namespace JurassicRisk.ViewsModels
         /// <author>Charif</author>
         public ViewModelCarte()
         {
+            //ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
+            //_decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");
+            //_carte = CreateCarte(_decorations);
+            //new SaveMap(_carte);
+
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
-            _decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");
+            _carte = c.Charger<Carte>("Map/Cartee");
+            _carteCanvas = new Canvas();
+            foreach (Continent continent in _carte.DicoContinents.Values)
+            {
+                foreach (TerritoireDecorator Territoire in continent.DicoTerritoires.Values)
+                {
+                    DrawRegion(Territoire);
+                }
+            }
+                
             f = new FabriqueUnite();
             j = new Joueur(new Profil("s",""),new List<Unite>() { new Unite()},Teams.NEUTRE);
-            _continents = new List<Continent>();
-            _carte = DrawCarte();
+
+            NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
-        }
-
-        /// <summary>
-        /// Add all region to the Canvas (CarteCanvas) with DrawRegion
-        /// </summary>
-        /// <Author>Charif</Author>
-        private Carte DrawCarte()
-        {
-            _carteCanvas = new Canvas();
-            _territoiresBase = new List<ITerritoireBase>();
-            foreach (TerritoireDecorator territoireDecorator in _decorations)
-            {
-                _territoiresBase.Add(territoireDecorator.TerritoireBase);
-                DrawRegion(territoireDecorator);
-            }
-     
-            _continents.Add(new Continent(_territoiresBase.Take(7).ToList()));
-            _continents.Add(new Continent(_territoiresBase.Skip(7).Take(7).ToList()));
-            _continents.Add(new Continent(_territoiresBase.Skip(14).Take(8).ToList()));
-            _continents.Add(new Continent(_territoiresBase.Skip(22).Take(7).ToList()));
-            _continents.Add(new Continent(_territoiresBase.Skip(29).Take(5).ToList()));
-            _continents.Add(new Continent(_territoiresBase.Skip(34).Take(7).ToList()));
-
-            return new Carte(_continents);
         }
 
         /// <summary>
