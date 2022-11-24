@@ -66,30 +66,37 @@ namespace RISKAPI.Controllers
         [HttpPost("connexion")]
         public IActionResult connexion( Profil profil)
         {
-            IActionResult actionResult = new BadRequestResult();
-            Profil profilDemande = null;
-            ProfilDAO profilDAO = factory.CreerProfil();
-            int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
-            if (Id != 0)
+            IActionResult reponse = null;
+            try
             {
-                string[] properties = profilDAO.FindByIdProfil(Id).Split(',');
-                profilDemande = new Profil(properties[1], properties[2]);
-                PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
-                if (passwordHasher.VerifyHashedPassword(profilDemande, profilDemande.Password, profil.Password ) != 0)
+                Profil profilDemande = null;
+                ProfilDAO profilDAO = factory.CreerProfil();
+                int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
+                if (Id != 0)
                 {
-                    actionResult = new JsonResult(profilDemande);
+                    string[] properties = profilDAO.FindByIdProfil(Id).Split(',');
+                    profilDemande = new Profil(properties[1], properties[2]);
+                    PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
+                    if (passwordHasher.VerifyHashedPassword(profilDemande, profilDemande.Password, profil.Password) != 0)
+                    {
+                        reponse = new JsonResult(profilDemande);
+                    }
+                    else
+                    {
+                        reponse = new BadRequestObjectResult("wrong password");
+                    }
                 }
                 else
                 {
-                    actionResult = new BadRequestObjectResult("wrong password");
+                    reponse = new BadRequestObjectResult("this account do not exist try to register or use an ather pseudo");
                 }
             }
-            else
+            catch (Exception e)
             {
-                actionResult = new BadRequestObjectResult("this account do not exist try to register or use an ather pseudo");
+                reponse = new BadRequestObjectResult(e.Message);
             }
-            
-            return actionResult;
+
+            return reponse;
         }
 
         /// <summary>
