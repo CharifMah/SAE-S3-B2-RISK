@@ -70,11 +70,12 @@ namespace RISKAPI.Controllers
             Profil profilDemande = null;
             ProfilDAO profilDAO = factory.CreerProfil();
             int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
-            if (profil.Id != 0)
+            if (Id != 0)
             {
                 string[] properties = profilDAO.FindByIdProfil(Id).Split(',');
                 profilDemande = new Profil(properties[1], properties[2]);
                 PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
+                profil.Password = passwordHasher.HashPassword(profil,profil.Password);
                 if (passwordHasher.VerifyHashedPassword(profilDemande, profilDemande.Password, profil.Password ) == 0)
                 {
                     actionResult = new JsonResult(profilDemande);
