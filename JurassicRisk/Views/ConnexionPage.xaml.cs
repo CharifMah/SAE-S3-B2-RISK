@@ -32,17 +32,18 @@ namespace JurassicRisk.Views
         private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
             Models.Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
-            await ProfilViewModel.Instance.SetSelectedProfil(profil);
+            string connexion = await ProfilViewModel.Instance.SetSelectedProfil(profil);
 
-            if (ProfilViewModel.Instance.SelectedProfil != null)
+            if (connexion == "Ok")
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
             }
             else
             {
+                Error.Text = connexion;
                 Error.Visibility = Visibility.Visible;
             }
-           
+
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

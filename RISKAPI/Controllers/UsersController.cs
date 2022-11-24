@@ -79,6 +79,14 @@ namespace RISKAPI.Controllers
                 {
                     actionResult = new JsonResult(profilDemande);
                 }
+                else
+                {
+                    actionResult = new BadRequestObjectResult("wrong password");
+                }
+            }
+            else
+            {
+                actionResult = new BadRequestObjectResult("this account do not exist try to register or use an ather pseudo");
             }
             
             return actionResult;
