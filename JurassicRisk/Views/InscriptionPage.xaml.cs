@@ -35,9 +35,17 @@ namespace JurassicRisk.Views
                 if (inputPseudo.Text != "")
                 {
                     Models.Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
-                    await MainViewModel.Get().CreateProfil(new Models.Profil(inputPseudo.Text,inputPassword.Text));
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-                    await MainViewModel.Get().SetSelectedProfil(profil);
+                    string inscription = await MainViewModel.Get().CreateProfil(profil);
+                    if (inscription == "Ok")
+                    {
+                        (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+                        await MainViewModel.Get().SetSelectedProfil(profil);
+                    }
+                    else
+                    {
+                        Error.Text = inscription;
+                        Error.Visibility = Visibility.Visible;
+                    }
                 }
                 else
                 {
