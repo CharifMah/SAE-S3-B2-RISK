@@ -1,6 +1,7 @@
 using DBStorage;
 using DBStorage.ClassMetier;
 using DBStorage.Mysql;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text.Json;
@@ -36,12 +37,13 @@ namespace RISKAPI.Controllers
                 {
                     if (profil.Password.Length > 4)
                     {
+                        PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
+                        profil.Password = passwordHasher.HashPassword(profil, profil.Password);
                         profilDAO.Insert(profil);
                     }
                     else
                     {
                         reponse = new BadRequestObjectResult("password too short");
-                        
                     }
                 }
                 else
@@ -64,22 +66,19 @@ namespace RISKAPI.Controllers
         [HttpPost("connexion")]
         public IActionResult connexion( Profil profil)
         {
+            IActionResult actionResult = new BadRequestResult();
             Profil profilDemande = null;
             ProfilDAO profilDAO = factory.CreerProfil();
-
-            profil.Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
-      
+            int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
             if (profil.Id != 0)
             {
-                profilDemande = profil;
-            }
-
-            //Création de la réponse
-            IActionResult actionResult = new NoContentResult();
-            if (profilDemande != null)
-            {
-                string s = JsonSerializer.Serialize<Profil>(profilDemande);
-                actionResult = new JsonResult(profilDemande);
+                string[] properties = profilDAO.FindByIdProfil(Id).Split(',');
+                profilDemande = new Profil(properties[1], properties[2]);
+                PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
+                if (passwordHasher.VerifyHashedPassword(profilDemande, profilDemande.Password, profil.Password ) == 0)
+                {
+                    actionResult = new JsonResult(profilDemande);
+                }
             }
             
             return actionResult;
