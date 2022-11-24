@@ -4,10 +4,8 @@ using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using GetResource = JurassicRisk.Ressources.GetResource;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -115,7 +113,7 @@ namespace JurassicRisk.ViewsModels
                 SauveCollection s = new SauveCollection(Environment.CurrentDirectory);
                 s.Sauver(carte, "Cartee");
             }
-            
+
         }
 
         public void SerializeConf(string Urisource, int x, int y, int width, int height)

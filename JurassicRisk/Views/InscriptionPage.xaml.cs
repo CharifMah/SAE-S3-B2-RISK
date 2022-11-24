@@ -59,7 +59,7 @@ namespace JurassicRisk.Views
 
         private async void inscription()
         {
-            Profil profil = new Models.Profil(inputPseudo.Text, inputPassword.Text);
+            Profil profil = new Profil(inputPseudo.Text, inputPassword.Text);
             string inscription = await ProfilViewModel.Instance.CreateProfil(profil);
             if (inscription == "Ok")
             {

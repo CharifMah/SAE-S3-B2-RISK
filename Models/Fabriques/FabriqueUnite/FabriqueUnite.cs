@@ -1,5 +1,5 @@
-﻿using Models.Units;
-using Models.Units.Constructs;
+﻿using Models.Fabriques.FabriqueUnite.Constructs;
+using Models.Units;
 
 namespace Models.Fabriques.FabriqueUnite
 {

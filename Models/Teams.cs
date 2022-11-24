@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public enum Elements
+    public enum Teams
     {
         ROUGE, BLEU, VERT, JAUNE, NEUTRE
     }

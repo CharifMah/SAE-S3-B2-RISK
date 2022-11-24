@@ -1,6 +1,5 @@
 
 using Models;
-using Models.Fabrique;
 using Models.Fabriques.FabriqueUnite;
 using Models.Joueur;
 using Models.Map;
@@ -8,15 +7,11 @@ using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -67,9 +62,9 @@ namespace JurassicRisk.ViewsModels
                     DrawRegion(Territoire);
                 }
             }
-                
+
             f = new FabriqueUniteBase();
-            j = new Joueur(new Profil("s",""),new List<UniteBase>() { new UniteBase(0,"1233","sqd")},Teams.NEUTRE);
+            j = new Joueur(new Profil("s", ""), new List<UniteBase>() { new UniteBase() }, Teams.NEUTRE);
 
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
@@ -95,11 +90,11 @@ namespace JurassicRisk.ViewsModels
             Canvas.SetLeft(myCanvas, territoire.x);
             Canvas.SetTop(myCanvas, territoire.y);
             myCanvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
-            myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire,myCanvas);
+            myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
             myCanvas.MouseEnter += MyCanvas_MouseEnter;
             myCanvas.MouseLeave += MyCanvas_MouseLeave;
-            myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender,e,territoire);
+            myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
             _carteCanvas.Children.Add(myCanvas);
         }
@@ -113,7 +108,7 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
-            
+
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
         }
@@ -121,8 +116,8 @@ namespace JurassicRisk.ViewsModels
         private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
-            
-            if(territoire.Team == Teams.NEUTRE)
+
+            if (territoire.Team == Teams.NEUTRE)
             {
                 territoire.Team = (Teams.ROUGE);
                 DropShadowEffect shadow = new DropShadowEffect();
