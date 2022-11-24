@@ -14,12 +14,14 @@ namespace JurassicRisk.Views
     {
         SettingsViewModel settingVm;
         SauveCollection _save;
-        public OptionsPage()
+
+        public OptionsPage(string OldPageName)
         {
             _save = new SauveCollection(Environment.CurrentDirectory);
             InitializeComponent();
             settingVm = new SettingsViewModel();
             this.DataContext = settingVm;
+            Settings.Get().ActualPageName = OldPageName;
         }
 
         private void LangueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -36,7 +38,22 @@ namespace JurassicRisk.Views
         {
             _save.Sauver(Settings.Get(), "Settings");
 
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());     
+            switch (Settings.Get().ActualPageName)
+            {
+                case "_MenuPage":
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+                    this.LangueComboBox.Visibility = Visibility.Visible;
+                    break;
+                case "_HomePage":
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
+                    this.LangueComboBox.Visibility = Visibility.Visible;
+                    break;
+                case "_JeuPage":
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+                    this.LangueComboBox.Visibility = Visibility.Hidden;
+                    break;
+            }
+           
         }
           
     }

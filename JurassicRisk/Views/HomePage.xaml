@@ -6,8 +6,9 @@
       xmlns:local="clr-namespace:JurassicRisk.Views"
       mc:Ignorable="d" 
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
+      x:Name="_HomePage"
       d:DesignHeight="1080" d:DesignWidth="1920">
-
+       
     <Grid>
 
         <Grid.RowDefinitions>

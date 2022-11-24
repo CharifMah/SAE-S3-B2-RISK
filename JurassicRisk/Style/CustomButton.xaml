@@ -10,6 +10,7 @@
         <Setter Property="BorderBrush" Value="DarkRed"/>
         <Setter Property="FontSize" Value="24"/>
         
+        
         <Setter Property="Template">
 
             <Setter.Value>
@@ -46,7 +47,7 @@
     </Style>
 
     <Style x:Key="CustomAnimationButton" TargetType="{x:Type Button}">
-
+        <Setter Property="Margin" Value="20"/>
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0.5,0.5" EndPoint="1,1" SpreadMethod="Reflect">

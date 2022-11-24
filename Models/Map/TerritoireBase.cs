@@ -6,6 +6,7 @@ namespace Models.Map
     /// <summary>
     /// Classe générique des territoires
     /// </summary>
+    [KnownType(typeof(TerritoireBase))]
     [DataContract]
     public class TerritoireBase : ITerritoireBase
     {

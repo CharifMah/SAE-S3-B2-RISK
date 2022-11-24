@@ -7,6 +7,8 @@ namespace Models
     public class Settings
     {
         #region Attribute
+        
+        private string actualPageName = "";
         private ICharge _loadSettings;
         private ISauve _saveSettings;
 
@@ -51,6 +53,8 @@ namespace Models
                 _availableCulture = value;
             }
         }
+
+        public string ActualPageName { get => actualPageName; set => actualPageName = value; }
         #endregion
 
         #region Singleton
@@ -96,9 +100,7 @@ namespace Models
             {
                 this._culturename = instance._culturename;
                 this._pleinEcran = instance._pleinEcran;
-            }
-
-            
+            }           
         }
     }
 }

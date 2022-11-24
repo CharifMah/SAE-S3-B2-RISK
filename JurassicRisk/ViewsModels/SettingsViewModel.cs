@@ -12,7 +12,6 @@ namespace JurassicRisk.ViewsModels
 {
     public class SettingsViewModel : observable.Observable
     {
-        
         /// <summary>
         /// True if full screen else False
         /// </summary>
@@ -73,15 +72,20 @@ namespace JurassicRisk.ViewsModels
             Ressource.Strings.Culture = new CultureInfo(culture);
             Page currentPage = (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Content as Page;
 
-            if (currentPage.Name == "Options")
+            switch (currentPage.Name)
             {
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage());
+                case "_MenuPage":
+                    Settings.Get().ActualPageName = currentPage.Name;
+                    break;
+                case "_HomePage":
+                    Settings.Get().ActualPageName = currentPage.Name;
+                    break;
+                case "_JeuPage":
+                    Settings.Get().ActualPageName = currentPage.Name;
+                    break;
             }
-            else if (currentPage.Name == "OptionInGame")
-            {
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new GameOptionPage());
-            }
-            
+
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage(Settings.Get().ActualPageName));         
         }
     }
 }
