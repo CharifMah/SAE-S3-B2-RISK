@@ -120,6 +120,9 @@
   <data name="Back" xml:space="preserve">
     <value>Retour</value>
   </data>
+  <data name="ConfirationMdp" xml:space="preserve">
+    <value>Confirmer mot de passe</value>
+  </data>
   <data name="Connecter" xml:space="preserve">
     <value>Se connecter</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Mots de Passe :</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>Le mot de passe de confirmation et le mot de passe sont differents</value>
   </data>
   <data name="Play" xml:space="preserve">
     <value>Jouer</value>
