@@ -14,7 +14,7 @@ namespace Models.Joueur
         #region Attribute
 
         private Teams _equipe;
-        private List<Unite> _troupe;
+        private List<UniteBase> _troupe;
         private Profil _profil;
 
         #endregion
@@ -27,7 +27,7 @@ namespace Models.Joueur
             set { _equipe = value; }
         }
 
-        public List<Unite> Troupe
+        public List<UniteBase> Troupe
         {
             get { return _troupe; }
             set { _troupe = value; }
@@ -43,7 +43,7 @@ namespace Models.Joueur
 
         #region Constructor
 
-        public Joueur(Profil profil, List<Unite> troupe, Teams equipe)
+        public Joueur(Profil profil, List<UniteBase> troupe, Teams equipe)
         {
             _troupe = troupe;
             _profil = profil;
@@ -52,11 +52,11 @@ namespace Models.Joueur
 
         #endregion
 
-        public void PositionnerTroupe(List<Unite> unites, ITerritoireBase territoire)
+        public void PositionnerTroupe(List<UniteBase> UniteBases, ITerritoireBase territoire)
         {
             if (_equipe == territoire.Team)
             {
-                foreach (var unit in unites)
+                foreach (var unit in UniteBases)
                 {
                     if (_troupe.Contains(unit))
                     {
@@ -66,7 +66,7 @@ namespace Models.Joueur
                     }
                     else
                     {
-                        throw new NotEnoughUnitException("Not enough unit !");
+                        throw new NotEnoughUniteBasexception("Not enough unit !");
                     }
                 }
             }

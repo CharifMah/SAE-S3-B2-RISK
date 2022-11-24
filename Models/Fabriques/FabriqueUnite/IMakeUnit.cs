@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Models.Units;
 
-namespace Models.Fabrique.FabriqueUnite
+namespace Models.Fabriques.FabriqueUnite
 {
     public interface IMakeUnit
     {
-        public Unite MakeUnit();
+        public UniteBase MakeUnit();
     }
 }

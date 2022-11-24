@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Models.Exceptions
 {
-    public class NotEnoughUnitException : Exception
+    public class NotEnoughUniteBasexception : Exception
     {
-        public NotEnoughUnitException()
+        public NotEnoughUniteBasexception()
         {
         }
 
-        public NotEnoughUnitException(string? message) : base(message)
+        public NotEnoughUniteBasexception(string? message) : base(message)
         {
         }
 
-        public NotEnoughUnitException(string? message, Exception? innerException) : base(message, innerException)
+        public NotEnoughUniteBasexception(string? message, Exception? innerException) : base(message, innerException)
         {
         }
     }

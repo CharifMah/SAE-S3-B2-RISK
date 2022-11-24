@@ -9,8 +9,8 @@ namespace Models.Map
     {
         int ID { get; set; }
         Teams Team { get; set; }
-        List<Unite> Units { get; set; }
+        List<UniteBase> Units { get; set; }
 
-        void AddUnit(Unite unite);
+        void AddUnit(UniteBase UniteBase);
     }
 }

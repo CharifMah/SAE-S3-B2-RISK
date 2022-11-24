@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace Models.Units
 {
-    public class Brachiosaure : Unite
+    public class Brachiosaure : UniteBase
     {
-
+        public Brachiosaure()
+        {
+            this.Element = Elements.EAU;
+            this.id = 0;
+            this.name = "ExempleUnite";
+            this.description = "Description d'une unite";
+        }
     }
 }

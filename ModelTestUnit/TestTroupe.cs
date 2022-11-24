@@ -1,6 +1,6 @@
 ﻿using Models;
 using Models.Exceptions;
-using Models.Fabrique.FabriqueUnite;
+using Models.Fabriques.FabriqueUnite;
 using Models.Joueur;
 using Models.Map;
 using Models.Units;
@@ -21,14 +21,14 @@ namespace ModelTestUnit
             t1.Team = Models.Teams.ROUGE;
             TerritoireBase t2 = new TerritoireBase(0);
             t2.Team = Models.Teams.VERT;
-            Joueur j1 = new Joueur(new Profil("test"),new List<Unite>() { new Unite()},Teams.NEUTRE);
+            Joueur j1 = new Joueur(new Profil("test","qsd"),new List<UniteBase>() { new UniteBase(0)},Teams.NEUTRE);
             j1.Equipe = Teams.VERT;
 
-            FabriqueUnite f = new FabriqueUnite();
-            List<Unite> renforts = new List<Unite>();
+            FabriqueUniteBase f = new FabriqueUniteBase();
+            List<UniteBase> renforts = new List<UniteBase>();
             for(int i =0; i < 10; i++)
             {
-                Unite u = new Unite();
+                UniteBase u = new UniteBase(0);
                 renforts.Add(u);
                 j1.Troupe.Add(u);
             }
@@ -37,7 +37,7 @@ namespace ModelTestUnit
             j1.PositionnerTroupe(renforts, t2);
 
             renforts.Add(f.Create("brachiosaure"));
-            Assert.Throws<NotEnoughUnitException>(() => j1.PositionnerTroupe(renforts, t2));
+            Assert.Throws<NotEnoughUniteBasexception>(() => j1.PositionnerTroupe(renforts, t2));
         }
     }
 }

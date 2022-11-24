@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models
+namespace Models.Units
 {
     public enum Elements
     {
-        ROUGE, BLEU, VERT, JAUNE, NEUTRE
+        EAU, FEU, VENT, TERRE
     }
 }

@@ -10,6 +10,6 @@ namespace Models.Joueur
 {
     public interface IGestionTroupe
     {
-        public void PositionnerTroupe(List<Unite> unites, ITerritoireBase territoire);
+        public void PositionnerTroupe(List<UniteBase> UniteBases, ITerritoireBase territoire);
     }
 }

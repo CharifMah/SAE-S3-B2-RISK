@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Models.Units;
+﻿using Models.Units;
+using Models.Units.Constructs;
 
-namespace Models.Fabrique.FabriqueUnite
+namespace Models.Fabriques.FabriqueUnite
 {
-    public class FabriqueUnite
+    public class FabriqueUniteBase
     {
         private Dictionary<string, IMakeUnit> constructors = new Dictionary<string, IMakeUnit>();
 
@@ -15,7 +11,7 @@ namespace Models.Fabrique.FabriqueUnite
         /// Initialise les constructeurs d'unité
         /// </summary>
         /// <author>VERCHERE Brian</author>
-        public FabriqueUnite()
+        public FabriqueUniteBase()
         {
             constructors["brachiosaure"] = new ConstructBrachiosaure();
         }
@@ -26,7 +22,7 @@ namespace Models.Fabrique.FabriqueUnite
         /// <param name="type"></param>
         /// <returns>Renvoie une unité</returns>
         /// <author>VERCHERE Brian</author>
-        public Unite Create(string type)
+        public UniteBase Create(string type)
         {
             if (constructors.ContainsKey(type))
                 return constructors[type].MakeUnit();

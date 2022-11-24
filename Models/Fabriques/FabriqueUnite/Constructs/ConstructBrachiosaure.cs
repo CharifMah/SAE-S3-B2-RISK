@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Models.Fabrique.FabriqueUnite;
+using Models.Fabriques.FabriqueUnite;
+using Models.Units;
 
-namespace Models.Units.Constructs
+namespace Models.Fabriques.FabriqueUnite.Constructs
 {
     public class ConstructBrachiosaure : IMakeUnit
     {
@@ -14,7 +15,7 @@ namespace Models.Units.Constructs
         /// </summary>
         /// <returns>Renvoie un Brachiosaure</returns>
         /// <author>VERCHERE Brian</author>
-        public Unite MakeUnit()
+        public UniteBase MakeUnit()
         {
             return new Brachiosaure();
         }
