@@ -22,7 +22,7 @@ namespace Models
         [DataMember]
         private Sound _backgroundMusic;
         [DataMember]
-        private double _musiqueslider;
+        private double _musicVolume;
         #endregion
 
         #region Property
@@ -59,28 +59,21 @@ namespace Models
             }
         }
 
-        public bool Musique 
+        public bool MusiqueOnOff 
         { 
             get { return _musique; }
             set { _musique = value; }
         }
-        public double MusiqueSlider
-        {
-            get { return _musiqueslider; }
-            set { _musiqueslider = value; }
-        }
-        public double BackgroundVolume
+
+        public double Volume
         {
             get
             {
-                return (_backgroundMusic != null) ? _backgroundMusic.Volume : 0.0;
+                return _musicVolume;
             }
             set
             {
-                if (_backgroundMusic != null)
-                {
-                    _backgroundMusic.Volume = value;
-                }
+               _musicVolume= value;
             }
         }
        
@@ -92,12 +85,6 @@ namespace Models
             {
                 _backgroundMusic = value;
             }
-        }
-        public Sound SliderMusic
-        {
-            get { return _backgroundMusic; }
-            set { _backgroundMusic = value; }
-
         }
 
         #endregion
@@ -147,7 +134,7 @@ namespace Models
                 this._pleinEcran = instance._pleinEcran;
                 this._musique = instance._musique;
                 this._backgroundMusic = instance._backgroundMusic;
-                this._musiqueslider = instance._musiqueslider;
+                this._musicVolume = instance._musicVolume;
             }
 
             

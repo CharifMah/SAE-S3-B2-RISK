@@ -1,14 +1,8 @@
 ﻿using JurassicRisk.Views;
 using Models;
-using Models.Son;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -65,51 +59,54 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
+        public bool MusiqueOnOff
+        {
+            get { return Settings.Get().MusiqueOnOff; }
+            set
+            {
+                Settings.Get().MusiqueOnOff = value;
+                if (!Settings.Get().MusiqueOnOff)
+                {
+                    Settings.Get().Backgroundmusic.Volume = 0;
+                }
+                else
+                {
+                    Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
+
+                }
+                this.NotifyPropertyChanged("MusiqueOnOff");
+
+            }
+        }
+
+        public double Volume
+        {
+            get { return Settings.Get().Volume; }
+            set
+            {
+                Settings.Get().Volume = value;
+                Settings.Get().Backgroundmusic.Volume = value / 100;
+                if (Settings.Get().Volume > 1)
+                {
+                    Settings.Get().MusiqueOnOff = true;
+                }
+                if (Settings.Get().Volume < 1)
+                {
+                    Settings.Get().MusiqueOnOff = false;
+                }
+                this.NotifyPropertyChanged("Volume");
+                this.NotifyPropertyChanged("MusiqueOnOff");
+            }
+        }
+
         public SettingsViewModel()
         {
             this.NotifyPropertyChanged("PLeinEcran");
             this.NotifyPropertyChanged("Culturename");
-            this.NotifyPropertyChanged("Musique");
-            this.NotifyPropertyChanged("MusiqueSlider");
+            this.NotifyPropertyChanged("MusiqueOnOff");
+            this.NotifyPropertyChanged("Volume");
         }
 
-        public bool Musique
-        {
-            get { return Settings.Get().Musique; }
-            set
-            {
-                Settings.Get().Musique = value;
-                if (!Settings.Get().Musique)
-                {
-                    Settings.Get().BackgroundVolume = 0;
-                }
-                else
-                {
-                    Settings.Get().BackgroundVolume = Settings.Get().Backgroundmusic.Volume / 100;
-
-                }
-                this.NotifyPropertyChanged("Musique");
-            }
-        }
-        public double MusiqueSlider
-        {
-            get { return Settings.Get().Backgroundmusic.Volume; }
-            set
-            {
-                Settings.Get().Backgroundmusic.Volume = value;
-
-                Settings.Get().Backgroundmusic.Volume = Settings.Get().Backgroundmusic.Volume / 100;
-
-                if (Settings.Get().Backgroundmusic.Volume > 1)
-                {
-                    Settings.Get().Musique = true;
-                }
-                if (Settings.Get().Backgroundmusic.Volume < 1)
-                {
-                    Settings.Get().Musique = false;
-                }
-                this.NotifyPropertyChanged("MusiqueSlider");
-            }
-        }
+       
     }
 }

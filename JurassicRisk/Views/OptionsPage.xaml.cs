@@ -31,7 +31,7 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            Settings.Get().SliderMusic.Volume = slider_Son.Value;
+            settingVm.Volume = slider_Son.Value;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
