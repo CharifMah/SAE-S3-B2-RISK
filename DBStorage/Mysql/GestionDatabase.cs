@@ -39,12 +39,11 @@ namespace DBStorage.Mysql
         /// <author>Brian VERCHERE</author>
         private void Connect()
         {
-            connString = "server=localhost;uid=root;password=root;";
+            connString = "server=localhost;uid=root;password=admin;";
 
             conn = null;
             conn = new MySqlConnection(connString);
             conn.Open();
-
         }
 
         /// <summary>
