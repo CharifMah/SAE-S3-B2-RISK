@@ -52,7 +52,7 @@ namespace Models.Player
         }
 
         #endregion
-        public void AddUnit(List<UniteBase> unites, ITerritoireBase territoire)
+        public void AddUnits(List<UniteBase> unites, ITerritoireBase territoire)
         {
             foreach (var unit in unites)
             {

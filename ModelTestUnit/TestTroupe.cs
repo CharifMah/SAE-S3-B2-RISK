@@ -29,7 +29,7 @@ namespace ModelTestUnit
                 j1.Troupe.Add(u);
             }
 
-            j1.AddUnit(renforts, t2);
+            j1.AddUnits(renforts, t2);
             Assert.Equal(t2.Team, j1.Equipe);
             Assert.Equal(1,j1.Troupe.Count);
             Assert.Equal(renforts.Count,t2.Units.Count);

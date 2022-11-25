@@ -117,6 +117,8 @@ namespace JurassicRisk.ViewsModels
 
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
+
+            this._carte.SelectedTerritoire = null;
         }
 
         private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
@@ -129,9 +131,9 @@ namespace JurassicRisk.ViewsModels
 
 
             this._carte.SelectedTerritoire = territoire;
-            if (_joueur.Joueur.Troupe.Count > 0)
+            if (_joueur.Joueur.Troupe.Count > 0 && this._carte.SelectedTerritoire != null)
             {
-                _joueur.PositionnerTroupe(new List<UniteBase>() { _joueur.Joueur.Troupe[0] }, this._carte.SelectedTerritoire);
+                _joueur.AddUnits(new List<UniteBase>() { _joueur.Joueur.Troupe[0] }, this._carte.SelectedTerritoire);
             }
            
             NotifyPropertyChanged("CarteCanvas");

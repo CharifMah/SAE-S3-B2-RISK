@@ -62,11 +62,16 @@ namespace JurassicRisk.ViewsModels
 
         }
 
-        public void PositionnerTroupe(List<UniteBase> UniteBases, ITerritoireBase territoire)
+        /// <summary>
+        /// Ajoute des Unites a un territoire
+        /// </summary>
+        /// <param name="UniteBases">Les unite a ajouter</param>
+        /// <param name="territoire">le territoire</param>
+        public void AddUnits(List<UniteBase> UniteBases, ITerritoireBase territoire)
         {
             if (UniteBases.Count > 0 && (_joueur.Equipe == territoire.Team || territoire.Team == Models.Teams.NEUTRE))
             {
-                _joueur.AddUnit(UniteBases, territoire);
+                _joueur.AddUnits(UniteBases, territoire);
             }
             else
             {

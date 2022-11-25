@@ -15,7 +15,7 @@ namespace Models
         private Carte _carte;
         private List<Joueur> _joueurs;
         private List<ITour> _tours;
-
+        private TaskCompletionSource<bool> _clickWaitTask;
         #endregion
 
         #region Property
@@ -65,8 +65,18 @@ namespace Models
 
         public async Task StartGame()
         {
+            TourPlacement t = new TourPlacement();
+            _clickWaitTask = new TaskCompletionSource<bool>();
 
-
+            while (_carte.NombreTerritoireOccupe != 0)
+            {
+                foreach (Joueur joueur in _joueurs)
+                {
+                    t.PlaceUnits(joueur.Troupe[0], joueur);
+                    
+                    await _clickWaitTask.Task;
+                }          
+            }
         }
 
     }
