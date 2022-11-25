@@ -6,6 +6,9 @@ namespace Models
     {
         private Joueur _joueur;
         private bool _tourEnd;
+
+        public bool TourEnd => throw new NotImplementedException();
+
         public Tour(Joueur joueur)
         {
             _joueur = joueur;
