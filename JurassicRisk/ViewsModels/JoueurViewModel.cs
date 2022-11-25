@@ -28,14 +28,15 @@ namespace JurassicRisk.ViewsModels
 
         public JoueurViewModel()
         {
-            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<UniteBase>() { new UniteBase(), new UniteBase() }, Models.Teams.NEUTRE);
+            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<UniteBase>() { new UniteBase(), new UniteBase() }, Models.Teams.VERT);
         }
 
         public void PositionnerTroupe(List<UniteBase> UniteBases, ITerritoireBase territoire)
         {
-            if (_joueur.Equipe == territoire.Team)
+            if (_joueur.Equipe == territoire.Team || territoire.Team == Models.Teams.NEUTRE)
             {
-                _joueur.PositionnerTroupe(UniteBases,territoire);              
+                _joueur.PositionnerTroupe(UniteBases,territoire);     
+                
             }
             else
             {

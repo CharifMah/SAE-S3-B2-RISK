@@ -38,10 +38,18 @@
         </GroupBox>
         <TextBlock Style="{StaticResource FruitDays}" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Top">
             <TextBlock.Text>
-                
                 <MultiBinding  StringFormat="{}{0}: {1}">
                     <Binding Source="{x:Static Ressources:Strings.TrpNombre}"/>
                     <Binding Path="CarteVm.JoueurVm.NombreTrp"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+        <TextBlock Style="{StaticResource FruitDays}" HorizontalAlignment="Right" FontSize="30" VerticalAlignment="Top">
+            <TextBlock.Text>
+                <MultiBinding  StringFormat="{}{0} {1}">
+                    <Binding Source="{x:Static Ressources:Strings.Pseudo}"/>
+                    <Binding Path="CarteVm.Carte.NombreTerritoireOccupe"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

@@ -33,6 +33,7 @@ namespace Models
 
 
         #endregion
+
         #region Singleton
 
         private static JurasicRiskGame _instance;
@@ -50,6 +51,11 @@ namespace Models
 
         #endregion
 
+        public enum Phase
+        {
+
+        }
+
         private JurasicRiskGame()
         {
 
@@ -57,6 +63,7 @@ namespace Models
 
         public void StartGame()
         {
+
 
         }
 

@@ -61,6 +61,7 @@ namespace Models.Player
                     _troupe.Remove(unit);
 
                     territoire.AddUnit(unit);
+                    territoire.Team = this._equipe;
                 }
 
             }
