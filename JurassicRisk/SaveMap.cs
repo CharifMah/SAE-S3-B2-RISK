@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Media.Imaging;
 using GetResource = JurassicRisk.Ressources.GetResource;
 
-namespace JurassicRisk.ViewsModels
+namespace JurassicRisk
 {
     /// <summary>
     /// Save the Map in Json file

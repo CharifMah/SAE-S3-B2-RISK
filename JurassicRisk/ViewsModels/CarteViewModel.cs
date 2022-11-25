@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 namespace JurassicRisk.ViewsModels
 {
     /// <author>Charif</author>
-    public class ViewModelCarte : observable.Observable
+    public class CarteViewModel : observable.Observable
     {
         #region Attributes
 
@@ -22,7 +22,7 @@ namespace JurassicRisk.ViewsModels
         private Carte _carte;
         private FabriqueUniteBase f;
         private int zi = 0;
-        private JoueurViewModel jVm;
+        private JoueurViewModel _joueurVm;
 
         #endregion
 
@@ -42,8 +42,8 @@ namespace JurassicRisk.ViewsModels
                 return _carte;
             }
         }
-
-        public JoueurViewModel JVm { get => jVm; set => jVm = value; }
+        
+        public JoueurViewModel JoueurVm { get => _joueurVm; set => _joueurVm = value; }
 
         #endregion
 
@@ -51,7 +51,7 @@ namespace JurassicRisk.ViewsModels
         /// Cree la carte et la dessine
         /// </summary>
         /// <author>Charif</author>
-        public ViewModelCarte()
+        public CarteViewModel()
         {
             //ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             //_decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");
@@ -71,7 +71,7 @@ namespace JurassicRisk.ViewsModels
             }
 
             f = new FabriqueUniteBase();
-            JVm = new JoueurViewModel();
+            JoueurVm = new JoueurViewModel();
 
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
@@ -124,7 +124,7 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas c = sender as Canvas;
 
-            JVm.PositionnerTroupe(new List<UniteBase>(JVm.Joueur.Troupe), territoire);
+            JoueurVm.PositionnerTroupe(new List<UniteBase>(JoueurVm.Joueur.Troupe), territoire);
             NotifyPropertyChanged("CarteCanvas");
         }
 

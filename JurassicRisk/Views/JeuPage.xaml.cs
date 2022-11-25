@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,7 +21,7 @@ namespace JurassicRisk.Views
             mainwindow.PreviewKeyDown += Mainwindow_PreviewKeyDown;
             ViewboxCanvas.Width = mainwindow.ActualWidth;
             ViewboxCanvas.Height = mainwindow.ActualHeight;
-            DataContext = new ViewModelCarte();
+            DataContext = new JurassicRiskViewModel();
         }
 
         private void Mainwindow_PreviewKeyDown(object sender, KeyEventArgs e)

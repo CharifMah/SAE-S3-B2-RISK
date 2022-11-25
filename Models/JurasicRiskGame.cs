@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class JurrasicRiskGame
+    public class JurasicRiskGame
     {
         private Carte _carte;
         private List<Joueur> _joueurs;
@@ -35,14 +35,14 @@ namespace Models
         #endregion
         #region Singleton
 
-        private static JurrasicRiskGame _instance;
-        public static JurrasicRiskGame Instance
+        private static JurasicRiskGame _instance;
+        public static JurasicRiskGame Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new JurrasicRiskGame();
+                    _instance = new JurasicRiskGame();
                 }
                 return _instance;
             }
@@ -50,11 +50,15 @@ namespace Models
 
         #endregion
 
-        private JurrasicRiskGame()
+        private JurasicRiskGame()
         {
 
         }
 
+        public void StartGame()
+        {
+
+        }
 
     }
 }

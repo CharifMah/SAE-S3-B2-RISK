@@ -17,7 +17,7 @@
         <Viewbox Stretch="Fill" x:Name="ViewboxCanvas">
             <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="-50,0,20,70">
 
-                <ContentPresenter Content="{Binding CarteCanvas}" />
+                <ContentPresenter Content="{Binding CarteVm.CarteCanvas}" />
 
             </Canvas>
         </Viewbox>
@@ -41,7 +41,7 @@
                 
                 <MultiBinding  StringFormat="{}{0}: {1}">
                     <Binding Source="{x:Static Ressources:Strings.TrpNombre}"/>
-                    <Binding Path="JVm.NombreTrp"/>
+                    <Binding Path="CarteVm.JoueurVm.NombreTrp"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
