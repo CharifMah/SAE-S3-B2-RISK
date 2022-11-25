@@ -1,12 +1,8 @@
 ﻿using Models;
 using Models.Combat;
 using Models.Map;
+using Models.Player;
 using Models.Units;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelTestUnit
 {
@@ -26,7 +22,7 @@ namespace ModelTestUnit
             t2.Team = Teams.BLEU;
 
             FabriqueUnite f = new FabriqueUnite();
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 var unit = f.Create("brachiosaure");
                 j1.AddUnit(unit);
@@ -34,8 +30,8 @@ namespace ModelTestUnit
                 j2.AddUnit(unit2);
             }
 
-            List<Unite> attaquants = new List<Unite>();
-            List<Unite> defenseurs = new List<Unite>();
+            List<UniteBase> attaquants = new List<UniteBase>();
+            List<UniteBase> defenseurs = new List<UniteBase>();
             t1.Units = attaquants;
             t2.Units = defenseurs;
             t1.Units.Add(f.Create("brachiosaure"));
@@ -44,7 +40,7 @@ namespace ModelTestUnit
             {
                 attaquants.Add(j1.Troupe[i]);
             }
-            for(int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 defenseurs.Add(j2.Troupe[i]);
             }
