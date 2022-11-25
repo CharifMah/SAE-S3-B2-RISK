@@ -137,7 +137,7 @@ namespace Models
             {
                 this._culturename = instance._culturename;
                 this._pleinEcran = instance._pleinEcran;
-            }           
+                       
                 this._musique = instance._musique;
                 this._backgroundMusic = instance._backgroundMusic;
                 this._musicVolume = instance._musicVolume;

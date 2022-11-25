@@ -1,11 +1,7 @@
-using DBStorage;
-using Google.Protobuf.WellKnownTypes;
-using DBStorage;
 using Models;
 using Models.Son;
 using System;
 using System.Globalization;
-using DBStorage.Mysql;
 using System.Windows;
 
 namespace JurassicRisk.Views
@@ -17,6 +13,10 @@ namespace JurassicRisk.Views
     {
         public MainWindow()
         {
+            SoundStore.LoadSounds("Sounds");
+            Settings.Get().Backgroundmusic = SoundStore.Get("JungleMusic.mp3");
+            Settings.Get().Backgroundmusic.Play();
+            Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
 

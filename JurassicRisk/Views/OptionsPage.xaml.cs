@@ -18,7 +18,6 @@ namespace JurassicRisk.Views
 
         public OptionsPage(string OldPageName)
         {
-            SoundStore.Get("Click.mp3").Stop();
             _save = new SauveCollection(Environment.CurrentDirectory);
             InitializeComponent();
             settingVm = new SettingsViewModel();

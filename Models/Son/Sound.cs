@@ -64,16 +64,5 @@ namespace Models.Son
             player.Position = new TimeSpan(0L);
             player.Play();
         }
-
-        public void PlayBackgroundMusic(string file)
-        {
-            backgroundMusic = SoundStore.Get(file);
-            backgroundMusic.Play(true);
-        }
-        public void StopBackgroundMusic()
-        {
-            backgroundMusic.Stop();
-        }
-
     }
 }

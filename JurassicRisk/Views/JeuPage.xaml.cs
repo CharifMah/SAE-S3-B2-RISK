@@ -1,5 +1,4 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models;
 using Models.Son;
 using System.Windows;
 using System.Windows.Controls;
