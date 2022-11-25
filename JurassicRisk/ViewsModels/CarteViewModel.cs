@@ -1,5 +1,6 @@
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
+using Models.Player;
 using Models.Units;
 using Stockage;
 using System;
@@ -22,8 +23,7 @@ namespace JurassicRisk.ViewsModels
         private Carte _carte;
         private FabriqueUniteBase f;
         private int zi = 0;
-        private JoueurViewModel _joueurVm;
-
+        private JoueurViewModel _joueur;
         #endregion
 
         #region Property
@@ -43,15 +43,13 @@ namespace JurassicRisk.ViewsModels
             }
         }
         
-        public JoueurViewModel JoueurVm { get => _joueurVm; set => _joueurVm = value; }
-
         #endregion
 
         /// <summary>
         /// Cree la carte et la dessine
         /// </summary>
         /// <author>Charif</author>
-        public CarteViewModel()
+        public CarteViewModel(JoueurViewModel joueur)
         {
             //ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             //_decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");
@@ -71,7 +69,8 @@ namespace JurassicRisk.ViewsModels
             }
 
             f = new FabriqueUniteBase();
-            JoueurVm = new JoueurViewModel();
+            _joueur = joueur;
+
 
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
@@ -123,8 +122,18 @@ namespace JurassicRisk.ViewsModels
         private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
+            DropShadowEffect shadow = new DropShadowEffect();
 
-            JoueurVm.PositionnerTroupe(new List<UniteBase>(JoueurVm.Joueur.Troupe), territoire);
+            shadow.Color = Brushes.Green.Color;
+            c.Effect = shadow;
+
+
+            this._carte.SelectedTerritoire = territoire;
+            if (_joueur.Joueur.Troupe.Count > 0)
+            {
+                _joueur.PositionnerTroupe(new List<UniteBase>() { _joueur.Joueur.Troupe[0] }, this._carte.SelectedTerritoire);
+            }
+           
             NotifyPropertyChanged("CarteCanvas");
         }
 

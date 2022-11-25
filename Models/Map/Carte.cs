@@ -18,6 +18,8 @@ namespace Models.Map
         [DataMember]
         private Dictionary<int, Continent> dicoContinents;
 
+        private ITerritoireBase _selectedTerritoire;
+
         #endregion
 
         #region Property
@@ -28,6 +30,12 @@ namespace Models.Map
         }
 
         public int NombreTerritoireOccupe { get => GetNombreTerritoireOccupe(); }
+
+        public ITerritoireBase SelectedTerritoire
+        {
+            get => _selectedTerritoire;
+            set => _selectedTerritoire = value;
+        }
 
         #endregion
 

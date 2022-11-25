@@ -8,10 +8,15 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class JurasicRiskGame
+    public class JurasicRiskGame 
     {
+        #region Attributes
+
         private Carte _carte;
         private List<Joueur> _joueurs;
+        private List<ITour> _tours;
+
+        #endregion
 
         #region Property
 
@@ -58,11 +63,13 @@ namespace Models
 
         }
 
-        public void StartGame()
+        public async Task StartGame()
         {
 
 
         }
 
     }
+
+   
 }

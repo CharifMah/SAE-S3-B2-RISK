@@ -14,6 +14,9 @@ namespace Models.Fabriques.FabriqueUnite
         public FabriqueUniteBase()
         {
             constructors["brachiosaure"] = new ConstructBrachiosaure();
+            constructors["rex"] = new ConstructRex();
+            constructors["baryonix"] = new ConstructBaryonix();
+            constructors["pterosaure"] = new ConstructPterosaure();
         }
 
         /// <summary>

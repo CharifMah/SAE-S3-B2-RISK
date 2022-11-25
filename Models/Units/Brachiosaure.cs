@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Units
 {
-    public class Brachiosaure : UniteBase
+    internal class Brachiosaure : UniteBase
     {
         public Brachiosaure()
         {
