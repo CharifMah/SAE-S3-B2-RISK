@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models.Son;
 using Stockage;
 using System;
 using System.Windows;
@@ -28,7 +29,7 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            PlayBackgroundMusic("checkbox.mp3");
+            SoundStore.Get("checkbox.mp3").Play(true);
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

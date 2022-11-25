@@ -1,6 +1,6 @@
 ﻿using DBStorage;
-using Google.Protobuf.WellKnownTypes;
 using Models;
+using Models.Son;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -14,7 +14,7 @@ namespace JurassicRisk.Views
     {
         public MainWindow()
         {
-
+            SoundStore.LoadSounds("Sounds");
             GestionDatabase connection = new GestionDatabase();
             connection.CreateDatabase();
             connection.CreateUserTable();

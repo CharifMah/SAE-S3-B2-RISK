@@ -1,5 +1,4 @@
-﻿using Stockage;
-using System;
+﻿using System;
 using System.Windows.Media;
 
 namespace Models.Son
@@ -64,7 +63,7 @@ namespace Models.Son
 
         public void PlayBackgroundMusic(string file)
         {
-            backgroundMusic = Stockage.SoundStore.Get(file);
+            backgroundMusic = SoundStore.Get(file);
             backgroundMusic.Play(true);
         }
 
