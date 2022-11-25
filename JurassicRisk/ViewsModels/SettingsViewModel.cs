@@ -70,6 +70,7 @@ namespace JurassicRisk.ViewsModels
             this.NotifyPropertyChanged("PLeinEcran");
             this.NotifyPropertyChanged("Culturename");
             this.NotifyPropertyChanged("Musique");
+            this.NotifyPropertyChanged("MusiqueSlider");
         }
 
         public bool Musique
@@ -88,6 +89,26 @@ namespace JurassicRisk.ViewsModels
 
                 }
                 this.NotifyPropertyChanged("Musique");
+            }
+        }
+        public double MusiqueSlider
+        {
+            get { return Settings.Get().Backgroundmusic.Volume; }
+            set
+            {
+                Settings.Get().Backgroundmusic.Volume = value;
+
+                Settings.Get().Backgroundmusic.Volume = Settings.Get().Backgroundmusic.Volume / 100;
+
+                if (Settings.Get().Backgroundmusic.Volume > 1)
+                {
+                    Settings.Get().Musique = true;
+                }
+                if (Settings.Get().Backgroundmusic.Volume < 1)
+                {
+                    Settings.Get().Musique = false;
+                }
+                this.NotifyPropertyChanged("MusiqueSlider");
             }
         }
     }

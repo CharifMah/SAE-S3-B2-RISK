@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
 using Models.Son;
 using Stockage;
 using System;
@@ -30,9 +31,7 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-                Sound d = SoundStore.Get("checkbox.mp3");
-                d.Play(true);
-                d.Stop();
+            Settings.Get().SliderMusic.Volume = slider_Son.Value;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -41,13 +40,5 @@ namespace JurassicRisk.Views
             
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
-
-        //private void Musiqueclick(object sender, RoutedEventArgs e)
-        //{
-        //    Sound d = SoundStore.Get("checkbox.mp3");
-        //    d.Play(true);
-        //    d.Stop();
-        //    //d.PlayBackgroundMusic("checkbox.mp3");
-        //}
     }
 }

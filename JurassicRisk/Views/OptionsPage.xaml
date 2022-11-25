@@ -37,7 +37,7 @@
         <Slider x:Name="slider_Son" 
                 Grid.Column="1"
                 Grid.Row="3" 
-                Value="{Binding Son , Mode=TwoWay}"
+                Value="{Binding MusiqueSlider , Mode=TwoWay}"
                 Background="LightGray"
                 VerticalAlignment="Center"
                 IsSnapToTickEnabled="True"
@@ -47,7 +47,7 @@
                 Margin="20,0,20,0"
                 Thumb.DragCompleted="slider_Son_DragCompleted"
                 Style="{StaticResource CustomSlider1}" 
-                Minimum="0" 
+                Minimum="0"
                 />
 
         <CheckBox x:Name="checkBoxSound" 
