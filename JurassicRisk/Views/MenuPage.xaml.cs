@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models.Son;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +25,13 @@ namespace JurassicRisk.Views
         public MenuPage()
         {
             InitializeComponent();
+
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("JungleMusic.mp3").Stop();
+            SoundStore.Get("DarkJungleMusic.mp3").Play(true);
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
         }
 

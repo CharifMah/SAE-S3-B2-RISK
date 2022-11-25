@@ -1,4 +1,5 @@
-﻿using Stockage;
+﻿using Models.Son;
+using Stockage;
 using System.Runtime.Serialization;
 
 namespace Models
@@ -18,6 +19,13 @@ namespace Models
         private string _culturename;
         [DataMember]
         private List<string> _availableCulture;
+        [DataMember]
+        private bool _musique;
+ 
+        private Sound _backgroundMusic;
+
+        [DataMember]
+        private double _musicVolume;
         #endregion
 
         #region Property
@@ -55,6 +63,34 @@ namespace Models
         }
 
         public string ActualPageName { get => actualPageName; set => actualPageName = value; }
+        public bool MusiqueOnOff 
+        { 
+            get { return _musique; }
+            set { _musique = value; }
+        }
+
+        public double Volume
+        {
+            get
+            {
+                return _musicVolume;
+            }
+            set
+            {
+               _musicVolume= value;
+            }
+        }
+       
+
+        public Sound Backgroundmusic
+        {
+            get { return _backgroundMusic; }
+            set
+            {
+                _backgroundMusic = value;
+            }
+        }
+
         #endregion
 
         #region Singleton
@@ -90,6 +126,7 @@ namespace Models
         public void SaveSettings()
         {
             _saveSettings = new SauveCollection(Environment.CurrentDirectory);
+            _saveSettings.Sauver(this,"Settings");
         }
 
         private void LoadSettings()
@@ -101,6 +138,12 @@ namespace Models
                 this._culturename = instance._culturename;
                 this._pleinEcran = instance._pleinEcran;
             }           
+                this._musique = instance._musique;
+                this._backgroundMusic = instance._backgroundMusic;
+                this._musicVolume = instance._musicVolume;
+            }
+
+            
         }
     }
 }

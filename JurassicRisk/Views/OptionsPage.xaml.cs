@@ -1,5 +1,6 @@
 ﻿using JurassicRisk.ViewsModels;
 using Models;
+using Models.Son;
 using Stockage;
 using System;
 using System.Windows;
@@ -17,11 +18,17 @@ namespace JurassicRisk.Views
 
         public OptionsPage(string OldPageName)
         {
+            SoundStore.Get("Click.mp3").Stop();
             _save = new SauveCollection(Environment.CurrentDirectory);
             InitializeComponent();
             settingVm = new SettingsViewModel();
             this.DataContext = settingVm;
             Settings.Get().ActualPageName = OldPageName;
+
+            InitializeComponent();
+
+            slider_Son.Value = settingVm.Volume;
+            checkBoxSound.IsChecked = settingVm.MusiqueOnOff;
         }
 
         private void LangueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -31,7 +38,7 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-
+            settingVm.Volume = slider_Son.Value;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

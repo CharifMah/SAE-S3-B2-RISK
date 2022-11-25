@@ -1,6 +1,5 @@
 ﻿using JurassicRisk.Views;
 using Models;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -57,10 +56,52 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
+        public bool MusiqueOnOff
+        {
+            get { return Settings.Get().MusiqueOnOff; }
+            set
+            {
+                Settings.Get().MusiqueOnOff = value;
+                if (!Settings.Get().MusiqueOnOff)
+                {
+                    Settings.Get().Backgroundmusic.Volume = 0;
+                }
+                else
+                {
+                    Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
+
+                }
+                this.NotifyPropertyChanged("MusiqueOnOff");
+
+            }
+        }
+
+        public double Volume
+        {
+            get { return Settings.Get().Volume; }
+            set
+            {
+                Settings.Get().Volume = value;
+                Settings.Get().Backgroundmusic.Volume = value / 100;
+                if (Settings.Get().Volume > 1)
+                {
+                    Settings.Get().MusiqueOnOff = true;
+                }
+                if (Settings.Get().Volume < 1)
+                {
+                    Settings.Get().MusiqueOnOff = false;
+                }
+                this.NotifyPropertyChanged("Volume");
+                this.NotifyPropertyChanged("MusiqueOnOff");
+            }
+        }
+
         public SettingsViewModel()
         {
             this.NotifyPropertyChanged("PLeinEcran");
             this.NotifyPropertyChanged("Culturename");
+            this.NotifyPropertyChanged("MusiqueOnOff");
+            this.NotifyPropertyChanged("Volume");
         }
 
         /// <summary>
