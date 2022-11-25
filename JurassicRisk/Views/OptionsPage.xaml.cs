@@ -21,7 +21,11 @@ namespace JurassicRisk.Views
             _save = new SauveCollection(Environment.CurrentDirectory);
             settingVm = new SettingsViewModel();
             this.DataContext = settingVm;
+
             InitializeComponent();
+
+            slider_Son.Value = settingVm.Volume;
+            checkBoxSound.IsChecked = settingVm.MusiqueOnOff;
         }
 
         private void LangueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

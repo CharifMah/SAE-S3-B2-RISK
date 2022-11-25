@@ -19,8 +19,9 @@ namespace Models
         private List<string> _availableCulture;
         [DataMember]
         private bool _musique;
-        [DataMember]
+ 
         private Sound _backgroundMusic;
+
         [DataMember]
         private double _musicVolume;
         #endregion
@@ -122,6 +123,7 @@ namespace Models
         public void SaveSettings()
         {
             _saveSettings = new SauveCollection(Environment.CurrentDirectory);
+            _saveSettings.Sauver(this,"Settings");
         }
 
         private void LoadSettings()
