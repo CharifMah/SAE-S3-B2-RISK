@@ -34,11 +34,11 @@ namespace ModelTestUnit
                 j1.Troupe.Add(u);
             }
 
-            Assert.Throws<NotYourTerritoryException>(()=> j1.PositionnerTroupe(renforts, t1));
-            j1.PositionnerTroupe(renforts, t2);
+            Assert.Throws<NotYourTerritoryException>(()=> j1.AddUnit(renforts, t1));
+            j1.AddUnit(renforts, t2);
 
             renforts.Add(f.Create("brachiosaure"));
-            Assert.Throws<NotEnoughUniteBasexception>(() => j1.PositionnerTroupe(renforts, t2));
+            Assert.Throws<NotEnoughUniteException>(() => j1.AddUnit(renforts, t2));
         }
     }
 }
