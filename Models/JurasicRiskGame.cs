@@ -51,10 +51,6 @@ namespace Models
 
         #endregion
 
-        public enum Phase
-        {
-
-        }
 
         private JurasicRiskGame()
         {

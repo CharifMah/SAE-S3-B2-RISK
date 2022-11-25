@@ -35,8 +35,7 @@ namespace JurassicRisk.ViewsModels
         {
             if (_joueur.Equipe == territoire.Team || territoire.Team == Models.Teams.NEUTRE)
             {
-                _joueur.PositionnerTroupe(UniteBases,territoire);     
-                
+                _joueur.PositionnerTroupe(UniteBases,territoire);                    
             }
             else
             {
