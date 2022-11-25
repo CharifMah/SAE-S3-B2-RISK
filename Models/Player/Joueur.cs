@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Joueur
+namespace Models.Player
 {
     public class Joueur : IGestionTroupe
     {
@@ -54,25 +54,15 @@ namespace Models.Joueur
 
         public void PositionnerTroupe(List<UniteBase> UniteBases, ITerritoireBase territoire)
         {
-            if (_equipe == territoire.Team)
+            foreach (var unit in UniteBases)
             {
-                foreach (var unit in UniteBases)
+                if (_troupe.Contains(unit))
                 {
-                    if (_troupe.Contains(unit))
-                    {
-                        _troupe.Remove(unit);
+                    _troupe.Remove(unit);
 
-                        territoire.AddUnit(unit);
-                    }
-                    else
-                    {
-                        throw new NotEnoughUniteBasexception("Not enough unit !");
-                    }
+                    territoire.AddUnit(unit);
                 }
-            }
-            else
-            {
-                throw new NotYourTerritoryException("Not your territory !");
+
             }
         }
     }

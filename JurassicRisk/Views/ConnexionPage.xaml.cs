@@ -1,6 +1,6 @@
 ﻿
 using JurassicRisk.ViewsModels;
-using Models.Joueur;
+using Models.Player;
 using System.Windows;
 using System.Windows.Controls;
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Joueur
+namespace Models.Player
 {
     public interface IGestionTroupe
     {

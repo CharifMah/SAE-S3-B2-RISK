@@ -1,10 +1,14 @@
 ﻿using JurassicRisk.observable;
-using Models.Joueur;
+using Models.Exceptions;
+using Models.Map;
+using Models.Player;
+using Models.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -19,6 +23,19 @@ namespace JurassicRisk.ViewsModels
 
         public JoueurViewModel()
         {
+            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<UniteBase>() { new UniteBase(), new UniteBase() }, Models.Teams.VERT);
+        }
+
+        public void PositionnerTroupe(List<UniteBase> UniteBases, ITerritoireBase territoire)
+        {
+            if (_joueur.Equipe == territoire.Team)
+            {
+                _joueur.PositionnerTroupe(UniteBases,territoire);
+            }
+            else
+            {
+                MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
+            }
         }
     }
 }

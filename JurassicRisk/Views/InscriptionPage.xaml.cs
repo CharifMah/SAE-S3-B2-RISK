@@ -1,6 +1,6 @@
 ﻿using JurassicRisk.Ressource;
 using JurassicRisk.ViewsModels;
-using Models.Joueur;
+using Models.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;

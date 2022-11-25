@@ -1,8 +1,8 @@
 
 using Models;
 using Models.Fabriques.FabriqueUnite;
-using Models.Joueur;
 using Models.Map;
+using Models.Player;
 using Models.Units;
 using Stockage;
 using System;
@@ -22,7 +22,7 @@ namespace JurassicRisk.ViewsModels
         private Carte _carte;
         private FabriqueUniteBase f;
         private int zi = 0;
-        private Joueur j;
+        private JoueurViewModel jVm;
 
         public Canvas CarteCanvas
         {
@@ -64,7 +64,7 @@ namespace JurassicRisk.ViewsModels
             }
 
             f = new FabriqueUniteBase();
-            j = new Joueur(new Profil("s", ""), new List<UniteBase>() { new UniteBase() }, Teams.NEUTRE);
+            jVm = new JoueurViewModel();
 
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
@@ -129,8 +129,8 @@ namespace JurassicRisk.ViewsModels
                 List<UniteBase> renforts = new List<UniteBase>();
                 var unit = f.Create("Brachiosaure");
                 renforts.Add(unit);
-                j.Troupe.Add(unit);
-                j.PositionnerTroupe(renforts, territoire);
+                jVm.Joueur.Troupe.Add(unit);
+                jVm.PositionnerTroupe(renforts, territoire);
                 MessageBox.Show("Troupes ajoutées");
             }
         }

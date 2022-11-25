@@ -1,4 +1,4 @@
-using Models.Joueur;
+using Models.Player;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
