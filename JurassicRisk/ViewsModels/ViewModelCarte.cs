@@ -1,12 +1,10 @@
-
-using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
-using Models.Player;
 using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,12 +16,17 @@ namespace JurassicRisk.ViewsModels
     /// <author>Charif</author>
     public class ViewModelCarte : observable.Observable
     {
+        #region Attributes
+
         private Canvas _carteCanvas;
         private Carte _carte;
         private FabriqueUniteBase f;
         private int zi = 0;
         private JoueurViewModel jVm;
 
+        #endregion
+
+        #region Property
         public Canvas CarteCanvas
         {
             get
@@ -39,6 +42,10 @@ namespace JurassicRisk.ViewsModels
                 return _carte;
             }
         }
+
+        public JoueurViewModel JVm { get => jVm; set => jVm = value; }
+
+        #endregion
 
         /// <summary>
         /// Cree la carte et la dessine
@@ -64,7 +71,7 @@ namespace JurassicRisk.ViewsModels
             }
 
             f = new FabriqueUniteBase();
-            jVm = new JoueurViewModel();
+            JVm = new JoueurViewModel();
 
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
@@ -117,22 +124,8 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas c = sender as Canvas;
 
-            if (territoire.Team == Teams.NEUTRE)
-            {
-                territoire.Team = (Teams.ROUGE);
-                DropShadowEffect shadow = new DropShadowEffect();
-                shadow.Color = Brushes.Red.Color;
-                c.Effect = shadow;
-            }
-            else
-            {
-                List<UniteBase> renforts = new List<UniteBase>();
-                var unit = f.Create("Brachiosaure");
-                renforts.Add(unit);
-                jVm.Joueur.Troupe.Add(unit);
-                jVm.PositionnerTroupe(renforts, territoire);
-                MessageBox.Show("Troupes ajoutées");
-            }
+            JVm.PositionnerTroupe(new List<UniteBase>(JVm.Joueur.Troupe), territoire);
+            NotifyPropertyChanged("CarteCanvas");
         }
 
         private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)

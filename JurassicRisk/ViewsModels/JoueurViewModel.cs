@@ -21,21 +21,28 @@ namespace JurassicRisk.ViewsModels
             get { return _joueur; }
         }
 
+        public int NombreTrp
+        {
+            get { return _joueur.Troupe.Count(); }
+        }
+
         public JoueurViewModel()
         {
-            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<UniteBase>() { new UniteBase(), new UniteBase() }, Models.Teams.VERT);
+            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<UniteBase>() { new UniteBase(), new UniteBase() }, Models.Teams.NEUTRE);
         }
 
         public void PositionnerTroupe(List<UniteBase> UniteBases, ITerritoireBase territoire)
         {
             if (_joueur.Equipe == territoire.Team)
             {
-                _joueur.PositionnerTroupe(UniteBases,territoire);
+                _joueur.PositionnerTroupe(UniteBases,territoire);              
             }
             else
             {
                 MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
             }
+            NotifyPropertyChanged("NombreTrp");
+         
         }
     }
 }

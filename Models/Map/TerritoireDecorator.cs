@@ -60,7 +60,7 @@ namespace Models.Map
 
         public void AddUnit(UniteBase UniteBase)
         {
-            ///Not yet
+            _territoire.AddUnit(UniteBase);
         }
     }
 }

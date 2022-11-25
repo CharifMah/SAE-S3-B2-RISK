@@ -186,6 +186,9 @@
   <data name="TConquisSmlt" xml:space="preserve">
     <value>Simultaneously conquered territory</value>
   </data>
+  <data name="TrpNombre" xml:space="preserve">
+    <value>Number of Unit</value>
+  </data>
   <data name="TrpPerdus" xml:space="preserve">
     <value>Lost troops</value>
   </data>

@@ -20,7 +20,7 @@ namespace JurassicRisk.Views
             mainwindow.PreviewKeyDown += Mainwindow_PreviewKeyDown;
             ViewboxCanvas.Width = mainwindow.ActualWidth;
             ViewboxCanvas.Height = mainwindow.ActualHeight;
-            CarteCanvas.DataContext = new ViewModelCarte();
+            DataContext = new ViewModelCarte();
         }
 
         private void Mainwindow_PreviewKeyDown(object sender, KeyEventArgs e)

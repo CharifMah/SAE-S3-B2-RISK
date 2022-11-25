@@ -279,5 +279,13 @@ namespace JurassicRisk.Ressource
             }
         }
 
+        public static string TrpNombre
+        {
+            get
+            {
+                return ResourceManager.GetString("TrpNombre", resourceCulture);
+            }
+        }
+
     }
 }

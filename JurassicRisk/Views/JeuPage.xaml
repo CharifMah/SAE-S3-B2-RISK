@@ -21,6 +21,7 @@
 
             </Canvas>
         </Viewbox>
+        
         <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Height="50" Margin="30" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click"></Button>
         <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Height="306" Width="324">
             <GroupBox.Background>
@@ -35,6 +36,14 @@
 
             </Grid>
         </GroupBox>
-
+        <TextBlock Style="{StaticResource FruitDays}" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Top">
+            <TextBlock.Text>
+                
+                <MultiBinding  StringFormat="{}{0}: {1}">
+                    <Binding Source="{x:Static Ressources:Strings.TrpNombre}"/>
+                    <Binding Path="JVm.NombreTrp"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
     </Grid>
 </Page>
