@@ -55,21 +55,26 @@ namespace JurassicRisk.ViewsModels
 
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
-            _carte = c.Charger<Carte>("Map/Cartee");
+            _carte = null;/*c.Charger<Carte>("Map/Cartee");*/
             _carteCanvas = new Canvas();
+            DrawCarte();
+
+            f = new FabriqueUniteBase();
+            j = new Joueur(new Profil("s", ""), new List<UniteBase>() { new UniteBase() }, Teams.NEUTRE);
+
+            NotifyPropertyChanged("CarteCanvas");
+            NotifyPropertyChanged("Carte");
+        }
+
+        private void DrawCarte()
+        {
             foreach (Continent continent in _carte.DicoContinents.Values)
             {
                 foreach (TerritoireDecorator Territoire in continent.DicoTerritoires.Values)
                 {
                     DrawRegion(Territoire);
                 }
-            }
-                
-            f = new FabriqueUnite();
-            j = new Joueur(new Profil("s",""),new List<Unite>() { new Unite()},Teams.NEUTRE);
-
-            NotifyPropertyChanged("CarteCanvas");
-            NotifyPropertyChanged("Carte");
+            }           
         }
 
         /// <summary>
