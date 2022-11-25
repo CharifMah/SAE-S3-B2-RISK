@@ -28,7 +28,7 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-
+            PlayBackgroundMusic("checkbox.mp3");
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Resources;
 
-namespace Models.Map
+namespace JurassicRisk.Ressources
 {
     public static class GetResource
     {
