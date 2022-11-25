@@ -1,15 +1,10 @@
-﻿using DBStorage.ClassMetier;
-using Microsoft.AspNetCore.Mvc;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ubiety.Dns.Core;
-using Xunit.Sdk;
+﻿
 
-namespace ModelTestUnit
+using DBStorage.ClassMetier;
+using RISKAPI.Controllers;
+using System.Net.Http.Json;
+
+namespace UnitTestApi
 {
     public class TestControllerApiUsers
     {
@@ -19,10 +14,10 @@ namespace ModelTestUnit
             string _ip = "localhost:7215";
             HttpClient client = new HttpClient();
 
-            var controller = new RISKAPI.Controllers.UsersController();
-            Profil profil = new Profil("","");
+            var controller = new UsersController();
+            Profil profil = new Profil("", "");
 
-            HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Connexion", profil);
+            HttpResponseMessage reponse = await client.PostAsJsonAsync($"https://{_ip}/Users/Connexion", profil);
 
             string res = reponse.Content.ReadAsStringAsync().Result;
 
@@ -31,17 +26,17 @@ namespace ModelTestUnit
 
             profil = new Profil("romain", "12345");
 
-            await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Connexion", profil);
+            await client.PostAsJsonAsync($"https://{_ip}/Users/Connexion", profil);
 
 
-            reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Connexion", profil);
+            reponse = await client.PostAsJsonAsync($"https://{_ip}/Users/Connexion", profil);
 
 
             Assert.True(reponse.IsSuccessStatusCode);
 
             profil.Password = "azerty";
 
-            reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Connexion", profil);
+            reponse = await client.PostAsJsonAsync($"https://{_ip}/Users/Connexion", profil);
 
             res = reponse.Content.ReadAsStringAsync().Result;
 
@@ -58,7 +53,7 @@ namespace ModelTestUnit
             var controller = new RISKAPI.Controllers.UsersController();
             Profil profil = new Profil("", "");
 
-            HttpResponseMessage reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
+            HttpResponseMessage reponse = await client.PostAsJsonAsync($"https://{_ip}/Users/Inscription", profil);
 
             string res = reponse.Content.ReadAsStringAsync().Result;
 
@@ -67,9 +62,9 @@ namespace ModelTestUnit
 
             profil = new Profil("romain", "12345");
 
-            await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
+            await client.PostAsJsonAsync($"https://{_ip}/Users/Inscription", profil);
 
-            reponse = await client.PostAsJsonAsync<Profil>($"https://{_ip}/Users/Inscription", profil);
+            reponse = await client.PostAsJsonAsync($"https://{_ip}/Users/Inscription", profil);
 
 
             Assert.True(!reponse.IsSuccessStatusCode);
