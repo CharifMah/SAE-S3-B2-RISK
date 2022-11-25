@@ -62,5 +62,10 @@ namespace Models.Map
         {
             _territoire.AddUnit(UniteBase);
         }
+
+        public void RemoveUnit(UniteBase UniteBase)
+        {
+            _territoire.RemoveUnit(UniteBase);
+        }
     }
 }

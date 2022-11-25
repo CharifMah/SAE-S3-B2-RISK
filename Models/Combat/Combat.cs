@@ -1,4 +1,5 @@
 ﻿using Models.Map;
+using Models.Player;
 using Models.Units;
 using System;
 using System.Collections.Generic;
@@ -7,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Models
+namespace Models.Combat
 {
     public class Combat : ICombat
     {
-        public Combat(List<Unite> attaquant, List<Unite> defenseur, TerritoireBase territoireAttaquant, TerritoireBase cible, Joueur assaillant, Joueur victime)
+        public Combat(List<UniteBase> attaquant, List<UniteBase> defenseur, TerritoireBase territoireAttaquant, TerritoireBase cible, Joueur assaillant, Joueur victime)
         {
             DerouleCombat(attaquant, defenseur, territoireAttaquant, cible, assaillant, victime);
         }
 
-        public void DerouleCombat(List<Unite> attaquant, List<Unite> defenseur, TerritoireBase territoireAttaquant, TerritoireBase cible, Joueur assaillant, Joueur victime)
+        public void DerouleCombat(List<UniteBase> attaquant, List<UniteBase> defenseur, TerritoireBase territoireAttaquant, TerritoireBase cible, Joueur assaillant, Joueur victime)
         {
             int nbAttaque = Attaquer(attaquant, cible, assaillant);
             int nbDefense = Defendre(defenseur, territoireAttaquant, victime);
@@ -31,7 +32,7 @@ namespace Models
             RemoveUnits(attaqueReussie, nombreAttaque, territoireAttaquant, cible);
         }
 
-        public int Attaquer(List<Unite> attaquant, TerritoireBase cible, Joueur assaillant)
+        public int Attaquer(List<UniteBase> attaquant, TerritoireBase cible, Joueur assaillant)
         {
             if (cible.Team != assaillant.Equipe)
             {
@@ -55,7 +56,7 @@ namespace Models
             }
         }
 
-        public int Defendre(List<Unite> defenseur, TerritoireBase territoireAttaquant, Joueur j)
+        public int Defendre(List<UniteBase> defenseur, TerritoireBase territoireAttaquant, Joueur j)
         {
             switch (defenseur.Count)
             {
@@ -147,7 +148,7 @@ namespace Models
 
         public void RemoveUnits(int attaqueReussie, int nbAttaque, TerritoireBase territoireAttaquant, TerritoireBase cible)
         {
-            List<Unite> troupe = cible.Units;
+            List<UniteBase> troupe = cible.Units;
             for (int i = 0; i < attaqueReussie; i++)
             {
                 cible.RemoveUnit(troupe[0]);

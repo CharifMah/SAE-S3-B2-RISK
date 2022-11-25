@@ -12,5 +12,6 @@ namespace Models.Map
         List<UniteBase> Units { get; set; }
 
         void AddUnit(UniteBase UniteBase);
+        void RemoveUnit(UniteBase UniteBase);
     }
 }

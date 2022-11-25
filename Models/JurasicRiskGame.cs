@@ -12,6 +12,7 @@ namespace Models
     {
         private Carte _carte;
         private List<Joueur> _joueurs;
+
         #region Property
 
         public Carte Carte

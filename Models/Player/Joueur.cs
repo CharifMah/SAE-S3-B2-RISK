@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Models.Player
@@ -51,10 +52,9 @@ namespace Models.Player
         }
 
         #endregion
-
-        public void PositionnerTroupe(List<UniteBase> UniteBases, ITerritoireBase territoire)
+        public void AddUnit(List<UniteBase> unites, ITerritoireBase territoire)
         {
-            foreach (var unit in UniteBases)
+            foreach (var unit in unites)
             {
                 if (_troupe.Contains(unit))
                 {
@@ -66,5 +66,26 @@ namespace Models.Player
 
             }
         }
+
+        public void AddUnit(UniteBase unit)
+        {
+            this._troupe.Add(unit);
+        }
+
+        public void RemoveUnit(UniteBase unit)
+        {
+            this._troupe.Remove(unit);
+        }
+
+        public void RemoveUnit(List<UniteBase> unites, ITerritoireBase territoire)
+        {
+            foreach (var unit in unites)
+            {
+                if (_troupe.Contains(unit))
+                {
+                    territoire.RemoveUnit(unit);
+                }
+            }
+        }      
     }
 }

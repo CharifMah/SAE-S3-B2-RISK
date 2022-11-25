@@ -8,7 +8,7 @@ namespace Models.Map
     /// </summary>
     [KnownType(typeof(TerritoireBase))]
     [DataContract]
-    public class TerritoireBase : ITerritoireBase, IGestionTroupe
+    public class TerritoireBase : ITerritoireBase
     {
         [DataMember]
         protected Teams _teams;
@@ -40,30 +40,14 @@ namespace Models.Map
             this._troupe = troupe;
         }
 
-        /// <summary>
-        /// Ajoute une UniteBase
-        /// </summary>
-        /// <param name="UniteBase">UniteBase</param>
         public void AddUnit(UniteBase UniteBase)
         {
-            _troupe.Add(UniteBase);
+            this._troupe.Add(UniteBase);
         }
 
-
-        public void RemoveUnit(Unite unit)
+        public void RemoveUnit(UniteBase UniteBase)
         {
-            _troupe.Remove(unit);
-        }
-
-
-        public void AddUnit(List<Unite> unites, TerritoireBase territoire)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveUnit(List<Unite> unites, TerritoireBase territoire)
-        {
-            throw new NotImplementedException();
+            this._troupe.Remove(UniteBase);
         }
     }
 }

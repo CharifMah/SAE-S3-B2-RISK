@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Combat;
 using Models.Map;
 using Models.Units;
 using System;
