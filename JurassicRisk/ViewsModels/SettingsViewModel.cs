@@ -1,5 +1,6 @@
 ﻿using JurassicRisk.Views;
 using Models;
+using Models.Son;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -67,6 +69,26 @@ namespace JurassicRisk.ViewsModels
         {
             this.NotifyPropertyChanged("PLeinEcran");
             this.NotifyPropertyChanged("Culturename");
+            this.NotifyPropertyChanged("Musique");
+        }
+
+        public bool Musique
+        {
+            get { return Settings.Get().Musique; }
+            set
+            {
+                Settings.Get().Musique = value;
+                if (!Settings.Get().Musique)
+                {
+                    Settings.Get().BackgroundVolume = 0;
+                }
+                else
+                {
+                    Settings.Get().BackgroundVolume = Settings.Get().Backgroundmusic.Volume / 100;
+
+                }
+                this.NotifyPropertyChanged("Musique");
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ namespace JurassicRisk.Views
         SauveCollection _save;
         public OptionsPage()
         {
+            SoundStore.Get("Click.mp3").Stop();
             _save = new SauveCollection(Environment.CurrentDirectory);
             settingVm = new SettingsViewModel();
             this.DataContext = settingVm;
@@ -29,7 +30,9 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            SoundStore.Get("checkbox.mp3").Play(true);
+                Sound d = SoundStore.Get("checkbox.mp3");
+                d.Play(true);
+                d.Stop();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -38,5 +41,13 @@ namespace JurassicRisk.Views
             
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
+
+        //private void Musiqueclick(object sender, RoutedEventArgs e)
+        //{
+        //    Sound d = SoundStore.Get("checkbox.mp3");
+        //    d.Play(true);
+        //    d.Stop();
+        //    //d.PlayBackgroundMusic("checkbox.mp3");
+        //}
     }
 }

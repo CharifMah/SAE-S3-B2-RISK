@@ -12,8 +12,8 @@
     <None Remove="Polices\University.otf" />
     <None Remove="Sounds\checkbox.mp3" />
     <None Remove="Sounds\Click.mp3" />
-    <None Remove="Sounds\Dark Jungle Music - King of the Dinosaurs.mp3" />
-    <None Remove="Sounds\Jungle Music - Land of the Dinosaurs.mp3" />
+    <None Remove="Sounds\DarkJungleMusic.mp3" />
+    <None Remove="Sounds\JungleMusic.mp3" />
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
     <None Remove="Sprites\Background\Background3.jpg" />
@@ -78,7 +78,7 @@
     <Content Include="Sounds\Click.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Sounds\Dark Jungle Music - King of the Dinosaurs.mp3">
+    <Content Include="Sounds\DarkJungleMusic.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\Background\trexHead.png">
@@ -252,7 +252,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Sounds\Jungle Music - Land of the Dinosaurs.mp3">
+    <Content Include="Sounds\JungleMusic.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

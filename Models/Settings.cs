@@ -1,4 +1,5 @@
-﻿using Stockage;
+﻿using Models.Son;
+using Stockage;
 using System.Runtime.Serialization;
 
 namespace Models
@@ -16,6 +17,10 @@ namespace Models
         private string _culturename;
         [DataMember]
         private List<string> _availableCulture;
+        [DataMember]
+        private bool _musique;
+        [DataMember]
+        private Sound _backgroundMusic;
         #endregion
 
         #region Property
@@ -49,6 +54,36 @@ namespace Models
             set
             {
                 _availableCulture = value;
+            }
+        }
+
+        public bool Musique 
+        { 
+            get { return _musique; }
+            set { _musique = value; }
+        }
+        public double BackgroundVolume
+        {
+            get
+            {
+                return (_backgroundMusic != null) ? _backgroundMusic.Volume : 0.0;
+            }
+            set
+            {
+                if (_backgroundMusic != null)
+                {
+                    _backgroundMusic.Volume = value;
+                }
+            }
+        }
+       
+
+        public Sound Backgroundmusic
+        {
+            get { return _backgroundMusic; }
+            set
+            {
+                _backgroundMusic = value;
             }
         }
 
@@ -97,6 +132,8 @@ namespace Models
             {
                 this._culturename = instance._culturename;
                 this._pleinEcran = instance._pleinEcran;
+                this._musique = instance._musique;
+                this._backgroundMusic = instance._backgroundMusic;
             }
 
             

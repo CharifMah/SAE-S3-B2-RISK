@@ -9,7 +9,17 @@ namespace Models.Son
         private bool loop;
         private bool playing;
         private Sound backgroundMusic;
-
+        public double Volume
+        {
+            get
+            {
+                return player.Volume;
+            }
+            set
+            {
+                player.Volume = value;
+            }
+        }
         public Sound(string path)
         {
             loop = false;
@@ -55,16 +65,14 @@ namespace Models.Son
             player.Play();
         }
 
-        public double Volume
-        {
-            get => player.Volume;
-            set => player.Volume = value;
-        }
-
         public void PlayBackgroundMusic(string file)
         {
             backgroundMusic = SoundStore.Get(file);
             backgroundMusic.Play(true);
+        }
+        public void StopBackgroundMusic()
+        {
+            backgroundMusic.Stop();
         }
 
     }

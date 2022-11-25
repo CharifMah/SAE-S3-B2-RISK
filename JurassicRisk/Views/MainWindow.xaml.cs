@@ -14,7 +14,10 @@ namespace JurassicRisk.Views
     {
         public MainWindow()
         {
+
             SoundStore.LoadSounds("Sounds");
+            Settings.Get().Backgroundmusic = SoundStore.Get("JungleMusic.mp3");
+            Settings.Get().Backgroundmusic.Play();
             GestionDatabase connection = new GestionDatabase();
             connection.CreateDatabase();
             connection.CreateUserTable();
