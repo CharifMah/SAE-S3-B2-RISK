@@ -51,15 +51,11 @@ namespace JurassicRisk.ViewsModels
         /// <author>Charif</author>
         public CarteViewModel(JoueurViewModel joueur)
         {
-            //ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
-            //_decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");
-            //_carte = CreateCarte(_decorations);
-            //new SaveMap(_carte);
-
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
+
             foreach (Continent continent in _carte.DicoContinents.Values)
             {
                 foreach (TerritoireDecorator Territoire in continent.DicoTerritoires.Values)
@@ -133,7 +129,10 @@ namespace JurassicRisk.ViewsModels
             this._carte.SelectedTerritoire = territoire;
             if (_joueur.Joueur.Troupe.Count > 0 && this._carte.SelectedTerritoire != null)
             {
-                _joueur.AddUnits(new List<UniteBase>() { _joueur.Joueur.Troupe[0] }, this._carte.SelectedTerritoire);
+                if (_joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire))
+                {
+                    _joueur.Units.Remove(_joueur.SelectedUnit);
+                }
             }
            
             NotifyPropertyChanged("CarteCanvas");

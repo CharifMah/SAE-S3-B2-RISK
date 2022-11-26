@@ -8,16 +8,16 @@ using Models.Units;
 
 namespace Models.Fabriques.FabriqueUnite.Constructs
 {
-    public class ConstructBaryonix : IMakeUnit
+    public class ConstructBaryonyx : IMakeUnit
     {
         /// <summary>
-        /// Instancie un objet de type Brachiosaure
+        /// Instancie un objet de type Brachiosaurus
         /// </summary>
-        /// <returns>Renvoie un Brachiosaure</returns>
+        /// <returns>Renvoie un Brachiosaurus</returns>
         /// <author>VERCHERE Brian</author>
         public UniteBase MakeUnit()
         {
-            return new Baryonix();
+            return new Baryonyx();
         }
     }
 }

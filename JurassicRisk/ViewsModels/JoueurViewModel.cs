@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.observable;
+using JurassicRisk.Ressources;
 using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
@@ -9,12 +10,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace JurassicRisk.ViewsModels
 {
     public class JoueurViewModel : observable.Observable
     {
+        #region Attributes
         private Joueur _joueur;
+        private ObservableCollection<IUnit> _units;
+        private IUnit _selectedUnit;
+        #endregion
+
+        #region Property
 
         public Joueur Joueur
         {
@@ -26,38 +34,53 @@ namespace JurassicRisk.ViewsModels
             get { return _joueur.Troupe.Count(); }
         }
 
-        public ObservableCollection<UniteBase> Units
+        public ObservableCollection<IUnit> Units
         {
             get
             {
-                return new ObservableCollection<UniteBase>(_joueur.Troupe);
+                return _units;
             }
         }
+
+        public IUnit SelectedUnit
+        {
+            get { return _selectedUnit; }
+            set { _selectedUnit = value; }
+        }
+
+        #endregion
+
 
         public JoueurViewModel()
         {
             FabriqueUniteBase f = new FabriqueUniteBase();
-            List<UniteBase> units = new List<UniteBase>();
-            Random random= new Random();
+            _units = new ObservableCollection<IUnit>();
+          
+            #region CreatePlayer
+
+            Random random = new Random();
             for (int i = 0; i < 40; i++)
             {
                 switch (random.Next(4))
                 {
                     case 0:
-                        units.Add(f.Create("rex"));
+                        _units.Add(new UniteDecorator(f.Create("Rex")));
                         break;
                     case 1:
-                        units.Add(f.Create("brachiosaure"));
+                        _units.Add(new UniteDecorator(f.Create("Brachiosaurus")));
                         break;
                     case 2:
-                        units.Add(f.Create("baryonix"));
+                        _units.Add(new UniteDecorator(f.Create("Baryonyx")));
                         break;
                     case 3:
-                        units.Add(f.Create("pterosaure"));
+                        _units.Add(new UniteDecorator(f.Create("Pterosaure")));
                         break;
                 }
             }
-            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, units, Models.Teams.VERT);
+            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, _units.ToList(), Models.Teams.VERT);
+
+            #endregion
+
             NotifyPropertyChanged("Units");
 
         }
@@ -67,11 +90,13 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="UniteBases">Les unite a ajouter</param>
         /// <param name="territoire">le territoire</param>
-        public void AddUnits(List<UniteBase> UniteBases, ITerritoireBase territoire)
+        public bool AddUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
         {
+            bool res = false;
             if (UniteBases.Count > 0 && (_joueur.Equipe == territoire.Team || territoire.Team == Models.Teams.NEUTRE))
             {
                 _joueur.AddUnits(UniteBases, territoire);
+                res = true;
             }
             else
             {
@@ -79,6 +104,8 @@ namespace JurassicRisk.ViewsModels
             }
             NotifyPropertyChanged("NombreTrp");
             NotifyPropertyChanged("Units");
+
+            return res;
 
         }
     }

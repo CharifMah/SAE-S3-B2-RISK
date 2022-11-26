@@ -25,9 +25,9 @@ namespace ModelTestUnit
             FabriqueUniteBase f = new FabriqueUniteBase();
             for (int i = 0; i < 5; i++)
             {
-                var unit = f.Create("brachiosaure");
+                var unit = f.Create("Brachiosaurus");
                 j1.AddUnit(unit);
-                var unit2 = f.Create("brachiosaure");
+                var unit2 = f.Create("Brachiosaurus");
                 j2.AddUnit(unit2);
             }
 
@@ -35,7 +35,7 @@ namespace ModelTestUnit
             List<UniteBase> defenseurs = new List<UniteBase>();
             t1.Units = attaquants;
             t2.Units = defenseurs;
-            t1.Units.Add(f.Create("brachiosaure"));
+            t1.Units.Add(f.Create("Brachiosaurus"));
 
             for (int i = 0; i < 3; i++)
             {

@@ -28,7 +28,21 @@
             </Canvas>
         </Viewbox>
 
-        <ListBox Grid.Row="0" HorizontalAlignment="Center" Width="452" ItemsSource="{Binding JoueurVm.Units}" ItemBindingGroup="{Binding CarteVm.JoueurVm.Units}"></ListBox>
+        <ListBox x:Name="ListBoxUnits" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="0" HorizontalAlignment="Center" Width="452" ItemsSource="{Binding JoueurVm.Units}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Path=Name}"/>
+                        <Image Source="{Binding Path=Sprite}"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         
         <Button HorizontalAlignment="Right" Width="50" Grid.Row="3" Height="50" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click"></Button>
 
@@ -52,7 +66,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0}: {1}">
                     <Binding Source="{x:Static Ressources:Strings.TrpNombre}"/>
-                    <Binding Path="CarteVm.JoueurVm.NombreTrp"/>
+                    <Binding Path="JoueurVm.NombreTrp"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

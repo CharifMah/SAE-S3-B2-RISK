@@ -15,7 +15,7 @@ namespace Models.Player
         #region Attribute
 
         private Teams _equipe;
-        private List<UniteBase> _troupe;
+        private List<IUnit> _troupe;
         private Profil _profil;
 
         #endregion
@@ -28,7 +28,7 @@ namespace Models.Player
             set { _equipe = value; }
         }
 
-        public List<UniteBase> Troupe
+        public List<IUnit> Troupe
         {
             get { return _troupe; }
             set { _troupe = value; }
@@ -44,7 +44,7 @@ namespace Models.Player
 
         #region Constructor
 
-        public Joueur(Profil profil, List<UniteBase> troupe, Teams equipe)
+        public Joueur(Profil profil, List<IUnit> troupe, Teams equipe)
         {
             _troupe = troupe;
             _profil = profil;
@@ -52,7 +52,7 @@ namespace Models.Player
         }
 
         #endregion
-        public void AddUnits(List<UniteBase> unites, ITerritoireBase territoire)
+        public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
             foreach (var unit in unites)
             {
@@ -67,17 +67,17 @@ namespace Models.Player
             }
         }
 
-        public void AddUnit(UniteBase unit)
+        public void AddUnit(IUnit unit)
         {
             this._troupe.Add(unit);
         }
 
-        public void RemoveUnit(UniteBase unit)
+        public void RemoveUnit(IUnit unit)
         {
             this._troupe.Remove(unit);
         }
 
-        public void RemoveUnit(List<UniteBase> unites, ITerritoireBase territoire)
+        public void RemoveUnit(List<IUnit> unites, ITerritoireBase territoire)
         {
             foreach (var unit in unites)
             {

@@ -65,6 +65,10 @@
     <None Remove="Sprites\Carte\6c5r.png" />
     <None Remove="Sprites\Carte\6c6r.png" />
     <None Remove="Sprites\Carte\6c7r.png" />
+    <None Remove="Sprites\Units\Baryonyx.png" />
+    <None Remove="Sprites\Units\Brachiosaurus.png" />
+    <None Remove="Sprites\Units\Pterosaure.png" />
+    <None Remove="Sprites\Units\Rex.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -234,6 +238,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Sprites\Carte\6c7r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Units\Baryonyx.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Units\Brachiosaurus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Units\Pterosaure.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Units\Rex.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

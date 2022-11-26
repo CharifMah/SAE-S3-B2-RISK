@@ -13,10 +13,10 @@ namespace Models.Fabriques.FabriqueUnite
         /// <author>VERCHERE Brian</author>
         public FabriqueUniteBase()
         {
-            constructors["brachiosaure"] = new ConstructBrachiosaure();
-            constructors["rex"] = new ConstructRex();
-            constructors["baryonix"] = new ConstructBaryonix();
-            constructors["pterosaure"] = new ConstructPterosaure();
+            constructors["Brachiosaurus"] = new ConstructBrachiosaurus();
+            constructors["Rex"] = new ConstructRex();
+            constructors["Baryonyx"] = new ConstructBaryonyx();
+            constructors["Pterosaure"] = new ConstructPterosaure();
         }
 
         /// <summary>

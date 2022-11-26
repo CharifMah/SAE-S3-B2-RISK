@@ -14,11 +14,11 @@ namespace Models
             _tourEnd = false;
         }
 
-        public void PlaceUnits(UniteBase unitToPlace, Joueur _joueur)
+        public void PlaceUnits(IUnit unitToPlace, Joueur _joueur)
         {
             if (_joueur.Troupe.Count > 0)
             {
-                _joueur.AddUnits(new List<UniteBase>() { unitToPlace }, JurasicRiskGame.Instance.Carte.SelectedTerritoire);
+                _joueur.AddUnits(new List<IUnit>() { unitToPlace }, JurasicRiskGame.Instance.Carte.SelectedTerritoire);
             }
         }
 

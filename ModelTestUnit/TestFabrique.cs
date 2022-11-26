@@ -11,11 +11,11 @@ namespace ModelTestUnit
     public class TestFabrique
     {
         [Fact]
-        public void CreationBrachiosaure()
+        public void CreationBrachiosaurus()
         {
             FabriqueUniteBase fabrique = new FabriqueUniteBase();
-            UniteBase b1 = fabrique.Create("brachiosaure");
-            Assert.IsType<Brachiosaure>(b1);
+            UniteBase b1 = fabrique.Create("Brachiosaurus");
+            Assert.IsType<Brachiosaurus>(b1);
         }
     }
 }

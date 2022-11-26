@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Models.Units
 {
-    internal class Baryonix : UniteBase
+    internal class Baryonyx : UniteBase
     {
-        public Baryonix()
+        public Baryonyx()
         {
-            this.name = "Baryonix";
-            this.description = "this is a Baryonix";
+            this.name = "Baryonyx";
+            this.description = "this is a Baryonyx";
         }
     }
 }

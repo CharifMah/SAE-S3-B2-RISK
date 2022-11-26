@@ -1,5 +1,6 @@
 ﻿using JurassicRisk.ViewsModels;
 using Models;
+using Models.Units;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,7 +13,7 @@ namespace JurassicRisk.Views
     public partial class JeuPage : Page
     {
         private Window mainwindow;
-
+        private JurassicRiskViewModel _jurassicRiskVm;
         public JeuPage()
         {
             InitializeComponent();
@@ -21,7 +22,8 @@ namespace JurassicRisk.Views
             mainwindow.PreviewKeyDown += Mainwindow_PreviewKeyDown;
             ViewboxCanvas.Width = mainwindow.ActualWidth;
             ViewboxCanvas.Height = mainwindow.ActualHeight;
-            DataContext = new JurassicRiskViewModel();
+            _jurassicRiskVm = new JurassicRiskViewModel();
+            DataContext = _jurassicRiskVm;
         }
 
         private void Mainwindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -92,6 +94,11 @@ namespace JurassicRisk.Views
         private void OptionButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage("_JeuPage"));
+        }
+
+        private void ListBoxUnits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _jurassicRiskVm.JoueurVm.SelectedUnit = (sender as ListBox).SelectedItem as IUnit;
         }
     }
 }

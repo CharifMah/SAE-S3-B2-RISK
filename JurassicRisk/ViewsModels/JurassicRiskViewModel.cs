@@ -18,15 +18,10 @@ namespace JurassicRisk.ViewsModels
         public JoueurViewModel JoueurVm { get => _joueurVm; }
         #endregion
 
-
-
         public JurassicRiskViewModel()
         {
             _joueurVm = new JoueurViewModel();
-            _carteVm = new CarteViewModel(_joueurVm);
-            
+            _carteVm = new CarteViewModel(_joueurVm);          
         }
-
-
     }
 }

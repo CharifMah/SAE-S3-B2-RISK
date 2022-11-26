@@ -11,9 +11,9 @@ namespace Models.Fabriques.FabriqueUnite.Constructs
     public class ConstructPterosaure : IMakeUnit
     {
         /// <summary>
-        /// Instancie un objet de type Brachiosaure
+        /// Instancie un objet de type Brachiosaurus
         /// </summary>
-        /// <returns>Renvoie un Brachiosaure</returns>
+        /// <returns>Renvoie un Brachiosaurus</returns>
         /// <author>VERCHERE Brian</author>
         public UniteBase MakeUnit()
         {

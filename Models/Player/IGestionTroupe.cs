@@ -10,9 +10,9 @@ namespace Models.Player
 {
     public interface IGestionTroupe
     {
-        public void AddUnit(UniteBase unit);
-        public void AddUnits(List<UniteBase> unites, ITerritoireBase territoire);
-        public void RemoveUnit(UniteBase unit);
-        public void RemoveUnit(List<UniteBase> unites, ITerritoireBase territoire);
+        public void AddUnit(IUnit unit);
+        public void AddUnits(List<IUnit> unites, ITerritoireBase territoire);
+        public void RemoveUnit(IUnit unit);
+        public void RemoveUnit(List<IUnit> unites, ITerritoireBase territoire);
     }
 }

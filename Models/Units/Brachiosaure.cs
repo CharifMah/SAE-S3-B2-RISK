@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace Models.Units
 {
-    internal class Brachiosaure : UniteBase
+    internal class Brachiosaurus : UniteBase
     {
-        public Brachiosaure()
+        public Brachiosaurus()
         {
-            this.Element = Elements.EAU;
-            this.id = 0;
-            this.name = "ExempleUnite";
-            this.description = "Description d'une unite";
+            this.name = "Brachiosaurus";
+            this.description = "this is a Brachiosaurus";
         }
     }
 }

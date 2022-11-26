@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 namespace Models.Units
 {
     [DataContract]
-    public class UniteBase
+    public class UniteBase : IUnit
     {
         private Elements element;
         protected int id;
         protected string name;
         protected string description;
 
-        protected string Name { get => name; }
-        protected string Description { get => description; }
-        protected int Id { get => id; }
-        protected Elements Element { get => element; set => element = value; }
+        public string Name { get => name; }
+        public string Description { get => description; }
+        public int Id { get => id; }
+        public Elements Element { get => element; set => element = value; }
 
         public UniteBase()
         {
