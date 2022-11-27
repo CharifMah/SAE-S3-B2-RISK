@@ -13,12 +13,31 @@ namespace Models.Map
     [DataContract]
     public class Carte
     {
+        #region Attributes
+
         [DataMember]
         private Dictionary<int, Continent> dicoContinents;
+
+        private ITerritoireBase _selectedTerritoire;
+
+        #endregion
+
+        #region Property
+
         public Dictionary<int, Continent> DicoContinents
         {
             get { return dicoContinents; }
         }
+
+        public int NombreTerritoireOccupe { get => GetNombreTerritoireOccupe(); }
+
+        public ITerritoireBase SelectedTerritoire
+        {
+            get => _selectedTerritoire;
+            set => _selectedTerritoire = value;
+        }
+
+        #endregion
 
         public Carte(List<Continent> continent)
         {
@@ -27,7 +46,22 @@ namespace Models.Map
             {
                 dicoContinents.Add(i, continent[i]);
             }
-
-        }    
+        }   
+        
+        public int GetNombreTerritoireOccupe()
+        {
+            int res = 0;
+            foreach (Continent continent in dicoContinents.Values)
+            {
+                foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                {
+                    if (territoire.Team == Teams.NEUTRE)
+                    {
+                        res++;
+                    }
+                }
+            }
+            return res;
+        }
     }
 }

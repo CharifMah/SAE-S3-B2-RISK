@@ -1,4 +1,5 @@
-﻿using Models.Units;
+﻿using Models.Fabriques.FabriqueUnite;
+using Models.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace ModelTestUnit
     public class TestFabrique
     {
         [Fact]
-        public void CreationBrachiosaure()
+        public void CreationBrachiosaurus()
         {
-            FabriqueUnite fabrique = new FabriqueUnite();
-            Unite b1 = fabrique.Create("brachiosaure");
-            Assert.IsType<Brachiosaure>(b1);
+            FabriqueUniteBase fabrique = new FabriqueUniteBase();
+            UniteBase b1 = fabrique.Create("Brachiosaurus");
+            Assert.IsType<Brachiosaurus>(b1);
         }
     }
 }

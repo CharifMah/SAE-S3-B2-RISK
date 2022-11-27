@@ -14,6 +14,8 @@
                 <ResourceDictionary Source="Style\CustomPolice.xaml"/>
                 <ResourceDictionary Source="Style\CustomDataGrid.xaml"/>
                 <ResourceDictionary Source="Style\CustomComboBox.xaml"/>
+                <ResourceDictionary Source="Style\CustomScrollBar.xaml"/>
+                <ResourceDictionary Source="Style\CustomListBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

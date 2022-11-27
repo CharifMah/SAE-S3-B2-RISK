@@ -147,6 +147,9 @@
   <data name="Musique" xml:space="preserve">
     <value>Musique :</value>
   </data>
+  <data name="NbTerritoireVide" xml:space="preserve">
+    <value>Nombre de Territoire Vide</value>
+  </data>
   <data name="NoExiste" xml:space="preserve">
     <value>Ce compte n'éxiste pas</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="TConquisSmlt" xml:space="preserve">
     <value>Territoire conquis simultanément</value>
+  </data>
+  <data name="TrpNombre" xml:space="preserve">
+    <value>Nombre d'unites</value>
   </data>
   <data name="TrpPerdus" xml:space="preserve">
     <value>Troupes perdus</value>

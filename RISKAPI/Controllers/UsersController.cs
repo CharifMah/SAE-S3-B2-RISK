@@ -21,9 +21,9 @@ namespace RISKAPI.Controllers
             factory =  MySqlDAOFactory.GetInstance();
         }
         /// <summary>
-        /// envoi un profil pour que l'API l'ajoute � la BDD
+        /// envoi un profil pour que l'API l'ajoute a la BDD
         /// </summary>
-        /// <param name="pseudo">profil a rajouter a la BDD</param>
+        /// <param name="profil">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("inscription")]
         public IActionResult inscription(Profil profil)

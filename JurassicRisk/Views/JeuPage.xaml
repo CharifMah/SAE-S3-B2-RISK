@@ -11,18 +11,40 @@
       x:Name="_JeuPage"
       Title="JeuPage">
 
-    <Grid >
-        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif" Stretch="Fill" />
-        
-        <Viewbox Stretch="Fill" x:Name="ViewboxCanvas">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif" Stretch="Fill" Grid.RowSpan="3"/>
+
+        <Viewbox Stretch="Fill" x:Name="ViewboxCanvas" Grid.RowSpan="3" Margin="0,35,0,0">
             <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="-50,0,20,70">
 
-                <ContentPresenter Content="{Binding CarteCanvas}" />
+                <ContentPresenter Content="{Binding CarteVm.CarteCanvas}" />
 
             </Canvas>
         </Viewbox>
-        <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Height="50" Margin="30" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click"></Button>
-        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Height="306" Width="324">
+
+        <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" HorizontalAlignment="Center" Width="452" ItemsSource="{Binding JoueurVm.Units}">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel Orientation="Vertical">
+                        <Image Source="{Binding Path=Sprite}"/>
+                        <TextBlock Text="{Binding Path=Name}" Style="{StaticResource FruitDays}"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <Button HorizontalAlignment="Right" Width="50" Grid.Row="3" Height="50" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click"></Button>
+
+        <Button HorizontalAlignment="Center" Grid.Row="3" Style="{StaticResource CustomAnimationButton}" Grid.RowSpan="3" Width="198" Height="30">Fin de Tour</Button>
+        
+        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="3" Height="306" Width="324">
             <GroupBox.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"/>
             </GroupBox.Background>
@@ -36,5 +58,22 @@
             </Grid>
         </GroupBox>
 
+        <TextBlock Style="{StaticResource FruitDays}" HorizontalAlignment="Left" FontSize="30" Margin="20,0,0,0" VerticalAlignment="Top">
+            <TextBlock.Text>
+                <MultiBinding  StringFormat="{}{0}: {1}">
+                    <Binding Source="{x:Static Ressources:Strings.TrpNombre}"/>
+                    <Binding Path="JoueurVm.NombreTrp"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+        <TextBlock Style="{StaticResource FruitDays}" HorizontalAlignment="Right" FontSize="30" Margin="0,0,20,0" VerticalAlignment="Top">
+            <TextBlock.Text>
+                <MultiBinding  StringFormat="{}{0} {1}">
+                    <Binding Source="{x:Static Ressources:Strings.NbTerritoireVide}"/>
+                    <Binding Path="CarteVm.Carte.NombreTerritoireOccupe"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
     </Grid>
 </Page>

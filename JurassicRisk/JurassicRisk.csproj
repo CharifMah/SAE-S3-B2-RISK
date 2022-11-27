@@ -10,6 +10,10 @@
   <ItemGroup>
     <None Remove="Polices\FruitDays.ttf" />
     <None Remove="Polices\University.otf" />
+    <None Remove="Sounds\checkbox.mp3" />
+    <None Remove="Sounds\Click.mp3" />
+    <None Remove="Sounds\DarkJungleMusic.mp3" />
+    <None Remove="Sounds\JungleMusic.mp3" />
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
     <None Remove="Sprites\Background\Background3.jpg" />
@@ -65,9 +69,22 @@
     <None Remove="Sprites\Carte\6c5r.png" />
     <None Remove="Sprites\Carte\6c6r.png" />
     <None Remove="Sprites\Carte\6c7r.png" />
+    <None Remove="Sprites\Units\Baryonyx.png" />
+    <None Remove="Sprites\Units\Brachiosaurus.png" />
+    <None Remove="Sprites\Units\Pterosaure.png" />
+    <None Remove="Sprites\Units\Rex.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Sounds\checkbox.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Click.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\DarkJungleMusic.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Background\trexHead.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -236,6 +253,24 @@
     <Resource Include="Sprites\Carte\6c7r.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Sprites\Units\Baryonyx.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Units\Brachiosaurus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Units\Pterosaure.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Units\Rex.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Sounds\JungleMusic.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

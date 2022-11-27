@@ -44,7 +44,6 @@ namespace DBStorage.Mysql
             conn = null;
             conn = new MySqlConnection(connString);
             conn.Open();
-
         }
 
         /// <summary>

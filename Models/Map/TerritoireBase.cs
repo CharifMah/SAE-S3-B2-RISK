@@ -13,14 +13,14 @@ namespace Models.Map
         [DataMember]
         protected Teams _teams;
         [DataMember]
-        protected List<Unite> _troupe;
+        protected List<IUnit> _troupe;
         [DataMember]
         protected int _id;
 
         public Teams Team { get => this._teams; set => this._teams = value; }
         public int ID { get => this._id; set => this._id = value; }
 
-        public List<Unite> Units
+        public List<IUnit> Units
         {
             get => this._troupe;
             set => this._troupe = value;
@@ -30,23 +30,24 @@ namespace Models.Map
         {
             this._id = id;
             this._teams = Teams.NEUTRE;
-            this._troupe = new List<Unite>();
+            this._troupe = new List<IUnit>();
         }
 
-        public TerritoireBase(List<Unite> troupe, int id)
+        public TerritoireBase(List<IUnit> troupe, int id)
         {
             this._id = id;
             this._teams = Teams.NEUTRE;
             this._troupe = troupe;
         }
 
-        /// <summary>
-        /// Ajoute une unite
-        /// </summary>
-        /// <param name="unite">Unite</param>
-        public void AddUnit(Unite unite)
+        public void AddUnit(IUnit UniteBase)
         {
-            _troupe.Add(unite);
+            this._troupe.Add(UniteBase);
+        }
+
+        public void RemoveUnit(IUnit UniteBase)
+        {
+            this._troupe.Remove(UniteBase);
         }
     }
 }

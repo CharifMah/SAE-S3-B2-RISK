@@ -51,16 +51,21 @@ namespace Models.Map
         public int Height { get => height; set => height = value; }
         public int ID { get => _territoire.ID; set => _territoire.ID = value; }
         public Teams Team { get => _territoire.Team; set => _territoire.Team = value; }
-        public List<Unite> Units { get => _territoire.Units; set => _territoire.Units = value; }
+        public List<IUnit> Units { get => _territoire.Units; set => _territoire.Units = value; }
 
         public override string? ToString()
         {
             return $"{x},{y}";
         }
 
-        public void AddUnit(Unite unite)
+        public void AddUnit(IUnit UniteBase)
         {
-            ///Not yet
+            _territoire.AddUnit(UniteBase);
+        }
+
+        public void RemoveUnit(IUnit UniteBase)
+        {
+            _territoire.RemoveUnit(UniteBase);
         }
     }
 }

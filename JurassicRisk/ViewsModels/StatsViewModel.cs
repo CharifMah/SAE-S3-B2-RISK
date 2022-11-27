@@ -1,10 +1,5 @@
-﻿using Models;
-using System;
-using System.Collections.Generic;
+﻿using Models.Player;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JurassicRisk.ViewsModels
 {
