@@ -28,12 +28,8 @@
             </Canvas>
         </Viewbox>
 
-        <ListBox x:Name="ListBoxUnits" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" HorizontalAlignment="Center" Width="452" ItemsSource="{Binding JoueurVm.Units}">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Vertical" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+        <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" HorizontalAlignment="Center" Width="452" ItemsSource="{Binding JoueurVm.Units}">
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Orientation="Vertical">
