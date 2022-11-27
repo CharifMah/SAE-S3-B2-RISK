@@ -33,7 +33,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.00001*" />
                         </Grid.RowDefinitions>
-                        <Border x:Name="Rectangle1" CornerRadius="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto"  Background="Black" />
+                        <Border x:Name="Rectangle" CornerRadius="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Background="Black" />
                         <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
                             <Track.Thumb>
                                 <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}"/>
@@ -50,6 +50,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Rectangle" Property="Visibility" Value="Hidden"/>
                         </Trigger>
                         <Trigger Property="Orientation" Value="Horizontal">
                             <Setter TargetName="GridRoot" Property="LayoutTransform">
