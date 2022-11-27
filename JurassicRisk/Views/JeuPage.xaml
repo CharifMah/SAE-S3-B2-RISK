@@ -13,7 +13,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.6*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
@@ -37,9 +37,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Path=Name}"/>
-                        <TextBlock Text="{Binding Path=Count}"/>
                         <Image Source="{Binding Path=Sprite}"/>
+                        <TextBlock Text="{Binding Path=Name}" Style="{StaticResource FruitDays}"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
