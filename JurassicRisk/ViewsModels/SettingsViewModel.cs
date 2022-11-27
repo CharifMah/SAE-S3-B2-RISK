@@ -111,22 +111,8 @@ namespace JurassicRisk.ViewsModels
         public void ChangeLanguage(string culture)
         {
             Ressource.Strings.Culture = new CultureInfo(culture);
-            Page currentPage = (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Content as Page;
-
-            switch (currentPage.Name)
-            {
-                case "_MenuPage":
-                    Settings.Get().ActualPageName = currentPage.Name;
-                    break;
-                case "_HomePage":
-                    Settings.Get().ActualPageName = currentPage.Name;
-                    break;
-                case "_JeuPage":
-                    Settings.Get().ActualPageName = currentPage.Name;
-                    break;
-            }
-
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage(Settings.Get().ActualPageName));         
+           
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage(Settings.Get().ActualPage));         
         }
     }
 }

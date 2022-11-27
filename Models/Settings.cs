@@ -1,6 +1,7 @@
 ﻿using Models.Son;
 using Stockage;
 using System.Runtime.Serialization;
+using System.Windows.Controls;
 
 namespace Models
 {
@@ -9,7 +10,7 @@ namespace Models
     {
         #region Attribute
         
-        private string actualPageName = "";
+        private Page actualPageName;
         private ICharge _loadSettings;
         private ISauve _saveSettings;
 
@@ -62,7 +63,8 @@ namespace Models
             }
         }
 
-        public string ActualPageName { get => actualPageName; set => actualPageName = value; }
+        public Page ActualPage { get => actualPageName; set => actualPageName = value; }
+        
         public bool MusiqueOnOff 
         { 
             get { return _musique; }
