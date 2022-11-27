@@ -22,5 +22,11 @@ namespace JurassicRisk.Views
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new InscriptionPage());
         }
+
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+
+        }
     }
 }

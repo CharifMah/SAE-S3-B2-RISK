@@ -57,7 +57,29 @@ namespace JurassicRisk.Views
             ViewboxCanvas.IsEnabled = true;
         }
 
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool Pressed = false;
+            //Pause
+            if (GroupBoxPause.Visibility == Visibility.Hidden && !Pressed)
+            {
+                Pause();
+                Pressed = true;
+            }
+            //Resume
+            if (GroupBoxPause.Visibility == Visibility.Visible && !Pressed)
+            {
+                Resume();
+                Pressed = true;
+            }
+        }
+
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+        }
+
+        private void ListBoxUnits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }

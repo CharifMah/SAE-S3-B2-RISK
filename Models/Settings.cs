@@ -1,5 +1,6 @@
 ﻿using Stockage;
 using System.Runtime.Serialization;
+using System.Windows.Controls;
 
 namespace Models
 {
@@ -7,8 +8,10 @@ namespace Models
     public class Settings
     {
         #region Attribute
-        private ChargerCollection _loadSettings;
-        private SauveCollection _saveSettings;
+        
+        private Page actualPageName;
+        private ICharge _loadSettings;
+        private ISauve _saveSettings;
 
         [DataMember]
         private bool _pleinEcran;
@@ -49,6 +52,36 @@ namespace Models
             set
             {
                 _availableCulture = value;
+            }
+        }
+
+        public Page ActualPage { get => actualPageName; set => actualPageName = value; }
+        
+        public bool MusiqueOnOff 
+        { 
+            get { return _musique; }
+            set { _musique = value; }
+        }
+
+        public double Volume
+        {
+            get
+            {
+                return _musicVolume;
+            }
+            set
+            {
+               _musicVolume= value;
+            }
+        }
+       
+
+        public Sound Backgroundmusic
+        {
+            get { return _backgroundMusic; }
+            set
+            {
+                _backgroundMusic = value;
             }
         }
 

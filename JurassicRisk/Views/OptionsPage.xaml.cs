@@ -1,4 +1,7 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
+using Stockage;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,10 +12,23 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class OptionsPage : Page
     {
-        public OptionsPage()
+        SettingsViewModel settingVm;
+        SauveCollection _save;
+
+        public OptionsPage(Page OldPageName)
         {
-            this.DataContext = new SettingsViewModel();
+            _save = new SauveCollection(Environment.CurrentDirectory);
             InitializeComponent();
+            settingVm = new SettingsViewModel();
+            this.DataContext = settingVm;
+            Settings.Get().ActualPage = OldPageName;
+            InitializeComponent();
+            if (OldPageName.Name == "_JeuPage")
+            {
+                this.LangueComboBox.Visibility = Visibility.Hidden;
+            }
+            slider_Son.Value = settingVm.Volume;
+            checkBoxSound.IsChecked = settingVm.MusiqueOnOff;
         }
 
         private void LangueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -27,7 +43,21 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(Settings.Get().ActualPage);
+
+            switch (Settings.Get().ActualPage.Name)
+            {
+                case "_MenuPage":
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+                    break;
+                case "_HomePage":
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
+                    break;
+                case "_JeuPage":
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.GoBack();
+                    break;
+            }
         }
+
     }
 }

@@ -59,7 +59,21 @@ namespace JurassicRisk.ViewsModels
 
         public SettingsViewModel()
         {
+            this.NotifyPropertyChanged("PLeinEcran");
+            this.NotifyPropertyChanged("Culturename");
+            this.NotifyPropertyChanged("MusiqueOnOff");
+            this.NotifyPropertyChanged("Volume");
+        }
 
+        /// <summary>
+        /// Changes the language according to the given culture.
+        /// </summary>
+        /// <param name="culture">The culture.</param>
+        public void ChangeLanguage(string culture)
+        {
+            Ressource.Strings.Culture = new CultureInfo(culture);
+           
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage(Settings.Get().ActualPage));         
         }
     }
 }

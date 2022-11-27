@@ -48,21 +48,7 @@ namespace JurassicRisk.ViewsModels
         {
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
-            _decorations = c.Charger<List<TerritoireDecorator>>("Map/Cartee");     
-            
-            _continents = new List<Continent>();
-            _carte = DrawCarte();
-            NotifyPropertyChanged("Carte");
-
-            
-        }
-
-        /// <summary>
-        /// Add all region to the Canvas (CarteCanvas) with DrawRegion
-        /// </summary>
-        /// <Author>Charif</Author>
-        private Carte DrawCarte()
-        {
+            _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
             _territoiresBase = new List<ITerritoireBase>();
             foreach (TerritoireDecorator territoireDecorator in _decorations)
