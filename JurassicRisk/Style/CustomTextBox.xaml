@@ -13,10 +13,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border x:Name="border"
-CornerRadius="0"
-BorderBrush="#000"
-BorderThickness="2"
-Background="#fff"
+                        CornerRadius="0"
+                        BorderBrush="#000"
+                        BorderThickness="2"
+                        Background="#fff"
 >
                         <ScrollViewer x:Name="PART_ContentHost"
 Focusable="false"
@@ -86,11 +86,24 @@ VerticalScrollBarVisibility="Hidden"/>
         <Setter Property="MinWidth" Value="250"/>
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontFamily" Value="Fruit Days"/>
+        <Setter Property="CaretBrush">
+            <Setter.Value>
+                <LinearGradientBrush MappingMode="RelativeToBoundingBox"
+                                    StartPoint="0,0"
+                                    EndPoint="0,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Color="DarkRed"    Offset="0" />
+                        <GradientStop Color="Blue" Offset="0.5" />
+                        <GradientStop Color="DarkRed"   Offset="1" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border x:Name="border"
-                        CornerRadius="0,25,0,25"
+                        CornerRadius="25,3,25,3"
                         BorderBrush="#000"
                         BorderThickness="2"
                         Background="AliceBlue" Opacity="0.7">                       
@@ -144,7 +157,9 @@ VerticalScrollBarVisibility="Hidden"/>
                             </Trigger.EnterActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
+   
                 </ControlTemplate>
+
             </Setter.Value>
         </Setter>
     </Style>
