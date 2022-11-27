@@ -82,8 +82,8 @@ namespace JurassicRisk.Views
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
         }
 
-        private void ListBoxUnits_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        { 
             SoundStore.Get("DarkJungleMusic.mp3").Stop();
             SoundStore.Get("JungleMusic.mp3").Play(true);
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
@@ -99,28 +99,6 @@ namespace JurassicRisk.Views
         {
             GroupBoxPause.Visibility = Visibility.Hidden;
             ViewboxCanvas.IsEnabled = true;
-        }
-
-        private void PauseButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool Pressed = false;
-            //Pause
-            if (GroupBoxPause.Visibility == Visibility.Hidden && !Pressed)
-            {
-                Pause();
-                Pressed = true;
-            }
-            //Resume
-            if (GroupBoxPause.Visibility == Visibility.Visible && !Pressed)
-            {
-                Resume();
-                Pressed = true;
-            }
-        }
-
-        private void OptionButton_Click(object sender, RoutedEventArgs e)
-        {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage("_JeuPage"));
         }
 
         private void ListBoxUnits_SelectionChanged(object sender, SelectionChangedEventArgs e)
