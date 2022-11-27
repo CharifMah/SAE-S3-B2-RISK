@@ -56,7 +56,7 @@ namespace JurassicRisk.ViewsModels
         {
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
-            _carte = null;/*c.Charger<Carte>("Map/Cartee");*/
+            _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
             foreach (Continent continent in _carte.DicoContinents.Values)
             {
