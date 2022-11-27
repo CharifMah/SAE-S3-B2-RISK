@@ -147,6 +147,9 @@
   <data name="Musique" xml:space="preserve">
     <value>Music :</value>
   </data>
+  <data name="NbTerritoireVide" xml:space="preserve">
+    <value>Number of empty territory</value>
+  </data>
   <data name="NoExiste" xml:space="preserve">
     <value>this account does not existe</value>
   </data>

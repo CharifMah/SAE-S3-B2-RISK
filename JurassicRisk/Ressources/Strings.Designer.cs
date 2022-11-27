@@ -278,12 +278,20 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("PauseEm", resourceCulture);
             }
         }
-
+        
         public static string TrpNombre
         {
             get
             {
                 return ResourceManager.GetString("TrpNombre", resourceCulture);
+            }
+        }
+
+        public static string NbTerritoireVide
+        {
+            get
+            {
+                return ResourceManager.GetString("NbTerritoireVide", resourceCulture);
             }
         }
 
