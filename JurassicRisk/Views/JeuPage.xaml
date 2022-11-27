@@ -38,6 +38,7 @@
                 <DataTemplate>
                     <WrapPanel Orientation="Vertical">
                         <TextBlock Text="{Binding Path=Name}"/>
+                        <TextBlock Text="{Binding Path=Count}"/>
                         <Image Source="{Binding Path=Sprite}"/>
                     </WrapPanel>
                 </DataTemplate>

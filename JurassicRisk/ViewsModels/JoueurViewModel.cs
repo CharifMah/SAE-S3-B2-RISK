@@ -1,6 +1,4 @@
-﻿using JurassicRisk.observable;
-using JurassicRisk.Ressources;
-using Models.Exceptions;
+﻿using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
 using Models.Player;
@@ -10,7 +8,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media.Imaging;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -54,8 +51,8 @@ namespace JurassicRisk.ViewsModels
         public JoueurViewModel()
         {
             FabriqueUniteBase f = new FabriqueUniteBase();
+
             _units = new ObservableCollection<IUnit>();
-          
             #region CreatePlayer
 
             Random random = new Random();
@@ -77,7 +74,8 @@ namespace JurassicRisk.ViewsModels
                         break;
                 }
             }
-            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, _units.ToList(), Models.Teams.VERT);
+            _selectedUnit = _units[0];
+            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<IUnit>(_units), Models.Teams.VERT);
 
             #endregion
 
@@ -90,13 +88,14 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="UniteBases">Les unite a ajouter</param>
         /// <param name="territoire">le territoire</param>
-        public bool AddUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
+        public void AddUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
         {
-            bool res = false;
-            if (UniteBases.Count > 0 && (_joueur.Equipe == territoire.Team || territoire.Team == Models.Teams.NEUTRE))
+            if ((_joueur.Equipe == territoire.Team || territoire.Team == Models.Teams.NEUTRE) && _selectedUnit != null)
             {
                 _joueur.AddUnits(UniteBases, territoire);
-                res = true;
+                this._units.Remove(_selectedUnit);
+                if (_units.Count > 0)
+                    _selectedUnit = _units[0];
             }
             else
             {
@@ -104,9 +103,6 @@ namespace JurassicRisk.ViewsModels
             }
             NotifyPropertyChanged("NombreTrp");
             NotifyPropertyChanged("Units");
-
-            return res;
-
         }
     }
 }

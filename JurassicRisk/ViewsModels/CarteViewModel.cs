@@ -5,6 +5,7 @@ using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -129,12 +130,9 @@ namespace JurassicRisk.ViewsModels
             this._carte.SelectedTerritoire = territoire;
             if (_joueur.Joueur.Troupe.Count > 0 && this._carte.SelectedTerritoire != null)
             {
-                if (_joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire))
-                {
-                    _joueur.Units.Remove(_joueur.SelectedUnit);
-                }
+                _joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire);
             }
-           
+
             NotifyPropertyChanged("CarteCanvas");
         }
 

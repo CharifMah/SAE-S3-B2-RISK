@@ -54,16 +54,18 @@ namespace Models.Player
         #endregion
         public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
-            foreach (var unit in unites)
+            if (unites.Count > 0 && (this._equipe == territoire.Team || territoire.Team == Models.Teams.NEUTRE))
             {
-                if (_troupe.Contains(unit))
+                foreach (var unit in unites)
                 {
-                    _troupe.Remove(unit);
+                    if (_troupe.Contains(unit))
+                    {
+                        _troupe.Remove(unit);
 
-                    territoire.AddUnit(unit);
-                    territoire.Team = this._equipe;
+                        territoire.AddUnit(unit);
+                        territoire.Team = this._equipe;
+                    }
                 }
-
             }
         }
 
