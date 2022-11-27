@@ -102,6 +102,10 @@
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                         </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="BorderBrush" TargetName="border" Value="White"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>
