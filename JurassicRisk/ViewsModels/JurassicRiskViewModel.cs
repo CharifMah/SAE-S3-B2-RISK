@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JurassicRisk.ViewsModels
+﻿namespace JurassicRisk.ViewsModels
 {
     public class JurassicRiskViewModel
     {
@@ -21,7 +15,7 @@ namespace JurassicRisk.ViewsModels
         public JurassicRiskViewModel()
         {
             _joueurVm = new JoueurViewModel();
-            _carteVm = new CarteViewModel(_joueurVm);          
+            _carteVm = new CarteViewModel(_joueurVm);
         }
     }
 }

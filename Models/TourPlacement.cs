@@ -18,7 +18,7 @@ namespace Models
         {
             if (_joueur.Troupe.Count > 0)
             {
-                _joueur.AddUnits(new List<IUnit>() { unitToPlace }, JurasicRiskGame.Instance.Carte.SelectedTerritoire);
+                _joueur.AddUnits(new List<IUnit>() { unitToPlace }, JurasicRiskGame.Get.Carte.SelectedTerritoire);
             }
         }
 

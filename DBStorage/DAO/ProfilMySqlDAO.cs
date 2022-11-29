@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DBStorage
+namespace DBStorage.DAO
 {
     public class ProfilMySqlDAO : ProfilDAO
     {

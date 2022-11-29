@@ -1,12 +1,10 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models;
-using Models.Units;
-using System.Collections.Generic;
-using System.Linq;
 using Models.Son;
+using Models.Units;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 
 namespace JurassicRisk.Views
 {
@@ -96,9 +94,33 @@ namespace JurassicRisk.Views
             }
         }
 
-        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        private async void OptionButton_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< Updated upstream
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage("_JeuPage"));
+=======
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+            await _jurassicRiskVm.CarteVm.InsertCarte(_jurassicRiskVm.CarteVm.Carte);
+        }
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            SoundStore.Get("DarkJungleMusic.mp3").Stop();
+            SoundStore.Get("JungleMusic.mp3").Play(true);
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+        }
+
+        private void Pause()
+        {
+            GroupBoxPause.Visibility = Visibility.Visible;
+            ViewboxCanvas.IsEnabled = false;
+        }
+
+        private void Resume()
+        {
+            GroupBoxPause.Visibility = Visibility.Hidden;
+            ViewboxCanvas.IsEnabled = true;
+>>>>>>> Stashed changes
         }
 
         private void ListBoxUnits_SelectionChanged(object sender, SelectionChangedEventArgs e)

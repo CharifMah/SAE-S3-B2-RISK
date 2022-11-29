@@ -1,5 +1,4 @@
-﻿using JurassicRisk.Ressources;
-using Models.Map;
+﻿using Models.Map;
 using Stockage;
 using System;
 using System.Collections.Generic;

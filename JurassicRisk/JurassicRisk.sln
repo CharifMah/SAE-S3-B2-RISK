@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockage", "..\Stockage\Sto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageUnitTest", "..\StorageUnitTest\StorageUnitTest.csproj", "{3FE708FF-B119-4C4D-9598-B1C89D457285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestApi", "..\UnitTestApi\UnitTestApi.csproj", "{C57F05B7-37F8-465F-8FFE-5AB1B1DC37A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestApi", "..\UnitTestApi\UnitTestApi.csproj", "{C57F05B7-37F8-465F-8FFE-5AB1B1DC37A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

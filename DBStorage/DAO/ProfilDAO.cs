@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DBStorage.ClassMetier;
 
-namespace DBStorage
+namespace DBStorage.DAO
 {
     public interface ProfilDAO
     {

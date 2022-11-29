@@ -1,4 +1,7 @@
-﻿using Models;
+﻿using DBStorage.ClassMetier;
+using DBStorage.ClassMetier.Map;
+using DBStorage.ClassMetier.Units;
+using Models;
 using Models.Combat;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;

@@ -3,6 +3,7 @@ using Models.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,8 @@ namespace Models
     public class JurasicRiskGame 
     {
         #region Attributes
-
+        private HttpClient _client;
+        private string _ip;
         private Carte _carte;
         private List<Joueur> _joueurs;
         private List<ITour> _tours;
@@ -37,13 +39,22 @@ namespace Models
             get { return _joueurs; } set { _joueurs = value; } 
         }
 
+        public HttpClient Client
+        {
+            get { return _client; }
+        }
+
+        public string Ip
+        {
+            get { return _ip; }
+        }
 
         #endregion
 
         #region Singleton
 
         private static JurasicRiskGame _instance;
-        public static JurasicRiskGame Instance
+        public static JurasicRiskGame Get
         {
             get
             {
@@ -60,7 +71,8 @@ namespace Models
 
         private JurasicRiskGame()
         {
-
+            _ip = "localhost:7215";
+            _client = new HttpClient();
         }
 
         public async Task StartGame()

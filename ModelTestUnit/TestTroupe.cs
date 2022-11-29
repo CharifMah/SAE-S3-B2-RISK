@@ -1,4 +1,7 @@
-﻿using Models;
+﻿using DBStorage.ClassMetier;
+using DBStorage.ClassMetier.Map;
+using DBStorage.ClassMetier.Units;
+using Models;
 using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
@@ -14,9 +17,9 @@ namespace ModelTestUnit
         public void TestPositionnement()
         {
             TerritoireBase t1 = new TerritoireBase(0);
-            t1.Team = Models.Teams.ROUGE;
+            t1.Team = DBStorage.ClassMetier.Teams.ROUGE;
             TerritoireBase t2 = new TerritoireBase(0);
-            t2.Team = Models.Teams.VERT;
+            t2.Team = DBStorage.ClassMetier.Teams.VERT;
             Joueur j1 = new Joueur(new Profil("test", "qsd"), new List<IUnit>() { new UniteBase() }, Teams.NEUTRE);
             j1.Equipe = Teams.VERT;
 

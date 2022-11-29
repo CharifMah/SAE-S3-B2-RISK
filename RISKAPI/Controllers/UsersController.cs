@@ -1,25 +1,16 @@
-using DBStorage;
 using DBStorage.ClassMetier;
-using DBStorage.Mysql;
+using DBStorage.DAO;
+using DBStorage.DAOFactory;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Text.Json;
-using Ubiety.Dns.Core;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RISKAPI.Controllers
 {
     [ApiController]
     [Route("Users")]
-    public class UsersController
+    public class UsersController : ControllerBase
     {
-        private static DAOFactory factory;
 
-        public UsersController()
-        {
-            factory =  MySqlDAOFactory.GetInstance();
-        }
         /// <summary>
         /// envoi un profil pour que l'API l'ajoute a la BDD
         /// </summary>
@@ -31,7 +22,7 @@ namespace RISKAPI.Controllers
             IActionResult reponse = null;
             try
             {
-                ProfilDAO profilDAO = factory.CreerProfil();
+                ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
                 reponse = new AcceptedResult();
                 if (profilDAO.VerifUserCreation(profil) == false)
                 {
@@ -64,13 +55,13 @@ namespace RISKAPI.Controllers
         /// <param name="profil">user a recuperer</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("connexion")]
-        public IActionResult connexion( Profil profil)
+        public IActionResult connexion(Profil profil)
         {
             IActionResult reponse = null;
             try
             {
                 Profil profilDemande = null;
-                ProfilDAO profilDAO = factory.CreerProfil();
+                ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
                 int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
                 if (Id != 0)
                 {
@@ -109,10 +100,10 @@ namespace RISKAPI.Controllers
         public IActionResult verifUser(Profil profil)
         {
             IActionResult reponse = null;
-            ProfilDAO profilDAO = factory.CreerProfil();
+            ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
 
             bool res = profilDAO.VerifUserCreation(profil);
-     
+
             if (res == null)
             {
                 reponse = new BadRequestResult();

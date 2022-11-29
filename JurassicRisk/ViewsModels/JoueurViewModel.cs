@@ -1,4 +1,5 @@
-﻿using Models.Exceptions;
+﻿using Models;
+using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
 using Models.Player;
@@ -75,7 +76,7 @@ namespace JurassicRisk.ViewsModels
                 }
             }
             _selectedUnit = _units[0];
-            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<IUnit>(_units), Models.Teams.VERT);
+            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<IUnit>(_units), Teams.VERT);
 
             #endregion
 
@@ -90,7 +91,7 @@ namespace JurassicRisk.ViewsModels
         /// <param name="territoire">le territoire</param>
         public void AddUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
         {
-            if ((_joueur.Equipe == territoire.Team || territoire.Team == Models.Teams.NEUTRE) && _selectedUnit != null)
+            if ((_joueur.Equipe == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
             {
                 _joueur.AddUnits(UniteBases, territoire);
                 this._units.Remove(_selectedUnit);

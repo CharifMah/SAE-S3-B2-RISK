@@ -1,19 +1,18 @@
+using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
-using Models.Player;
 using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Media;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -45,7 +44,7 @@ namespace JurassicRisk.ViewsModels
                 return _carte;
             }
         }
-        
+
         #endregion
 
         /// <summary>
@@ -70,10 +69,39 @@ namespace JurassicRisk.ViewsModels
             f = new FabriqueUniteBase();
             _joueur = joueur;
 
-
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
         }
+
+        /// <summary>
+        /// Set Value of the selected profil
+        /// </summary>
+        /// <param name="pseudo">string pseudo</param>
+        /// <returns>awaitable Task</returns>
+        /// <Author>Charif Mahmoud</Author>
+        public async Task<string> InsertCarte(Carte carte)
+        {
+            string res = "Ok";
+            try
+            {
+                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Clear();
+                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage reponse = await JurasicRiskGame.Get.Client.PostAsJsonAsync<Carte>($"https://{JurasicRiskGame.Get.Ip}/Carte/SetCarte", carte);
+                if (reponse.IsSuccessStatusCode)
+                {
+                    res = reponse.Content.ReadAsStringAsync().Result;
+                }
+
+            }
+            catch (Exception e)
+            {
+                res = e.Message;
+            }
+            return res;
+        }
+
+        #region Event
 
         /// <summary>
         /// Dessine les regions et les ajoute a la carte
@@ -161,4 +189,8 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
     }
+    #endregion
+
+       
+
 }

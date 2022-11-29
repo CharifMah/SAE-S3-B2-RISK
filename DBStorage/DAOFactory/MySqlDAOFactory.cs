@@ -1,11 +1,12 @@
 ﻿using DBStorage.ClassMetier;
+using DBStorage.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DBStorage
+namespace DBStorage.DAOFactory
 {
     public class MySqlDAOFactory : DAOFactory
     {
@@ -16,7 +17,7 @@ namespace DBStorage
         /// get the instance of the factory
         /// </summary>
         /// <returns>the instance</returns>
-        public static MySqlDAOFactory GetInstance()
+        public static MySqlDAOFactory Get()
         {
             if (Instance == null)
             {
@@ -35,7 +36,23 @@ namespace DBStorage
             {
                 return new ProfilMySqlDAO();
             }
-            catch(IOException e) 
+            catch (IOException e)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// create a new CarteMySqlDAO
+        /// </summary>
+        /// <returns>the new CarteMySqlDAO</returns>
+        public CarteDAO CreateCarteDAO()
+        {
+            try
+            {
+                return new CarteMySqlDAO();
+            }
+            catch (IOException e)
             {
                 return null;
             }

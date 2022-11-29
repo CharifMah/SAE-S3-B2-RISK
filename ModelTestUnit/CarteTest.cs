@@ -1,6 +1,4 @@
-﻿
-
-using JurassicRisk.ViewsModels;
+﻿using Models;
 using Models.Map;
 
 namespace ModelTestUnit
@@ -17,7 +15,7 @@ namespace ModelTestUnit
             for (int y = 0; y < 5; y++)
             {
                 TerritoireBase territoire = new TerritoireBase(0);
-                territoire.Team = Models.Teams.ROUGE;
+                territoire.Team = Teams.ROUGE;
                 territoires.Add(territoire);
 
             }
@@ -28,7 +26,7 @@ namespace ModelTestUnit
 
             }
             Carte carte = new Carte(continent);
-            Assert.Equal(carte.DicoContinents.Values.ElementAt(0).DicoTerritoires.ElementAt(0).Value.Team, Models.Teams.ROUGE);
+            Assert.Equal(carte.DicoContinents.Values.ElementAt(0).DicoTerritoires.ElementAt(0).Value.Team, Teams.ROUGE);
 
 
         }
