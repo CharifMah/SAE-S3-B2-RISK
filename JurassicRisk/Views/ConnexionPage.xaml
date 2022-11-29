@@ -31,7 +31,7 @@
             <TextBox VerticalAlignment="Bottom" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputPseudo"/>
 
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource FruitDays}" Text="{x:Static Ressources:Strings.Password}"/>
-            <TextBox Grid.Column="1" VerticalAlignment="Center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputPassword"/>
+            <PasswordBox  Grid.Column="1" VerticalAlignment="Center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=PasswordBoxBaseStyle}" x:Name="inputPassword"/>
 
             <TextBlock x:Name="Error"  Grid.ColumnSpan="3" VerticalAlignment="Bottom" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Text="{x:Static Ressources:Strings.NoExiste}" Visibility="Hidden" Height="25" Style="{StaticResource FruitDays}"/>
             <Button Content="{x:Static Ressources:Strings.Connecter}" VerticalAlignment="Center" Style="{StaticResource CustomAnimationButton }" Click="ConnectButton_Click"></Button>

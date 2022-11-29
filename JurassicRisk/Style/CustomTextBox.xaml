@@ -19,9 +19,9 @@
                         Background="#fff"
 >
                         <ScrollViewer x:Name="PART_ContentHost"
-Focusable="false"
-HorizontalScrollBarVisibility="Hidden"
-VerticalScrollBarVisibility="Hidden"/>
+                            Focusable="false"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -51,15 +51,14 @@ VerticalScrollBarVisibility="Hidden"/>
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border x:Name="border"
-CornerRadius="10"
-BorderBrush="#000"
-BorderThickness="2"
-Background="#fff"
->
+                        CornerRadius="10"
+                        BorderBrush="#000"
+                        BorderThickness="2"
+                        Background="#fff">
                         <ScrollViewer x:Name="PART_ContentHost"
-Focusable="false"
-HorizontalScrollBarVisibility="Hidden"
-VerticalScrollBarVisibility="Hidden"/>
+                            Focusable="false"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -158,6 +157,95 @@ VerticalScrollBarVisibility="Hidden"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
    
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="PasswordBox" x:Key="PasswordBoxBaseStyle">
+        <Setter Property="Padding" Value="7"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Foreground" Value="#000"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="MinHeight" Value="20"/>
+        <Setter Property="MinWidth" Value="250"/>
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontFamily" Value="Fruit Days"/>
+        <Setter Property="PasswordChar" Value="*"/>
+        <Setter Property="CaretBrush">
+            <Setter.Value>
+                <LinearGradientBrush MappingMode="RelativeToBoundingBox"
+                                    StartPoint="0,0"
+                                    EndPoint="0,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Color="DarkRed"    Offset="0" />
+                        <GradientStop Color="Blue" Offset="0.5" />
+                        <GradientStop Color="DarkRed"   Offset="1" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="border"
+                        CornerRadius="25,3,25,3"
+                        BorderBrush="#000"
+                        BorderThickness="2"
+                        Background="AliceBlue" Opacity="0.7">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                    Focusable="false"
+                                    HorizontalScrollBarVisibility="Hidden"
+                                    VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" SpreadMethod="Reflect">
+                                        <GradientStop Color="White" Offset="1"/>
+                                        <GradientStop Color="DarkRed" Offset="0"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation 
+                                            Storyboard.TargetName="border"
+                                            Storyboard.TargetProperty="BorderBrush.(LinearGradientBrush.GradientStops)[0].(GradientStop.Offset)"
+                                            From="0" To="1" Duration="0:0:0.4" AccelerationRatio="0.1">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="5,0" SpreadMethod="Reflect">
+                                        <GradientStop Color="White" Offset="1"/>
+                                        <GradientStop Color="DarkRed" Offset="0"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation 
+                                            Storyboard.TargetName="border"
+                                            Storyboard.TargetProperty="BorderBrush.(LinearGradientBrush.GradientStops)[0].(GradientStop.Offset)"
+                                            From="0" To="1" Duration="0:0:0.4" AccelerationRatio="0.1">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
                 </ControlTemplate>
 
             </Setter.Value>
