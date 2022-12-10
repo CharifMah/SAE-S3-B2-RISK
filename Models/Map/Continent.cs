@@ -10,25 +10,25 @@ namespace Models.Map
     /// <summary>
     /// Classe représentant les différents continents du plateau
     /// </summary>
-    [KnownType(typeof(Continent))]
+    [KnownType(typeof(TerritoireDecorator))]
     [DataContract]
     public class Continent : IContinent
     {
         [DataMember]
-        private Dictionary<int, ITerritoireBase> dicoTerritoires;
+        private Dictionary<int, ITerritoireBase> _dicoTerritoires;
 
         public Dictionary<int, ITerritoireBase> DicoTerritoires
         {
-            get { return dicoTerritoires; }
-            set { dicoTerritoires = value; }
+            get { return _dicoTerritoires; }
+            set { _dicoTerritoires = value; }
         }
 
         public Continent(List<ITerritoireBase> territoires)
         {
-            dicoTerritoires = new Dictionary<int, ITerritoireBase>();
+            _dicoTerritoires = new Dictionary<int, ITerritoireBase>();
             for (int i = 0; i < territoires.Count; i++)
             {
-                dicoTerritoires.Add(i, territoires[i]);
+                _dicoTerritoires.Add(i, territoires[i]);
             }
         }
 

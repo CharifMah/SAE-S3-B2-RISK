@@ -8,22 +8,22 @@ namespace DBStorage.ClassMetier.Map
     /// </summary>
     public class Continent
     {
-        private Dictionary<int, ITerritoireBase> dicoTerritoires;
+        private Dictionary<int, ITerritoireBase> _dicoTerritoires;
 
-        [JsonProperty(ItemConverterType = typeof(Dictionary<int, TerritoireBase>))]
+        [JsonProperty(ItemConverterType = typeof(Dictionary<int, ITerritoireBase>))]
         public Dictionary<int, ITerritoireBase> DicoTerritoires
         {
-            get { return dicoTerritoires; }
-            set { dicoTerritoires = value; }
+            get { return _dicoTerritoires; }
+            set { _dicoTerritoires = value; }
         }
 
 
         public Continent(List<ITerritoireBase> DicoTerritoires)
         {
-            dicoTerritoires = new Dictionary<int, ITerritoireBase>();
+            _dicoTerritoires = new Dictionary<int, ITerritoireBase>();
             for (int i = 0; i < DicoTerritoires.Count; i++)
             {
-                dicoTerritoires.Add(i, DicoTerritoires[i]);
+                _dicoTerritoires.Add(i, DicoTerritoires[i]);
             }
         }
 

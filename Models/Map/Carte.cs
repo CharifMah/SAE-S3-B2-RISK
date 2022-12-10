@@ -16,7 +16,7 @@ namespace Models.Map
         #region Attributes
 
         [DataMember]
-        private Dictionary<int, IContinent> _dicoContinents;
+        private Dictionary<int, Continent> _dicoContinents;
 
         private ITerritoireBase _selectedTerritoire;
 
@@ -24,7 +24,7 @@ namespace Models.Map
 
         #region Property
 
-        public Dictionary<int, IContinent> DicoContinents
+        public Dictionary<int, Continent> DicoContinents
         {
             get { return _dicoContinents; }
         }
@@ -39,7 +39,7 @@ namespace Models.Map
 
         #endregion
 
-        public Carte(Dictionary<int, IContinent> _dicoContinents, ITerritoireBase _selectedTerritoire = null)
+        public Carte(Dictionary<int, Continent> _dicoContinents, ITerritoireBase _selectedTerritoire = null)
         {
             this._dicoContinents = _dicoContinents;
             this._selectedTerritoire = _selectedTerritoire;

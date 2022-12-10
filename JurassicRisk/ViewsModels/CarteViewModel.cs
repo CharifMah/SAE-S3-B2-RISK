@@ -58,7 +58,9 @@ namespace JurassicRisk.ViewsModels
             new SaveMap(null);
             _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
-
+            TerritoireBase t = new TerritoireBase(999999);
+            t.Team = Teams.BLEU;
+            _carte.SelectedTerritoire = t;
             InsertCarte(_carte);
             foreach (Continent continent in _carte.DicoContinents.Values)
             {

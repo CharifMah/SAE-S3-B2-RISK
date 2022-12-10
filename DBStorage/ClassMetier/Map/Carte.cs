@@ -11,17 +11,19 @@ namespace DBStorage.ClassMetier.Map
     {
         #region Attributes
 
-        private Dictionary<int, IContinent> _dicoContinents;
+        //private Dictionary<int, Continent> _dicoContinents;
 
         private ITerritoireBase _selectedTerritoire;
 
         #endregion
 
         #region Property
-        public Dictionary<int, IContinent> DicoContinents
-        {
-            get { return _dicoContinents; }
-        }
+        //public Dictionary<int, Continent> DicoContinents
+        //{
+        //    get { return _dicoContinents; }
+        //    set { _dicoContinents = value; }
+        //}
+
         [JsonConverter(typeof(InterfaceConverter<TerritoireBase>))]
         public ITerritoireBase SelectedTerritoire
         {
@@ -29,19 +31,37 @@ namespace DBStorage.ClassMetier.Map
             set => _selectedTerritoire = value;
         }
 
+        public int NombreTerritoireOccupe { get => GetNombreTerritoireOccupe(); }
+
         #endregion
 
-        public Carte(Dictionary<int, IContinent> _dicoContinents, ITerritoireBase _selectedTerritoire = null)
-        {
-            this._dicoContinents = _dicoContinents;
-            this._selectedTerritoire = _selectedTerritoire;
-        }
+        //public Carte(Dictionary<int, Continent> _dicoContinents, ITerritoireBase _selectedTerritoire = null)
+        //{
+        //    //this._dicoContinents = _dicoContinents;
+        //    this._selectedTerritoire = _selectedTerritoire;
+        //}
 
         [JsonConstructor]
         public Carte()
         {
             _selectedTerritoire = new TerritoireBase();
-            _dicoContinents = new Dictionary<int, IContinent>();          
+            //_dicoContinents = new Dictionary<int, Continent>();          
+        }
+
+        public int GetNombreTerritoireOccupe()
+        {
+            int res = 0;
+            //foreach (Continent continent in _dicoContinents.Values)
+            //{
+            //    foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+            //    {
+            //        if (territoire.Team == Teams.NEUTRE)
+            //        {
+            //            res++;
+            //        }
+            //    }
+            //}
+            return res;
         }
     }
 }

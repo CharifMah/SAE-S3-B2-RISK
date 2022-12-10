@@ -16,10 +16,4 @@
     <ProjectReference Include="..\Stockage\Stockage.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Map\Cartee.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
