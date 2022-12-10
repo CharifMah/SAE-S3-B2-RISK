@@ -39,18 +39,24 @@ namespace JurassicRisk
             return _sprites;
         }
 
-        private Carte CreateCarte(List<TerritoireDecorator> _decorations)
+        private Carte CreateCarte(List<ITerritoireBase> _decorations)
         {
-            List<Continent> _continents = new List<Continent>();
+            List<IContinent> _continents = new List<IContinent>();
 
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Take(7).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(7).Take(7).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(14).Take(8).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(22).Take(7).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(29).Take(5).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(34).Take(7).ToList()));
+            _continents.Add(new Continent(_decorations.Take(7).ToList()));
+            _continents.Add(new Continent(_decorations.Skip(7).Take(7).ToList()));
+            _continents.Add(new Continent(_decorations.Skip(14).Take(8).ToList()));
+            _continents.Add(new Continent(_decorations.Skip(22).Take(7).ToList()));
+            _continents.Add(new Continent(_decorations.Skip(29).Take(5).ToList()));
+            _continents.Add(new Continent(_decorations.Skip(34).Take(7).ToList()));
+            Dictionary<int, IContinent> dic = new Dictionary<int, IContinent>();
+            for (int i = 0; i < _continents.Count; i++)
+            {
+                dic.Add(i, _continents[i]);
+            } 
 
-            return new Carte(_continents);
+
+            return new Carte(dic);
         }
 
         /// <summary>
@@ -105,7 +111,8 @@ namespace JurassicRisk
                 SerializeConf(GetImagesTerritoires()[40].UriSource.ToString(), 1475, 668, 218, 213);
 
                 SauveCollection s = new SauveCollection(Environment.CurrentDirectory);
-                s.Sauver(_decorations.Cast<TerritoireDecorator>().ToList(), "Cartee");
+                s.Sauver(CreateCarte(_decorations), "Cartee");
+               
             }
             else
             {

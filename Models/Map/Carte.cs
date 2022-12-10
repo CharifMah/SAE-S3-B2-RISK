@@ -16,7 +16,7 @@ namespace Models.Map
         #region Attributes
 
         [DataMember]
-        private Dictionary<int, Continent> dicoContinents;
+        private Dictionary<int, IContinent> _dicoContinents;
 
         private ITerritoireBase _selectedTerritoire;
 
@@ -24,9 +24,9 @@ namespace Models.Map
 
         #region Property
 
-        public Dictionary<int, Continent> DicoContinents
+        public Dictionary<int, IContinent> DicoContinents
         {
-            get { return dicoContinents; }
+            get { return _dicoContinents; }
         }
 
         public int NombreTerritoireOccupe { get => GetNombreTerritoireOccupe(); }
@@ -39,19 +39,16 @@ namespace Models.Map
 
         #endregion
 
-        public Carte(List<Continent> continent)
+        public Carte(Dictionary<int, IContinent> _dicoContinents, ITerritoireBase _selectedTerritoire = null)
         {
-            dicoContinents = new Dictionary<int, Continent>();
-            for (int i = 0; i < continent.Count; i++)
-            {
-                dicoContinents.Add(i, continent[i]);
-            }
+            this._dicoContinents = _dicoContinents;
+            this._selectedTerritoire = _selectedTerritoire;
         }   
         
         public int GetNombreTerritoireOccupe()
         {
             int res = 0;
-            foreach (Continent continent in dicoContinents.Values)
+            foreach (Continent continent in _dicoContinents.Values)
             {
                 foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
                 {

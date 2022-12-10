@@ -10,9 +10,9 @@ namespace Models.Map
     /// <summary>
     /// Classe représentant les différents continents du plateau
     /// </summary>
-    [KnownType(typeof(TerritoireDecorator))]
+    [KnownType(typeof(Continent))]
     [DataContract]
-    public class Continent
+    public class Continent : IContinent
     {
         [DataMember]
         private Dictionary<int, ITerritoireBase> dicoTerritoires;

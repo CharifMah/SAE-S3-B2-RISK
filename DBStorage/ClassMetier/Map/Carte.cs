@@ -11,7 +11,7 @@ namespace DBStorage.ClassMetier.Map
     {
         #region Attributes
 
-        private Dictionary<int, IContinent> dicoContinents;
+        private Dictionary<int, IContinent> _dicoContinents;
 
         private ITerritoireBase _selectedTerritoire;
 
@@ -20,7 +20,7 @@ namespace DBStorage.ClassMetier.Map
         #region Property
         public Dictionary<int, IContinent> DicoContinents
         {
-            get { return dicoContinents; }
+            get { return _dicoContinents; }
         }
         [JsonConverter(typeof(InterfaceConverter<TerritoireBase>))]
         public ITerritoireBase SelectedTerritoire
@@ -31,21 +31,17 @@ namespace DBStorage.ClassMetier.Map
 
         #endregion
 
-        public Carte(Dictionary<int, IContinent> DicoContinents,ITerritoireBase SelectedTerritoire)
+        public Carte(Dictionary<int, IContinent> _dicoContinents, ITerritoireBase _selectedTerritoire = null)
         {
-            this.dicoContinents = DicoContinents;
-            this.SelectedTerritoire= SelectedTerritoire;
+            this._dicoContinents = _dicoContinents;
+            this._selectedTerritoire = _selectedTerritoire;
         }
 
         [JsonConstructor]
         public Carte()
         {
             _selectedTerritoire = new TerritoireBase();
-            dicoContinents = new Dictionary<int, IContinent>();
-            for (int i = 0; i < DicoContinents.Count; i++)
-            {
-                dicoContinents.Add(i, DicoContinents[i]);
-            }
+            _dicoContinents = new Dictionary<int, IContinent>();          
         }
     }
 }

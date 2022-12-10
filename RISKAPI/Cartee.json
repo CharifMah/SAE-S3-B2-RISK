@@ -1,8 +1,9 @@
 {
-  "dicoContinents": [
+  "_dicoContinents": [
     {
       "Key": 0,
       "Value": {
+        "__type": "Continent:#Models.Map",
         "dicoTerritoires": [
           {
             "Key": 0,
@@ -122,6 +123,7 @@
     {
       "Key": 1,
       "Value": {
+        "__type": "Continent:#Models.Map",
         "dicoTerritoires": [
           {
             "Key": 0,
@@ -241,6 +243,7 @@
     {
       "Key": 2,
       "Value": {
+        "__type": "Continent:#Models.Map",
         "dicoTerritoires": [
           {
             "Key": 0,
@@ -376,6 +379,7 @@
     {
       "Key": 3,
       "Value": {
+        "__type": "Continent:#Models.Map",
         "dicoTerritoires": [
           {
             "Key": 0,
@@ -495,6 +499,7 @@
     {
       "Key": 4,
       "Value": {
+        "__type": "Continent:#Models.Map",
         "dicoTerritoires": [
           {
             "Key": 0,
@@ -582,6 +587,7 @@
     {
       "Key": 5,
       "Value": {
+        "__type": "Continent:#Models.Map",
         "dicoTerritoires": [
           {
             "Key": 0,

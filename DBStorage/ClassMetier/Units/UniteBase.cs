@@ -10,9 +10,9 @@ namespace DBStorage.ClassMetier.Units
         protected string name;
         protected string description;
 
-        public string Name { get => name; set => name = value; }
-        public string Description { get => description; set => description = value; }
-        public int Id { get => id; set => id = value; }
+        public string Name { get => name; }
+        public string Description { get => description; }
+        public int Id { get => id; }
         public Elements Element { get => element; set => element = value; }
 
         [JsonConstructor]
