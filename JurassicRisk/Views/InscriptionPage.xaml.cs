@@ -34,7 +34,7 @@ namespace JurassicRisk.Views
             {
                 if (inputPseudo.Text != "")
                 {
-                    if (inputConfirmPassword.Text == inputPassword.Text)
+                    if (inputConfirmPassword.Password == inputPassword.Password)
                     {
                         inscription();
                     }
@@ -59,7 +59,7 @@ namespace JurassicRisk.Views
 
         private async void inscription()
         {
-            Profil profil = new Profil(inputPseudo.Text, inputPassword.Text);
+            Profil profil = new Profil(inputPseudo.Text, inputPassword.Password);
             string inscription = await ProfilViewModel.Instance.CreateProfil(profil);
             if (inscription == "Ok")
             {

@@ -58,25 +58,6 @@ namespace JurassicRisk.Views
             Resume();
         }
 
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
-        {
-            SoundStore.Get("DarkJungleMusic.mp3").Stop();
-            SoundStore.Get("JungleMusic.mp3").Play(true);
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-        }
-
-        private void Pause()
-        {
-            GroupBoxPause.Visibility = Visibility.Visible;
-            ViewboxCanvas.IsEnabled = false;
-        }
-
-        private void Resume()
-        {
-            GroupBoxPause.Visibility = Visibility.Hidden;
-            ViewboxCanvas.IsEnabled = true;
-        }
-
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
             bool Pressed = false;
@@ -96,15 +77,17 @@ namespace JurassicRisk.Views
 
         private async void OptionButton_Click(object sender, RoutedEventArgs e)
         {
-<<<<<<< Updated upstream
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage("_JeuPage"));
-=======
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
             await _jurassicRiskVm.CarteVm.InsertCarte(_jurassicRiskVm.CarteVm.Carte);
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+        }
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        { 
             SoundStore.Get("DarkJungleMusic.mp3").Stop();
             SoundStore.Get("JungleMusic.mp3").Play(true);
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
@@ -120,7 +103,6 @@ namespace JurassicRisk.Views
         {
             GroupBoxPause.Visibility = Visibility.Hidden;
             ViewboxCanvas.IsEnabled = true;
->>>>>>> Stashed changes
         }
 
         private void ListBoxUnits_SelectionChanged(object sender, SelectionChangedEventArgs e)

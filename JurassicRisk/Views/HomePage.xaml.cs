@@ -1,11 +1,7 @@
-<<<<<<< Updated upstream
-﻿using Models.Son;
-=======
-﻿using JurassicRisk.ViewsModels;
+using JurassicRisk.ViewsModels;
 using Models;
 using Models.Son;
 using System;
->>>>>>> Stashed changes
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,6 +27,17 @@ namespace JurassicRisk.Views
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new InscriptionPage());
 
+        }
+
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+
+        }
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

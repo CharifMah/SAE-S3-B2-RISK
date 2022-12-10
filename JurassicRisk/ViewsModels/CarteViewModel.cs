@@ -57,7 +57,6 @@ namespace JurassicRisk.ViewsModels
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
-
             foreach (Continent continent in _carte.DicoContinents.Values)
             {
                 foreach (TerritoireDecorator Territoire in continent.DicoTerritoires.Values)

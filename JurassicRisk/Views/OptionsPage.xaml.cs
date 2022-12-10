@@ -1,6 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
 using Models;
-using Models.Son;
 using Stockage;
 using System;
 using System.Windows;
@@ -16,16 +15,18 @@ namespace JurassicRisk.Views
         SettingsViewModel settingVm;
         SauveCollection _save;
 
-        public OptionsPage(string OldPageName)
+        public OptionsPage(Page OldPageName)
         {
             _save = new SauveCollection(Environment.CurrentDirectory);
             InitializeComponent();
             settingVm = new SettingsViewModel();
             this.DataContext = settingVm;
-            Settings.Get().ActualPageName = OldPageName;
-
+            Settings.Get().ActualPage = OldPageName;
             InitializeComponent();
-
+            if (OldPageName.Name == "_JeuPage")
+            {
+                this.LangueComboBox.Visibility = Visibility.Hidden;
+            }
             slider_Son.Value = settingVm.Volume;
             checkBoxSound.IsChecked = settingVm.MusiqueOnOff;
         }
@@ -42,25 +43,21 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            _save.Sauver(Settings.Get(), "Settings");
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(Settings.Get().ActualPage);
 
-            switch (Settings.Get().ActualPageName)
+            switch (Settings.Get().ActualPage.Name)
             {
                 case "_MenuPage":
                     (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-                    this.LangueComboBox.Visibility = Visibility.Visible;
                     break;
                 case "_HomePage":
                     (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
-                    this.LangueComboBox.Visibility = Visibility.Visible;
                     break;
                 case "_JeuPage":
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
-                    this.LangueComboBox.Visibility = Visibility.Hidden;
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.GoBack();
                     break;
             }
-           
         }
-          
+
     }
 }
