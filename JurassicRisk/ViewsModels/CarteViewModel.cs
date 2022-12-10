@@ -1,3 +1,4 @@
+
 using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
@@ -7,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -193,6 +193,6 @@ namespace JurassicRisk.ViewsModels
     }
     #endregion
 
-       
+
 
 }

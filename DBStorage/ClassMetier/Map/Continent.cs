@@ -6,7 +6,7 @@ namespace DBStorage.ClassMetier.Map
     /// <summary>
     /// Classe représentant les différents continents du plateau
     /// </summary>
-    public class Continent : IContinent
+    public class Continent
     {
         private Dictionary<int, ITerritoireBase> dicoTerritoires;
 
