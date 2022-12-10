@@ -3,13 +3,14 @@ using Microsoft.Graph;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using JsonConstructorAttribute = System.Text.Json.Serialization.JsonConstructorAttribute;
+using JsonConstructorAttribute = Newtonsoft.Json.JsonConstructorAttribute;
 
 namespace DBStorage.ClassMetier.Map
 {
     /// <summary>
     /// Classe générique des territoires
     /// </summary>
+
     public class TerritoireBase : ITerritoireBase
     {
         protected Teams _teams;
@@ -18,12 +19,12 @@ namespace DBStorage.ClassMetier.Map
 
         public Teams Team { get => _teams; set => _teams = value; }
         public int ID { get => _id; set => _id = value; }
-        //[JsonProperty(ItemConverterType = typeof(List<UniteBase>))]
-        //public List<IUnit> Units
-        //{
-        //    get => _troupe;
-        //    set => _troupe = value;
-        //}
+
+        public List<IUnit> Units
+        {
+            get => _troupe;
+            set => _troupe = value;
+        }
 
         public TerritoireBase(int id)
         {
@@ -32,6 +33,7 @@ namespace DBStorage.ClassMetier.Map
             _troupe = new List<IUnit>();
         }
 
+    
         public TerritoireBase(List<IUnit> Units, int id)
         {
             _id = id;
@@ -52,7 +54,9 @@ namespace DBStorage.ClassMetier.Map
         [JsonConstructor]
         public TerritoireBase()
         {
-
+            _id = 0;
+            _teams = Teams.NEUTRE;
+            _troupe = new List<IUnit>();
         }
     }
 }
