@@ -10,9 +10,9 @@ namespace DBStorage.ClassMetier.Units
 {
     public interface IUnit
     {
-        string Name { get; }
-        string Description { get; }
-        int Id { get; }
+        string Name { get; set; }
+        string Description { get; set; }
+        int Id { get; set; }
         Elements Element { get; set; }
     }
 }

@@ -57,6 +57,8 @@ namespace JurassicRisk.ViewsModels
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
+
+            InsertCarte(_carte);
             foreach (Continent continent in _carte.DicoContinents.Values)
             {
                 foreach (TerritoireDecorator Territoire in continent.DicoTerritoires.Values)
@@ -87,6 +89,7 @@ namespace JurassicRisk.ViewsModels
                 JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage reponse = await JurasicRiskGame.Get.Client.PostAsJsonAsync<Carte>($"https://{JurasicRiskGame.Get.Ip}/Carte/SetCarte", carte);
+
                 if (reponse.IsSuccessStatusCode)
                 {
                     res = reponse.Content.ReadAsStringAsync().Result;

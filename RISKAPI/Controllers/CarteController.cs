@@ -32,14 +32,13 @@ namespace RISKAPI.Controllers
         // POST api/<CarteController>
 
         [HttpPost("SetCarte")]
-        public IActionResult Post([FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)] Carte carte)
+        public IActionResult Post(Carte carte)
         {
             IActionResult reponse = null;
             try
             {
-                ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
-                reponse = new AcceptedResult();
                 MySqlDAOFactory.Get().CreateCarteDAO().Insert(carte);
+                reponse = new AcceptedResult();
             }
             catch (Exception e)
             {

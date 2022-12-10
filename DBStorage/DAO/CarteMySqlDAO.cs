@@ -54,7 +54,7 @@ namespace DBStorage.DAO
 
                 MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand("insert into carte (carte) values (\"" + jsonCarte + "\");", GestionDatabase.GetInstance().Conn);
+                cmd = new MySqlCommand("insert into carte (carte) values (\""+ jsonCarte + "\");", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("carte " + jsonCarte + " creer");
             }

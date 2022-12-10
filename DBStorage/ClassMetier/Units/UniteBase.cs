@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace DBStorage.ClassMetier.Units
 {
-    [DataContract]
     public class UniteBase : IUnit
     {
         private Elements element;
@@ -10,11 +10,12 @@ namespace DBStorage.ClassMetier.Units
         protected string name;
         protected string description;
 
-        public string Name { get => name; }
-        public string Description { get => description; }
-        public int Id { get => id; }
+        public string Name { get => name; set => name = value; }
+        public string Description { get => description; set => description = value; }
+        public int Id { get => id; set => id = value; }
         public Elements Element { get => element; set => element = value; }
 
+        [JsonConstructor]
         public UniteBase()
         {
             Element = Elements.EAU;

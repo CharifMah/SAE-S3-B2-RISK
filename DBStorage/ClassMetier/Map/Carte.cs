@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Graph;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace DBStorage.ClassMetier.Map
@@ -10,36 +11,35 @@ namespace DBStorage.ClassMetier.Map
     {
         #region Attributes
 
-        private Dictionary<int, Continent> dicoContinents;
+        //private Dictionary<int, IContinent> dicoContinents;
 
         private ITerritoireBase _selectedTerritoire;
 
         #endregion
 
         #region Property
-        [Required]
-        public Dictionary<int, Continent> DicoContinents
-        {
-            get;
-        }
-        [Required]
+        //public Dictionary<int, IContinent> DicoContinents
+        //{
+        //    get { return dicoContinents; }
+        //}
+        [JsonConverter(typeof(InterfaceConverter<TerritoireBase>))]
         public ITerritoireBase SelectedTerritoire
         {
-            get;
-            set;
+            get => _selectedTerritoire;
+            set => _selectedTerritoire = value;
         }
 
         #endregion
 
-        public Carte(List<Continent> continent)
+        public Carte(List<IContinent> DicoContinents)
         {
-            dicoContinents = new Dictionary<int, Continent>();
-            for (int i = 0; i < continent.Count; i++)
-            {
-                dicoContinents.Add(i, continent[i]);
-            }
+            //dicoContinents = new Dictionary<int, Continent>();
+            //for (int i = 0; i < DicoContinents.Count; i++)
+            //{
+            //    dicoContinents.Add(i, DicoContinents[i]);
+            //}
         }
-    
+
         [JsonConstructor]
         public Carte()
         {

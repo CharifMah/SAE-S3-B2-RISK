@@ -77,13 +77,8 @@ namespace JurassicRisk.Views
 
         private async void OptionButton_Click(object sender, RoutedEventArgs e)
         {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage("_JeuPage"));
-            await _jurassicRiskVm.CarteVm.InsertCarte(_jurassicRiskVm.CarteVm.Carte);
-        }
-
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
-        {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+            await _jurassicRiskVm.CarteVm.InsertCarte(_jurassicRiskVm.CarteVm.Carte);
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
