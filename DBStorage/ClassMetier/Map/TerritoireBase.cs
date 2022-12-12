@@ -14,23 +14,24 @@ namespace DBStorage.ClassMetier.Map
     public class TerritoireBase : ITerritoireBase
     {
         protected Teams _teams;
-        protected List<IUnit> _troupe;
+        protected List<IUnit> units;
         protected int _id;
 
         public Teams Team { get => _teams; set => _teams = value; }
         public int ID { get => _id; set => _id = value; }
 
+        [JsonProperty(ItemConverterType = typeof(List<UniteBase>))]
         public List<IUnit> Units
         {
-            get => _troupe;
-            set => _troupe = value;
+            get => units;
+            set => units = value;
         }
 
         public TerritoireBase(int id)
         {
             _id = id;
             _teams = Teams.NEUTRE;
-            _troupe = new List<IUnit>();
+            units = new List<IUnit>();
         }
 
     
@@ -38,25 +39,23 @@ namespace DBStorage.ClassMetier.Map
         {
             _id = id;
             _teams = Teams.NEUTRE;
-            _troupe = Units;
+            this.Units = Units;
         }
 
         public void AddUnit(IUnit UniteBase)
         {
-            _troupe.Add(UniteBase);
+            units.Add(UniteBase);
         }
 
         public void RemoveUnit(IUnit UniteBase)
         {
-            _troupe.Remove(UniteBase);
+            units.Remove(UniteBase);
         }
 
         [JsonConstructor]
         public TerritoireBase()
         {
-            _id = 0;
-            _teams = Teams.NEUTRE;
-            _troupe = new List<IUnit>();
+
         }
     }
 }

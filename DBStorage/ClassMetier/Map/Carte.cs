@@ -35,16 +35,16 @@ namespace DBStorage.ClassMetier.Map
 
         #endregion
 
-        //public Carte(Dictionary<int, Continent> _dicoContinents, ITerritoireBase _selectedTerritoire = null)
-        //{
-        //    //this._dicoContinents = _dicoContinents;
-        //    this._selectedTerritoire = _selectedTerritoire;
-        //}
+        public Carte(ITerritoireBase selectedTerritoire)
+        {
+            //this._dicoContinents = _dicoContinents;
+            this._selectedTerritoire = selectedTerritoire;
+        }
 
         [JsonConstructor]
         public Carte()
         {
-            _selectedTerritoire = new TerritoireBase();
+            //_selectedTerritoire = new TerritoireBase();
             //_dicoContinents = new Dictionary<int, Continent>();          
         }
 
