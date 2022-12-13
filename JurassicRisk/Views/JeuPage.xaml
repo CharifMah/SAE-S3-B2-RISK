@@ -63,7 +63,7 @@
             </TextBlock.Text>
         </TextBlock>
 
-        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="3" Height="306" Width="324">
+        <GroupBox Visibility="Hidden" FontSize="40" Grid.Column="1" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="3" Height="306" Width="324">
             <GroupBox.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"/>
             </GroupBox.Background>
