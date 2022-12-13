@@ -31,11 +31,6 @@ namespace JurassicRisk.Views
             checkBoxSound.IsChecked = settingVm.MusiqueOnOff;
         }
 
-        private void LangueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             settingVm.Volume = slider_Son.Value;
@@ -59,5 +54,9 @@ namespace JurassicRisk.Views
             }
         }
 
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.Get().SaveSettings();
+        }
     }
 }

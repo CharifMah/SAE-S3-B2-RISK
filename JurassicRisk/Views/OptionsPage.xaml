@@ -35,6 +35,7 @@
         <TextBlock Style="{StaticResource Bloody}" FontSize="45" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2" Text="{x:Static Ressources:Strings.Options}"/>
 
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Top" Margin="20"/>
+        <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Save}"  Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Click="SaveButton_Click" VerticalAlignment="Top" Margin="20"/>
 
         <Slider x:Name="slider_Son" 
                 Grid.Column="1"

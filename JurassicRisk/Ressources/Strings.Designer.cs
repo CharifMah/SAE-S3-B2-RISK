@@ -295,5 +295,13 @@ namespace JurassicRisk.Ressource
             }
         }
 
+        public static string Save
+        {
+            get
+            {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+
     }
 }
