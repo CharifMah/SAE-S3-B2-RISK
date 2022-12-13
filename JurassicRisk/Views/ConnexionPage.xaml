@@ -6,27 +6,29 @@
       xmlns:local="clr-namespace:JurassicRisk.Views"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="1920"
       xmlns:gif="http://wpfanimatedgif.codeplex.com" 
       
       Title="Connexion">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.Background>
             <ImageBrush ImageSource="/Sprites/Background/Background2.jpg"/>
         </Grid.Background>
-        <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Top" ></Button>
+        <TextBlock Style="{StaticResource Bloody}" FontSize="45" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Text="{x:Static Ressources:Strings.Connexion}"/>
 
-        <StackPanel Grid.Column="1" Grid.Row="1">
+        <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Center" ></Button>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" FontSize="20" Style="{StaticResource FruitDays}" Text="{x:Static Ressources:Strings.Pseudo}"/>
             <TextBox VerticalAlignment="Bottom" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputPseudo"/>
 
