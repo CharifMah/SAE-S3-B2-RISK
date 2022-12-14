@@ -70,6 +70,7 @@ namespace JurassicRisk.ViewsModels
                     Profil profilDemande = JsonSerializer.Deserialize<Profil>(reponse.Content.ReadAsStringAsync().Result, options);
                     string t = reponse.Content.ReadAsStringAsync().Result;
                     _selectedProfil = profilDemande;
+                    NotifyPropertyChanged("SelectedProfil");
                 }
                 else
                 {
