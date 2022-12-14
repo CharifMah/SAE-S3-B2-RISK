@@ -180,6 +180,9 @@
   <data name="Pseudo" xml:space="preserve">
     <value>Pseudo :</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="Sinscrire" xml:space="preserve">
     <value>Register</value>
   </data>

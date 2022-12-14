@@ -17,7 +17,6 @@ namespace DBStorage.Mysql
         {
             CreateDatabase();
             CreateUserTable();
-            CreateCarteTable();
             Connect();
         }
 
@@ -40,8 +39,9 @@ namespace DBStorage.Mysql
         /// <author>Brian VERCHERE</author>
         private void Connect()
         {
-            connString = "server=localhost;uid=root;password=;";
+            connString = "server=localhost;uid=root;password=root;Connection Timeout=30;Connection Lifetime=0;Min Pool Size=0;Max Pool Size=4;Pooling=true;";
 
+            conn = null;
             conn = new MySqlConnection(connString);
             conn.Open();
         }
@@ -95,34 +95,6 @@ namespace DBStorage.Mysql
                 cmd.ExecuteNonQuery();
 
                 Console.WriteLine("Table Users created successfully or already existing");
-            }
-            catch (Exception x)
-            {
-                Console.WriteLine("An error occured: {0}", x.Message);
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-
-        /// <summary>
-        /// Créer la table gérant les comptes utilisateurs si il elle n'existe pas
-        /// </summary>
-        /// <author>Brian VERCHERE,Charif Mahmoud</author>
-        private void CreateCarteTable()
-        {
-            Connect();
-
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("use risk;", conn);
-                cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand("create table if not exists Carte (Carte json NOT NULL);", conn);
-                cmd.ExecuteNonQuery();
-
-                Console.WriteLine("Table Carte created successfully or already existing");
             }
             catch (Exception x)
             {
