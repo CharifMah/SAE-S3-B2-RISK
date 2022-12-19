@@ -1,22 +1,21 @@
-﻿using Newtonsoft.Json;
-using JsonConstructorAttribute = Newtonsoft.Json.JsonConstructorAttribute;
+﻿using ModelsAPI.Converters;
+using System.Text.Json.Serialization;
 
-namespace DBStorage.ClassMetier.Map
+namespace ModelsAPI.ClassMetier.Map
 {
     /// <summary>
     /// Classe représentant les différents continents du plateau
     /// </summary>
-    public class Continent
+    public class Continent : IContinent
     {
         private Dictionary<int, ITerritoireBase> _dicoTerritoires;
 
-        [JsonProperty(ItemConverterType = typeof(Dictionary<int, ITerritoireBase>))]
+        [JsonConverter(typeof(DictionnaryTerritoireConverter))]
         public Dictionary<int, ITerritoireBase> DicoTerritoires
         {
             get { return _dicoTerritoires; }
             set { _dicoTerritoires = value; }
         }
-
 
         public Continent(List<ITerritoireBase> DicoTerritoires)
         {

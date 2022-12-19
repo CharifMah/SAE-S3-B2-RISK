@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageUnitTest", "..\Stora
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestApi", "..\UnitTestApi\UnitTestApi.csproj", "{C57F05B7-37F8-465F-8FFE-5AB1B1DC37A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsAPI", "..\ModelsAPI\ModelsAPI.csproj", "{7F985C18-3317-4ACC-8818-A323B5D3E84B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{C57F05B7-37F8-465F-8FFE-5AB1B1DC37A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C57F05B7-37F8-465F-8FFE-5AB1B1DC37A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C57F05B7-37F8-465F-8FFE-5AB1B1DC37A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F985C18-3317-4ACC-8818-A323B5D3E84B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F985C18-3317-4ACC-8818-A323B5D3E84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F985C18-3317-4ACC-8818-A323B5D3E84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F985C18-3317-4ACC-8818-A323B5D3E84B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

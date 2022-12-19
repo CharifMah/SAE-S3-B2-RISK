@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
-namespace DBStorage.ClassMetier.Units
+namespace ModelsAPI.ClassMetier.Units
 {
     public interface IUnit
     {

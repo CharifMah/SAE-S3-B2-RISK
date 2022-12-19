@@ -1,13 +1,7 @@
-﻿using DBStorage.ClassMetier;
-using DBStorage.ClassMetier.Map;
-using DBStorage.Mysql;
+﻿using DBStorage.Mysql;
+using ModelsAPI.ClassMetier.Map;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace DBStorage.DAO
 {
@@ -47,14 +41,14 @@ namespace DBStorage.DAO
         }
 
         public void Insert(Carte carte)
-        {          
+        {
             try
             {
                 string jsonCarte = JsonSerializer.Serialize(carte);
 
                 MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand("insert into carte (carte) values (\""+ jsonCarte + "\");", GestionDatabase.GetInstance().Conn);
+                cmd = new MySqlCommand("insert into carte (carte) values (\"" + jsonCarte + "\");", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("carte " + jsonCarte + " creer");
             }
@@ -66,7 +60,7 @@ namespace DBStorage.DAO
             {
                 GestionDatabase.GetInstance().Disconnect();
             }
-            
+
         }
 
         public void Update(Carte carte)

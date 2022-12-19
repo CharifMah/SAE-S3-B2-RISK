@@ -1,8 +1,8 @@
-using DBStorage.ClassMetier;
 using DBStorage.DAO;
 using DBStorage.DAOFactory;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ModelsAPI.ClassMetier;
 
 namespace RISKAPI.Controllers
 {

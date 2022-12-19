@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace DBStorage.ClassMetier
+namespace ModelsAPI.ClassMetier
 {
     public class Profil
     {
@@ -12,7 +12,7 @@ namespace DBStorage.ClassMetier
         /// <summary>
         /// pseudo of the profil
         /// </summary>
-        public string Pseudo { get ; set; }
+        public string Pseudo { get; set; }
 
         /// <summary>
         /// Password of the profil
@@ -23,9 +23,9 @@ namespace DBStorage.ClassMetier
         /// create a profil
         /// </summary>
         /// <param name="login">of the profil</param>
-        public Profil(string Pseudo, string Password) 
+        public Profil(string Pseudo, string Password)
         {
-            this.Pseudo = Pseudo; 
+            this.Pseudo = Pseudo;
             this.Password = Password;
         }
 

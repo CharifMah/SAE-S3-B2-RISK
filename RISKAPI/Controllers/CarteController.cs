@@ -1,10 +1,6 @@
-﻿using DBStorage.ClassMetier.Map;
-using DBStorage.DAO;
-using DBStorage.DAOFactory;
-using Microsoft.AspNetCore.Identity;
+﻿using DBStorage.DAOFactory;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Ubiety.Dns.Core;
+using ModelsAPI.ClassMetier.Map;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,7 +33,7 @@ namespace RISKAPI.Controllers
             IActionResult reponse = null;
             try
             {
-                
+
                 MySqlDAOFactory.Get().CreateCarteDAO().Insert(carte as Carte);
                 reponse = new AcceptedResult();
             }
@@ -45,7 +41,7 @@ namespace RISKAPI.Controllers
             {
                 reponse = new BadRequestObjectResult(e.Message);
             }
-            return reponse;           
+            return reponse;
         }
 
         // PUT api/<CarteController>/5

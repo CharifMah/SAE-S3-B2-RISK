@@ -1,8 +1,6 @@
-﻿using DBStorage.ClassMetier.Units;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+﻿using ModelsAPI.ClassMetier.Units;
 
-namespace DBStorage.ClassMetier.Map
+namespace ModelsAPI.ClassMetier.Map
 {
     public interface ITerritoireBase
     {

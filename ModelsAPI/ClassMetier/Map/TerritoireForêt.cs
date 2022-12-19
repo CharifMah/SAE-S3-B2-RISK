@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DBStorage.ClassMetier.Map
+namespace ModelsAPI.ClassMetier.Map
 {
-    internal class TerritoireDésert : TerritoireBase
+    internal class TerritoireForêt : TerritoireBase
     {
-        public TerritoireDésert(int id) : base(id)
+        public TerritoireForêt(int id) : base(id)
         {
         }
     }

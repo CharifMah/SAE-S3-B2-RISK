@@ -1,12 +1,12 @@
-﻿using DBStorage.ClassMetier;
-using DBStorage.ClassMetier.Map;
-using DBStorage.ClassMetier.Units;
-using Models;
+﻿using Models;
 using Models.Combat;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
 using Models.Player;
 using Models.Units;
+using ModelsAPI.ClassMetier;
+using ModelsAPI.ClassMetier.Map;
+using ModelsAPI.ClassMetier.Units;
 
 namespace ModelTestUnit
 {

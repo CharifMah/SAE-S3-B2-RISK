@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace DBStorage.ClassMetier.Units
+namespace ModelsAPI.ClassMetier.Units
 {
     public class UniteBase : IUnit
     {
