@@ -705,4 +705,713 @@
       }
     }
   ]
-} 
+}
+
+{
+  "_dicoContinents": [
+    {
+      "Key": "0",
+      "Value": {
+        "__type": "Continent:#Models.Map",
+        "_dicoTerritoires": [
+          {
+            "Key": "0",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/1c1r.png",
+              "_territoire": {
+                "_id": 0,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 94,
+              "_y": 51,
+              "height": 70,
+              "width": 152
+            }
+          },
+          {
+            "Key": "1",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/1c2r.png",
+              "_territoire": {
+                "_id": 1,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 114,
+              "_y": 149,
+              "height": 130,
+              "width": 97
+            }
+          },
+          {
+            "Key": "2",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/1c3r.png",
+              "_territoire": {
+                "_id": 2,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 148,
+              "_y": 1,
+              "height": 194,
+              "width": 160
+            }
+          },
+          {
+            "Key": "3",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/1c4r.png",
+              "_territoire": {
+                "_id": 3,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 268,
+              "_y": 32,
+              "height": 146,
+              "width": 90
+            }
+          },
+          {
+            "Key": "4",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/1c5r.png",
+              "_territoire": {
+                "_id": 4,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 332,
+              "_y": 38,
+              "height": 150,
+              "width": 182
+            }
+          },
+          {
+            "Key": "5",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/1c6r.png",
+              "_territoire": {
+                "_id": 5,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 222,
+              "_y": 114,
+              "height": 138,
+              "width": 146
+            }
+          },
+          {
+            "Key": "6",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/1c7r.png",
+              "_territoire": {
+                "_id": 6,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 290,
+              "_y": 157,
+              "height": 220,
+              "width": 151
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Key": "1",
+      "Value": {
+        "__type": "Continent:#Models.Map",
+        "_dicoTerritoires": [
+          {
+            "Key": "7",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/2c1r.png",
+              "_territoire": {
+                "_id": 7,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 112,
+              "_y": 580,
+              "height": 217,
+              "width": 188
+            }
+          },
+          {
+            "Key": "8",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/2c2r.png",
+              "_territoire": {
+                "_id": 8,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 107,
+              "_y": 735,
+              "height": 158,
+              "width": 226
+            }
+          },
+          {
+            "Key": "9",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/2c3r.png",
+              "_territoire": {
+                "_id": 9,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 163,
+              "_y": 807,
+              "height": 188,
+              "width": 165
+            }
+          },
+          {
+            "Key": "10",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/2c4r.png",
+              "_territoire": {
+                "_id": 10,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 249,
+              "_y": 637,
+              "height": 161,
+              "width": 182
+            }
+          },
+          {
+            "Key": "11",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/2c5r.png",
+              "_territoire": {
+                "_id": 11,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 388,
+              "_y": 620,
+              "height": 161,
+              "width": 215
+            }
+          },
+          {
+            "Key": "12",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/2c6r.png",
+              "_territoire": {
+                "_id": 12,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 296,
+              "_y": 735,
+              "height": 146,
+              "width": 302
+            }
+          },
+          {
+            "Key": "13",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/2c7r.png",
+              "_territoire": {
+                "_id": 13,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 400,
+              "_y": 751,
+              "height": 215,
+              "width": 250
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Key": "2",
+      "Value": {
+        "__type": "Continent:#Models.Map",
+        "_dicoTerritoires": [
+          {
+            "Key": "14",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/3c1r.png",
+              "_territoire": {
+                "_id": 14,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 510,
+              "_y": 424,
+              "height": 188,
+              "width": 177
+            }
+          },
+          {
+            "Key": "15",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/3c2r.png",
+              "_territoire": {
+                "_id": 15,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 641,
+              "_y": 484,
+              "height": 266,
+              "width": 168
+            }
+          },
+          {
+            "Key": "16",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/3c3r.png",
+              "_territoire": {
+                "_id": 16,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 745,
+              "_y": 332,
+              "height": 162,
+              "width": 184
+            }
+          },
+          {
+            "Key": "17",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/3c4r.png",
+              "_territoire": {
+                "_id": 17,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 635,
+              "_y": 302,
+              "height": 139,
+              "width": 193
+            }
+          },
+          {
+            "Key": "18",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/3c5r.png",
+              "_territoire": {
+                "_id": 18,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 617,
+              "_y": 127,
+              "height": 238,
+              "width": 201
+            }
+          },
+          {
+            "Key": "19",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/3c6r.png",
+              "_territoire": {
+                "_id": 19,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 728,
+              "_y": 184,
+              "height": 244,
+              "width": 214
+            }
+          },
+          {
+            "Key": "20",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/3c7r.png",
+              "_territoire": {
+                "_id": 20,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 921,
+              "_y": 202,
+              "height": 272,
+              "width": 125
+            }
+          },
+          {
+            "Key": "21",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/3c8r.png",
+              "_territoire": {
+                "_id": 21,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 837,
+              "_y": 120,
+              "height": 357,
+              "width": 132
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Key": "3",
+      "Value": {
+        "__type": "Continent:#Models.Map",
+        "_dicoTerritoires": [
+          {
+            "Key": "22",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/4c1r.png",
+              "_territoire": {
+                "_id": 22,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 895,
+              "_y": 321,
+              "height": 145,
+              "width": 205
+            }
+          },
+          {
+            "Key": "23",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/4c2r.png",
+              "_territoire": {
+                "_id": 23,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 998,
+              "_y": 287,
+              "height": 274,
+              "width": 154
+            }
+          },
+          {
+            "Key": "24",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/4c3r.png",
+              "_territoire": {
+                "_id": 24,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1123,
+              "_y": 327,
+              "height": 199,
+              "width": 245
+            }
+          },
+          {
+            "Key": "25",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/4c4r.png",
+              "_territoire": {
+                "_id": 25,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 911,
+              "_y": 389,
+              "height": 244,
+              "width": 201
+            }
+          },
+          {
+            "Key": "26",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/4c5r.png",
+              "_territoire": {
+                "_id": 26,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 746,
+              "_y": 516,
+              "height": 212,
+              "width": 142
+            }
+          },
+          {
+            "Key": "27",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/4c6r.png",
+              "_territoire": {
+                "_id": 27,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 893,
+              "_y": 571,
+              "height": 232,
+              "width": 231
+            }
+          },
+          {
+            "Key": "28",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/4c7r.png",
+              "_territoire": {
+                "_id": 28,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1049,
+              "_y": 502,
+              "height": 186,
+              "width": 300
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Key": "4",
+      "Value": {
+        "__type": "Continent:#Models.Map",
+        "_dicoTerritoires": [
+          {
+            "Key": "29",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/5c1r.png",
+              "_territoire": {
+                "_id": 29,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1415,
+              "_y": 130,
+              "height": 134,
+              "width": 149
+            }
+          },
+          {
+            "Key": "30",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/5c2r.png",
+              "_territoire": {
+                "_id": 30,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1440,
+              "_y": 194,
+              "height": 194,
+              "width": 146
+            }
+          },
+          {
+            "Key": "31",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/5c3r.png",
+              "_territoire": {
+                "_id": 31,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1519,
+              "_y": 40,
+              "height": 267,
+              "width": 170
+            }
+          },
+          {
+            "Key": "32",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/5c4r.png",
+              "_territoire": {
+                "_id": 32,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1709,
+              "_y": 49,
+              "height": 191,
+              "width": 319
+            }
+          },
+          {
+            "Key": "33",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/5c5r.png",
+              "_territoire": {
+                "_id": 33,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1587,
+              "_y": 182,
+              "height": 182,
+              "width": 146
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Key": "5",
+      "Value": {
+        "__type": "Continent:#Models.Map",
+        "_dicoTerritoires": [
+          {
+            "Key": "34",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/6c1r.png",
+              "_territoire": {
+                "_id": 34,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1549,
+              "_y": 296,
+              "height": 286,
+              "width": 136
+            }
+          },
+          {
+            "Key": "35",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/6c2r.png",
+              "_territoire": {
+                "_id": 35,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1740,
+              "_y": 326,
+              "height": 148,
+              "width": 225
+            }
+          },
+          {
+            "Key": "36",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/6c3r.png",
+              "_territoire": {
+                "_id": 36,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1416,
+              "_y": 349,
+              "height": 245,
+              "width": 224
+            }
+          },
+          {
+            "Key": "37",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/6c4r.png",
+              "_territoire": {
+                "_id": 37,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1493,
+              "_y": 422,
+              "height": 309,
+              "width": 191
+            }
+          },
+          {
+            "Key": "38",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/6c5r.png",
+              "_territoire": {
+                "_id": 38,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1592,
+              "_y": 523,
+              "height": 260,
+              "width": 262
+            }
+          },
+          {
+            "Key": "39",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/6c6r.png",
+              "_territoire": {
+                "_id": 39,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1413,
+              "_y": 550,
+              "height": 194,
+              "width": 212
+            }
+          },
+          {
+            "Key": "40",
+            "Value": {
+              "__type": "TerritoireDecorator:#Models.Map",
+              "_UriSource": "pack:\/\/application:,,,\/Sprites\/Carte\/6c7r.png",
+              "_territoire": {
+                "_id": 40,
+                "_teams": 4,
+                "units": []
+              },
+              "_x": 1475,
+              "_y": 668,
+              "height": 213,
+              "width": 218
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

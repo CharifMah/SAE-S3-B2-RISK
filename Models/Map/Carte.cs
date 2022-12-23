@@ -11,6 +11,8 @@ namespace Models.Map
     /// Classe du plateau de jeu
     /// </summary>
     [DataContract]
+    [KnownType(typeof(TerritoireDecorator))]
+    [KnownType(typeof(Continent))]
     public class Carte
     {
         #region Attributes

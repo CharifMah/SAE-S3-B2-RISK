@@ -48,14 +48,15 @@ namespace JurassicRisk
 
         private Carte CreateCarte(Dictionary<string, ITerritoireBase> _decorations)
         {
-            List<IContinent> _continents = new List<IContinent>();
-
-            _continents.Add(new Continent(_decorations.Take(7).ToDictionary(x => x.Key,y => y.Value)));
-            _continents.Add(new Continent(_decorations.Skip(7).Take(7).ToDictionary(x => x.Key, y => y.Value)));
-            _continents.Add(new Continent(_decorations.Skip(14).Take(8).ToDictionary(x => x.Key, y => y.Value)));
-            _continents.Add(new Continent(_decorations.Skip(22).Take(7).ToDictionary(x => x.Key, y => y.Value)));
-            _continents.Add(new Continent(_decorations.Skip(29).Take(5).ToDictionary(x => x.Key, y => y.Value)));
-            _continents.Add(new Continent(_decorations.Skip(34).Take(7).ToDictionary(x => x.Key, y => y.Value)));
+            List<IContinent> _continents = new List<IContinent>
+            {
+                new Continent(_decorations.Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(_decorations.Skip(7).Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(_decorations.Skip(14).Take(8).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(_decorations.Skip(22).Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(_decorations.Skip(29).Take(5).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(_decorations.Skip(34).Take(7).ToDictionary(x => x.Key, y => y.Value))
+            };
             Dictionary<string, IContinent> dic = new Dictionary<string, IContinent>();
             for (int i = 0; i < _continents.Count; i++)
             {

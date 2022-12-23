@@ -11,8 +11,9 @@ using System.Windows.Media.Imaging;
 
 namespace Models.Map
 {
-    [KnownType(typeof(TerritoireDecorator))]
+
     [DataContract]
+    [KnownType(typeof(TerritoireDecorator))]
     public class TerritoireDecorator : ITerritoireBase
     {
         [DataMember]
