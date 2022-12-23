@@ -5,20 +5,22 @@ namespace ModelsAPI.ClassMetier.Units
 {
     public class UniteBase : IUnit
     {
+        #region Attributes
         protected Elements element;
         protected int id;
         protected string name;
         protected string description;
+        #endregion
 
-        public string Name { get => name; }
-        public string Description { get => description; }
-        public int ID { get => id; }
+        #region Property
+        public string Name { get => name; set => name = value; }
+        public string Description { get => description; set => description = value; }
+        public int ID { get => id; set => id = value; }
 
         public Elements Element { get => element; set => element = value; }
-        string IUnit.Name { get; set ; }
+        #endregion
 
-        string IUnit.Description { get; set; }
-        int IUnit.ID { get; set; }
+
 
         public UniteBase(int ID, Elements Element = Elements.EAU)
         {

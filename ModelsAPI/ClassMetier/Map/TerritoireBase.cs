@@ -10,20 +10,26 @@ namespace ModelsAPI.ClassMetier.Map
 
     public class TerritoireBase : ITerritoireBase
     {
+        #region Attributes
         protected Teams _teams;
-        protected List<IUnit>? _units;
+        protected List<IUnit> _units;
         protected int _id;
+        #endregion
 
+        #region Property
         public Teams Team { get => _teams; set => _teams = value; }
         public int ID { get => _id; set => _id = value; }
 
-        //[JsonConverter(typeof(ConcreteListConverter<IUnit,UniteBase>))]
-        //public List<IUnit>? Units
-        //{
-        //    get => _units;
-        //    set => _units = value;
-        //}
+        [JsonConverter(typeof(ConcreteCollectionTypeConverter<List<IUnit>,UniteBase, IUnit>))]
+        public List<IUnit> Units
+        {
+            get => _units;
+            set => _units = value;
+        }
 
+        #endregion
+
+        #region Constructor
         public TerritoireBase(int id)
         {
             _id = id;
@@ -32,17 +38,18 @@ namespace ModelsAPI.ClassMetier.Map
         }
 
         [JsonConstructor]
-        public TerritoireBase(int ID, Teams Team = Teams.NEUTRE)
+        public TerritoireBase(int ID, List<IUnit> Units, Teams Team = Teams.NEUTRE)
         {
             this._id = ID;
             this._teams = Team;
-            //this._units = Units;
+            this._units = Units;
         }
 
         public TerritoireBase()
         {
 
         }
+        #endregion
 
 
         public void AddUnit(IUnit UniteBase)

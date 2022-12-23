@@ -7,7 +7,7 @@ namespace ModelsAPI.ClassMetier.Map
         int ID { get; set; }
         Teams Team { get; set; }
 
-       // List<IUnit> Units { get; set; }
+        List<IUnit> Units { get; set; }
 
         void AddUnit(IUnit UniteBase);
         void RemoveUnit(IUnit UniteBase);
