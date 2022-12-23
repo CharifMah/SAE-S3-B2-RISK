@@ -6,19 +6,25 @@ namespace ModelsAPI.ClassMetier.Map
     /// <summary>
     /// Classe représentant les différents continents du plateau
     /// </summary>
-    public class Continent
+    public class Continent : IContinent
     {
-        private Dictionary<string, ITerritoireBase> _dicoTerritoires;
+        //private Dictionary<string, ITerritoireBase> _dicoTerritoires;
 
-        public Dictionary<string, ITerritoireBase> DicoTerritoires
-        {
-            get { return _dicoTerritoires; }
-            set { _dicoTerritoires = value; }
-        }
+        //[JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, ITerritoireBase>, TerritoireBase, string, ITerritoireBase>))]
+        //public Dictionary<string, ITerritoireBase> DicoTerritoires
+        //{
+        //    get { return _dicoTerritoires; }
+        //    set { _dicoTerritoires = value; }
+        //}
 
-        public Continent(Dictionary<string, ITerritoireBase> _dicoTerritoires)
+        //public Continent(Dictionary<string, ITerritoireBase> _dicoTerritoires)
+        //{
+        //    this._dicoTerritoires = _dicoTerritoires;       
+        //}
+
+        public Continent()
         {
-            this._dicoTerritoires = _dicoTerritoires;       
+
         }
     }
 }

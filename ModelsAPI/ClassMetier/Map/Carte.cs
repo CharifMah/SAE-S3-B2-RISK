@@ -11,7 +11,7 @@ namespace ModelsAPI.ClassMetier.Map
     {
         #region Attributes
 
-        //private Dictionary<string, Continent> _dicoContinents;
+        private Dictionary<string, IContinent> _dicoContinents;
 
         private ITerritoireBase? _selectedTerritoire;
 
@@ -21,11 +21,12 @@ namespace ModelsAPI.ClassMetier.Map
         ///// <summary>
         ///// Dictionary des Continents
         ///// </summary>
-        //public Dictionary<string, Continent> DicoContinents
-        //{
-        //    get { return _dicoContinents; }
-        //    set { _dicoContinents = value; }
-        //}
+        [JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, IContinent>, Continent, string, IContinent>))]
+        public Dictionary<string, IContinent> DicoContinents
+        {
+            get { return _dicoContinents; }
+            set { _dicoContinents = value; }
+        }
 
         /// <summary>
         /// Le Territoire Selectionne par le joueur
@@ -58,9 +59,9 @@ namespace ModelsAPI.ClassMetier.Map
 
         #endregion
 
-        public Carte(ITerritoireBase? SelectedTerritoire)
+        public Carte(Dictionary<string, IContinent> DicoContinents,ITerritoireBase? SelectedTerritoire)
         {
-            //this._dicoContinents = DicoContinents;
+            this._dicoContinents = DicoContinents;
             this._selectedTerritoire = SelectedTerritoire;
         }
     }
