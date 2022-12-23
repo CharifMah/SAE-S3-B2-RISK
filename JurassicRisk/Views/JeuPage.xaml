@@ -58,7 +58,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0} {1}">
                     <Binding Source="{x:Static Ressources:Strings.NbTerritoireVide}"/>
-                    <Binding Path="CarteVm.Carte.NombreTerritoireOccupe"/>
+                    <Binding Path="CarteVm.Carte.GetNombreTerritoireOccupe"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
