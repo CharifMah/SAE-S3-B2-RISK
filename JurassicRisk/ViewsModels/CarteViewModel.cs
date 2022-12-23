@@ -3,6 +3,8 @@ using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Map;
 using Models.Units;
+using ModelsAPI.ClassMetier.Map;
+using ModelsAPI.ClassMetier.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;

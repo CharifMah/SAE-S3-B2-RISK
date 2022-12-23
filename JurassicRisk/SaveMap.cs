@@ -1,4 +1,5 @@
 ﻿using Models.Map;
+using ModelsAPI.ClassMetier.Map;
 using Stockage;
 using System;
 using System.Collections.Generic;

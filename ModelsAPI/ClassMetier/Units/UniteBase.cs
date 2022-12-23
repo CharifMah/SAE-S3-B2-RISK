@@ -12,15 +12,25 @@ namespace ModelsAPI.ClassMetier.Units
 
         public string Name { get => name; }
         public string Description { get => description; }
-        public int Id { get => id; }
-        public Elements Element { get => element; set => element = value; }
+        public int ID { get => id; }
 
-        public UniteBase(int id, Elements element = Elements.EAU)
+        public Elements Element { get => element; set => element = value; }
+        string IUnit.Name { get; set ; }
+
+        string IUnit.Description { get; set; }
+        int IUnit.ID { get; set; }
+
+        public UniteBase(int ID, Elements Element = Elements.EAU)
         {
-            this.element = element;
-            this.id = id;
+            this.element = Element;
+            this.id = ID;
             name = "ExempleUnite";
             description = "Description d'une unite";
+        }
+
+        public UniteBase()
+        {
+
         }
     }
 }

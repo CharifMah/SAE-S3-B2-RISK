@@ -1,6 +1,6 @@
 ﻿using Models.Player;
 
-namespace Models
+namespace Models.Tours
 {
     public class Tour : ITour
     {
@@ -25,8 +25,8 @@ namespace Models
 
         }
 
-        public void Draft() 
-        { 
+        public void Draft()
+        {
 
         }
 

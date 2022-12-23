@@ -12,24 +12,20 @@ namespace Models.Map
     /// </summary>
     [KnownType(typeof(TerritoireDecorator))]
     [DataContract]
-    public class Continent : IContinent
+    public class Continent
     {
         [DataMember]
-        private Dictionary<int, ITerritoireBase> _dicoTerritoires;
+        private Dictionary<string, TerritoireBase> _dicoTerritoires;
 
-        public Dictionary<int, ITerritoireBase> DicoTerritoires
+        public Dictionary<string, TerritoireBase> DicoTerritoires
         {
             get { return _dicoTerritoires; }
             set { _dicoTerritoires = value; }
         }
 
-        public Continent(List<ITerritoireBase> territoires)
+        public Continent(Dictionary<string, TerritoireBase> _dicoTerritoires)
         {
-            _dicoTerritoires = new Dictionary<int, ITerritoireBase>();
-            for (int i = 0; i < territoires.Count; i++)
-            {
-                _dicoTerritoires.Add(i, territoires[i]);
-            }
+            this._dicoTerritoires = _dicoTerritoires;
         }
 
 

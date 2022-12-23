@@ -1,4 +1,6 @@
 ﻿using ModelsAPI.ClassMetier.Units;
+using ModelsAPI.Converters;
+using Newtonsoft.Json;
 
 namespace ModelsAPI.ClassMetier.Map
 {
@@ -15,11 +17,12 @@ namespace ModelsAPI.ClassMetier.Map
         public Teams Team { get => _teams; set => _teams = value; }
         public int ID { get => _id; set => _id = value; }
 
-        public List<IUnit>? Units
-        {
-            get => _units;
-            set => _units = value;
-        }
+        //[JsonConverter(typeof(ConcreteListConverter<IUnit,UniteBase>))]
+        //public List<IUnit>? Units
+        //{
+        //    get => _units;
+        //    set => _units = value;
+        //}
 
         public TerritoireBase(int id)
         {
@@ -28,13 +31,19 @@ namespace ModelsAPI.ClassMetier.Map
             _units = new List<IUnit>();
         }
 
-
-        public TerritoireBase(List<IUnit> Units, int ID, Teams Team = Teams.NEUTRE)
+        [JsonConstructor]
+        public TerritoireBase(int ID, Teams Team = Teams.NEUTRE)
         {
             this._id = ID;
             this._teams = Team;
-            this._units = Units;
+            //this._units = Units;
         }
+
+        public TerritoireBase()
+        {
+
+        }
+
 
         public void AddUnit(IUnit UniteBase)
         {

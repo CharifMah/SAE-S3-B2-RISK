@@ -1,5 +1,6 @@
 ﻿using Models.Map;
 using Models.Player;
+using Models.Tours;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +81,7 @@ namespace Models
             TourPlacement t = new TourPlacement();
             _clickWaitTask = new TaskCompletionSource<bool>();
 
-            while (_carte.NombreTerritoireOccupe != 0)
+            while (_carte.GetNombreTerritoireOccupe != 0)
             {
                 foreach (Joueur joueur in _joueurs)
                 {

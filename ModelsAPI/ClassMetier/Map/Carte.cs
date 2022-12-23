@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graph;
 using ModelsAPI.Converters;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ModelsAPI.ClassMetier.Map
 {
@@ -11,25 +11,26 @@ namespace ModelsAPI.ClassMetier.Map
     {
         #region Attributes
 
-        private Dictionary<int, IContinent> _dicoContinents;
+        //private Dictionary<string, Continent> _dicoContinents;
 
         private ITerritoireBase? _selectedTerritoire;
 
         #endregion
 
         #region Property
-        /// <summary>
-        /// Dictionary des Continents
-        /// </summary>
-        public Dictionary<int, IContinent> DicoContinents
-        {
-            get { return _dicoContinents; }
-            set { _dicoContinents = value; }
-        }
+        ///// <summary>
+        ///// Dictionary des Continents
+        ///// </summary>
+        //public Dictionary<string, Continent> DicoContinents
+        //{
+        //    get { return _dicoContinents; }
+        //    set { _dicoContinents = value; }
+        //}
 
         /// <summary>
         /// Le Territoire Selectionne par le joueur
         /// </summary>
+        [JsonConverter(typeof(ConcreteConverter<ITerritoireBase,TerritoireBase>))]
         public ITerritoireBase? SelectedTerritoire
         {
             get => _selectedTerritoire;
@@ -41,25 +42,25 @@ namespace ModelsAPI.ClassMetier.Map
             get
             {
                 int res = 0;
-                foreach (Continent continent in _dicoContinents.Values)
-                {
-                    foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
-                    {
-                        if (territoire.Team == Teams.NEUTRE)
-                        {
-                            res++;
-                        }
-                    }
-                }
+                //foreach (Continent continent in _dicoContinents.Values)
+                //{
+                //    foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                //    {
+                //        if (territoire.Team == Teams.NEUTRE)
+                //        {
+                //            res++;
+                //        }
+                //    }
+                //}
                 return res;
             }
         }
 
         #endregion
 
-        public Carte(Dictionary<int, IContinent> DicoContinents, ITerritoireBase? SelectedTerritoire)
+        public Carte(ITerritoireBase? SelectedTerritoire)
         {
-            this._dicoContinents = DicoContinents;
+            //this._dicoContinents = DicoContinents;
             this._selectedTerritoire = SelectedTerritoire;
         }
     }

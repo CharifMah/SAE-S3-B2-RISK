@@ -1,7 +1,7 @@
 ﻿using Models.Player;
 using Models.Units;
 
-namespace Models
+namespace Models.Tours
 {
     public class TourPlacement : ITour
     {

@@ -14,51 +14,57 @@ namespace Models.Map
     public class Carte
     {
         #region Attributes
-
         [DataMember]
-        private Dictionary<int, Continent> _dicoContinents;
+        private Dictionary<string, Continent> _dicoContinents;
 
-        private ITerritoireBase _selectedTerritoire;
+        private TerritoireBase? _selectedTerritoire;
 
         #endregion
 
         #region Property
-
-        public Dictionary<int, Continent> DicoContinents
+        ///// <summary>
+        ///// Dictionary des Continents
+        ///// </summary>
+        public Dictionary<string, Continent> DicoContinents
         {
             get { return _dicoContinents; }
+            set { _dicoContinents = value; }
         }
 
-        public int NombreTerritoireOccupe { get => GetNombreTerritoireOccupe(); }
-
-        public ITerritoireBase SelectedTerritoire
+        /// <summary>
+        /// Le Territoire Selectionne par le joueur
+        /// </summary>
+        public TerritoireBase? SelectedTerritoire
         {
             get => _selectedTerritoire;
             set => _selectedTerritoire = value;
         }
 
-        #endregion
-
-        public Carte(Dictionary<int, Continent> _dicoContinents, ITerritoireBase _selectedTerritoire = null)
+        public int GetNombreTerritoireOccupe
         {
-            this._dicoContinents = _dicoContinents;
-            this._selectedTerritoire = _selectedTerritoire;
-        }   
-        
-        public int GetNombreTerritoireOccupe()
-        {
-            int res = 0;
-            foreach (Continent continent in _dicoContinents.Values)
+            get
             {
-                foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                int res = 0;
+                foreach (Continent continent in _dicoContinents.Values)
                 {
-                    if (territoire.Team == Teams.NEUTRE)
+                    foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
                     {
-                        res++;
+                        if (territoire.Team == Teams.NEUTRE)
+                        {
+                            res++;
+                        }
                     }
                 }
+                return res;
             }
-            return res;
+        }
+
+        #endregion
+
+        public Carte(Dictionary<string, Continent> DicoContinents, TerritoireBase? SelectedTerritoire)
+        {
+            this._dicoContinents = DicoContinents;
+            this._selectedTerritoire = SelectedTerritoire;
         }
     }
 }
