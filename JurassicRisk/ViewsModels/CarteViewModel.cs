@@ -15,6 +15,10 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using Carte = Models.Map.Carte;
+using Continent = Models.Map.Continent;
+using IUnit = Models.Units.IUnit;
+using TerritoireBase = Models.Map.TerritoireBase;
 
 namespace JurassicRisk.ViewsModels
 {

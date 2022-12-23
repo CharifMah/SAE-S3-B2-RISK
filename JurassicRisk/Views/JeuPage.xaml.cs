@@ -5,7 +5,7 @@ using ModelsAPI.ClassMetier.Units;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using IUnit = Models.Units.IUnit;
 
 namespace JurassicRisk.Views
 {

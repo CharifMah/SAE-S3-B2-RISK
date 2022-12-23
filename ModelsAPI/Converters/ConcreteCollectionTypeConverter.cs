@@ -2,9 +2,7 @@
 
 namespace ModelsAPI.Converters
 {
-    public class ConcreteCollectionTypeConverter<TCollection, TItem, TBaseItem> : JsonConverter
-    where TCollection : ICollection<TBaseItem>, new()
-    where TItem : TBaseItem
+    public class ConcreteCollectionTypeConverter<TCollection, TItem, TBaseItem> : JsonConverter where TCollection : ICollection<TBaseItem>, new() where TItem : TBaseItem
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

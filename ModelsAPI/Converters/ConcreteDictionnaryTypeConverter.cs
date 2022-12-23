@@ -24,7 +24,7 @@ namespace ModelsAPI.Converters
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(IDictionary<TKey, TItem>).IsAssignableFrom(objectType);
+            return typeof(IDictionary<TKey, TValue>).IsAssignableFrom(objectType);
         }
     }
 }

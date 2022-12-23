@@ -2,6 +2,6 @@
 {
     public interface IContinent
     {
-        Dictionary<int, ITerritoireBase> DicoTerritoires { get; set; }
+        Dictionary<string, ITerritoireBase> DicoTerritoires { get; set; }
     }
 }

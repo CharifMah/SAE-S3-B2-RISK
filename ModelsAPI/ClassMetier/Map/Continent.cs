@@ -8,23 +8,32 @@ namespace ModelsAPI.ClassMetier.Map
     /// </summary>
     public class Continent : IContinent
     {
-        //private Dictionary<string, ITerritoireBase> _dicoTerritoires;
+        #region Attributes
+        private Dictionary<string, ITerritoireBase> _dicoTerritoires;
+        #endregion
 
-        //[JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, ITerritoireBase>, TerritoireBase, string, ITerritoireBase>))]
-        //public Dictionary<string, ITerritoireBase> DicoTerritoires
-        //{
-        //    get { return _dicoTerritoires; }
-        //    set { _dicoTerritoires = value; }
-        //}
+        #region Property
 
-        //public Continent(Dictionary<string, ITerritoireBase> _dicoTerritoires)
-        //{
-        //    this._dicoTerritoires = _dicoTerritoires;       
-        //}
+        [JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, ITerritoireBase>, TerritoireBase, string, ITerritoireBase>))]
+        public Dictionary<string, ITerritoireBase> DicoTerritoires
+        {
+            get { return _dicoTerritoires; }
+            set { _dicoTerritoires = value; }
+        }
+
+        #endregion
+
+        #region Constructor
+        public Continent(Dictionary<string, ITerritoireBase> DicoTerritoires)
+        {
+            this._dicoTerritoires = DicoTerritoires;
+        }
 
         public Continent()
         {
 
         }
+        #endregion
+
     }
 }

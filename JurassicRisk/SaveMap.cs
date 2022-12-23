@@ -1,11 +1,13 @@
 ﻿using Models.Map;
-using ModelsAPI.ClassMetier.Map;
 using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using Carte = Models.Map.Carte;
+using Continent = Models.Map.Continent;
 using GetResource = JurassicRisk.Ressources.GetResource;
+using ITerritoireBase = Models.Map.ITerritoireBase;
 
 namespace JurassicRisk
 {
@@ -16,8 +18,12 @@ namespace JurassicRisk
     public class SaveMap
     {
         private List<string> _fileEntries;
-        private List<TerritoireDecorator> _decorations;
+        private Dictionary<string, ITerritoireBase> _decorations;
         private int i = 0;
+        /// <summary>
+        /// Save the carte
+        /// </summary>
+        /// <param name="carte">null if we don't have map</param>
         public SaveMap(Carte carte)
         {
             SaveCarte(carte);
@@ -40,21 +46,21 @@ namespace JurassicRisk
             return _sprites;
         }
 
-        private Carte CreateCarte(List<TerritoireDecorator> _decorations)
+        private Carte CreateCarte(Dictionary<string, ITerritoireBase> _decorations)
         {
-            List<Continent> _continents = new List<Continent>();
+            List<IContinent> _continents = new List<IContinent>();
 
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Take(7).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(7).Take(7).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(14).Take(8).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(22).Take(7).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(29).Take(5).ToList()));
-            _continents.Add(new Continent(_decorations.ToList<ITerritoireBase>().Skip(34).Take(7).ToList()));
-            Dictionary<int, Continent> dic = new Dictionary<int, Continent>();
+            _continents.Add(new Continent(_decorations.Take(7).ToDictionary(x => x.Key,y => y.Value)));
+            _continents.Add(new Continent(_decorations.Skip(7).Take(7).ToDictionary(x => x.Key, y => y.Value)));
+            _continents.Add(new Continent(_decorations.Skip(14).Take(8).ToDictionary(x => x.Key, y => y.Value)));
+            _continents.Add(new Continent(_decorations.Skip(22).Take(7).ToDictionary(x => x.Key, y => y.Value)));
+            _continents.Add(new Continent(_decorations.Skip(29).Take(5).ToDictionary(x => x.Key, y => y.Value)));
+            _continents.Add(new Continent(_decorations.Skip(34).Take(7).ToDictionary(x => x.Key, y => y.Value)));
+            Dictionary<string, IContinent> dic = new Dictionary<string, IContinent>();
             for (int i = 0; i < _continents.Count; i++)
             {
-                dic.Add(i, _continents[i]);
-            } 
+                dic.Add(i.ToString(), _continents[i]);
+            }
 
 
             return new Carte(dic);
@@ -67,7 +73,7 @@ namespace JurassicRisk
         {
             if (carte == null)
             {
-                _decorations = new List<TerritoireDecorator>();
+                _decorations = new Dictionary<string, ITerritoireBase>();
 
                 SerializeConf(GetImagesTerritoires()[0].UriSource.ToString(), 94, 51, 152, 70);
                 SerializeConf(GetImagesTerritoires()[1].UriSource.ToString(), 114, 149, 97, 130);
@@ -114,7 +120,7 @@ namespace JurassicRisk
                 SauveCollection s = new SauveCollection(Environment.CurrentDirectory);
 
                 s.Sauver(CreateCarte(_decorations), "Map/Cartee");
-               
+
             }
             else
             {
@@ -125,7 +131,7 @@ namespace JurassicRisk
 
         public void SerializeConf(string Urisource, int x, int y, int width, int height)
         {
-            _decorations.Add(new TerritoireDecorator(new TerritoireBase(i), x, y, width, height, Urisource));
+            _decorations.Add(i.ToString(), new TerritoireDecorator(new Models.Map.TerritoireBase(i), x, y, width, height, Urisource));
             i++;
         }
     }

@@ -4,12 +4,12 @@ using Models.Fabriques.FabriqueUnite;
 using Models.Map;
 using Models.Player;
 using Models.Units;
-using ModelsAPI.ClassMetier.Units;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using IUnit = Models.Units.IUnit;
 
 namespace JurassicRisk.ViewsModels
 {

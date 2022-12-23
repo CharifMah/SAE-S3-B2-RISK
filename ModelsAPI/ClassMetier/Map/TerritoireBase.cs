@@ -7,7 +7,6 @@ namespace ModelsAPI.ClassMetier.Map
     /// <summary>
     /// Classe générique des territoires
     /// </summary>
-
     public class TerritoireBase : ITerritoireBase
     {
         #region Attributes

@@ -15,9 +15,9 @@ namespace Models.Map
     {
         #region Attributes
         [DataMember]
-        private Dictionary<string, Continent> _dicoContinents;
+        private Dictionary<string, IContinent> _dicoContinents;
 
-        private TerritoireBase? _selectedTerritoire;
+        private ITerritoireBase? _selectedTerritoire;
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace Models.Map
         ///// <summary>
         ///// Dictionary des Continents
         ///// </summary>
-        public Dictionary<string, Continent> DicoContinents
+        public Dictionary<string, IContinent> DicoContinents
         {
             get { return _dicoContinents; }
             set { _dicoContinents = value; }
@@ -34,7 +34,7 @@ namespace Models.Map
         /// <summary>
         /// Le Territoire Selectionne par le joueur
         /// </summary>
-        public TerritoireBase? SelectedTerritoire
+        public ITerritoireBase? SelectedTerritoire
         {
             get => _selectedTerritoire;
             set => _selectedTerritoire = value;
@@ -61,7 +61,7 @@ namespace Models.Map
 
         #endregion
 
-        public Carte(Dictionary<string, Continent> DicoContinents, TerritoireBase? SelectedTerritoire)
+        public Carte(Dictionary<string, IContinent> DicoContinents, ITerritoireBase? SelectedTerritoire = null)
         {
             this._dicoContinents = DicoContinents;
             this._selectedTerritoire = SelectedTerritoire;
