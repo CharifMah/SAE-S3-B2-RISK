@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ModelsAPI.ClassMetier.Units
+﻿namespace ModelsAPI.ClassMetier.Units
 {
     public class Brachiosaurus : UniteBase
     {
-        public Brachiosaurus()
+        public Brachiosaurus(int id, Elements element = Elements.EAU) : base(id, element)
         {
+            this.id = id;
+            this.element= element;
             name = "Brachiosaurus";
             description = "this is a Brachiosaurus";
+
         }
     }
 }

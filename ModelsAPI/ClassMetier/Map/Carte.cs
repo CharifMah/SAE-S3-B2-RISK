@@ -18,51 +18,49 @@ namespace ModelsAPI.ClassMetier.Map
         #endregion
 
         #region Property
-
-        [JsonConverter(typeof(DictionnaryContinentConverter))]
+        /// <summary>
+        /// Dictionary des Continents
+        /// </summary>
         public Dictionary<int, IContinent> DicoContinents
         {
             get { return _dicoContinents; }
             set { _dicoContinents = value; }
         }
 
-        [JsonConverter(typeof(InterfaceConverter<TerritoireBase>))]
+        /// <summary>
+        /// Le Territoire Selectionne par le joueur
+        /// </summary>
         public ITerritoireBase? SelectedTerritoire
         {
             get => _selectedTerritoire;
             set => _selectedTerritoire = value;
         }
 
-        public int NombreTerritoireOccupe { get => GetNombreTerritoireOccupe(); }
+        public int GetNombreTerritoireOccupe
+        {
+            get
+            {
+                int res = 0;
+                foreach (Continent continent in _dicoContinents.Values)
+                {
+                    foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                    {
+                        if (territoire.Team == Teams.NEUTRE)
+                        {
+                            res++;
+                        }
+                    }
+                }
+                return res;
+            }
+        }
 
         #endregion
 
-        public Carte(Dictionary<int, IContinent> _dicoContinents = null, ITerritoireBase _selectedTerritoire = null)
+        public Carte(Dictionary<int, IContinent> DicoContinents, ITerritoireBase? SelectedTerritoire)
         {
-            this._dicoContinents = _dicoContinents;
-            this._selectedTerritoire = _selectedTerritoire;
-        }
-
-        [JsonConstructor]
-        public Carte()
-        {
-
-        }
-
-        public int GetNombreTerritoireOccupe()
-        {
-            int res = 0;
-            foreach (Continent continent in _dicoContinents.Values)
-            {
-                foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
-                {
-                    if (territoire.Team == Teams.NEUTRE)
-                    {
-                        res++;
-                    }
-                }
-            }
-            return res;
+            this._dicoContinents = DicoContinents;
+            this._selectedTerritoire = SelectedTerritoire;
         }
     }
 }

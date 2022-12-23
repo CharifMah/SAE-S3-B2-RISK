@@ -1,5 +1,4 @@
 ﻿using ModelsAPI.ClassMetier.Units;
-using System.Text.Json.Serialization;
 
 namespace ModelsAPI.ClassMetier.Map
 {
@@ -10,48 +9,41 @@ namespace ModelsAPI.ClassMetier.Map
     public class TerritoireBase : ITerritoireBase
     {
         protected Teams _teams;
-        protected List<IUnit>? units;
+        protected List<IUnit>? _units;
         protected int _id;
 
         public Teams Team { get => _teams; set => _teams = value; }
         public int ID { get => _id; set => _id = value; }
 
-        [JsonConverter(typeof(List<IUnit>))]
         public List<IUnit>? Units
         {
-            get => units;
-            set => units = value;
+            get => _units;
+            set => _units = value;
         }
 
         public TerritoireBase(int id)
         {
             _id = id;
             _teams = Teams.NEUTRE;
-            units = new List<IUnit>();
+            _units = new List<IUnit>();
         }
 
 
-        public TerritoireBase(List<IUnit> units, int ID)
+        public TerritoireBase(List<IUnit> Units, int ID, Teams Team = Teams.NEUTRE)
         {
-            _id = ID;
-            _teams = Teams.NEUTRE;
-            this.units = units;
+            this._id = ID;
+            this._teams = Team;
+            this._units = Units;
         }
 
         public void AddUnit(IUnit UniteBase)
         {
-            units.Add(UniteBase);
+            _units.Add(UniteBase);
         }
 
         public void RemoveUnit(IUnit UniteBase)
         {
-            units.Remove(UniteBase);
-        }
-
-        [JsonConstructor]
-        public TerritoireBase()
-        {
-
+            _units.Remove(UniteBase);
         }
     }
 }

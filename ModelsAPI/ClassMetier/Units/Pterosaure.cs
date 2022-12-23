@@ -8,8 +8,10 @@ namespace ModelsAPI.ClassMetier.Units
 {
     internal class Pterosaure : UniteBase
     {
-        public Pterosaure()
+        public Pterosaure(int id, Elements element = Elements.EAU) : base(id, element)
         {
+            this.id = id;
+            this.element = element;
             name = "Pterosaure";
             description = "this is a Pterosaure";
         }

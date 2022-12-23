@@ -28,11 +28,5 @@ namespace ModelsAPI.ClassMetier
             this.Pseudo = Pseudo;
             this.Password = Password;
         }
-
-        [JsonConstructor]
-        public Profil()
-        {
-        }
-
     }
 }

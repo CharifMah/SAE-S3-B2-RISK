@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ModelsAPI.ClassMetier.Units
+﻿namespace ModelsAPI.ClassMetier.Units
 {
     internal class Baryonyx : UniteBase
     {
-        public Baryonyx()
+        public Baryonyx(int id, Elements element = Elements.EAU) : base(id, element)
         {
-            name = "Baryonyx";
+            this.id = id; 
+            this.element = element; 
+            name = "Baryonyx"; 
             description = "this is a Baryonyx";
         }
     }

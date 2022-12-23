@@ -5,7 +5,7 @@ namespace ModelsAPI.ClassMetier.Units
 {
     public class UniteBase : IUnit
     {
-        private Elements element;
+        protected Elements element;
         protected int id;
         protected string name;
         protected string description;
@@ -15,11 +15,10 @@ namespace ModelsAPI.ClassMetier.Units
         public int Id { get => id; }
         public Elements Element { get => element; set => element = value; }
 
-        [JsonConstructor]
-        public UniteBase()
+        public UniteBase(int id, Elements element = Elements.EAU)
         {
-            Element = Elements.EAU;
-            id = 0;
+            this.element = element;
+            this.id = id;
             name = "ExempleUnite";
             description = "Description d'une unite";
         }

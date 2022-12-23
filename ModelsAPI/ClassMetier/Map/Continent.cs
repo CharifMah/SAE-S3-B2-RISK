@@ -17,19 +17,9 @@ namespace ModelsAPI.ClassMetier.Map
             set { _dicoTerritoires = value; }
         }
 
-        public Continent(List<ITerritoireBase> DicoTerritoires)
+        public Continent(Dictionary<int, ITerritoireBase> _dicoTerritoires)
         {
-            _dicoTerritoires = new Dictionary<int, ITerritoireBase>();
-            for (int i = 0; i < DicoTerritoires.Count; i++)
-            {
-                _dicoTerritoires.Add(i, DicoTerritoires[i]);
-            }
-        }
-
-        [JsonConstructor]
-        public Continent()
-        {
-
+            this._dicoTerritoires = _dicoTerritoires;       
         }
     }
 }
