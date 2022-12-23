@@ -16,14 +16,14 @@ namespace Models.Map
     public class Carte
     {
         #region Attributes
-        [DataMember]
-        private Dictionary<string, IContinent> _dicoContinents;
 
+        private Dictionary<string, IContinent> _dicoContinents;
         private ITerritoireBase? _selectedTerritoire;
 
         #endregion
 
         #region Property
+        [DataMember]
         ///// <summary>
         ///// Dictionary des Continents
         ///// </summary>
@@ -32,7 +32,7 @@ namespace Models.Map
             get { return _dicoContinents; }
             set { _dicoContinents = value; }
         }
-
+        [DataMember]
         /// <summary>
         /// Le Territoire Selectionne par le joueur
         /// </summary>

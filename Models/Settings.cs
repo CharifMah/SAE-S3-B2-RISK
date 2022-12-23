@@ -1,4 +1,5 @@
 ﻿using Models.Son;
+using Newtonsoft.Json;
 using Stockage;
 using System.Runtime.Serialization;
 using System.Windows.Controls;
@@ -119,8 +120,7 @@ namespace Models
         {
             _availableCulture = new List<string>() { "fr-FR", "en-US" };
             _pleinEcran = false;
-            _culturename = Thread.CurrentThread.CurrentCulture.Name;
-            LoadSettings();       
+            _culturename = Thread.CurrentThread.CurrentCulture.Name;     
         }
 
         #endregion
@@ -131,18 +131,18 @@ namespace Models
             _saveSettings.Sauver(this,"Settings");
         }
 
-        private void LoadSettings()
+        public void LoadSettings()
         {
             _loadSettings = new ChargerCollection(Environment.CurrentDirectory);
-            Settings instance = _loadSettings.Charger<Settings>("Settings");
-            if (instance != null)
+            _instance = _loadSettings.Charger<Settings>("Settings");
+            if (_instance != null)
             {
-                this._culturename = instance._culturename;
-                this._pleinEcran = instance._pleinEcran;
+                this._culturename = _instance._culturename;
+                this._pleinEcran = _instance._pleinEcran;
                        
-                this._musique = instance._musique;
-                this._backgroundMusic = instance._backgroundMusic;
-                this._musicVolume = instance._musicVolume;
+                this._musique = _instance._musique;
+                this._backgroundMusic = _instance._backgroundMusic;
+                this._musicVolume = _instance._musicVolume;
             }
 
             

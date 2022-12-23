@@ -1,5 +1,5 @@
 ﻿
-using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
 
 namespace Stockage
 {
@@ -15,13 +15,13 @@ namespace Stockage
         {
             this._path = path;
         }
-
+        private static readonly JsonSerializerSettings _options = new() { TypeNameHandling = TypeNameHandling.Auto, NullValueHandling = NullValueHandling.Ignore };
         /// <summary>
         /// Crée un fichier Json avec les Settings
         /// </summary>
         /// <param name="T">data a sauvgarde</param>
         /// <Author>Charif</Author>
-        public void Sauver<T>(T data,string FileName)
+        public void Sauver<T>(T data, string FileName)
         {
             if (Directory.Exists(_path))
             {
@@ -29,11 +29,9 @@ namespace Stockage
                 {
                     File.Delete(Path.Combine(_path, $"{FileName}.json"));
                 }
-                using (FileStream stream = File.OpenWrite(Path.Combine(_path,  $"{FileName}.json")))
-                {
-                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
-                    ser.WriteObject(stream, data);
-                }
+
+                var jsonString = JsonConvert.SerializeObject(data, _options);
+                File.WriteAllText(Path.Combine(_path, $"{FileName}.json"), jsonString);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 
@@ -18,6 +19,8 @@ namespace Stockage
             this._path = path;
         }
 
+        private static readonly JsonSerializerSettings _options = new() { TypeNameHandling = TypeNameHandling.Auto, NullValueHandling = NullValueHandling.Ignore };
+
         /// <summary>
         /// Charger un fichier
         /// </summary>
@@ -27,14 +30,15 @@ namespace Stockage
         /// <Author>Charif</Author>
         public T Charger<T>(string FileName)
         {
+
+
             T d2 = default;
             if (File.Exists(Path.Combine(_path, $"{FileName}.json")))
             {
-                using (FileStream stream = File.OpenRead(Path.Combine(_path, $"{FileName}.json")))
-                {
-                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
-                    d2 = (T?)ser.ReadObject(stream);
-                }
+                string path = Path.Combine(_path, $"{FileName}.json");
+
+                // read file into a string and deserialize JSON to a type
+                d2 = JsonConvert.DeserializeObject<T>(File.ReadAllText(path), _options);
 
             }
             return d2;

@@ -19,6 +19,7 @@ using Carte = Models.Map.Carte;
 using Continent = Models.Map.Continent;
 using IUnit = Models.Units.IUnit;
 using TerritoireBase = Models.Map.TerritoireBase;
+using TerritoireDecorator = Models.Map.TerritoireDecorator;
 
 namespace JurassicRisk.ViewsModels
 {

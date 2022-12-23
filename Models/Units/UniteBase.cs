@@ -11,9 +11,13 @@ namespace Models.Units
     [DataContract]
     public class UniteBase : IUnit
     {
+        [DataMember]
         private Elements element;
+        [DataMember]
         protected int id;
+        [DataMember]
         protected string name;
+        [DataMember]
         protected string description;
 
         public string Name { get => name; }

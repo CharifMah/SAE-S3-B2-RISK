@@ -14,11 +14,14 @@ namespace ModelsAPI.Converters
             var collection = new TDictionary();
             var items = serializer.Deserialize<Dictionary<TKey, TItem>>(reader);
 
-            foreach (var item in items)
+            if (items != null)
             {
-                collection.Add(item.Key,item.Value);
+                foreach (var item in items)
+                {
+                    collection.Add(item.Key, item.Value);
+                }
             }
-
+       
             return collection;
         }
 

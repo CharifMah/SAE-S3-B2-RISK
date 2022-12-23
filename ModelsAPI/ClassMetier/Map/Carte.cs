@@ -13,7 +13,7 @@ namespace ModelsAPI.ClassMetier.Map
 
         private Dictionary<string, IContinent> _dicoContinents;
 
-        private ITerritoireBase? _selectedTerritoire;
+        private TerritoireDecorator? _selectedTerritoire;
 
         #endregion
 
@@ -31,8 +31,7 @@ namespace ModelsAPI.ClassMetier.Map
         /// <summary>
         /// Le Territoire Selectionne par le joueur
         /// </summary>
-        [JsonConverter(typeof(ConcreteConverter<ITerritoireBase,TerritoireBase>))]
-        public ITerritoireBase? SelectedTerritoire
+        public TerritoireDecorator? SelectedTerritoire
         {
             get => _selectedTerritoire;
             set => _selectedTerritoire = value;
@@ -59,7 +58,7 @@ namespace ModelsAPI.ClassMetier.Map
 
         #endregion
 
-        public Carte(Dictionary<string, IContinent> DicoContinents,ITerritoireBase? SelectedTerritoire)
+        public Carte(Dictionary<string, IContinent> DicoContinents, TerritoireDecorator? SelectedTerritoire)
         {
             this._dicoContinents = DicoContinents;
             this._selectedTerritoire = SelectedTerritoire;

@@ -14,6 +14,7 @@ namespace JurassicRisk.Views
         public MainWindow()
         {
             SoundStore.LoadSounds("Sounds");
+            Settings.Get().LoadSettings();
             Settings.Get().Backgroundmusic = SoundStore.Get("JungleMusic.mp3");
             Settings.Get().Backgroundmusic.Play();
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
