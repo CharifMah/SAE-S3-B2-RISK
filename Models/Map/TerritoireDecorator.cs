@@ -1,4 +1,6 @@
 ﻿using Models.Units;
+using ModelsAPI.Converters;
+using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
 namespace Models.Map
@@ -14,27 +16,27 @@ namespace Models.Map
         protected int _y;
         private int width;
         private int height;
-        protected string _UriSource;
+        protected string uriSource;
         #endregion
 
         #region Property
         [DataMember]
         public TerritoireBase TerritoireBase { get { return _territoire; } set => _territoire = value; }
         [DataMember]
-        public int x
+        public int X
         {
             get { return _x; }
             set { _x = value; }
         }
         [DataMember]
-        public int y
+        public int Y
         {
             get { return this._y; }
             set => this._y = value;
         }
 
         [DataMember]
-        public string UriSource { get => this._UriSource; set => this._UriSource = value; }
+        public string UriSource { get => this.uriSource; set => this.uriSource = value; }
         [DataMember]
         public int Width { get => width; set => width = value; }
         [DataMember]
@@ -42,16 +44,17 @@ namespace Models.Map
 
         public int ID { get => _territoire.ID; set => _territoire.ID = value; }
         public Teams Team { get => _territoire.Team; set => _territoire.Team = value; }
+        [JsonConverter(typeof(ConcreteCollectionTypeConverter<List<IUnit>, UniteBase, IUnit>))]
         public List<IUnit> Units { get => _territoire.Units; set => _territoire.Units = value; }
 
         #endregion
 
-        public TerritoireDecorator(TerritoireBase TerritoireBase, int x, int y, int Width, int Height, string UriSource)
+        public TerritoireDecorator(TerritoireBase TerritoireBase, int X, int Y, int Width, int Height, string UriSource)
         {
             this._territoire = TerritoireBase;
-            _x = x;
-            _y = y;
-            _UriSource = UriSource;
+            this._x = X;
+            this._y = Y;
+            this.uriSource = UriSource;
             this.Width = Width;
             this.Height = Height;
             if (TerritoireBase.Team != this.Team)
@@ -61,9 +64,14 @@ namespace Models.Map
 
         }
 
+        public TerritoireDecorator()
+        {
+
+        }
+
         public override string? ToString()
         {
-            return $"{x},{y}";
+            return $"{_x},{_y}";
         }
 
         public void AddUnit(IUnit UniteBase)

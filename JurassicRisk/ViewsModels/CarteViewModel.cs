@@ -96,9 +96,9 @@ namespace JurassicRisk.ViewsModels
             try
             {
                 JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Clear();
-                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json-patch+json"));
 
-                HttpResponseMessage reponse = await JurasicRiskGame.Get.Client.PostAsJsonAsync<Carte>($"https://{JurasicRiskGame.Get.Ip}/Carte/SetCarte", carte);
+                HttpResponseMessage reponse = await JurasicRiskGame.Get.Client.PostAsJsonAsync($"https://{JurasicRiskGame.Get.Ip}/Carte/SetCarte", carte);
 
                 if (reponse.IsSuccessStatusCode)
                 {
@@ -132,8 +132,8 @@ namespace JurassicRisk.ViewsModels
             myCanvas.Background = myImageBrush;
             myCanvas.Height = territoire.Width;
             myCanvas.Width = territoire.Height;
-            Canvas.SetLeft(myCanvas, territoire.x);
-            Canvas.SetTop(myCanvas, territoire.y);
+            Canvas.SetLeft(myCanvas, territoire.X);
+            Canvas.SetTop(myCanvas, territoire.Y);
             myCanvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
             ToolTipService.SetInitialShowDelay(myCanvas, 0);

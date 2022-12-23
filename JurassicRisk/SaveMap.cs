@@ -64,7 +64,7 @@ namespace JurassicRisk
             }
 
 
-            return new Carte(dic);
+            return new Carte(dic,null);
         }
 
         /// <summary>

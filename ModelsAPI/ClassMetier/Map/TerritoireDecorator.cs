@@ -19,14 +19,23 @@ namespace ModelsAPI.ClassMetier.Map
 
         private int height;
 
-        protected string _UriSource;
+        protected string uriSource;
         #endregion
 
         #region Property
         public TerritoireBase TerritoireBase { get { return _territoire; } set => _territoire = value; }
-        public int x => _x;
-        public int y => _y;
-        public string UriSource { get => _UriSource; set => _UriSource = value; }
+
+        public int X
+        {
+            get { return _x; }
+            set { _x = value; }
+        }
+        public int Y
+        {
+            get { return this._y; }
+            set => this._y = value;
+        }
+        public string UriSource { get => uriSource; set => uriSource = value; }
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
         public int ID { get => _territoire.ID; set => _territoire.ID = value; }
@@ -36,12 +45,12 @@ namespace ModelsAPI.ClassMetier.Map
         #endregion
 
         #region Constructor
-        public TerritoireDecorator(TerritoireBase TerritoireBase, int x, int y, int Width, int Height, string UriSource)
+        public TerritoireDecorator(TerritoireBase TerritoireBase, int X, int Y, int Width, int Height, string UriSource)
         {
             _territoire = TerritoireBase;
-            _x = x;
-            _y = y;
-            _UriSource = UriSource;
+            _x = X;
+            _y = Y;
+            uriSource = UriSource;
             this.Width = Width;
             this.Height = Height;
             if (TerritoireBase.Team != Team)
@@ -60,7 +69,7 @@ namespace ModelsAPI.ClassMetier.Map
 
         public override string? ToString()
         {
-            return $"{x},{y}";
+            return $"{_x},{_y}";
         }
 
         public void AddUnit(IUnit UniteBase)

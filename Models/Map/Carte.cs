@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ModelsAPI.Converters;
+using Newtonsoft.Json;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models.Map
 {
@@ -27,15 +24,18 @@ namespace Models.Map
         ///// <summary>
         ///// Dictionary des Continents
         ///// </summary>
+        [JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, IContinent>, Continent, string, IContinent>))]
         public Dictionary<string, IContinent> DicoContinents
         {
             get { return _dicoContinents; }
             set { _dicoContinents = value; }
         }
+
         [DataMember]
         /// <summary>
         /// Le Territoire Selectionne par le joueur
         /// </summary>
+        [JsonConverter(typeof(ConcreteConverter<ITerritoireBase?, TerritoireDecorator>))]
         public ITerritoireBase? SelectedTerritoire
         {
             get => _selectedTerritoire;
@@ -49,7 +49,7 @@ namespace Models.Map
                 int res = 0;
                 foreach (Continent continent in _dicoContinents.Values)
                 {
-                    foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                    foreach (ITerritoireBase? territoire in continent.DicoTerritoires.Values)
                     {
                         if (territoire.Team == Teams.NEUTRE)
                         {
@@ -63,7 +63,7 @@ namespace Models.Map
 
         #endregion
 
-        public Carte(Dictionary<string, IContinent> DicoContinents, ITerritoireBase? SelectedTerritoire = null)
+        public Carte(Dictionary<string, IContinent> DicoContinents, ITerritoireBase? SelectedTerritoire)
         {
             this._dicoContinents = DicoContinents;
             this._selectedTerritoire = SelectedTerritoire;
