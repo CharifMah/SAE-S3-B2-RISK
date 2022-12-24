@@ -41,10 +41,18 @@ namespace DBStorage.DAO
             try
             {
                 string jsonCarte = JsonSerializer.Serialize(carte);
-                MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
+                MySqlCommand cmd = new MySqlCommand("use risk; DELETE FROM carte;", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand($"insert into carte (`Values`,`Keys`) values ('{carte.DicoContinents.Count}','{carte.DicoContinents.Keys.Count}')", GestionDatabase.GetInstance().Conn);
-                cmd.ExecuteNonQuery();
+                foreach (IContinent contient in carte.DicoContinents.Values)
+                {
+
+                    foreach (var territoires in contient.DicoTerritoires.Values)
+                    {
+                        cmd = new MySqlCommand($"insert into carte (`Values`,`Keys`) values ('{territoires.Team}','{territoires.UriSource}')", GestionDatabase.GetInstance().Conn);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+               
                 Console.WriteLine("carte " + jsonCarte + " creer");
             }
             catch (Exception x)
