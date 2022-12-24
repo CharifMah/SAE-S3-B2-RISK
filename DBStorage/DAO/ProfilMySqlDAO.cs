@@ -42,10 +42,6 @@ namespace DBStorage.DAO
             {
                 Console.WriteLine("An error occured: {0}", x.Message);
             }
-            finally
-            {
-                GestionDatabase.GetInstance().Disconnect();
-            }
             return res;
 
         }
@@ -77,10 +73,6 @@ namespace DBStorage.DAO
             {
                 Console.WriteLine("An error occured: {0}", x.Message);
             }
-            finally
-            {
-                GestionDatabase.GetInstance().Disconnect();
-            }
             return res;
 
         }
@@ -102,10 +94,6 @@ namespace DBStorage.DAO
             catch (Exception x)
             {
                 Console.WriteLine("an error occured: {0}", x.Message);
-            }
-            finally
-            {
-                GestionDatabase.GetInstance().Disconnect();
             }
         }
 
@@ -138,7 +126,6 @@ namespace DBStorage.DAO
             {
                 Console.WriteLine(e.Message);
             }
-            GestionDatabase.GetInstance().Disconnect();
             return res;
         }
 

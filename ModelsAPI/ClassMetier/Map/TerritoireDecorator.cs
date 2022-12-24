@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ModelsAPI.ClassMetier.Map
 {
-    public class TerritoireDecorator : ITerritoireBase
+    public class TerritoireDecorator : TerritoireBase
     {
 
         #region Attributes
@@ -38,10 +38,7 @@ namespace ModelsAPI.ClassMetier.Map
         public string UriSource { get => uriSource; set => uriSource = value; }
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
-        public int ID { get => _territoire.ID; set => _territoire.ID = value; }
-        public Teams Team { get => _territoire.Team; set => _territoire.Team = value; }
-        [JsonConverter(typeof(ConcreteCollectionTypeConverter<List<IUnit>, UniteBase, IUnit>))]
-        public List<IUnit> Units { get => _territoire.Units; set => _territoire.Units = value; }
+
         #endregion
 
         #region Constructor
@@ -53,9 +50,9 @@ namespace ModelsAPI.ClassMetier.Map
             uriSource = UriSource;
             this.Width = Width;
             this.Height = Height;
-            if (TerritoireBase.Team != Team)
+            if (TerritoireBase.Team != this.Team)
             {
-                throw new Exception();
+                TerritoireBase.Team = this.Team;
             }
 
         }
@@ -66,20 +63,5 @@ namespace ModelsAPI.ClassMetier.Map
         }
 
         #endregion
-
-        public override string? ToString()
-        {
-            return $"{_x},{_y}";
-        }
-
-        public void AddUnit(IUnit UniteBase)
-        {
-            _territoire.AddUnit(UniteBase);
-        }
-
-        public void RemoveUnit(IUnit UniteBase)
-        {
-            _territoire.RemoveUnit(UniteBase);
-        }
     }
 }

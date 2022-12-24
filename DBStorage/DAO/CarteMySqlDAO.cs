@@ -33,10 +33,6 @@ namespace DBStorage.DAO
             {
                 Console.WriteLine("An error occured: {0}", x.Message);
             }
-            finally
-            {
-                GestionDatabase.GetInstance().Disconnect();
-            }
             return res;
         }
 
@@ -45,10 +41,9 @@ namespace DBStorage.DAO
             try
             {
                 string jsonCarte = JsonSerializer.Serialize(carte);
-
                 MySqlCommand cmd = new MySqlCommand("use risk;", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand("insert into carte (carte) values (\"" + jsonCarte + "\");", GestionDatabase.GetInstance().Conn);
+                cmd = new MySqlCommand($"insert into carte (`Values`,`Keys`) values ('{carte.DicoContinents.Count}','{carte.DicoContinents.Keys.Count}')", GestionDatabase.GetInstance().Conn);
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("carte " + jsonCarte + " creer");
             }
@@ -56,11 +51,6 @@ namespace DBStorage.DAO
             {
                 Console.WriteLine("an error occured: {0}", x.Message);
             }
-            finally
-            {
-                GestionDatabase.GetInstance().Disconnect();
-            }
-
         }
 
         public void Update(Carte carte)

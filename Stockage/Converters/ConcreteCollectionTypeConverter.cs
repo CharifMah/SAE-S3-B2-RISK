@@ -13,11 +13,14 @@ namespace ModelsAPI.Converters
         {
             var collection = new TCollection();
             var items = serializer.Deserialize<IEnumerable<TItem>>(reader);
-
-            foreach (var item in items)
+            if (items != null)
             {
-                collection.Add(item);
+                foreach (var item in items)
+                {
+                    collection.Add(item);
+                }
             }
+           
 
             return collection;
         }

@@ -47,15 +47,6 @@ namespace DBStorage.Mysql
         }
 
         /// <summary>
-        /// disconnect from database
-        /// </summary>
-        public void Disconnect()
-        {
-            conn.Close();
-            Instance = null;
-        }
-
-        /// <summary>
         /// Créer la base de donnée du jeu si il elle n'existe pas
         /// </summary>
         /// <author>Brian VERCHERE,Charif Mahmoud</author>

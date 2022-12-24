@@ -8,7 +8,7 @@ namespace Models.Map
 
     [DataContract]
     [KnownType(typeof(TerritoireDecorator))]
-    public class TerritoireDecorator : ITerritoireBase
+    public class TerritoireDecorator : TerritoireBase
     {
         #region Attributes
         private TerritoireBase _territoire;
@@ -42,11 +42,6 @@ namespace Models.Map
         [DataMember]
         public int Height { get => height; set => height = value; }
 
-        public int ID { get => _territoire.ID; set => _territoire.ID = value; }
-        public Teams Team { get => _territoire.Team; set => _territoire.Team = value; }
-        [JsonConverter(typeof(ConcreteCollectionTypeConverter<List<IUnit>, UniteBase, IUnit>))]
-        public List<IUnit> Units { get => _territoire.Units; set => _territoire.Units = value; }
-
         #endregion
 
         public TerritoireDecorator(TerritoireBase TerritoireBase, int X, int Y, int Width, int Height, string UriSource)
@@ -59,7 +54,7 @@ namespace Models.Map
             this.Height = Height;
             if (TerritoireBase.Team != this.Team)
             {
-                throw new Exception();
+                TerritoireBase.Team = this.Team;
             }
 
         }
@@ -67,21 +62,6 @@ namespace Models.Map
         public TerritoireDecorator()
         {
 
-        }
-
-        public override string? ToString()
-        {
-            return $"{_x},{_y}";
-        }
-
-        public void AddUnit(IUnit UniteBase)
-        {
-            _territoire.AddUnit(UniteBase);
-        }
-
-        public void RemoveUnit(IUnit UniteBase)
-        {
-            _territoire.RemoveUnit(UniteBase);
         }
     }
 }

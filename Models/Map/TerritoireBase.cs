@@ -14,7 +14,7 @@ namespace Models.Map
 
         protected Teams _teams;
 
-        protected List<IUnit> units;
+        protected List<IUnit> _units;
 
         protected int _id;
         #endregion
@@ -27,8 +27,8 @@ namespace Models.Map
         [DataMember]
         public List<IUnit> Units
         {
-            get => this.units;
-            set => this.units = value;
+            get => this._units;
+            set => this._units = value;
         }
 
         #endregion
@@ -38,29 +38,33 @@ namespace Models.Map
         {
             this._id = id;
             this._teams = Teams.NEUTRE;
-            this.units = new List<IUnit>();
+            this._units = new List<IUnit>();
         }
 
         public TerritoireBase(int ID, List<IUnit> Units, Teams Team = Teams.NEUTRE)
         {
             this._id = ID;
             this._teams = Team;
-            this.units = Units;
+            if (Units == null)
+                this._units = new List<IUnit>();
+            else
+                this._units = Units;
+
         }
 
         public TerritoireBase()
         {
-
+            this._units = new List<IUnit>();
         }
 
         public void AddUnit(IUnit UniteBase)
         {
-            this.units.Add(UniteBase);
+            this._units.Add(UniteBase);
         }
 
         public void RemoveUnit(IUnit UniteBase)
         {
-            this.units.Remove(UniteBase);
+            this._units.Remove(UniteBase);
         }
     }
 }

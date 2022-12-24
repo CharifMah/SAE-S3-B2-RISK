@@ -41,12 +41,15 @@ namespace ModelsAPI.ClassMetier.Map
         {
             this._id = ID;
             this._teams = Team;
-            this._units = Units;
+            if (Units == null)
+                this._units = new List<IUnit>();
+            else
+                this._units = Units;
         }
 
         public TerritoireBase()
         {
-
+            this._units = new List<IUnit>();
         }
         #endregion
 
