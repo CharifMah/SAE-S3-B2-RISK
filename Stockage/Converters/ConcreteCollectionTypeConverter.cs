@@ -21,7 +21,6 @@ namespace ModelsAPI.Converters
                 }
             }
            
-
             return collection;
         }
 
