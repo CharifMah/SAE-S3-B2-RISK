@@ -5,6 +5,11 @@ using ModelsAPI.ClassMetier;
 using Redis.OM.Searching;
 using Redis.OM;
 using System;
+using NReJSON;
+using RISKAPI.Services;
+using Microsoft.Extensions.Caching.Distributed;
+using StackExchange.Redis;
+using Newtonsoft.Json;
 
 namespace RISKAPI.Controllers
 {
@@ -12,12 +17,14 @@ namespace RISKAPI.Controllers
     [Route("Users")]
     public class UsersController : ControllerBase
     {
+        private readonly IDistributedCache _cache;
         private readonly RedisCollection<Profil> _people;
         private readonly RedisConnectionProvider _provider;
-        public UsersController(RedisConnectionProvider provider)
+        public UsersController(RedisConnectionProvider provider, IDistributedCache cache)
         {
             _provider = provider;
             _people = (RedisCollection<Profil>)provider.RedisCollection<Profil>();
+            _cache = cache;
         }
 
         /// <summary>
@@ -30,9 +37,10 @@ namespace RISKAPI.Controllers
         {
             IActionResult reponse = null;
             try
-            {       
+            {   
+                string key = $"Profil:{profil.Pseudo}";
                 reponse = new AcceptedResult();
-                if (_provider.Connection.Get($"Profil:{profil.Id}"))
+                if (!RedisConnectorHelper.Connection.GetDatabase(0).KeyExists(key))
                 {
                     if (profil.Password.Length > 4)
                     {
@@ -64,32 +72,32 @@ namespace RISKAPI.Controllers
         /// <param name="profil">user a recuperer</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("connexion")]
-        public IActionResult connexion(Profil profil)
+        public async Task<IActionResult> connexion(Profil profil)
         {
             IActionResult reponse = null;
             try
             {
-                Profil profilDemande = null;
-                //ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
-                //int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
-                //if (Id != 0)
-                //{
-                //    string[] properties = profilDAO.FindByIdProfil(Id).Split(',');
-                //    profilDemande = new Profil(properties[1], properties[2]);
-                //    PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
-                //    if (passwordHasher.VerifyHashedPassword(profilDemande, profilDemande.Password, profil.Password) != 0)
-                //    {
-                //        reponse = new JsonResult(profilDemande);
-                //    }
-                //    else
-                //    {
-                //        reponse = new BadRequestObjectResult("wrong password");
-                //    }
-                //}
-                //else
-                //{
-                //    reponse = new BadRequestObjectResult("this account do not exist try to register or use an ather pseudo");
-                //}
+                string key = $"Profil:{profil.Pseudo}";
+                string[] parms = { "." };
+
+                RedisResult result = await RedisConnectorHelper.Connection.GetDatabase(0).JsonGetAsync(key, parms);
+                if (!result.IsNull)
+                {
+                    Profil profilDemander = JsonConvert.DeserializeObject<Profil>(result.ToString());
+                    PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
+                    if (passwordHasher.VerifyHashedPassword(profilDemander, profilDemander.Password, profil.Password) != 0)
+                    {
+                        reponse = new JsonResult(profilDemander);
+                    }
+                    else
+                    {
+                        reponse = new BadRequestObjectResult("wrong password");
+                    }
+                }
+                else
+                {
+                    reponse = new BadRequestObjectResult("this account do not exist try to register or use an ather pseudo");
+                }
             }
             catch (Exception e)
             {

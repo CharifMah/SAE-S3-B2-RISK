@@ -1,3 +1,6 @@
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.Graph.ExternalConnectors;
 using Redis.OM;
 using RISKAPI.HostedServices;
 
@@ -18,6 +21,12 @@ namespace RISKAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton(new RedisConnectionProvider(builder.Configuration["REDIS_CONNECTION_STRING"]));
             builder.Services.AddHostedService<IndexCreationService>();
+            // Register the RedisCache service
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration["Redis"];
+            });
+            builder.Services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
             var app = builder.Build();
 
             //// Configure the HTTP request pipeline.

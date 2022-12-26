@@ -1,5 +1,4 @@
-﻿using Microsoft.Graph;
-using ModelsAPI.ClassMetier;
+﻿using ModelsAPI.ClassMetier;
 using Redis.OM;
 
 namespace RISKAPI.HostedServices

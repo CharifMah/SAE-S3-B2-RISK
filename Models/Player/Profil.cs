@@ -19,7 +19,6 @@ namespace Models.Player
             Password = password;
         }
 
-        public int Id { get; set; }
         public string Pseudo { get; set; }
         public string Password { get; set; }
     }

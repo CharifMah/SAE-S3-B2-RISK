@@ -7,15 +7,9 @@ namespace ModelsAPI.ClassMetier
     public class Profil
     {
         /// <summary>
-        /// id of the profil
-        /// </summary>
-        [RedisIdField]
-        [Indexed]
-        public string Id { get; set; }
-
-        /// <summary>
         /// pseudo of the profil
         /// </summary>
+        [RedisIdField]
         [Indexed]
         public string Pseudo { get; set; }
 
