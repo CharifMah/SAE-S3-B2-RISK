@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ModelsAPI.Converters
+namespace Stockage.Converters
 {
     public class ConcreteCollectionTypeConverter<TCollection, TItem, TBaseItem> : JsonConverter where TCollection : ICollection<TBaseItem>, new() where TItem : TBaseItem
     {
@@ -20,7 +20,7 @@ namespace ModelsAPI.Converters
                     collection.Add(item);
                 }
             }
-           
+
             return collection;
         }
 

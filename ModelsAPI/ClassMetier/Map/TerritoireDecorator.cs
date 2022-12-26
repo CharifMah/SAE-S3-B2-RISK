@@ -1,8 +1,4 @@
-﻿using ModelsAPI.ClassMetier.Units;
-using ModelsAPI.Converters;
-using Newtonsoft.Json;
-
-namespace ModelsAPI.ClassMetier.Map
+﻿namespace ModelsAPI.ClassMetier.Map
 {
     public class TerritoireDecorator : TerritoireBase
     {

@@ -1,10 +1,6 @@
 
 using Models;
 using Models.Fabriques.FabriqueUnite;
-using Models.Map;
-using Models.Units;
-using ModelsAPI.ClassMetier.Map;
-using ModelsAPI.ClassMetier.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
@@ -95,10 +91,10 @@ namespace JurassicRisk.ViewsModels
             string res = "Ok";
             try
             {
-                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Clear();
-                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json-patch+json"));
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json-patch+json"));
 
-                HttpResponseMessage reponse = await JurasicRiskGame.Get.Client.PostAsJsonAsync($"https://{JurasicRiskGame.Get.Ip}/Carte/SetCarte", carte);
+                HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.PostAsJsonAsync($"https://{JurasicRiskGameClient.Get.Ip}/Carte/SetCarte", carte);
 
                 if (reponse.IsSuccessStatusCode)
                 {

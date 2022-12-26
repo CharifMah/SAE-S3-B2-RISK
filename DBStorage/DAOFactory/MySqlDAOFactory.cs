@@ -30,7 +30,7 @@ namespace DBStorage.DAOFactory
             {
                 return new ProfilMySqlDAO();
             }
-            catch (IOException e)
+            catch
             {
                 return null;
             }

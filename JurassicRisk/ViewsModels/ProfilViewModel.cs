@@ -56,10 +56,10 @@ namespace JurassicRisk.ViewsModels
             string res = "Ok";
             try
             {
-                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Clear();
-                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _selectedProfil = null;
-                HttpResponseMessage reponse = await JurasicRiskGame.Get.Client.PostAsJsonAsync<Profil>($"https://{JurasicRiskGame.Get.Ip}/Users/connexion", profil);
+                HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.PostAsJsonAsync<Profil>($"https://{JurasicRiskGameClient.Get.Ip}/Users/connexion", profil);
                 if (reponse.IsSuccessStatusCode)
                 {
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -91,18 +91,18 @@ namespace JurassicRisk.ViewsModels
             string res = "Ok";
             try
             {
-                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Clear();
-                JurasicRiskGame.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _selectedProfil = null;
 
-                HttpResponseMessage reponse = await JurasicRiskGame.Get.Client.PostAsJsonAsync<Profil>($"https://{JurasicRiskGame.Get.Ip}/Users/Inscription", profil);
+                HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.PostAsJsonAsync<Profil>($"https://{JurasicRiskGameClient.Get.Ip}/Users/Inscription", profil);
                 if (!reponse.IsSuccessStatusCode)
                 {
                     res = reponse.Content.ReadAsStringAsync().Result;
                 }
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 res = e.Message;
             }
@@ -116,7 +116,7 @@ namespace JurassicRisk.ViewsModels
         public async Task<bool> VerifProfilCreation(string pseudo)
         {
             bool res = false;
-            HttpResponseMessage reponseMessage = await JurasicRiskGame.Get.Client.GetAsync($"https://{JurasicRiskGame.Get.Ip}/Users/verifUser?pseudo={pseudo}");
+            HttpResponseMessage reponseMessage = await JurasicRiskGameClient.Get.Client.GetAsync($"https://{JurasicRiskGameClient.Get.Ip}/Users/verifUser?pseudo={pseudo}");
             if (reponseMessage.IsSuccessStatusCode)
             {
                 res = await reponseMessage.Content.ReadAsAsync<bool>();

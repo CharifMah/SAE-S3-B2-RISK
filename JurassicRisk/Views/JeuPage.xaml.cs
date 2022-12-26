@@ -1,7 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
 using Models.Son;
-using Models.Units;
-using ModelsAPI.ClassMetier.Units;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -83,7 +81,7 @@ namespace JurassicRisk.Views
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             SoundStore.Get("DarkJungleMusic.mp3").Stop();
             SoundStore.Get("JungleMusic.mp3").Play(true);
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());

@@ -8,7 +8,6 @@ namespace Models.Son
         private MediaPlayer player;
         private bool loop;
         private bool playing;
-        private Sound backgroundMusic;
         public double Volume
         {
             get

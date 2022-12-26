@@ -1,8 +1,10 @@
-using DBStorage.DAO;
-using DBStorage.DAOFactory;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph;
 using ModelsAPI.ClassMetier;
+using Redis.OM.Searching;
+using Redis.OM;
+using System;
 
 namespace RISKAPI.Controllers
 {
@@ -10,6 +12,13 @@ namespace RISKAPI.Controllers
     [Route("Users")]
     public class UsersController : ControllerBase
     {
+        private readonly RedisCollection<Profil> _people;
+        private readonly RedisConnectionProvider _provider;
+        public UsersController(RedisConnectionProvider provider)
+        {
+            _provider = provider;
+            _people = (RedisCollection<Profil>)provider.RedisCollection<Profil>();
+        }
 
         /// <summary>
         /// envoi un profil pour que l'API l'ajoute a la BDD
@@ -17,20 +26,20 @@ namespace RISKAPI.Controllers
         /// <param name="profil">profil a rajouter a la BDD</param>
         /// <autor>Romain BARABANT</autor>
         [HttpPost("inscription")]
-        public IActionResult inscription(Profil profil)
+        public async Task<IActionResult> inscription(Profil profil)
         {
             IActionResult reponse = null;
             try
-            {
-                ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
+            {       
                 reponse = new AcceptedResult();
-                if (profilDAO.VerifUserCreation(profil) == false)
+                if (_provider.Connection.Get($"Profil:{profil.Id}"))
                 {
                     if (profil.Password.Length > 4)
                     {
                         PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
                         profil.Password = passwordHasher.HashPassword(profil, profil.Password);
-                        profilDAO.Insert(profil);
+                        await _people.InsertAsync(profil);
+
                     }
                     else
                     {
@@ -61,26 +70,26 @@ namespace RISKAPI.Controllers
             try
             {
                 Profil profilDemande = null;
-                ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
-                int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
-                if (Id != 0)
-                {
-                    string[] properties = profilDAO.FindByIdProfil(Id).Split(',');
-                    profilDemande = new Profil(properties[1], properties[2]);
-                    PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
-                    if (passwordHasher.VerifyHashedPassword(profilDemande, profilDemande.Password, profil.Password) != 0)
-                    {
-                        reponse = new JsonResult(profilDemande);
-                    }
-                    else
-                    {
-                        reponse = new BadRequestObjectResult("wrong password");
-                    }
-                }
-                else
-                {
-                    reponse = new BadRequestObjectResult("this account do not exist try to register or use an ather pseudo");
-                }
+                //ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
+                //int Id = profilDAO.FindIdByPseudoProfil(profil.Pseudo);
+                //if (Id != 0)
+                //{
+                //    string[] properties = profilDAO.FindByIdProfil(Id).Split(',');
+                //    profilDemande = new Profil(properties[1], properties[2]);
+                //    PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
+                //    if (passwordHasher.VerifyHashedPassword(profilDemande, profilDemande.Password, profil.Password) != 0)
+                //    {
+                //        reponse = new JsonResult(profilDemande);
+                //    }
+                //    else
+                //    {
+                //        reponse = new BadRequestObjectResult("wrong password");
+                //    }
+                //}
+                //else
+                //{
+                //    reponse = new BadRequestObjectResult("this account do not exist try to register or use an ather pseudo");
+                //}
             }
             catch (Exception e)
             {
@@ -100,18 +109,18 @@ namespace RISKAPI.Controllers
         public IActionResult verifUser(Profil profil)
         {
             IActionResult reponse = null;
-            ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
+            //ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
 
-            bool res = profilDAO.VerifUserCreation(profil);
+            //bool res = profilDAO.VerifUserCreation(profil);
 
-            if (res == null)
-            {
-                reponse = new BadRequestResult();
-            }
-            else
-            {
-                reponse = new JsonResult(res);
-            }
+            //if (res == null)
+            //{
+            //    reponse = new BadRequestResult();
+            //}
+            //else
+            //{
+            //    reponse = new JsonResult(res);
+            //}
 
             return reponse;
         }

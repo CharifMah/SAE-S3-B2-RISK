@@ -1,5 +1,5 @@
-﻿using ModelsAPI.Converters;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Stockage.Converters;
 using System.Runtime.Serialization;
 
 namespace Models.Map

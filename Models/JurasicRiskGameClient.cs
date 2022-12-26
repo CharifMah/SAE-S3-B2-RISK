@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class JurasicRiskGame 
+    public class JurasicRiskGameClient 
     {
         #region Attributes
         private HttpClient _client;
@@ -54,27 +54,28 @@ namespace Models
 
         #region Singleton
 
-        private static JurasicRiskGame _instance;
-        public static JurasicRiskGame Get
+        private static JurasicRiskGameClient? _instance;
+        public static JurasicRiskGameClient Get
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new JurasicRiskGame();
+                    _instance = new JurasicRiskGameClient();
                 }
                 return _instance;
             }
         }
 
-        #endregion
-
-
-        private JurasicRiskGame()
+        private JurasicRiskGameClient()
         {
             _ip = "localhost:7215";
             _client = new HttpClient();
         }
+        #endregion
+
+
+
 
         public async Task StartGame()
         {

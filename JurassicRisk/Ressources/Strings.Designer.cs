@@ -10,7 +10,6 @@
 
 namespace JurassicRisk.Ressource
 {
-    using Org.BouncyCastle.Bcpg.OpenPgp;
     using System;
 
 

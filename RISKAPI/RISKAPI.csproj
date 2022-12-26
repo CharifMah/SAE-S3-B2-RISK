@@ -20,12 +20,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Redis.OM" Version="0.4.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.86" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DBStorage\DBStorage.csproj" />
+    <ProjectReference Include="..\ModelsAPI\ModelsAPI.csproj" />
   </ItemGroup>
 
 </Project>

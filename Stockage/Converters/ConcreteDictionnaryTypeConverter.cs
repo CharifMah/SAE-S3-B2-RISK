@@ -2,16 +2,16 @@
 using Newtonsoft.Json.Linq;
 
 
-namespace ModelsAPI.Converters
+namespace Stockage.Converters
 {
-    public class ConcreteDictionnaryTypeConverter<TDictionary, TItem, TKey,TValue> : JsonConverter where TDictionary : IDictionary<TKey, TValue>, new() where TItem : TValue
+    public class ConcreteDictionnaryTypeConverter<TDictionary, TItem, TKey, TValue> : JsonConverter where TDictionary : IDictionary<TKey, TValue>, new() where TItem : TValue
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             serializer.Serialize(writer, value);
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             var collection = new TDictionary();
             var items = serializer.Deserialize<Dictionary<TKey, TItem>>(reader);
@@ -23,7 +23,7 @@ namespace ModelsAPI.Converters
                     collection.Add(item.Key, item.Value);
                 }
             }
-       
+
             return collection;
         }
 

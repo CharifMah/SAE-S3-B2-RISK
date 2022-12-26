@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace ModelsAPI.Converters
+namespace Stockage.Converters
 {
     /// <summary>
     /// This convert can be used on any interface definition to instruct the JSON
@@ -20,7 +20,7 @@ namespace ModelsAPI.Converters
         /// <returns>Returns true if this instance can convert the specified object type, false otherwise.</returns>
         public override bool CanConvert(Type objectType)
         {
-            return (objectType == typeof(TInterface));
+            return objectType == typeof(TInterface);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace ModelsAPI.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             object returnValue = null;
 
@@ -91,7 +91,7 @@ namespace ModelsAPI.Converters
         /// <param name="writer">The <see cref="JsonWriter"/> to write to.</param>
         /// <param name="value">The value.</param>
         /// <param name="serializer">The calling serializer.</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             serializer.Serialize(writer, value);
         }
