@@ -25,6 +25,7 @@ namespace Stockage
         {
             if (Directory.Exists(_path))
             {
+
                 if (File.Exists(Path.Combine(_path, $"{FileName}.json")))
                 {
                     File.Delete(Path.Combine(_path, $"{FileName}.json"));
