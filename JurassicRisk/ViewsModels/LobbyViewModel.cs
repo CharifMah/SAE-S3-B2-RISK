@@ -26,7 +26,7 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _lobby = new Lobby();
-           
+        
         }
 
         /// <summary>
@@ -44,6 +44,7 @@ namespace JurassicRisk.ViewsModels
             {
                 string lobbyJson = await reponse.Content.ReadAsStringAsync();
                 _lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
+                NotifyPropertyChanged("Lobby");
             }
         }
 
@@ -57,6 +58,7 @@ namespace JurassicRisk.ViewsModels
             string res = "Ok";
             try
             {
+
                 JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
                 JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -70,6 +72,7 @@ namespace JurassicRisk.ViewsModels
                     if (joined)
                     {
                         NotifyPropertyChanged("Lobby");
+                        RedisProvider.Instance.ManageSubscriber(RefreshLobby);
                     }
                     else
                     {

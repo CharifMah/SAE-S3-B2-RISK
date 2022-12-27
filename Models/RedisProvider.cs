@@ -1,13 +1,13 @@
 ﻿using StackExchange.Redis;
 using System.Net;
 
-namespace RISKAPI.Services
+namespace Models
 {
     public class RedisProvider
     {
 
         #region Attributes
-   
+
         private ConnectionMultiplexer redisClient;
         private IDatabase redisDatabase;
         private IServer currentServer;
@@ -39,14 +39,18 @@ namespace RISKAPI.Services
         }
         #endregion
 
-        public void ManageSubscriber(Action methode)
+        public void ManageSubscriber(Func<string,Task> methode)
         {
             redisPubSub = redisClient.GetSubscriber();
 
             redisPubSub.Subscribe("__keyevent@0__:json.set", (channel, message) =>
             {
-                methode();
+                if (message.StartsWith("Lobby"))
+                {
+                    message = message.ToString().Substring(message.ToString().LastIndexOf(':') + 1);
+                }
+                methode(message);
             });
-        }      
+        }
     }
 }
