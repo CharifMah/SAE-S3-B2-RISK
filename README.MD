@@ -82,7 +82,7 @@ redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/red
 ```
 or
 ```
-./redis-server /etc/redis/redis.conf
+sudo redis-server /etc/redis/redis.conf
 ```
 # Check if modules are loaded
 ```
