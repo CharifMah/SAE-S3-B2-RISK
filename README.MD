@@ -84,3 +84,6 @@ redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/red
 ```
 redis-cli info modules
 ```
+# excepted result 
+![image](https://user-images.githubusercontent.com/91829231/209672595-00118994-b348-4a04-a6ad-ad3aa1ce8d3f.png)
+
