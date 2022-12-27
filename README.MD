@@ -79,7 +79,9 @@ Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf
 # Start Redis
 ```
 redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/redis/modules/librejson.so
+```
 or
+```
 redis-server /etc/redis/redis.conf
 ```
 # Check if modules are loaded
