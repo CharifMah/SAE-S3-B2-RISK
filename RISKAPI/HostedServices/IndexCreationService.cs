@@ -1,5 +1,8 @@
 ﻿using ModelsAPI.ClassMetier;
+using ModelsAPI.ClassMetier.Map;
 using Redis.OM;
+using Redis.OM.Modeling;
+using RISKAPI.Services;
 
 namespace RISKAPI.HostedServices
 {
@@ -9,6 +12,7 @@ namespace RISKAPI.HostedServices
         public IndexCreationService(RedisConnectionProvider provider)
         {
             _provider = provider;
+            DocumentAttribute.RegisterIdGenerationStrategy(nameof(StaticIncrementStrategy), new StaticIncrementStrategy());
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -17,6 +21,7 @@ namespace RISKAPI.HostedServices
             cancellationToken.ThrowIfCancellationRequested();
 
             await _provider.Connection.CreateIndexAsync(typeof(Profil));
+            await _provider.Connection.CreateIndexAsync(typeof(Carte));
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

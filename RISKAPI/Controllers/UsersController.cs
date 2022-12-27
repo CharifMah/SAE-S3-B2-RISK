@@ -89,7 +89,7 @@ namespace RISKAPI.Controllers
                     PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
                     if (passwordHasher.VerifyHashedPassword(profilDemander, profilDemander.Password, profil.Password) != 0)
                     {
-                        reponse = new JsonResult("Connected");
+                        reponse = new JsonResult(profilDemander);
                     }
                     else
                     {

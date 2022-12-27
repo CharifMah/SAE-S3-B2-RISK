@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graph;
 using Newtonsoft.Json;
+using Redis.OM.Modeling;
 using Stockage.Converters;
 
 namespace ModelsAPI.ClassMetier.Map
@@ -7,6 +8,7 @@ namespace ModelsAPI.ClassMetier.Map
     /// <summary>
     /// Classe du plateau de jeu
     /// </summary>
+    [Document(StorageType = StorageType.Json, Prefixes = new[] { "Carte" })]
     public class Carte
     {
         #region Attributes
@@ -21,6 +23,7 @@ namespace ModelsAPI.ClassMetier.Map
         ///// <summary>
         ///// Dictionary des Continents
         ///// </summary>
+        [Indexed]
         [JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, IContinent>, Continent, string, IContinent>))]
         public Dictionary<string, IContinent> DicoContinents
         {
@@ -31,27 +34,29 @@ namespace ModelsAPI.ClassMetier.Map
         /// <summary>
         /// Le Territoire Selectionne par le joueur
         /// </summary>
+        [Indexed]
         public TerritoireDecorator? SelectedTerritoire
         {
             get => _selectedTerritoire;
             set => _selectedTerritoire = value;
         }
 
+        [Indexed]
         public int GetNombreTerritoireOccupe
         {
             get
             {
                 int res = 0;
-                //foreach (Continent continent in _dicoContinents.Values)
-                //{
-                //    foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
-                //    {
-                //        if (territoire.Team == Teams.NEUTRE)
-                //        {
-                //            res++;
-                //        }
-                //    }
-                //}
+                foreach (Continent continent in _dicoContinents.Values)
+                {
+                    foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                    {
+                        if (territoire.Team == Teams.NEUTRE)
+                        {
+                            res++;
+                        }
+                    }
+                }
                 return res;
             }
         }
