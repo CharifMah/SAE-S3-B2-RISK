@@ -48,6 +48,7 @@ namespace RISKAPI.Controllers
                         PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
                         profil.Password = passwordHasher.HashPassword(profil, profil.Password);
                         await _people.InsertAsync(profil);
+                        reponse = new JsonResult("Profil Created");
 
                     }
                     else
@@ -88,7 +89,7 @@ namespace RISKAPI.Controllers
                     PasswordHasher<Profil> passwordHasher = new PasswordHasher<Profil>();
                     if (passwordHasher.VerifyHashedPassword(profilDemander, profilDemander.Password, profil.Password) != 0)
                     {
-                        reponse = new JsonResult(profilDemander);
+                        reponse = new JsonResult("Connected");
                     }
                     else
                     {
