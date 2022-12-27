@@ -75,7 +75,7 @@ mv redisearch.so /etc/redis/modules/
 ```
 
 ## Config
-Add 'LOADMODULE' to Redis.conf /etc/redis/redis.con
+Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf
 # Start Redis
 ```
 redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/redis/modules/librejson.so
