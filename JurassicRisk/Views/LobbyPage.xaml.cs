@@ -39,7 +39,7 @@ namespace JurassicRisk.Views
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 
-        private void SelectTeamButton_Click(object sender, RoutedEventArgs e)
+        private async void SelectTeamButton_Click(object sender, RoutedEventArgs e)
         {
             Button b = (sender as Button);
             switch (b.Name)
@@ -52,7 +52,7 @@ namespace JurassicRisk.Views
                         Gbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
-                        JurassicRiskViewModel.Get.JoueurVm.Set
+                        await JurassicRiskViewModel.Get.JoueurVm.SetTeam(Teams.ROUGE);
                         
                     }
                     else
@@ -61,6 +61,7 @@ namespace JurassicRisk.Views
                         Gbutton.IsEnabled = true;
                         Bbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
+                        await JurassicRiskViewModel.Get.JoueurVm.SetTeam(Teams.NEUTRE);
                     }
 
                     break;
@@ -71,6 +72,7 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
+                        await JurassicRiskViewModel.Get.JoueurVm.SetTeam(Teams.VERT);
                     }
                     else
                     {
@@ -78,6 +80,7 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = true;
                         Bbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
+                        await JurassicRiskViewModel.Get.JoueurVm.SetTeam(Teams.NEUTRE);
                     }
                     break;
                 case "Bbutton":
@@ -87,6 +90,7 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = false;
                         Gbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
+                        await JurassicRiskViewModel.Get.JoueurVm.SetTeam(Teams.BLEU);
                     }
                     else
                     {
@@ -94,6 +98,7 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = true;
                         Gbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
+                        await JurassicRiskViewModel.Get.JoueurVm.SetTeam(Teams.NEUTRE);
                     }
                     break;
                 case "Ybutton":
@@ -103,6 +108,7 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = false;
                         Gbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
+                        await JurassicRiskViewModel.Get.JoueurVm.SetTeam(Teams.JAUNE);
                     }
                     else
                     {
@@ -110,6 +116,7 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = true;
                         Gbutton.IsEnabled = true;
                         Bbutton.IsEnabled = true;
+                        await JurassicRiskViewModel.Get.JoueurVm.SetTeam(Teams.NEUTRE);
                     }
                     break;
             }

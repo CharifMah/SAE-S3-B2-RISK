@@ -85,6 +85,7 @@ namespace JurassicRisk.ViewsModels
         public async Task SetTeam(Teams team)
         {
             _joueur.Team = team;
+
         }
     }
 }
