@@ -50,6 +50,11 @@ namespace JurassicRisk.Views
                     Error.Visibility = Visibility.Visible;
                 }
             }
+            else
+            {
+                Error.Text = "this pseudo already exist";
+                Error.Visibility = Visibility.Visible;
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

@@ -37,7 +37,16 @@
         </TextBlock>
 
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Deconnexion}" Click="LogOutButton_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300" ></Button>
-        <TextBlock Style="{StaticResource FruitDays}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Text="{x:Static Ressources:Strings.Pseudo}" />
+        <ListBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" ItemsSource="{Binding Lobby.Joueurs}" Style="{StaticResource CustomListBox}" Height="136" Width="308">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=Profil.Pseudo}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="Rbutton" Content="{x:Static Ressources:Strings.Red}" Style="{StaticResource CustomAnimationButton}" BorderBrush="Red" Width="200" Height="200" Click="SelectTeamButton_Click"/>
             <Button x:Name="Gbutton" Content="{x:Static Ressources:Strings.Green}" Style="{StaticResource CustomAnimationButton}" BorderBrush="Green" Width="200" Height="200" Click="SelectTeamButton_Click"/>

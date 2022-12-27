@@ -33,8 +33,9 @@ namespace JurassicRisk.Views
 
         }
 
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
+            await _lobbyVm.ExitLobby(_lobbyVm.Lobby.Id);
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 
@@ -51,6 +52,8 @@ namespace JurassicRisk.Views
                         Gbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
+                        JurassicRiskViewModel.Get.JoueurVm.Set
+                        
                     }
                     else
                     {

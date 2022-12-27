@@ -6,6 +6,7 @@
         #region Attributes
         private CarteViewModel _carteVm;
         private JoueurViewModel _joueurVm;
+        
         #endregion
 
         #region Property

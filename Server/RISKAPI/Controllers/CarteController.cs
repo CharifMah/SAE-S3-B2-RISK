@@ -41,7 +41,7 @@ namespace RISKAPI.Controllers
             IActionResult reponse = null;
             try
             {
-                RedisConnectorHelper.Connection.GetDatabase(0).JsonSetAsync("Carte", JsonConvert.SerializeObject(carte));
+                RedisProvider.Instance.RedisDataBase.JsonSetAsync("Carte", JsonConvert.SerializeObject(carte));
                 reponse = new AcceptedResult();
             }
             catch (Exception e)

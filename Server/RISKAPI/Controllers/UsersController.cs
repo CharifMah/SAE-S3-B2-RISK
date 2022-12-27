@@ -1,16 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Graph;
-using Redis.OM.Searching;
-using Redis.OM;
-using System;
-using NReJSON;
-using RISKAPI.Services;
 using Microsoft.Extensions.Caching.Distributed;
-using StackExchange.Redis;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using ModelsAPI.ClassMetier.Player;
+using Newtonsoft.Json;
+using NReJSON;
+using Redis.OM;
+using Redis.OM.Searching;
+using RISKAPI.Services;
+using StackExchange.Redis;
 
 namespace RISKAPI.Controllers
 {
@@ -38,10 +35,10 @@ namespace RISKAPI.Controllers
         {
             IActionResult reponse = null;
             try
-            {   
+            {
                 string key = $"Profil:{profil.Pseudo}";
                 reponse = new AcceptedResult();
-                if (!RedisConnectorHelper.Connection.GetDatabase(0).KeyExists(key))
+                if (!RedisProvider.Instance.RedisDataBase.KeyExists(key))
                 {
                     if (profil.Password.Length > 4)
                     {
@@ -82,7 +79,7 @@ namespace RISKAPI.Controllers
                 string key = $"Profil:{profil.Pseudo}";
                 string[] parms = { "." };
 
-                RedisResult result = await RedisConnectorHelper.Connection.GetDatabase(0).JsonGetAsync(key, parms);
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key, parms);
                 if (!result.IsNull)
                 {
                     Profil profilDemander = JsonConvert.DeserializeObject<Profil>(result.ToString());
@@ -113,19 +110,16 @@ namespace RISKAPI.Controllers
         /// Request to verify user if exist in database
         /// </summary>
         /// <param name="profil">profil to find in database</param>
-        /// <returns>boolean</returns>
-        /// <Author>Charif Mahmoud,Brian VERCHERE</Author>
+        /// <returns>boolean true if user exist</returns>
+        /// <Author>Charif Mahmoud</Author>
         [HttpGet("verifUser")]
         public IActionResult verifUser(string pseudo)
         {
             IActionResult reponse = null;
 
-            bool res = RedisConnectorHelper.Connection.GetDatabase(0).KeyExists($"Profil:{pseudo}");
+            bool res = RedisProvider.Instance.RedisDataBase.KeyExists($"Profil:{pseudo}");
 
-            if (!res)
-                reponse = new JsonResult($"Le profile '{pseudo}' existe pas");
-            else
-                reponse = new JsonResult($"Le profile '{pseudo}' existe");
+            reponse = new JsonResult(res);
 
             return reponse;
         }

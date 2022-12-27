@@ -1,6 +1,8 @@
 ﻿using Models.Fabriques.FabriqueUnite;
 using Models.Map;
 using Models.Units;
+using Newtonsoft.Json;
+using Stockage.Converters;
 
 namespace Models.Player
 {
@@ -21,7 +23,7 @@ namespace Models.Player
             get { return _team; }
             set { _team = value; }
         }
-
+        [JsonConverter(typeof(ConcreteCollectionTypeConverter<List<IUnit>, UniteBase, IUnit>))]
         public List<IUnit> Units
         {
             get { return _units; }

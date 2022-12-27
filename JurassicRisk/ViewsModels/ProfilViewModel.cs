@@ -43,8 +43,6 @@ namespace JurassicRisk.ViewsModels
 
         #endregion Constructor
 
-        #region Public methods
-
         /// <summary>
         /// Set Value of the selected profil
         /// </summary>
@@ -108,6 +106,7 @@ namespace JurassicRisk.ViewsModels
             }
             return res;
         }
+
         /// <summary>
         /// Verify if profil exist in database
         /// </summary>
@@ -119,11 +118,9 @@ namespace JurassicRisk.ViewsModels
             HttpResponseMessage reponseMessage = await JurasicRiskGameClient.Get.Client.GetAsync($"https://{JurasicRiskGameClient.Get.Ip}/Users/verifUser?pseudo={pseudo}");
             if (reponseMessage.IsSuccessStatusCode)
             {
-                res = await reponseMessage.Content.ReadAsAsync<bool>();
+                res = Boolean.Parse(await reponseMessage.Content.ReadAsStringAsync());
             }
             return res;
         }
-        #endregion Private methods
-
     }
 }

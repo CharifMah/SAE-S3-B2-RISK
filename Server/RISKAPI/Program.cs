@@ -3,6 +3,8 @@ using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Graph.ExternalConnectors;
 using Redis.OM;
 using RISKAPI.HostedServices;
+using RISKAPI.Services;
+using StackExchange.Redis;
 
 namespace RISKAPI
 {
@@ -27,6 +29,7 @@ namespace RISKAPI
                 options.Configuration = builder.Configuration["Redis"];
             });
             builder.Services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
+
             var app = builder.Build();
 
             //// Configure the HTTP request pipeline.

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Graph;
 using ModelsAPI.ClassMetier;
 using Newtonsoft.Json;
 using NReJSON;
@@ -23,6 +24,7 @@ namespace RISKAPI.Controllers
             _provider = provider;
             _lobby = (RedisCollection<Lobby>)provider.RedisCollection<Lobby>();
             _cache = cache;
+
         }
 
         [HttpPost("CreateLobby")]
@@ -31,8 +33,10 @@ namespace RISKAPI.Controllers
             IActionResult reponse = null;
             try
             {
+                Console.WriteLine("Created Lobby");
                 Lobby lobby = new Lobby();
                 lobby.Id = id;
+  
                 await _lobby.InsertAsync(lobby);
                 reponse = new JsonResult($"Lobby With Name : {id} created");
             }
@@ -51,7 +55,7 @@ namespace RISKAPI.Controllers
             {
                 string key = $"Lobby:{lobby.Id}";
                 reponse = new AcceptedResult();
-                if (RedisConnectorHelper.Connection.GetDatabase(0).KeyExists(key))
+                if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
                 {
                    await _lobby.UpdateAsync(lobby);
 
@@ -80,9 +84,9 @@ namespace RISKAPI.Controllers
                 string key = $"Lobby:{id}";
 
 
-                if (RedisConnectorHelper.Connection.GetDatabase(0).KeyExists(key))
+                if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
                 {
-                    RedisResult result = await RedisConnectorHelper.Connection.GetDatabase(0).JsonGetAsync(key);
+                    RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
                     Lobby? _lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
                     if (_lobby != null)
                         reponse = new JsonResult(_lobby);
