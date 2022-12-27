@@ -34,7 +34,7 @@ namespace Models.Combat
 
         public int Attaquer(List<IUnit> attaquant, ITerritoireBase cible, Joueur assaillant)
         {
-            if (cible.Team != assaillant.Equipe)
+            if (cible.Team != assaillant.Team)
             {
                 switch (attaquant.Count)
                 {

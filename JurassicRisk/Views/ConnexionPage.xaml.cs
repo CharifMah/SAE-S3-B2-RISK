@@ -14,13 +14,13 @@ namespace JurassicRisk.Views
         public ConnexionPage()
         {
             InitializeComponent();
-            DataContext = ProfilViewModel.Instance;
+            DataContext = ProfilViewModel.Get;
         }
 
         private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
             Profil profil = new Profil(inputPseudo.Text, inputPassword.Password);
-            string connexion = await ProfilViewModel.Instance.SetSelectedProfil(profil);
+            string connexion = await ProfilViewModel.Get.SetSelectedProfil(profil);
 
             if (connexion == "Ok")
             {

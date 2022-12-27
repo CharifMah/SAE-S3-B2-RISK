@@ -1,20 +1,8 @@
-﻿using Models.Son;
+﻿using JurassicRisk.ViewsModels;
 using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Models.Son;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using JurassicRisk.ViewsModels;
 
 namespace JurassicRisk.Views
 {
@@ -23,13 +11,13 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class LobbyPage : Page
     {
-        private JurassicRiskViewModel _jurassicRiskViewModel;
-        public LobbyPage()
+        private LobbyViewModel _lobbyVm;
+        public LobbyPage(LobbyViewModel lobbyVm)
         {
             InitializeComponent();
-            _jurassicRiskViewModel = new JurassicRiskViewModel();
+            _lobbyVm = lobbyVm;
+            DataContext= _lobbyVm;
         }
-
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
@@ -37,12 +25,12 @@ namespace JurassicRisk.Views
             Settings.Get().Backgroundmusic = SoundStore.Get("DarkJungleMusic.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("DarkJungleMusic.mp3").Play(true);
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage(_jurassicRiskViewModel));
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
         }
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
-                 
+
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
@@ -59,7 +47,7 @@ namespace JurassicRisk.Views
 
                     if (b.Content == Ressource.Strings.Red)
                     {
-                        b.Content = Ressource.Strings.Red + '\n' + _jurassicRiskViewModel.JoueurVm.Joueur.Profil.Pseudo;
+                        b.Content = Ressource.Strings.Red + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
                         Gbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
@@ -71,12 +59,12 @@ namespace JurassicRisk.Views
                         Bbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
                     }
-                   
+
                     break;
                 case "Gbutton":
                     if (b.Content == Ressource.Strings.Green)
                     {
-                        b.Content = Ressource.Strings.Green + '\n' + _jurassicRiskViewModel.JoueurVm.Joueur.Profil.Pseudo;
+                        b.Content = Ressource.Strings.Green + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
                         Rbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
@@ -92,7 +80,7 @@ namespace JurassicRisk.Views
                 case "Bbutton":
                     if (b.Content == Ressource.Strings.Blue)
                     {
-                        b.Content = Ressource.Strings.Blue + '\n' + _jurassicRiskViewModel.JoueurVm.Joueur.Profil.Pseudo;
+                        b.Content = Ressource.Strings.Blue + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
                         Rbutton.IsEnabled = false;
                         Gbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
@@ -108,7 +96,7 @@ namespace JurassicRisk.Views
                 case "Ybutton":
                     if (b.Content == Ressource.Strings.Yellow)
                     {
-                        b.Content = Ressource.Strings.Yellow + '\n' + _jurassicRiskViewModel.JoueurVm.Joueur.Profil.Pseudo;
+                        b.Content = Ressource.Strings.Yellow + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
                         Rbutton.IsEnabled = false;
                         Gbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;

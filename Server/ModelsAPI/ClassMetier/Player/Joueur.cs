@@ -1,8 +1,10 @@
-﻿using Models.Fabriques.FabriqueUnite;
-using Models.Map;
-using Models.Units;
+﻿using ModelsAPI.ClassMetier.Fabriques.FabriqueUnite;
+using ModelsAPI.ClassMetier.Map;
+using ModelsAPI.ClassMetier.Units;
+using Newtonsoft.Json;
+using Stockage.Converters;
 
-namespace Models.Player
+namespace ModelsAPI.ClassMetier.Player
 {
     public class Joueur : IGestionTroupe
     {
@@ -21,7 +23,7 @@ namespace Models.Player
             get { return _team; }
             set { _team = value; }
         }
-
+        [JsonConverter(typeof(ConcreteCollectionTypeConverter<List<IUnit>, UniteBase, IUnit>))]
         public List<IUnit> Units
         {
             get { return _units; }
@@ -69,7 +71,7 @@ namespace Models.Player
         #endregion
         public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
-            if (unites.Count > 0 && (this._team == territoire.Team || territoire.Team == Models.Teams.NEUTRE))
+            if (unites.Count > 0 && (_team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
                 foreach (var unit in unites)
                 {
@@ -78,7 +80,7 @@ namespace Models.Player
                         _units.Remove(unit);
 
                         territoire.AddUnit(unit);
-                        territoire.Team = this._team;
+                        territoire.Team = _team;
                     }
                 }
             }
@@ -86,12 +88,12 @@ namespace Models.Player
 
         public void AddUnit(IUnit unit)
         {
-            this._units.Add(unit);
+            _units.Add(unit);
         }
 
         public void RemoveUnit(IUnit unit)
         {
-            this._units.Remove(unit);
+            _units.Remove(unit);
         }
 
         public void RemoveUnit(List<IUnit> unites, ITerritoireBase territoire)

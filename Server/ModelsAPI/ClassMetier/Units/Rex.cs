@@ -8,11 +8,8 @@ namespace ModelsAPI.ClassMetier.Units
 {
     public class Rex : UniteBase
     {
-        public Rex(int id, Elements element = Elements.EAU) : base(id, element)
+        public Rex()
         {
-            this.id = id;
-            this.element = element;
-
             name = "Rex";
             description = "this is a Rex";
         }

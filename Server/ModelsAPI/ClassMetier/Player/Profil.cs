@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Redis.OM.Modeling;
 
-namespace ModelsAPI.ClassMetier
+namespace ModelsAPI.ClassMetier.Player
 {
     [Document(StorageType = StorageType.Json, Prefixes = new[] { "Profil" })]
     public class Profil
@@ -10,7 +10,6 @@ namespace ModelsAPI.ClassMetier
         /// pseudo of the profil
         /// </summary>
         [RedisIdField]
-        [Indexed]
         public string Pseudo { get; set; }
 
         /// <summary>

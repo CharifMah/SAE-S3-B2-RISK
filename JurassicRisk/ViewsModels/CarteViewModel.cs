@@ -166,7 +166,7 @@ namespace JurassicRisk.ViewsModels
 
 
             this._carte.SelectedTerritoire = territoire;
-            if (_joueur.Joueur.Troupe.Count > 0 && this._carte.SelectedTerritoire != null)
+            if (_joueur.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
             {
                 _joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire);
             }

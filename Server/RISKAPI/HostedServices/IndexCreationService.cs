@@ -1,8 +1,9 @@
-﻿using ModelsAPI.ClassMetier;
+﻿using ModelsAPI;
+using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.Map;
+using ModelsAPI.ClassMetier.Player;
 using Redis.OM;
 using Redis.OM.Modeling;
-using RISKAPI.Services;
 
 namespace RISKAPI.HostedServices
 {
@@ -22,6 +23,7 @@ namespace RISKAPI.HostedServices
 
             await _provider.Connection.CreateIndexAsync(typeof(Profil));
             await _provider.Connection.CreateIndexAsync(typeof(Carte));
+            await _provider.Connection.CreateIndexAsync(typeof(Lobby));
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

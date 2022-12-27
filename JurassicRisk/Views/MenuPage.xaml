@@ -19,6 +19,7 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="5*" />
             <RowDefinition Height="5*" />
+            <RowDefinition Height="5*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -33,10 +34,13 @@
         <TextBlock Style="{StaticResource Bloody}" FontSize="85" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Top" Text="{x:Static Ressources:Strings.GameTitle}">
       
         </TextBlock>
-        <Button Content="{x:Static Ressources:Strings.Play}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="PlayButton_Click"/>
-        <Button Content="{x:Static Ressources:Strings.Options}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="OptionButton_Click"/>
-        <Button Content="{x:Static Ressources:Strings.Profil}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="ProfilButton_Click"/>
-        <Button Content="{x:Static Ressources:Strings.Deconnexion}" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="DeconnectionButton_Click"/>
+        <Button Content="{x:Static Ressources:Strings.JoinLobby}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="JoinLobbyButton_Click"/>
+
+        <Button Content="{x:Static Ressources:Strings.CreateLobby}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="CreateLobbyButton_Click"/>
+
+        <Button Content="{x:Static Ressources:Strings.Options}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="OptionButton_Click"/>
+        <Button Content="{x:Static Ressources:Strings.Profil}" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="ProfilButton_Click"/>
+        <Button Content="{x:Static Ressources:Strings.Deconnexion}" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Click="DeconnectionButton_Click"/>
 
 
 

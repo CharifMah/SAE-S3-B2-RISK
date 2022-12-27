@@ -30,7 +30,7 @@ namespace JurassicRisk.ViewsModels
 
         public int NombreTrp
         {
-            get { return _joueur.Troupe.Count(); }
+            get { return _joueur.Units.Count(); }
         }
 
         public ObservableCollection<IUnit> Units
@@ -50,36 +50,11 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
 
-        public JoueurViewModel(Teams teams = Teams.VERT)
+        public JoueurViewModel(Teams teams = Teams.NEUTRE)
         {
-            FabriqueUniteBase f = new FabriqueUniteBase();
-
-            _units = new ObservableCollection<IUnit>();
-            #region CreatePlayer
-
-            Random random = new Random();
-            for (int i = 0; i < 40; i++)
-            {
-                switch (random.Next(4))
-                {
-                    case 0:
-                        _units.Add(new UniteDecorator(f.Create("Rex")));
-                        break;
-                    case 1:
-                        _units.Add(new UniteDecorator(f.Create("Brachiosaurus")));
-                        break;
-                    case 2:
-                        _units.Add(new UniteDecorator(f.Create("Baryonyx")));
-                        break;
-                    case 3:
-                        _units.Add(new UniteDecorator(f.Create("Pterosaure")));
-                        break;
-                }
-            }
+            _joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, teams);
+            _units = new ObservableCollection<IUnit>(_joueur.Units);
             _selectedUnit = _units[0];
-            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<IUnit>(_units), teams);
-
-            #endregion
 
             NotifyPropertyChanged("Units");
 
@@ -92,7 +67,7 @@ namespace JurassicRisk.ViewsModels
         /// <param name="territoire">le territoire</param>
         public void AddUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
         {
-            if ((_joueur.Equipe == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+            if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
             {
                 _joueur.AddUnits(UniteBases, territoire);
                 this._units.Remove(_selectedUnit);

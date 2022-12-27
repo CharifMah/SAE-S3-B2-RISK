@@ -16,7 +16,7 @@ namespace Models.Tours
 
         public void PlaceUnits(IUnit unitToPlace, Joueur _joueur)
         {
-            if (_joueur.Troupe.Count > 0)
+            if (_joueur.Units.Count > 0)
             {
                 _joueur.AddUnits(new List<IUnit>() { unitToPlace }, JurasicRiskGameClient.Get.Carte.SelectedTerritoire);
             }

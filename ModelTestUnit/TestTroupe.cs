@@ -18,7 +18,7 @@ namespace ModelTestUnit
             TerritoireBase t2 = new TerritoireBase(0);
             t2.Team = Teams.VERT;
             Joueur j1 = new Joueur(new Profil("test", "qsd"), new List<IUnit>() { new UniteBase() }, Teams.NEUTRE);
-            j1.Equipe = Teams.VERT;
+            j1.Team = Teams.VERT;
 
             FabriqueUniteBase f = new FabriqueUniteBase();
             List<IUnit> renforts = new List<IUnit>();
@@ -26,12 +26,12 @@ namespace ModelTestUnit
             {
                 UniteBase u = new UniteBase();
                 renforts.Add(u);
-                j1.Troupe.Add(u);
+                j1.Units.Add(u);
             }
 
             j1.AddUnits(renforts, t2);
-            Assert.Equal(t2.Team, j1.Equipe);
-            Assert.Equal(1, j1.Troupe.Count);
+            Assert.Equal(t2.Team, j1.Team);
+            Assert.Equal(1, j1.Units.Count);
             Assert.Equal(renforts.Count, t2.Units.Count);
         }
     }

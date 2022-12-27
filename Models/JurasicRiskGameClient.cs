@@ -86,7 +86,7 @@ namespace Models
             {
                 foreach (Joueur joueur in _joueurs)
                 {
-                    t.PlaceUnits(joueur.Troupe[0], joueur);
+                    t.PlaceUnits(joueur.Units[0], joueur);
                     
                     await _clickWaitTask.Task;
                 }          

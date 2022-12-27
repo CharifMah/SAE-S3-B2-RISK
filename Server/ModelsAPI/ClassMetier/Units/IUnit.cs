@@ -1,11 +1,18 @@
-﻿namespace ModelsAPI.ClassMetier.Units
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Xml.Linq;
+
+namespace ModelsAPI.ClassMetier.Units
 {
     public interface IUnit
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int ID { get; set; }
-        public Elements Element { get; set; }
+        string Name { get; }
+        string Description { get; }
+        int Id { get; }
+        Elements Element { get; set; }
     }
 }
-

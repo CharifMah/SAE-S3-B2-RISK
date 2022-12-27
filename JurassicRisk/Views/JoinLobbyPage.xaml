@@ -1,0 +1,41 @@
+﻿<Page x:Class="JurassicRisk.Views.JoinLobbyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:JurassicRisk.Views"
+      xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="JoinLobbyPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Sprites/Background/Background2.jpg"/>
+        </Grid.Background>
+        <TextBlock Style="{StaticResource Bloody}" FontSize="45" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Text="{x:Static Ressources:Strings.JoinLobby}"/>
+
+        <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Back}" Click="BackButton_Click" VerticalAlignment="Center" ></Button>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" FontSize="20" Style="{StaticResource FruitDays}" Text="{x:Static Ressources:Strings.Lobby}"/>
+            <TextBox VerticalAlignment="Bottom" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=TextBoxBaseStyle}" x:Name="inputLobbyName"/>
+
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource FruitDays}" Text="{x:Static Ressources:Strings.Password}"/>
+            <PasswordBox  Grid.Column="1" VerticalAlignment="Center" Foreground="DarkRed" FontSize="20" FontWeight="Bold" Margin="10" Style="{StaticResource ResourceKey=PasswordBoxBaseStyle}" x:Name="inputPassword"/>
+
+            <TextBlock x:Name="Error"  Grid.ColumnSpan="3" VerticalAlignment="Bottom" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Text="{x:Static Ressources:Strings.NoExiste}" Visibility="Hidden" Height="25" Style="{StaticResource FruitDays}"/>
+            <Button Content="{x:Static Ressources:Strings.JoinLobby}" VerticalAlignment="Center" Style="{StaticResource CustomAnimationButton }" Click="JoinButton_Click"></Button>
+        </StackPanel>
+
+    </Grid>
+</Page>

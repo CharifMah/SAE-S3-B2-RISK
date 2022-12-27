@@ -22,14 +22,22 @@
             <ColumnDefinition Width="1*" />
 
         </Grid.ColumnDefinitions>
+        
         <Grid.Background >
             <ImageBrush ImageSource="/Sprites/Background/Background3.jpg"/>
         </Grid.Background>
 
-        <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalAlignment="Top" Text="{x:Static Ressources:Strings.Lobby}"/>
+        <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalAlignment="Top">
+            <TextBlock.Text>
+                <MultiBinding  StringFormat="{}{0} : {1}">
+                    <Binding Source="{x:Static Ressources:Strings.Lobby}"/>
+                    <Binding Path="Lobby.Id"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
 
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Deconnexion}" Click="LogOutButton_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300" ></Button>
-
+        <TextBlock Style="{StaticResource FruitDays}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Text="{x:Static Ressources:Strings.Pseudo}" />
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="Rbutton" Content="{x:Static Ressources:Strings.Red}" Style="{StaticResource CustomAnimationButton}" BorderBrush="Red" Width="200" Height="200" Click="SelectTeamButton_Click"/>
             <Button x:Name="Gbutton" Content="{x:Static Ressources:Strings.Green}" Style="{StaticResource CustomAnimationButton}" BorderBrush="Green" Width="200" Height="200" Click="SelectTeamButton_Click"/>

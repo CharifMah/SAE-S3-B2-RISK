@@ -132,6 +132,9 @@
   <data name="Connexion" xml:space="preserve">
     <value>Connexion</value>
   </data>
+  <data name="CreateLobby" xml:space="preserve">
+    <value>Crée une partie</value>
+  </data>
   <data name="Deconnexion" xml:space="preserve">
     <value>Deconnexion</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Inscription" xml:space="preserve">
     <value>Inscription</value>
+  </data>
+  <data name="JoinLobby" xml:space="preserve">
+    <value>Rejoindre une partie</value>
   </data>
   <data name="Lobby" xml:space="preserve">
     <value>Hall de Jeux</value>

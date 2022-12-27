@@ -25,7 +25,7 @@ namespace JurassicRisk.Views
         public UserProfil()
         {
             InitializeComponent();
-            this.DataContext = ProfilViewModel.Instance;
+            this.DataContext = ProfilViewModel.Get;
             DataGrid1.DataContext = new StatsViewModel();
         }
 

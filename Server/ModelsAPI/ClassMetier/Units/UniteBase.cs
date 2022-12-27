@@ -15,17 +15,17 @@ namespace ModelsAPI.ClassMetier.Units
         #region Property
         public string Name { get => name; set => name = value; }
         public string Description { get => description; set => description = value; }
-        public int ID { get => id; set => id = value; }
+        public int Id { get => id; set => id = value; }
 
         public Elements Element { get => element; set => element = value; }
         #endregion
 
 
 
-        public UniteBase(int ID, Elements Element = Elements.EAU)
+        public UniteBase(int Id, Elements Element = Elements.EAU)
         {
             this.element = Element;
-            this.id = ID;
+            this.id = Id;
             name = "ExempleUnite";
             description = "Description d'une unite";
         }

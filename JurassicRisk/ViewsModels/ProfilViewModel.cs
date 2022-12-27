@@ -32,7 +32,7 @@ namespace JurassicRisk.ViewsModels
 
         #region Constructor
         private static ProfilViewModel _instance;
-        public static ProfilViewModel Instance
+        public static ProfilViewModel Get
         {
             get { return _instance ?? (_instance = new ProfilViewModel()); }
         }

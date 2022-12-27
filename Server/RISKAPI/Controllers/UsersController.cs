@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Graph;
-using ModelsAPI.ClassMetier;
 using Redis.OM.Searching;
 using Redis.OM;
 using System;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using StackExchange.Redis;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using ModelsAPI.ClassMetier.Player;
 
 namespace RISKAPI.Controllers
 {

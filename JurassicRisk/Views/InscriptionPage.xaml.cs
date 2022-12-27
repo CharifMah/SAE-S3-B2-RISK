@@ -30,7 +30,7 @@ namespace JurassicRisk.Views
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if(!await ProfilViewModel.Instance.VerifProfilCreation(inputPseudo.Text))
+            if(!await ProfilViewModel.Get.VerifProfilCreation(inputPseudo.Text))
             {
                 if (inputPseudo.Text != "")
                 {
@@ -60,11 +60,11 @@ namespace JurassicRisk.Views
         private async void inscription()
         {
             Profil profil = new Profil(inputPseudo.Text, inputPassword.Password);
-            string inscription = await ProfilViewModel.Instance.CreateProfil(profil);
+            string inscription = await ProfilViewModel.Get.CreateProfil(profil);
             if (inscription == "Ok")
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-                await ProfilViewModel.Instance.SetSelectedProfil(profil);
+                await ProfilViewModel.Get.SetSelectedProfil(profil);
             }
             else
             {

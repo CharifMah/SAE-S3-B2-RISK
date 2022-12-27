@@ -350,5 +350,21 @@ namespace JurassicRisk.Ressource
             }
         }
 
+        public static string CreateLobby
+        {
+            get
+            {
+                return ResourceManager.GetString("CreateLobby", resourceCulture);
+            }
+        }
+
+        public static string JoinLobby
+        {
+            get
+            {
+                return ResourceManager.GetString("JoinLobby", resourceCulture);
+            }
+        }
+
     }
 }

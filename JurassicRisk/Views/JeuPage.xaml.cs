@@ -13,8 +13,7 @@ namespace JurassicRisk.Views
     public partial class JeuPage : Page
     {
         private Window mainwindow;
-        private JurassicRiskViewModel _jurassicRiskVm;
-        public JeuPage(JurassicRiskViewModel jurassicRiskVm)
+        public JeuPage()
         {
             InitializeComponent();
             mainwindow = (Window.GetWindow(App.Current.MainWindow) as MainWindow);
@@ -23,8 +22,7 @@ namespace JurassicRisk.Views
             ViewboxCanvas.Width = mainwindow.ActualWidth;
             ViewboxCanvas.Height = mainwindow.ActualHeight;
 
-            _jurassicRiskVm = jurassicRiskVm;
-            DataContext = _jurassicRiskVm;
+            DataContext = JurassicRiskViewModel.Get;
         }
 
         private void Mainwindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -78,7 +76,7 @@ namespace JurassicRisk.Views
         private async void OptionButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
-            await _jurassicRiskVm.CarteVm.SetCarte(_jurassicRiskVm.CarteVm.Carte);
+            await JurassicRiskViewModel.Get.CarteVm.SetCarte(JurassicRiskViewModel.Get.CarteVm.Carte);
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
@@ -102,7 +100,7 @@ namespace JurassicRisk.Views
 
         private void ListBoxUnits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _jurassicRiskVm.JoueurVm.SelectedUnit = (sender as ListBox).SelectedItem as IUnit;
+            JurassicRiskViewModel.Get.JoueurVm.SelectedUnit = (sender as ListBox).SelectedItem as IUnit;
         }
     }
 }

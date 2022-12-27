@@ -15,12 +15,12 @@ namespace ModelTestUnit
         public void Combat()
         {
             Joueur j1 = new Joueur(new Profil("sqd", "sqd"), new List<IUnit>() { new UniteBase(), new UniteBase() }, Teams.ROUGE); ;
-            j1.Equipe = Teams.ROUGE;
+            j1.Team = Teams.ROUGE;
             TerritoireBase t1 = new TerritoireBase(1);
             t1.Team = Teams.ROUGE;
 
             Joueur j2 = new Joueur(new Profil("sqdd", "sqdd"), new List<IUnit>() { new UniteBase(), new UniteBase() }, Teams.ROUGE);
-            j2.Equipe = Teams.BLEU;
+            j2.Team = Teams.BLEU;
             TerritoireBase t2 = new TerritoireBase(2);
             t2.Team = Teams.BLEU;
 
@@ -41,11 +41,11 @@ namespace ModelTestUnit
 
             for (int i = 0; i < 3; i++)
             {
-                attaquants.Add(j1.Troupe[i]);
+                attaquants.Add(j1.Units[i]);
             }
             for (int i = 0; i < 2; i++)
             {
-                defenseurs.Add(j2.Troupe[i]);
+                defenseurs.Add(j2.Units[i]);
             }
 
             FakeCombat c = new FakeCombat(attaquants, defenseurs, t1, t2, j1, j2);

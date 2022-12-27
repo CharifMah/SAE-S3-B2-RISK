@@ -16,11 +16,6 @@ namespace JurassicRisk.Views
 
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
-        }
-
         private void ProfilButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new UserProfil());
@@ -34,6 +29,16 @@ namespace JurassicRisk.Views
         private void OptionButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+        }
+
+        private void JoinLobbyButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JoinLobbyPage());
+        }
+
+        private void CreateLobbyButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new CreateLobbyPage());
         }
     }
 }

@@ -1,14 +1,16 @@
-﻿using StackExchange.Redis;
+﻿using ModelsAPI.ClassMetier.Player;
+using StackExchange.Redis;
 
-namespace RISKAPI
+namespace ModelsAPI.ClassMetier
 {
     public class JurasicRiskGameServer
     {
         #region Attributes
-
+        private List<Profil> _profils;
         #endregion
 
         #region Property
+
 
 
         #endregion
@@ -31,7 +33,7 @@ namespace RISKAPI
 
         private JurasicRiskGameServer()
         {
-
+            _profils = new List<Profil>();
         }
 
         #endregion
