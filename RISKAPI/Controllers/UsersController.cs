@@ -10,6 +10,7 @@ using RISKAPI.Services;
 using Microsoft.Extensions.Caching.Distributed;
 using StackExchange.Redis;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 namespace RISKAPI.Controllers
 {
@@ -114,21 +115,16 @@ namespace RISKAPI.Controllers
         /// <returns>boolean</returns>
         /// <Author>Charif Mahmoud,Brian VERCHERE</Author>
         [HttpGet("verifUser")]
-        public IActionResult verifUser(Profil profil)
+        public IActionResult verifUser(string pseudo)
         {
             IActionResult reponse = null;
-            //ProfilDAO profilDAO = MySqlDAOFactory.Get().CreerProfil();
 
-            //bool res = profilDAO.VerifUserCreation(profil);
+            bool res = RedisConnectorHelper.Connection.GetDatabase(0).KeyExists($"Profil:{pseudo}");
 
-            //if (res == null)
-            //{
-            //    reponse = new BadRequestResult();
-            //}
-            //else
-            //{
-            //    reponse = new JsonResult(res);
-            //}
+            if (!res)
+                reponse = new JsonResult($"Le profile '{pseudo}' existe pas");
+            else
+                reponse = new JsonResult($"Le profile '{pseudo}' existe");
 
             return reponse;
         }

@@ -26,7 +26,6 @@ namespace RISKAPI.Controllers
             try
             {
 
-                //MySqlDAOFactory.Get().CreateCarteDAO().Insert(carte as Carte);
                 reponse = new AcceptedResult();
             }
             catch (Exception e)
