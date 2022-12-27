@@ -31,7 +31,6 @@ sudo apt-get install redis
 ```
 git clone --recursive https://github.com/RedisJSON/RedisJSON.git
 cd RedisJSON
-
 ```
 # Install dependencies
 ```
