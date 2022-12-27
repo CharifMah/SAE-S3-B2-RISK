@@ -96,7 +96,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
-    <ProjectReference Include="..\RISKAPI\RISKAPI.csproj" />
     <ProjectReference Include="..\Stockage\Stockage.csproj" />
   </ItemGroup>
 

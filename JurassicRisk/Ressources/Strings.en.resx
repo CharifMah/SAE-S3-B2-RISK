@@ -120,6 +120,9 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
   <data name="ConfirationMdp" xml:space="preserve">
     <value>Confirm password</value>
   </data>
@@ -136,10 +139,16 @@
     <value>FullScreen :</value>
   </data>
   <data name="GameTitle" xml:space="preserve">
-    <value>JurassicRisk</value>
+    <value>JURRASIC RISK</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Green</value>
   </data>
   <data name="Inscription" xml:space="preserve">
     <value>Sign up</value>
+  </data>
+  <data name="Lobby" xml:space="preserve">
+    <value>Game Lobby</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
@@ -180,6 +189,12 @@
   <data name="Pseudo" xml:space="preserve">
     <value>Pseudo :</value>
   </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -200,5 +215,8 @@
   </data>
   <data name="TrpVaincus" xml:space="preserve">
     <value>Defeated Troops </value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Yellow</value>
   </data>
 </root>

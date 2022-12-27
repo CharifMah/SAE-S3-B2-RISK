@@ -63,8 +63,8 @@
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="0.5,1" SpreadMethod="Reflect">
-                    <GradientStop Color="White" Offset="1"/>
-                    <GradientStop Color="DarkRed" Offset="0"/>
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="LightSalmon" Offset="1"/>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -110,17 +110,6 @@
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation 
-                                            Storyboard.TargetProperty="BorderBrush.(LinearGradientBrush.GradientStops)[1].(GradientStop.Offset)"
-                                            From="1" To="0" Duration="0:0:0.5" AccelerationRatio="0.1">
-                                    </DoubleAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>

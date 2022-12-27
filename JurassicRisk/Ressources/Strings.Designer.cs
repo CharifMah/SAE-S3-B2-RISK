@@ -302,5 +302,53 @@ namespace JurassicRisk.Ressource
             }
         }
 
+        public static string Lobby
+        {
+            get
+            {
+                return ResourceManager.GetString("Lobby", resourceCulture);
+            }
+        }
+
+        public static string Ready
+        {
+            get
+            {
+                return ResourceManager.GetString("Ready", resourceCulture);
+            }
+        }
+
+        public static string Red
+        {
+            get
+            {
+                return ResourceManager.GetString("Red", resourceCulture);
+            }
+        }
+
+        public static string Green
+        {
+            get
+            {
+                return ResourceManager.GetString("Green", resourceCulture);
+            }
+        }
+
+        public static string Blue
+        {
+            get
+            {
+                return ResourceManager.GetString("Blue", resourceCulture);
+            }
+        }
+
+        public static string Yellow
+        {
+            get
+            {
+                return ResourceManager.GetString("Yellow", resourceCulture);
+            }
+        }
+
     }
 }

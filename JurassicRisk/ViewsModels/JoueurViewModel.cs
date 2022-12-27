@@ -50,7 +50,7 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
 
-        public JoueurViewModel()
+        public JoueurViewModel(Teams teams = Teams.VERT)
         {
             FabriqueUniteBase f = new FabriqueUniteBase();
 
@@ -77,7 +77,7 @@ namespace JurassicRisk.ViewsModels
                 }
             }
             _selectedUnit = _units[0];
-            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<IUnit>(_units), Teams.VERT);
+            _joueur = new Joueur(ProfilViewModel.Instance.SelectedProfil, new List<IUnit>(_units), teams);
 
             #endregion
 

@@ -1,12 +1,6 @@
-﻿using Models;
-using Models.Combat;
+﻿using Models.Combat;
 using Models.Fabriques.FabriqueUnite;
-using Models.Map;
 using Models.Player;
-using Models.Units;
-using ModelsAPI.ClassMetier;
-using ModelsAPI.ClassMetier.Map;
-using ModelsAPI.ClassMetier.Units;
 using IUnit = Models.Units.IUnit;
 using Profil = Models.Player.Profil;
 using Teams = Models.Teams;
@@ -20,7 +14,7 @@ namespace ModelTestUnit
         [Fact]
         public void Combat()
         {
-            Joueur j1 = new Joueur(new Profil("sqd","sqd"),new List<IUnit>() { new UniteBase(),new UniteBase()},Teams.ROUGE);;
+            Joueur j1 = new Joueur(new Profil("sqd", "sqd"), new List<IUnit>() { new UniteBase(), new UniteBase() }, Teams.ROUGE); ;
             j1.Equipe = Teams.ROUGE;
             TerritoireBase t1 = new TerritoireBase(1);
             t1.Team = Teams.ROUGE;

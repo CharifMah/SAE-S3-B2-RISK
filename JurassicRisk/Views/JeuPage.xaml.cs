@@ -14,7 +14,7 @@ namespace JurassicRisk.Views
     {
         private Window mainwindow;
         private JurassicRiskViewModel _jurassicRiskVm;
-        public JeuPage()
+        public JeuPage(JurassicRiskViewModel jurassicRiskVm)
         {
             InitializeComponent();
             mainwindow = (Window.GetWindow(App.Current.MainWindow) as MainWindow);
@@ -22,7 +22,8 @@ namespace JurassicRisk.Views
             mainwindow.PreviewKeyDown += Mainwindow_PreviewKeyDown;
             ViewboxCanvas.Width = mainwindow.ActualWidth;
             ViewboxCanvas.Height = mainwindow.ActualHeight;
-            _jurassicRiskVm = new JurassicRiskViewModel();
+
+            _jurassicRiskVm = jurassicRiskVm;
             DataContext = _jurassicRiskVm;
         }
 
