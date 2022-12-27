@@ -7,6 +7,11 @@ using Models.Units;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Units;
+using IUnit = Models.Units.IUnit;
+using Profil = Models.Player.Profil;
+using Teams = Models.Teams;
+using TerritoireBase = Models.Map.TerritoireBase;
+using UniteBase = Models.Units.UniteBase;
 
 namespace ModelTestUnit
 {

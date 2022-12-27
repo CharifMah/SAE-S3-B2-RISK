@@ -12,7 +12,7 @@ namespace UnitTestApi
             string _ip = "localhost:7215";
             HttpClient client = new HttpClient();
 
-            var controller = new UsersController();
+            //var controller = new UsersController();
             Profil profil = new Profil("", "");
 
             HttpResponseMessage reponse = await client.PostAsJsonAsync($"https://{_ip}/Users/Connexion", profil);
@@ -48,7 +48,7 @@ namespace UnitTestApi
             string _ip = "localhost:7215";
             HttpClient client = new HttpClient();
 
-            var controller = new RISKAPI.Controllers.UsersController();
+            //var controller = new RISKAPI.Controllers.UsersController();
             Profil profil = new Profil("", "");
 
             HttpResponseMessage reponse = await client.PostAsJsonAsync($"https://{_ip}/Users/Inscription", profil);

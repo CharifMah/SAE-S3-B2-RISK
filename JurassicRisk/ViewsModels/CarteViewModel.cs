@@ -58,13 +58,13 @@ namespace JurassicRisk.ViewsModels
         {
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
-            new SaveMap(null);
+            //new SaveMap(null);
             _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
             TerritoireBase t = new TerritoireBase(999999);
             t.Team = Teams.BLEU;
             _carte.SelectedTerritoire = t;
-            InsertCarte(_carte);
+            SetCarte(_carte);
             foreach (Continent continent in _carte.DicoContinents.Values)
             {
                 foreach (TerritoireDecorator Territoire in continent.DicoTerritoires.Values)
@@ -86,7 +86,7 @@ namespace JurassicRisk.ViewsModels
         /// <param name="pseudo">string pseudo</param>
         /// <returns>awaitable Task</returns>
         /// <Author>Charif Mahmoud</Author>
-        public async Task<string> InsertCarte(Carte carte)
+        public async Task<string> SetCarte(Carte carte)
         {
             string res = "Ok";
             try
@@ -120,7 +120,7 @@ namespace JurassicRisk.ViewsModels
         /// <param name="height">hauteur</param>
         /// <param name="width">largeur</param>
         /// <Author>Charif</Author>
-        private void DrawRegion(TerritoireDecorator territoire)
+        private async Task DrawRegion(TerritoireDecorator territoire)
         {
             ImageBrush myImageBrush = new ImageBrush(new BitmapImage(new Uri(territoire.UriSource)));
             Canvas myCanvas = new Canvas();
@@ -133,9 +133,9 @@ namespace JurassicRisk.ViewsModels
             myCanvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
-            myCanvas.MouseEnter += MyCanvas_MouseEnter;
-            myCanvas.MouseLeave += MyCanvas_MouseLeave;
-            myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender, e, territoire);
+            myCanvas.MouseEnter  += (sender, e) => MyCanvas_MouseEnter(sender, e);
+            myCanvas.MouseLeave += async (sender, e) =>await MyCanvas_MouseLeave(sender, e);
+            myCanvas.PreviewMouseDown += async (sender, e) => await MyCanvas_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
             _carteCanvas.Children.Add(myCanvas);
         }
@@ -156,7 +156,7 @@ namespace JurassicRisk.ViewsModels
             this._carte.SelectedTerritoire = null;
         }
 
-        private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
+        private async Task MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
@@ -172,9 +172,10 @@ namespace JurassicRisk.ViewsModels
             }
 
             NotifyPropertyChanged("CarteCanvas");
+            await SetCarte(_carte);
         }
 
-        private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private async Task MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Canvas c = (sender as Canvas);
             c.Width -= 15;
@@ -184,6 +185,7 @@ namespace JurassicRisk.ViewsModels
             c.Effect = shadow;
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
+            await SetCarte(_carte);
         }
 
         private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

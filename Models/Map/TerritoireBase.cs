@@ -12,7 +12,7 @@ namespace Models.Map
     {
         #region Attributes
 
-        protected Teams _teams;
+        protected Teams _teams = Teams.NEUTRE;
 
         protected List<IUnit> _units;
 

@@ -10,7 +10,7 @@ namespace ModelsAPI.ClassMetier.Map
     public class TerritoireBase : ITerritoireBase
     {
         #region Attributes
-        protected Teams _teams;
+        protected Teams _teams = Teams.NEUTRE;
         protected List<IUnit> _units;
         protected int _id;
         #endregion
