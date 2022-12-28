@@ -38,7 +38,11 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Orientation="Vertical">
-                        <Image Source="{Binding Path=Sprite}"/>
+                        <Image>
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding Path=UriSource}"/>
+                            </Image.Source>
+                        </Image>
                         <TextBlock Text="{Binding Path=Name}" Style="{StaticResource FruitDays}"/>
                     </WrapPanel>
                 </DataTemplate>

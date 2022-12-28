@@ -1,3 +1,4 @@
+using JurassicRisk.ViewsModels;
 using Models;
 using Models.Son;
 using System;
@@ -53,8 +54,10 @@ namespace JurassicRisk.Views
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <Author>Charif</Author>
-        private void FentrePrincipal_Closed(object sender, System.EventArgs e)
+        private async void FentrePrincipal_Closed(object sender, System.EventArgs e)
         {
+            await JurassicRiskViewModel.Get.LobbyVm.ExitLobby(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
+
             Environment.Exit(0);
         }
     }

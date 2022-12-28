@@ -1,6 +1,7 @@
 ﻿using JurassicRisk.ViewsModels;
 using Models;
 using Models.Son;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,10 +13,10 @@ namespace JurassicRisk.Views
     public partial class LobbyPage : Page
     {
         private LobbyViewModel _lobbyVm;
-        public LobbyPage(LobbyViewModel lobbyVm)
+        public LobbyPage()
         {
             InitializeComponent();
-            _lobbyVm = lobbyVm;
+            _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
             DataContext= _lobbyVm;
         }
 

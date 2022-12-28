@@ -55,8 +55,8 @@ namespace RISKAPI.Controllers
             return reponse;
         }
 
-        [HttpPost("SetLobby")]
-        public async Task<IActionResult> SetLobby(Lobby lobby)
+        [HttpPut("UpdateLobby")]
+        public async Task<IActionResult> UpdateLobby(Lobby lobby)
         {
             IActionResult reponse = null;
             try
@@ -115,6 +115,7 @@ namespace RISKAPI.Controllers
 
             return reponse;
         }
+
         [HttpPut("PutTeam/{lobbyName}/{playerName}")]
         public async Task<IActionResult> SetTeam(string lobbyName, string playerName, [FromBody] Teams Team)
         {

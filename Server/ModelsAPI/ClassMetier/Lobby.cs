@@ -1,8 +1,5 @@
 ﻿using ModelsAPI.ClassMetier.Player;
-using Newtonsoft.Json;
-using Pipelines.Sockets.Unofficial.Buffers;
 using Redis.OM.Modeling;
-using Stockage.Converters;
 
 namespace ModelsAPI.ClassMetier
 {
@@ -76,7 +73,7 @@ namespace ModelsAPI.ClassMetier
         /// </summary>
         /// <param name="Id">Id of the lobby</param>
         /// <param name="Password">not required Password</param>
-        public Lobby(string Id,string? Password = null)
+        public Lobby(string Id, string? Password = null)
         {
             _joueurs = new List<Joueur>();
 
@@ -84,50 +81,13 @@ namespace ModelsAPI.ClassMetier
             this._password = Password;
         }
 
-        public Lobby() 
+        public Lobby()
         {
             _joueurs = new List<Joueur>();
         }
 
         #endregion
 
-        /// <summary>
-        /// Rejoins le lobby (ajoute le joueur dans la liste des joueurs)
-        /// </summary>
-        /// <param name="joueur">le joueur qui rejoint</param>
-        /// <returns>vrai si le joueur a rejoin</returns>
-        public bool JoinLobby(Joueur joueur)
-        {
-            bool res = false;
-            if (_joueurs != null)
-            {
-                if (_joueurs.Count < 4)
-                {
-                    _joueurs.Add(joueur);
-                    res = true;
-                }
-                if (_owner == null)
-                    _owner = _joueurs[0].Profil.Pseudo;
-            }
-            return res;
-        }
 
-        /// <summary>
-        /// Quitte le lobby retire le joueur de la liste
-        /// </summary>
-        /// <param name="joueur">Joueur qui quitte</param>
-        /// <returns>vrai si le joueur a quitter</returns>
-        public bool ExitLobby(Joueur joueur)
-        {
-            bool res = false;
-            Joueur? j = _joueurs.FindLast(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
-            if (j != null)
-            {
-                _joueurs.Remove(j);
-                res = true;
-            }
-
-            return res;
-        }
     }
 }

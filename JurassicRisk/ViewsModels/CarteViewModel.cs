@@ -171,8 +171,8 @@ namespace JurassicRisk.ViewsModels
                 _joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire);
             }
 
-            NotifyPropertyChanged("CarteCanvas");
             await SetCarte(_carte);
+            NotifyPropertyChanged("CarteCanvas");
         }
 
         private async Task MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -183,9 +183,10 @@ namespace JurassicRisk.ViewsModels
             DropShadowEffect shadow = new DropShadowEffect();
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
+
+            await SetCarte(_carte);
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
-            await SetCarte(_carte);
         }
 
         private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

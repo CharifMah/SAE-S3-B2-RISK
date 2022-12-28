@@ -14,7 +14,6 @@ namespace Models.Units
     {
         private string _sourceUri;
         private IUnit _uniteBase;
-        private BitmapImage _sprite;
         public UniteDecorator(IUnit uniteBase)
         {
             UniteBase = uniteBase;
@@ -33,7 +32,6 @@ namespace Models.Units
                     _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png"; ;
                     break;
             }
-            Sprite = new BitmapImage(new Uri(_sourceUri));
         }
 
         public IUnit UniteBase { get => _uniteBase; set => _uniteBase = value; }
@@ -47,6 +45,5 @@ namespace Models.Units
         public Elements Element { get => _uniteBase.Element; set => _uniteBase.Element = value; }
 
         public string UriSource { get => this._sourceUri; set => this._sourceUri = value; }
-        public BitmapImage Sprite { get => _sprite; set => _sprite = value; }
     }
 }

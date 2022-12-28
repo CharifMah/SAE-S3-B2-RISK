@@ -23,7 +23,6 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _lobby = new Lobby();
-
         }
 
         /// <summary>
@@ -60,6 +59,7 @@ namespace JurassicRisk.ViewsModels
             {
                 NotifyPropertyChanged("Lobby");
             }
+            //await RefreshLobby(_lobby.Id);
         }
 
         /// <summary>
@@ -69,12 +69,12 @@ namespace JurassicRisk.ViewsModels
         /// <returns>string</returns>
         public async Task<string> JoinLobby(string lobbyName)
         {
-            string res = "Ok";
+            string res = "";
             try
             {
 
                 JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
-                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json-patch+json"));
 
                 HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.GetAsync($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/{lobbyName}");
                 if (reponse.IsSuccessStatusCode)
@@ -93,10 +93,14 @@ namespace JurassicRisk.ViewsModels
                         res = "Plus de place dans le lobby";
                     }
 
-                    HttpResponseMessage reponsePost = await JurasicRiskGameClient.Get.Client.PostAsJsonAsync<Lobby>($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/SetLobby", _lobby);
+                    HttpResponseMessage reponsePost = await JurasicRiskGameClient.Get.Client.PutAsJsonAsync<Lobby>($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/UpdateLobby", _lobby);
                     if (reponsePost.IsSuccessStatusCode)
                     {
                         res = "lobby rejoint et refresh";
+                    }
+                    else
+                    {
+                        res = "lobby non rejoint et non refresh";
                     }
                 }
                 else
@@ -156,22 +160,20 @@ namespace JurassicRisk.ViewsModels
                 {
                     string lobbyJson = await reponse.Content.ReadAsStringAsync();
                     _lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
+
                     bool exited = _lobby.ExitLobby(JurassicRiskViewModel.Get.JoueurVm.Joueur);
 
                     if (exited)
                     {
                         NotifyPropertyChanged("Lobby");
                     }
-                    else
-                    {
-                        MessageBox.Show("Echec de la deconnexion");
-                    }
 
-                    HttpResponseMessage reponsePost = await JurasicRiskGameClient.Get.Client.PostAsJsonAsync<Lobby>($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/SetLobby", _lobby);
+                    HttpResponseMessage reponsePost = await JurasicRiskGameClient.Get.Client.PutAsJsonAsync<Lobby>($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/UpdateLobby", _lobby);
                     if (reponsePost.IsSuccessStatusCode)
                     {
                         res = "I left the lobby";
                     }
+         
                 }
                 else
                 {

@@ -9,20 +9,18 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class CreateLobbyPage : Page
     {
-        private LobbyViewModel _lobbyVm;
         public CreateLobbyPage()
         {
             InitializeComponent();
-            _lobbyVm = new LobbyViewModel();
         }
 
         private async void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            string connexion = await _lobbyVm.CreateLobby(new Lobby(inputLobbyName.Text,inputPassword.Password));
+            string connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text,inputPassword.Password));
             if (connexion == "lobby rejoint et refresh")
             {
 
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage(_lobbyVm));
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
             }
             else
             {

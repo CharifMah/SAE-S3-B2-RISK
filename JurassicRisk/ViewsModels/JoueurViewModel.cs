@@ -83,5 +83,10 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("NombreTrp");
             NotifyPropertyChanged("Units");
         }
+
+        public async void SetTeam(Teams teams)
+        {
+
+        }
     }
 }

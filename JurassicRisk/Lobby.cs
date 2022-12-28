@@ -113,11 +113,14 @@ namespace JurassicRisk
         public bool ExitLobby(Joueur joueur)
         {
             bool res = false;
-            Joueur? j = _joueurs.FindLast(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
-            if (j != null)
+            List<Joueur> joueurToRemove = _joueurs.FindAll(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
+            if (joueurToRemove != null)
             {
-                _joueurs.Remove(j);
-                res = true;
+                foreach (Joueur j in joueurToRemove)
+                {
+                    _joueurs.Remove(j);
+                    res = true;
+                }             
             }
 
             return res;
