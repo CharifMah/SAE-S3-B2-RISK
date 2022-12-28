@@ -10,6 +10,7 @@ using JurassicRisk.observable;
 using System.Windows;
 using StackExchange.Redis;
 using System.Threading.Channels;
+using JurassicRisk.Views;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -44,6 +45,18 @@ namespace JurassicRisk.ViewsModels
             {
                 string lobbyJson = await reponse.Content.ReadAsStringAsync();
                 _lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
+                NotifyPropertyChanged("Lobby");
+            }
+        }
+
+        public async Task SetTeam(Teams team)
+        {
+            JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
+            JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.PutAsJsonAsync($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/PutTeam/{_lobby.Id}/{JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo}",team);
+            if (reponse.IsSuccessStatusCode)
+                {
                 NotifyPropertyChanged("Lobby");
             }
         }

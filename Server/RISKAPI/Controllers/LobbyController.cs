@@ -36,7 +36,7 @@ namespace RISKAPI.Controllers
                 Console.WriteLine("Created Lobby");
                 Lobby lobby = new Lobby();
                 lobby.Id = id;
-  
+
                 await _lobby.InsertAsync(lobby);
                 reponse = new JsonResult($"Lobby With Name : {id} created");
             }
@@ -57,7 +57,7 @@ namespace RISKAPI.Controllers
                 reponse = new AcceptedResult();
                 if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
                 {
-                   await _lobby.UpdateAsync(lobby);
+                    await _lobby.UpdateAsync(lobby);
 
                     reponse = new JsonResult("Updated");
                 }
@@ -105,6 +105,37 @@ namespace RISKAPI.Controllers
                 reponse = new BadRequestObjectResult(e.Message);
             }
 
+            return reponse;
+        }
+        [HttpPut("PutTeam/{lobbyName}/{playerName}")]
+        public async Task<IActionResult> SetTeam(string lobbyName, string playerName, [FromBody] Teams Team)
+        {
+            IActionResult reponse = null;
+            try
+            {
+                string key = $"Lobby:{lobbyName}";
+                reponse = new AcceptedResult();
+                if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
+                {
+                    RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
+                    Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
+
+                    lobby.Joueurs.FindLast(x => x.Profil.Pseudo == playerName).Team = Team;
+
+                    await _lobby.UpdateAsync(lobby);
+
+                    reponse = new JsonResult("Updated");
+                }
+                else
+                {
+                    reponse = new JsonResult("Lobby not found");
+                }
+
+            }
+            catch (Exception e)
+            {
+                reponse = new BadRequestObjectResult(e.Message);
+            }
             return reponse;
         }
     }

@@ -40,9 +40,14 @@
         <ListBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" ItemsSource="{Binding Lobby.Joueurs}" Style="{StaticResource CustomListBox}" Height="136" Width="308">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=Profil.Pseudo}"></TextBlock>
-                    </StackPanel>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{} {0} : {1}">
+                                <Binding Path="Profil.Pseudo" Mode="OneWay"/>
+                                <Binding Path="Team" Mode="OneWay" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

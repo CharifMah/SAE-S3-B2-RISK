@@ -2,10 +2,12 @@
 using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Units;
 using Newtonsoft.Json;
+using Redis.OM.Modeling;
 using Stockage.Converters;
 
 namespace ModelsAPI.ClassMetier.Player
 {
+    [Document(StorageType = StorageType.Json, Prefixes = new[] { "Joueur" })]
     public class Joueur : IGestionTroupe
     {
         #region Attribute
@@ -17,19 +19,20 @@ namespace ModelsAPI.ClassMetier.Player
         #endregion
 
         #region Property
-
+        [Indexed]
         public Teams Team
         {
             get { return _team; }
             set { _team = value; }
         }
+        [Indexed]
         [JsonConverter(typeof(ConcreteCollectionTypeConverter<List<IUnit>, UniteBase, IUnit>))]
         public List<IUnit> Units
         {
             get { return _units; }
             set { _units = value; }
         }
-
+        [Indexed]
         public Profil Profil
         {
             get { return _profil; }

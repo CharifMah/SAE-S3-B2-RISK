@@ -7,10 +7,12 @@ using Models.Units;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using NReJSON;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using IUnit = Models.Units.IUnit;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -80,12 +82,6 @@ namespace JurassicRisk.ViewsModels
             }
             NotifyPropertyChanged("NombreTrp");
             NotifyPropertyChanged("Units");
-        }
-
-        public async Task SetTeam(Teams team)
-        {
-            _joueur.Team = team;
-
         }
     }
 }
