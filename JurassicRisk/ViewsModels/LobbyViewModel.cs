@@ -53,13 +53,12 @@ namespace JurassicRisk.ViewsModels
         {
             JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
             JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.PutAsJsonAsync($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/PutTeam/{_lobby.Id}/{JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo}", team);
+            JurassicRiskViewModel.Get.JoueurVm.Joueur.Team = team;
+            HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.PutAsJsonAsync($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/PutTeam/{_lobby.Id}/{JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo}", JurassicRiskViewModel.Get.JoueurVm.Joueur.Team);
             if (reponse.IsSuccessStatusCode)
             {
                 NotifyPropertyChanged("Lobby");
             }
-            //await RefreshLobby(_lobby.Id);
         }
 
         /// <summary>
