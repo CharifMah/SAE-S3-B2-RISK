@@ -37,20 +37,25 @@
         </TextBlock>
 
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Deconnexion}" Click="LogOutButton_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300" ></Button>
-        <ListBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" ItemsSource="{Binding Lobby.Joueurs}" Style="{StaticResource CustomListBox}" Height="136" Width="308">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{} {0} : {1}">
-                                <Binding Path="Profil.Pseudo" Mode="OneWay"/>
-                                <Binding Path="Team" Mode="OneWay" />
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+       
+        <StackPanel Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20">
+            <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=Lobby.Owner.Profil.Pseudo, Mode=OneWay , StringFormat={}Owner: {0}}"/>
+            <ListBox ItemsSource="{Binding Lobby.Joueurs}" Style="{StaticResource CustomListBox}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource FruitDays}" FontSize="20">
+                            <TextBlock.Text >
+                                <MultiBinding StringFormat="{} {0} : {1}">
+                                    <Binding Path="Profil.Pseudo" Mode="OneWay"/>
+                                    <Binding Path="Team" Mode="OneWay" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="Rbutton" Content="{x:Static Ressources:Strings.Red}" Style="{StaticResource CustomAnimationButton}" BorderBrush="Red" Width="200" Height="200" Click="SelectTeamButton_Click"/>

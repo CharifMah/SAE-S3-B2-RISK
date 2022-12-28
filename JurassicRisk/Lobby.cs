@@ -10,6 +10,7 @@ namespace JurassicRisk
 
         private string _id;
         private List<Joueur> _joueurs;
+        private Joueur? _owner;
 
         #endregion
 
@@ -47,6 +48,11 @@ namespace JurassicRisk
             get { return _joueurs; }
         }
 
+        public Joueur? Owner
+        {
+            get => _owner;
+        }
+
         #endregion
 
         #region Constructor
@@ -61,6 +67,8 @@ namespace JurassicRisk
                 {
                     _joueurs.Add(joueur);
                 }
+                if (_owner == null)
+                    _owner = _joueurs[0];
             }
         }
 

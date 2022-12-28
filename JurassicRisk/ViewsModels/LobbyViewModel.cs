@@ -1,16 +1,12 @@
-﻿using Models.Player;
+﻿using JurassicRisk.observable;
 using Models;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System;
-using System.Net.Http.Json;
 using Newtonsoft.Json;
-using JurassicRisk.observable;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 using System.Windows;
-using StackExchange.Redis;
-using System.Threading.Channels;
-using JurassicRisk.Views;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -27,7 +23,7 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _lobby = new Lobby();
-        
+
         }
 
         /// <summary>
@@ -59,9 +55,9 @@ namespace JurassicRisk.ViewsModels
             JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
             JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.PutAsJsonAsync($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/PutTeam/{_lobby.Id}/{JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo}",team);
+            HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.PutAsJsonAsync($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/PutTeam/{_lobby.Id}/{JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo}", team);
             if (reponse.IsSuccessStatusCode)
-                {
+            {
                 NotifyPropertyChanged("Lobby");
             }
         }
@@ -97,11 +93,11 @@ namespace JurassicRisk.ViewsModels
                         res = "Plus de place dans le lobby";
                     }
 
-                    HttpResponseMessage reponsePost = await JurasicRiskGameClient.Get.Client.PostAsJsonAsync<Lobby>($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/SetLobby",_lobby);
+                    HttpResponseMessage reponsePost = await JurasicRiskGameClient.Get.Client.PostAsJsonAsync<Lobby>($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/SetLobby", _lobby);
                     if (reponsePost.IsSuccessStatusCode)
                     {
                         res = "lobby rejoint et refresh";
-                    }                  
+                    }
                 }
                 else
                 {
