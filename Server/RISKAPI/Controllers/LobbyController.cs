@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Graph;
 using ModelsAPI.ClassMetier;
+using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
 using NReJSON;
 using Redis.OM;
@@ -28,17 +29,24 @@ namespace RISKAPI.Controllers
         }
 
         [HttpPost("CreateLobby")]
-        public async Task<IActionResult> CreateLobby(string id)
+        public async Task<IActionResult> CreateLobby(Lobby lobby)
         {
             IActionResult reponse = null;
             try
             {
-                Console.WriteLine("Created Lobby");
-                Lobby lobby = new Lobby();
-                lobby.Id = id;
+                bool res = RedisProvider.Instance.RedisDataBase.KeyExists($"Lobby:{lobby.Id}");
+                if (!res)
+                {
+                    await _lobby.InsertAsync(lobby);
+                    Console.WriteLine("Created Lobby");
 
-                await _lobby.InsertAsync(lobby);
-                reponse = new JsonResult($"Lobby With Name : {id} created");
+                    reponse = new JsonResult($"Lobby With Name : {lobby.Id} created");
+                }
+                else
+                {
+                    reponse = new JsonResult($"A lobby with name {lobby.Id} already exist");
+                }
+               
             }
             catch (Exception e)
             {

@@ -1,5 +1,6 @@
 ﻿using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
+using Pipelines.Sockets.Unofficial.Buffers;
 using Redis.OM.Modeling;
 using Stockage.Converters;
 
@@ -11,7 +12,9 @@ namespace ModelsAPI.ClassMetier
         #region Attributes
 
         private string _id;
+        private string _password;
         private List<Joueur> _joueurs;
+        private string _owner;
 
         #endregion
 
@@ -29,6 +32,7 @@ namespace ModelsAPI.ClassMetier
                 _id = value;
             }
         }
+
         [Indexed]
         public bool PlayersReady
         {
@@ -51,22 +55,38 @@ namespace ModelsAPI.ClassMetier
         {
             get { return _joueurs; }
         }
+        [Indexed]
+        public string? Owner
+        {
+            get => _owner;
+            set => _owner = value;
+        }
+        [Indexed]
+        public string? Password
+        {
+            get => _password;
+            set => _password = value;
+        }
 
         #endregion
 
         #region Constructor
-
-        public Lobby(List<Joueur> joueurs = null)
+        /// <summary>
+        /// Create a lobby
+        /// </summary>
+        /// <param name="Id">Id of the lobby</param>
+        /// <param name="Password">not required Password</param>
+        public Lobby(string Id,string? Password = null)
         {
             _joueurs = new List<Joueur>();
 
-            if (joueurs != null && joueurs.Count > 0)
-            {
-                foreach (Joueur joueur in joueurs)
-                {
-                    _joueurs.Add(joueur);
-                }
-            }
+            this._id = Id;
+            this._password = Password;
+        }
+
+        public Lobby() 
+        {
+            _joueurs = new List<Joueur>();
         }
 
         #endregion
@@ -79,20 +99,16 @@ namespace ModelsAPI.ClassMetier
         public bool JoinLobby(Joueur joueur)
         {
             bool res = false;
-            List<Joueur> joueurs = _joueurs.FindAll(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
-            if (joueurs != null)
+            if (_joueurs != null)
             {
-                foreach (Joueur j in joueurs)
+                if (_joueurs.Count < 4)
                 {
-                    _joueurs.Remove(j);
+                    _joueurs.Add(joueur);
+                    res = true;
                 }
+                if (_owner == null)
+                    _owner = _joueurs[0].Profil.Pseudo;
             }
-            if (_joueurs.Count < 4)
-            {
-                _joueurs.Add(joueur);
-                res = true;
-            }
-
             return res;
         }
 

@@ -112,6 +112,32 @@ namespace JurassicRisk.ViewsModels
             return res;
         }
 
+        public async Task<string> CreateLobby(Lobby lobby)
+        {
+            string res = "Ok";
+            try
+            {
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
+                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage reponsePost = await JurasicRiskGameClient.Get.Client.PostAsJsonAsync<Lobby>($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/CreateLobby",lobby);
+                if (reponsePost.IsSuccessStatusCode)
+                {
+                    res = $"Lobby Created with name {lobby.Id}";
+                }
+                else
+                {
+                    res = "Un lobby avec le meme nom existe déja";
+                }
+
+            }
+            catch (Exception e)
+            {
+                res = e.Message;
+            }
+            return res;
+        }
+
         /// <summary>
         /// Exit the lobby
         /// </summary>

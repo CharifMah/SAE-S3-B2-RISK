@@ -17,7 +17,7 @@ namespace ModelTestUnit
             t1.Team = Teams.ROUGE;
             TerritoireBase t2 = new TerritoireBase(0);
             t2.Team = Teams.VERT;
-            Joueur j1 = new Joueur(new Profil("test", "qsd"), new List<IUnit>() { new UniteBase() }, Teams.NEUTRE);
+            Joueur j1 = new Joueur(new Profil("test", "qsd"), Teams.NEUTRE);
             j1.Team = Teams.VERT;
 
             FabriqueUniteBase f = new FabriqueUniteBase();

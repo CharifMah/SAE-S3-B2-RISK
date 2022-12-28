@@ -39,7 +39,7 @@
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Deconnexion}" Click="LogOutButton_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300" ></Button>
        
         <StackPanel Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20">
-            <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=Lobby.Owner.Profil.Pseudo, Mode=OneWay , StringFormat={}Owner: {0}}"/>
+            <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=Lobby.Owner, Mode=OneWay , StringFormat={}Owner: {0}}"/>
             <ListBox ItemsSource="{Binding Lobby.Joueurs}" Style="{StaticResource CustomListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

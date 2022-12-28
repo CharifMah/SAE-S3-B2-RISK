@@ -14,12 +14,12 @@ namespace ModelTestUnit
         [Fact]
         public void Combat()
         {
-            Joueur j1 = new Joueur(new Profil("sqd", "sqd"), new List<IUnit>() { new UniteBase(), new UniteBase() }, Teams.ROUGE); ;
+            Joueur j1 = new Joueur(new Profil("sqd", "sqd"), Teams.ROUGE); ;
             j1.Team = Teams.ROUGE;
             TerritoireBase t1 = new TerritoireBase(1);
             t1.Team = Teams.ROUGE;
 
-            Joueur j2 = new Joueur(new Profil("sqdd", "sqdd"), new List<IUnit>() { new UniteBase(), new UniteBase() }, Teams.ROUGE);
+            Joueur j2 = new Joueur(new Profil("sqdd", "sqdd"), Teams.ROUGE);
             j2.Team = Teams.BLEU;
             TerritoireBase t2 = new TerritoireBase(2);
             t2.Team = Teams.BLEU;

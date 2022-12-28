@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JurassicRisk.ViewsModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace JurassicRisk.Views
 {
@@ -20,9 +9,31 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class CreateLobbyPage : Page
     {
+        private LobbyViewModel _lobbyVm;
         public CreateLobbyPage()
         {
             InitializeComponent();
+            _lobbyVm = new LobbyViewModel();
+        }
+
+        private async void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            string connexion = await _lobbyVm.CreateLobby(new Lobby(inputLobbyName.Text,inputPassword.Password));
+            if (connexion == "lobby rejoint et refresh")
+            {
+
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage(_lobbyVm));
+            }
+            else
+            {
+                Error.Text = connexion;
+                Error.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
     }
 }
