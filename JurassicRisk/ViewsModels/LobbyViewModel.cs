@@ -49,6 +49,11 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
+        /// <summary>
+        /// Set the team of the current player
+        /// </summary>
+        /// <param name="team">new team</param>
+        /// <returns>Task</returns>
         public async Task SetTeam(Teams team)
         {
             JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
