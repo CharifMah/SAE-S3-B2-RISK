@@ -11,8 +11,6 @@ Vous devez installer la dependance avant de lancer le projet.
 
 ![image](https://user-images.githubusercontent.com/91829231/193802735-e29d8524-2eb2-48b8-ac12-8679abedfb07.png)
    
-- Lancez la solution puis allez dans les propriétés de la solution et sélectionnée compilation multiple et choissez démarrer comme action pour RISKAPI et JurrasicRisk. 
-
 ## Redis Setup
 ### Prérequise (REDISJSON , REDISEARCH , REDIS-SERVER)
 ```
