@@ -1,5 +1,6 @@
 ﻿using JurassicRisk.observable;
 using Models;
+using Models.Player;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -80,7 +81,8 @@ namespace JurassicRisk.ViewsModels
                 {
                     string lobbyJson = await reponse.Content.ReadAsStringAsync();
                     _lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
-                    bool joined = _lobby.JoinLobby(JurassicRiskViewModel.Get.JoueurVm.Joueur);
+
+                    bool joined = _lobby.JoinLobby(new Joueur(ProfilViewModel.Get.SelectedProfil, Teams.NEUTRE));
 
                     if (joined)
                     {
