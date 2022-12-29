@@ -28,9 +28,13 @@ namespace JurassicRisk.Views
             InitializeComponent();
         }
 
+        #region Event
+
+        #region Async
+
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if(!await ProfilViewModel.Get.VerifProfilCreation(inputPseudo.Text))
+            if (!await ProfilViewModel.Get.VerifProfilCreation(inputPseudo.Text))
             {
                 if (inputPseudo.Text != "")
                 {
@@ -57,19 +61,14 @@ namespace JurassicRisk.Views
             }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
-        }
-
         private async void inscription()
         {
             Profil profil = new Profil(inputPseudo.Text, inputPassword.Password);
-            string inscription = await ProfilViewModel.Get.CreateProfil(profil);
+            string inscription = await ProfilViewModel.Get.Inscription(profil);
             if (inscription == "Ok")
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
-                await ProfilViewModel.Get.SetSelectedProfil(profil);
+                await ProfilViewModel.Get.Connexion(profil);
             }
             else
             {
@@ -77,5 +76,14 @@ namespace JurassicRisk.Views
                 Error.Visibility = Visibility.Visible;
             }
         }
+
+        #endregion
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
+        }
+
+        #endregion
     }
 }

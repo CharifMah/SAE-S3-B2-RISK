@@ -20,7 +20,7 @@ namespace JurassicRisk.Views
         private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
             Profil profil = new Profil(inputPseudo.Text, inputPassword.Password);
-            string connexion = await ProfilViewModel.Get.SetSelectedProfil(profil);
+            string connexion = await ProfilViewModel.Get.Connexion(profil);
 
             if (connexion == "Ok")
             {

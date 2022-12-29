@@ -74,9 +74,6 @@ namespace Models
         }
         #endregion
 
-
-
-
         public async Task StartGame()
         {
             TourPlacement t = new TourPlacement();
@@ -93,7 +90,5 @@ namespace Models
             }
         }
 
-    }
-
-   
+    } 
 }

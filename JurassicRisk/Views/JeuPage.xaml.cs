@@ -13,6 +13,10 @@ namespace JurassicRisk.Views
     public partial class JeuPage : Page
     {
         private Window mainwindow;
+
+        /// <summary>
+        /// Page du jeux
+        /// </summary>
         public JeuPage()
         {
             InitializeComponent();
@@ -24,6 +28,18 @@ namespace JurassicRisk.Views
 
             DataContext = JurassicRiskViewModel.Get;
         }
+
+        #region Events
+
+        #region Async
+
+        private async void OptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+            await JurassicRiskViewModel.Get.CarteVm.SetCarte(JurassicRiskViewModel.Get.CarteVm.Carte);
+        }
+
+        #endregion
 
         private void Mainwindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -73,12 +89,6 @@ namespace JurassicRisk.Views
             }
         }
 
-        private async void OptionButton_Click(object sender, RoutedEventArgs e)
-        {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
-            await JurassicRiskViewModel.Get.CarteVm.SetCarte(JurassicRiskViewModel.Get.CarteVm.Carte);
-        }
-
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             SoundStore.Get("DarkJungleMusic.mp3").Stop();
@@ -102,5 +112,8 @@ namespace JurassicRisk.Views
         {
             JurassicRiskViewModel.Get.JoueurVm.SelectedUnit = (sender as ListBox).SelectedItem as IUnit;
         }
+
+        #endregion
+
     }
 }

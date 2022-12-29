@@ -6,7 +6,15 @@ namespace Stockage.Converters
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            serializer.Serialize(writer, value);
+            try
+            {
+                serializer.Serialize(writer, value);
+            }
+            catch (Exception e)
+            {
+                throw e.InnerException;
+            }
+           
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

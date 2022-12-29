@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using JurassicRisk.ViewsModels;
+using Models;
 using Models.Son;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +24,7 @@ namespace JurassicRisk.Views
 
         private void DeconnectionButton_Click(object sender, RoutedEventArgs e)
         {
+            ProfilViewModel.Get.SelectedProfil = null;
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
         }
 

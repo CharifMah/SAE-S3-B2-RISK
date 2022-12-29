@@ -12,13 +12,13 @@ namespace JurassicRisk.ViewsModels
     {
         #region Attributs
 
-        private Profil _selectedProfil;
+        private Profil? _selectedProfil;
 
         #endregion
 
         #region Properties
 
-        public Profil SelectedProfil
+        public Profil? SelectedProfil
         {
             get { return _selectedProfil; }
             set
@@ -49,7 +49,7 @@ namespace JurassicRisk.ViewsModels
         /// <param name="pseudo">string pseudo</param>
         /// <returns>awaitable Task</returns>
         /// <Author>Charif Mahmoud</Author>
-        public async Task<string> SetSelectedProfil(Profil profil)
+        public async Task<string> Connexion(Profil profil)
         {
             string res = "Ok";
             try
@@ -84,7 +84,7 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="profil">Profil</param>
         /// <returns>awaitable Task</returns>
-        public async Task<string> CreateProfil(Profil profil)
+        public async Task<string> Inscription(Profil profil)
         {
             string res = "Ok";
             try
