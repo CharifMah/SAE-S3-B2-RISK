@@ -75,14 +75,15 @@ mv redisearch.so /etc/redis/modules/
 ```
 
 ## Config
-Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf
+Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf (load conf is RDB is not loaded)
 # Start Redis
 ```
-redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/redis/modules/librejson.so
-```
-or
-```
 sudo redis-server /etc/redis/redis.conf
+
+```
+and / or
+```
+redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/redis/modules/librejson.so
 ```
 # Check if modules are loaded
 ```
