@@ -78,7 +78,6 @@ Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf (load conf is RDB is not lo
 # Start Redis
 ```
 sudo redis-server /etc/redis/redis.conf
-
 ```
 and / or
 ```
