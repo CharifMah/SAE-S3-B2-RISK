@@ -100,3 +100,10 @@ nano etc/redis/redis.conf
 config set notify-keyspace-events AKEs
 ```
 
+### Check if RDB is loaded with data
+```
+redis-cli
+
+KEYS *
+```
+
