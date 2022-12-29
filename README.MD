@@ -55,7 +55,6 @@ mv librejson.so /etc/redis/modules/
 ```
 git clone --recursive https://github.com/RediSearch/RediSearch.git
 cd RediSearch
-
 ```
 # Install dependencies
 ```
