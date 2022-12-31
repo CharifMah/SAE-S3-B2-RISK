@@ -88,6 +88,47 @@ namespace ModelsAPI.ClassMetier
 
         #endregion
 
+        /// <summary>
+        /// Rejoins le lobby (ajoute le joueur dans la liste des joueurs)
+        /// </summary>
+        /// <param name="joueur">le joueur qui rejoint</param>
+        /// <returns>vrai si le joueur a rejoin</returns>
+        public bool JoinLobby(Joueur joueur)
+        {
+            bool res = false;
+            if (_joueurs != null)
+            {
+                if (_joueurs.Count < 4)
+                {
+                    _joueurs.Add(joueur);
+                    res = true;
+                }
+                if (_owner == null)
+                    _owner = _joueurs[0].Profil.Pseudo;
+            }
+            return res;
+        }
+
+        /// <summary>
+        /// Quitte le lobby retire le joueur de la liste
+        /// </summary>
+        /// <param name="joueur">Joueur qui quitte</param>
+        /// <returns>vrai si le joueur a quitter</returns>
+        public bool ExitLobby(Joueur joueur)
+        {
+            bool res = false;
+            List<Joueur> joueurToRemove = _joueurs.FindAll(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
+            if (joueurToRemove != null)
+            {
+                foreach (Joueur j in joueurToRemove)
+                {
+                    _joueurs.Remove(j);
+                    res = true;
+                }
+            }
+
+            return res;
+        }
 
     }
 }

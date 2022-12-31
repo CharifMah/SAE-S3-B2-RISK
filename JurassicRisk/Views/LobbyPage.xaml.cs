@@ -18,6 +18,7 @@ namespace JurassicRisk.Views
             InitializeComponent();
             _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
             DataContext= _lobbyVm;
+
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -53,8 +54,6 @@ namespace JurassicRisk.Views
                         Gbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
-                        await _lobbyVm.SetTeam(Teams.ROUGE);
-                        
                     }
                     else
                     {
@@ -62,7 +61,6 @@ namespace JurassicRisk.Views
                         Gbutton.IsEnabled = true;
                         Bbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
-                        await _lobbyVm.SetTeam(Teams.NEUTRE);
                     }
 
                     break;
@@ -73,7 +71,6 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
-                        await _lobbyVm.SetTeam( Teams.VERT);
                     }
                     else
                     {
@@ -81,7 +78,6 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = true;
                         Bbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
-                        await _lobbyVm.SetTeam(Teams.NEUTRE);
                     }
                     break;
                 case "Bbutton":
@@ -91,7 +87,6 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = false;
                         Gbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
-                        await _lobbyVm.SetTeam(Teams.BLEU);
                     }
                     else
                     {
@@ -99,7 +94,6 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = true;
                         Gbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
-                        await _lobbyVm.SetTeam( Teams.NEUTRE);
                     }
                     break;
                 case "Ybutton":
@@ -109,15 +103,13 @@ namespace JurassicRisk.Views
                         Rbutton.IsEnabled = false;
                         Gbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
-                        await _lobbyVm.SetTeam(Teams.JAUNE);
                     }
                     else
                     {
                         b.Content = Ressource.Strings.Yellow;
                         Rbutton.IsEnabled = true;
                         Gbutton.IsEnabled = true;
-                        Bbutton.IsEnabled = true;
-                        await _lobbyVm.SetTeam(Teams.NEUTRE);
+                        Bbutton.IsEnabled = true;                      
                     }
                     break;
             }

@@ -1,10 +1,11 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
-using Microsoft.Graph.ExternalConnectors;
 using Redis.OM;
+using RISKAPI.Controllers;
 using RISKAPI.HostedServices;
-using RISKAPI.Services;
-using StackExchange.Redis;
+using RISKAPI.Hubs;
+using System.Net.WebSockets;
+using System.Text;
 
 namespace RISKAPI
 {
@@ -15,20 +16,26 @@ namespace RISKAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers(
                 options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true).AddNewtonsoftJson();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddSingleton(new RedisConnectionProvider(builder.Configuration["REDIS_CONNECTION_STRING"]));
+
             builder.Services.AddHostedService<IndexCreationService>();
             // Register the RedisCache service
             builder.Services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = builder.Configuration["Redis"];
             });
+
             builder.Services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
+
+            builder.Services.AddSignalR();
 
             var app = builder.Build();
 
@@ -39,16 +46,16 @@ namespace RISKAPI
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
+            app.UseRouting();
             app.MapControllers();
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<LobbyHub>("/LobbyHub");
+            });
+
             app.Run();
-
-
-        }
+        }       
     }
 }
 

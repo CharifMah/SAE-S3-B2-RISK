@@ -1,19 +1,16 @@
 ﻿using Models.Map;
 using Models.Player;
 using Models.Tours;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.WebSockets;
 
 namespace Models
 {
-    public class JurasicRiskGameClient 
+    public class JurasicRiskGameClient
     {
         #region Attributes
         private HttpClient _client;
+        private ClientWebSocket _clientWebSocket;
         private string _ip;
         private Carte _carte;
         private List<Joueur> _joueurs;
@@ -37,7 +34,8 @@ namespace Models
 
         public List<Joueur> Joueurs
         {
-            get { return _joueurs; } set { _joueurs = value; } 
+            get { return _joueurs; }
+            set { _joueurs = value; }
         }
 
         public HttpClient Client
@@ -84,11 +82,10 @@ namespace Models
                 foreach (Joueur joueur in _joueurs)
                 {
                     t.PlaceUnits(joueur.Units[0], joueur);
-                    
+
                     await _clickWaitTask.Task;
-                }          
+                }
             }
         }
-
-    } 
+    }
 }

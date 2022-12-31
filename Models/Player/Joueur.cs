@@ -23,6 +23,7 @@ namespace Models.Player
             get { return _team; }
             set { _team = value; }
         }
+
         [JsonConverter(typeof(ConcreteCollectionTypeConverter<List<IUnit>, UniteBase, IUnit>))]
         public List<IUnit> Units
         {

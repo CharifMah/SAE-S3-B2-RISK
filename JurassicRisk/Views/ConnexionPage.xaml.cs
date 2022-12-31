@@ -1,5 +1,6 @@
 ﻿
 using JurassicRisk.ViewsModels;
+using Models;
 using Models.Player;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +32,6 @@ namespace JurassicRisk.Views
                 Error.Text = connexion;
                 Error.Visibility = Visibility.Visible;
             }
-
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

@@ -20,7 +20,7 @@ using TerritoireDecorator = Models.Map.TerritoireDecorator;
 namespace JurassicRisk.ViewsModels
 {
     /// <author>Charif</author>
-    public class CarteViewModel : observable.Observable
+    public class CarteViewModel :    observable.Observable
     {
         #region Attributes
 

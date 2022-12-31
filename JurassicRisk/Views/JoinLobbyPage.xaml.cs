@@ -1,4 +1,6 @@
 ﻿using JurassicRisk.ViewsModels;
+using Microsoft.AspNetCore.SignalR.Client;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,18 +19,20 @@ namespace JurassicRisk.Views
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
 
-            string connexion = await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text);
-            if (connexion == "lobby rejoint et refresh")
+            try
             {
-
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                bool connection = await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text);
+                if (connection)
+                {
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Error.Text = connexion;
+                Error.Text = ex.Message;
                 Error.Visibility = Visibility.Visible;
+                
             }
-
         }
 
         private async void BackButton_Click(object sender, RoutedEventArgs e)

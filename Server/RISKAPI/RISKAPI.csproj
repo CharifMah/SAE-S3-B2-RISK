@@ -25,11 +25,15 @@
     <PackageReference Include="NReJSON" Version="4.0.0" />
     <PackageReference Include="Redis.OM" Version="0.4.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.86" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ModelsAPI\ModelsAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
