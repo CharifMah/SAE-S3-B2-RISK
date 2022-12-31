@@ -9,7 +9,7 @@ namespace Models.Player
     public class Joueur : IGestionTroupe
     {
         #region Attribute
-
+        private string _connectionId;
         private Teams _team;
         private List<IUnit> _units;
         private Profil _profil;
@@ -36,6 +36,7 @@ namespace Models.Player
             get { return _profil; }
             set { _profil = value; }
         }
+
 
         #endregion
 
@@ -64,7 +65,7 @@ namespace Models.Player
                         break;
                 }
             }
-
+            _connectionId = "NotConnected";
             _profil = profil;
             _team = team;
         }

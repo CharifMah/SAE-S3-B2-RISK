@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockage", "..\Stockage\Sto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageUnitTest", "..\StorageUnitTest\StorageUnitTest.csproj", "{3FE708FF-B119-4C4D-9598-B1C89D457285}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{4A6D0326-ABB5-4E80-A264-7381993E2D62}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,10 +42,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{259C2F37-5D21-4F59-AB3B-07FDECA04F33} = {4A6D0326-ABB5-4E80-A264-7381993E2D62}
-		{3FE708FF-B119-4C4D-9598-B1C89D457285} = {4A6D0326-ABB5-4E80-A264-7381993E2D62}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CE9497DE-B3DB-4AAB-8B0D-4A205409B392}

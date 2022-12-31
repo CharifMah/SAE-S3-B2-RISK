@@ -19,6 +19,12 @@ namespace ModelsAPI.ClassMetier.Player
         public string Password { get; set; }
 
         /// <summary>
+        /// ConnectionId SignalR
+        /// </summary>
+        [Indexed]
+        public string ConnectionId { get; set; }
+
+        /// <summary>
         /// create a profil
         /// </summary>
         /// <param name="login">of the profil</param>

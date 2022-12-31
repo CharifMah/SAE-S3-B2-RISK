@@ -1,8 +1,7 @@
-﻿using Models;
-using Models.Player;
+﻿using Models.Player;
 using System.Collections.Generic;
 
-namespace JurassicRisk
+namespace Models
 {
     public class Lobby
     {
@@ -44,6 +43,7 @@ namespace JurassicRisk
                 return res;
             }
         }
+
         public List<Joueur> Joueurs
         {
             get { return _joueurs; }
@@ -73,8 +73,8 @@ namespace JurassicRisk
         {
             _joueurs = new List<Joueur>();
 
-            this._id = Id;
-            this._password = Password;
+            _id = Id;
+            _password = Password;
         }
 
         public Lobby()
@@ -103,7 +103,7 @@ namespace JurassicRisk
                     _owner = _joueurs[0].Profil.Pseudo;
             }
             return res;
-        }
+        }     
 
         /// <summary>
         /// Quitte le lobby retire le joueur de la liste
@@ -120,7 +120,7 @@ namespace JurassicRisk
                 {
                     _joueurs.Remove(j);
                     res = true;
-                }             
+                }
             }
 
             return res;

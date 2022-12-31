@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using JurassicRisk.observable;
 using JurassicRisk.Services;
+using JurassicRisk.Views;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
 using Models.Player;
@@ -18,7 +19,9 @@ namespace JurassicRisk.ViewsModels
     public class LobbyViewModel : Observable
     {
         #region Attributes
+        private HubConnection _connection;
         readonly Dispatcher _dispatcher;
+        private SignalRLobbyService _chatService;
         private Lobby _lobby;
         private bool _isConnected;
         private string _errorMessage = string.Empty;
@@ -71,41 +74,63 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
+            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/LobbyHub").Build();
+            _chatService = new SignalRLobbyService(_connection);
             _lobby = new Lobby();  
             _isConnected = false;
         }
 
         #endregion
 
+        #region Requests
 
         /// <summary>
-        /// Join un partie existante
+        /// Connect chatService Client to LobbyHub
         /// </summary>
-        /// <param name="lobbyName">le nom de lobby</param>
-        /// <returns>string</returns>
-        public async Task<bool> JoinLobby(string lobbyName)
+        /// <returns>bool true if connected</returns>
+        private async Task Connect()
         {
-            HubConnection connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/LobbyHub").Build();
-            SignalRChatService chatService = new SignalRChatService(connection);
-            chatService.LobbyReceived += ChatService_LobbyReceived;
-            chatService.LobbyJoined += ChatService_LobbyJoined;
-            await chatService.Connect().ContinueWith(async task =>
+            _chatService.Connected += _chatService_Connected;
+            await _chatService.Connect().ContinueWith(async task =>
             {
                 if (task.Exception != null)
                 {
                     this._errorMessage = "Unable to connect to lobby chat hub";
                 }
-                Joueur joueur = new Joueur(JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil, Teams.NEUTRE);
-                await chatService.JoinLobby(joueur,lobbyName);
-                await chatService.SendLobby(new Lobby(lobbyName));
-                _isConnected = true;
             });
+        }
 
-            return _isConnected;
+        /// <summary>
+        /// Join un partie existante
+        /// </summary>
+        /// <param name="lobbyName">le nom de lobby</param>
+        /// <returns>bool</returns>
+        public async Task<bool> JoinLobby(string lobbyName)
+        {
+            await Connect();
+
+            _chatService.LobbyReceived += ChatService_LobbyReceived;
+            _chatService.LobbyJoined += ChatService_LobbyJoined;
+
+            Joueur joueur = new Joueur(JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil, Teams.NEUTRE);
+            await _chatService.JoinLobby(joueur, lobbyName);
+
+            return true;
+        }
+
+        public async Task<bool> SetTeam(Teams team)
+        {
+            await _chatService.SetTeam(team);
+            return true;
         }
 
 
 
+        /// <summary>
+        /// Create a lobby
+        /// </summary>
+        /// <param name="lobby">lobby to create</param>
+        /// <returns>response</returns>
         public async Task<string> CreateLobby(Lobby lobby)
         {
             string res = "Ok";
@@ -132,68 +157,30 @@ namespace JurassicRisk.ViewsModels
             return res;
         }
 
-        /// <summary>
-        /// Exit the lobby
-        /// </summary>
-        /// <param name="lobbyName">le nom de lobby</param>
-        /// <returns>string</returns>
-        public async Task<string> ExitLobby(string lobbyName)
-        {
-            string res = "Ok";
-            try
-            {
-                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Clear();
-                JurasicRiskGameClient.Get.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage reponse = await JurasicRiskGameClient.Get.Client.GetAsync($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/{lobbyName}");
-                if (reponse.IsSuccessStatusCode)
-                {
-                    string lobbyJson = await reponse.Content.ReadAsStringAsync();
-                    _lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
-
-                    bool exited = _lobby.ExitLobby(JurassicRiskViewModel.Get.JoueurVm.Joueur);
-
-                    if (exited)
-                    {
-                        NotifyPropertyChanged("Lobby");
-                    }
-
-                    HttpResponseMessage reponsePost = await JurasicRiskGameClient.Get.Client.PutAsJsonAsync<Lobby>($"https://{JurasicRiskGameClient.Get.Ip}/Lobby/UpdateLobby", _lobby);
-                    if (reponsePost.IsSuccessStatusCode)
-                    {
-                        res = "I left the lobby";
-                    }
-
-                }
-                else
-                {
-                    res = "Le lobby n'existe pas";
-                }
-
-            }
-            catch (Exception e)
-            {
-                res = e.Message;
-            }
-            return res;
-        }
-
+        #endregion
 
         #region Events
 
-        private void ChatService_LobbyReceived(Lobby lobby)
+        private void _chatService_Connected(string connectionId)
+        {
+            _isConnected = true;
+        }
+
+        private void ChatService_LobbyReceived(string lobbyJson)
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() =>
             {
+                Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
                 NotifyPropertyChanged("Lobby");
             });
         }
 
-        private void ChatService_LobbyJoined(Lobby lobby)
+        private void ChatService_LobbyJoined(string lobbyJson)
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() =>
             {
+                Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
                 NotifyPropertyChanged("Lobby");
             });

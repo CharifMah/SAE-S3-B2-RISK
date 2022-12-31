@@ -3,7 +3,7 @@ using System.Net;
 
 namespace RISKAPI.Services
 {
-    public class RedisProvider
+    public class RedisProvider : IRedisProvider
     {
 
         #region Attributes
@@ -24,6 +24,7 @@ namespace RISKAPI.Services
         #endregion
 
         #region Singleton
+        private int _sub = -1;
         private static readonly Lazy<RedisProvider> lazyObj = new Lazy<RedisProvider>(() => new RedisProvider());
         public static RedisProvider Instance => lazyObj.Value;
         private RedisProvider()
@@ -41,16 +42,31 @@ namespace RISKAPI.Services
 
         public void ManageSubscriber(Func<string, Task> methode)
         {
-            redisPubSub = redisClient.GetSubscriber();
 
-            redisPubSub.Subscribe("__keyevent@0__:json.set", (channel, message) =>
+            if (_sub == -1)
             {
-                if (message.StartsWith("Lobby"))
+                redisPubSub = redisClient.GetSubscriber();
+
+                redisPubSub.Subscribe("__keyevent@0__:json.set", (channel, message) =>
                 {
-                    message = message.ToString().Substring(message.ToString().LastIndexOf(':') + 1);
-                }
-                methode(message);
-            });
+                    if (message.StartsWith("Lobby"))
+                    {
+                        message = message.ToString().Substring(message.ToString().LastIndexOf(':') + 1);
+                    }
+                    methode(message);
+                });
+
+                redisPubSub.Subscribe("__keyevent@0__:json.del", (channel, message) =>
+                {
+                    if (message.StartsWith("Lobby"))
+                    {
+                        message = message.ToString().Substring(message.ToString().LastIndexOf(':') + 1);
+                    }
+                    methode(message);
+                });
+
+                _sub = 0;
+            }
         }
     }
 }

@@ -72,6 +72,7 @@ namespace ModelsAPI.ClassMetier.Player
         }
 
         #endregion
+
         public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
             if (unites.Count > 0 && (_team == territoire.Team || territoire.Team == Teams.NEUTRE))

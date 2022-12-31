@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsAPI", "ModelsAPI\Mode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockage", "Stockage\Stockage.csproj", "{C0854899-0AC3-4181-B2B5-0DF36AD4BA10}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestApi", "UnitTestApi\UnitTestApi.csproj", "{4838F7BA-4D1A-4344-9D20-E0A443F045A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C0854899-0AC3-4181-B2B5-0DF36AD4BA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0854899-0AC3-4181-B2B5-0DF36AD4BA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0854899-0AC3-4181-B2B5-0DF36AD4BA10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4838F7BA-4D1A-4344-9D20-E0A443F045A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4838F7BA-4D1A-4344-9D20-E0A443F045A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4838F7BA-4D1A-4344-9D20-E0A443F045A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4838F7BA-4D1A-4344-9D20-E0A443F045A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

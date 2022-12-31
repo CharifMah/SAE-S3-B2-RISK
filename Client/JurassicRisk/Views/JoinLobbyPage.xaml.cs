@@ -18,7 +18,6 @@ namespace JurassicRisk.Views
 
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 bool connection = await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text);

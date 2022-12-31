@@ -47,7 +47,11 @@ namespace JurassicRisk.ViewsModels
         public IUnit SelectedUnit
         {
             get { return _selectedUnit; }
-            set { _selectedUnit = value; }
+            set 
+            {
+                _selectedUnit = value;
+                NotifyPropertyChanged("SelectedUnit");
+            }
         }
 
         #endregion

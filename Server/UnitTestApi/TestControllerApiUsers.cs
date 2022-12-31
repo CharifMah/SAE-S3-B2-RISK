@@ -1,4 +1,5 @@
 ﻿using ModelsAPI.ClassMetier;
+using ModelsAPI.ClassMetier.Player;
 using RISKAPI.Controllers;
 using System.Net.Http.Json;
 
