@@ -17,7 +17,7 @@ namespace JurassicRisk.Services
             _connection = connection;
 
             _connection.On<Lobby>("ReceiveLobby", (lobby) => LobbyReceived?.Invoke(lobby));
-            //_connection.On<Lobby>("JoinLobby", (lobby) => LobbyJoined?.Invoke(lobby));
+            _connection.On<Lobby>("JoinLobby", (lobby) => LobbyJoined?.Invoke(lobby));
         }
 
 
@@ -28,7 +28,16 @@ namespace JurassicRisk.Services
 
         public async Task JoinLobby(Joueur joueur,string lobbyName)
         {
-            await _connection.SendAsync("JoinLobby", joueur, lobbyName);
+            try
+            {
+                await _connection.SendAsync("JoinLobby", joueur, lobbyName);
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+           
         }
 
         public async Task SendLobby(Lobby lobby)
