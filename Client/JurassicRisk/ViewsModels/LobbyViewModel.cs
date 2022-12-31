@@ -74,8 +74,6 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
-            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/LobbyHub").Build();
-            _chatService = new SignalRLobbyService(_connection);
             _lobby = new Lobby();  
             _isConnected = false;
         }
@@ -85,13 +83,15 @@ namespace JurassicRisk.ViewsModels
         #region Requests
 
         /// <summary>
-        /// Connect chatService Client to LobbyHub
+        /// Starts a connection to the server
         /// </summary>
-        /// <returns>bool true if connected</returns>
+        /// <returns>Task</returns>
         private async Task Connect()
         {
+            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/LobbyHub").Build();
+            _chatService = new SignalRLobbyService(_connection);
             _chatService.Connected += _chatService_Connected;
-            await _chatService.Connect().ContinueWith(async task =>
+            await _connection.StartAsync().ContinueWith(async task =>
             {
                 if (task.Exception != null)
                 {
@@ -101,33 +101,16 @@ namespace JurassicRisk.ViewsModels
         }
 
         /// <summary>
-        /// Join un partie existante
+        /// Disconnect the connection
         /// </summary>
-        /// <param name="lobbyName">le nom de lobby</param>
-        /// <returns>bool</returns>
-        public async Task<bool> JoinLobby(string lobbyName)
+        /// <returns></returns>
+        public async Task Disconnect()
         {
-            await Connect();
-
-            _chatService.LobbyReceived += ChatService_LobbyReceived;
-            _chatService.LobbyJoined += ChatService_LobbyJoined;
-
-            Joueur joueur = new Joueur(JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil, Teams.NEUTRE);
-            await _chatService.JoinLobby(joueur, lobbyName);
-
-            return true;
-        }
-
-        public async Task<bool> SetTeam(Teams team)
-        {
-            await _chatService.SetTeam(team);
-            return true;
-        }
-
-        public async Task<bool> ExitLobby()
-        {
-            await _chatService.ExitLobby();
-            return true;
+            if (_connection != null)
+            {
+                await _connection.DisposeAsync();
+            }
+            _isConnected = false;
         }
 
         /// <summary>
@@ -159,6 +142,46 @@ namespace JurassicRisk.ViewsModels
                 res = e.Message;
             }
             return res;
+        }
+
+        /// <summary>
+        /// Join une partie existante
+        /// </summary>
+        /// <param name="lobbyName">le nom du lobby</param>
+        /// <returns>bool</returns>
+        public async Task<bool> JoinLobby(string lobbyName)
+        {
+            await Connect();
+
+            _chatService.LobbyReceived += ChatService_LobbyReceived;
+            _chatService.LobbyJoined += ChatService_LobbyJoined;
+
+            Joueur joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, Teams.NEUTRE);
+            await _chatService.JoinLobby(joueur, lobbyName);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Exit actual lobby
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> ExitLobby()
+        {
+            await _chatService.ExitLobby();
+            JurassicRiskViewModel.Get.LobbyVm = new LobbyViewModel();
+            return true;
+        }
+
+        /// <summary>
+        /// Set the team of the current player 
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns></returns>
+        public async Task<bool> SetTeam(Teams team)
+        {
+            await _chatService.SetTeam(team);
+            return true;
         }
 
         #endregion

@@ -12,7 +12,7 @@
         #region Property
         public CarteViewModel CarteVm { get => _carteVm; }
         public JoueurViewModel JoueurVm { get => _joueurVm; }
-        public LobbyViewModel LobbyVm { get => _lobbyVm; }
+        public LobbyViewModel LobbyVm { get => _lobbyVm; set => _lobbyVm = value; }
         #endregion
 
         #region Singleton

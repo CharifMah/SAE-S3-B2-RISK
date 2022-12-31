@@ -1,6 +1,7 @@
 ﻿using JurassicRisk.ViewsModels;
 using Models;
 using Models.Son;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,7 +15,6 @@ namespace JurassicRisk.Views
         public MenuPage()
         {
             InitializeComponent();
-
         }
 
         private void ProfilButton_Click(object sender, RoutedEventArgs e)
@@ -22,9 +22,10 @@ namespace JurassicRisk.Views
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new UserProfil());
         }
 
-        private void DeconnectionButton_Click(object sender, RoutedEventArgs e)
+        private async void DeconnectionButton_Click(object sender, RoutedEventArgs e)
         {
             ProfilViewModel.Get.SelectedProfil = null;
+            await JurassicRiskViewModel.Get.LobbyVm.Disconnect();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
         }
 

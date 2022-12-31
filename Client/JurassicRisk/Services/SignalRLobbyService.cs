@@ -31,15 +31,6 @@ namespace JurassicRisk.Services
         }
 
         /// <summary>
-        /// Starts a connection to the servers
-        /// </summary>
-        /// <returns></returns>
-        public async Task Connect()
-        {
-            await _connection.StartAsync();
-        }
-
-        /// <summary>
         /// Join a Lobby
         /// </summary>
         /// <param name="joueur">player qui rejoint</param>
@@ -71,5 +62,7 @@ namespace JurassicRisk.Services
             string lobbyJson = JsonConvert.SerializeObject(lobby);
             await _connection.SendAsync("SendLobby", lobbyJson);
         }
+
+
     }
 }

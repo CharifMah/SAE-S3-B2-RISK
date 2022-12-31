@@ -63,7 +63,6 @@ namespace JurassicRisk.ViewsModels
             _selectedUnit = _units[0];
 
             NotifyPropertyChanged("Units");
-
         }
 
         /// <summary>
