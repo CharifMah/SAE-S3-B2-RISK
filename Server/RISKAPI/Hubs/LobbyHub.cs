@@ -57,7 +57,7 @@ namespace RISKAPI.Hubs
                 try
                 {
                     List<Joueur?> joueur = JsonConvert.DeserializeObject<List<Joueur?>>(result.ToString());
-                    if (joueur[0] != null)
+                    if (joueur != null && joueur.Count > 0)
                     {
                         Console.WriteLine($"{joueur[0].Profil.Pseudo} try to Set Team {joueur[0].Team} to {teams}");
                         joueur[0].Team = teams;

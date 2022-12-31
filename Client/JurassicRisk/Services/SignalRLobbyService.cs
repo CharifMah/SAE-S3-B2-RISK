@@ -44,7 +44,7 @@ namespace JurassicRisk.Services
 
         public async Task SetTeam(Teams teams)
         {
-            await _connection.SendAsync("SetTeam", teams, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
+            await _connection.SendAsync("SetTeam", teams, ProfilViewModel.Get.SelectedProfil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
         }
 
         public async Task ExitLobby()
