@@ -56,6 +56,11 @@ namespace JurassicRisk.Services
             await _connection.SendAsync("SetTeam", teams, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
         }
 
+        public async Task ExitLobby()
+        {
+            await _connection.SendAsync("ExitLobby");
+        }
+
         /// <summary>
         /// Send lobby to server
         /// </summary>

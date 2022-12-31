@@ -124,7 +124,11 @@ namespace JurassicRisk.ViewsModels
             return true;
         }
 
-
+        public async Task<bool> ExitLobby()
+        {
+            await _chatService.ExitLobby();
+            return true;
+        }
 
         /// <summary>
         /// Create a lobby

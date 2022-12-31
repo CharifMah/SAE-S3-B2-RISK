@@ -3,13 +3,10 @@ using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
 using NReJSON;
-using Redis.OM.Searching;
 using Redis.OM;
+using Redis.OM.Searching;
 using RISKAPI.Services;
 using StackExchange.Redis;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using System.IO;
-using System;
 
 namespace RISKAPI.Hubs
 {
@@ -22,12 +19,10 @@ namespace RISKAPI.Hubs
         {
             _provider = provider;
             _lobby = (RedisCollection<Lobby>)provider.RedisCollection<Lobby>();
-            RedisProvider.Instance.ManageSubscriber(RefreshLobby);
+            RedisProvider.Instance.ManageSubscriber(RefreshLobbyToClients);
         }
 
-
-
-        public async Task RefreshLobby(string lobbyName)
+        public async Task RefreshLobbyToClients(string lobbyName)
         {
             string key = $"Lobby:{lobbyName}";
 
@@ -49,16 +44,16 @@ namespace RISKAPI.Hubs
             Console.WriteLine($"Lobby try to send {lobby.Id}");
             await Clients.All.SendAsync("ReceiveLobby", lobbyJson);
         }
-
-        public async Task SetTeam(Teams teams,string joueurName,string lobbyName)
+  
+        public async Task SetTeam(Teams teams, string joueurName, string lobbyName)
         {
             string key = $"Lobby:{lobbyName}";
-            string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' +joueurName + '"'})]";
-           
+            string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]";
+
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
 
-                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key, param },CommandFlags.None);
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key, param }, CommandFlags.None);
                 try
                 {
                     List<Joueur?> joueur = JsonConvert.DeserializeObject<List<Joueur?>>(result.ToString());
@@ -69,17 +64,17 @@ namespace RISKAPI.Hubs
 
                         string? joueurJson = JsonConvert.SerializeObject(joueur[0]);
                         await RedisProvider.Instance.RedisDataBase.JsonSetAsync(key, joueurJson, $".Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]");
-                        await RefreshLobby(lobbyName);
+                        await RefreshLobbyToClients(lobbyName);
                     }
                 }
                 catch (JsonSerializationException)
                 {
                     throw;
-                }           
-            }    
+                }
+            }
         }
 
-        public async Task JoinLobby(string joueurJson,string lobbyName)
+        public async Task JoinLobby(string joueurJson, string lobbyName)
         {
             Joueur? joueur = JsonConvert.DeserializeObject<Joueur>(joueurJson);
             Console.WriteLine($"{joueur.Profil.Pseudo} try to Join {lobbyName}");
@@ -95,16 +90,14 @@ namespace RISKAPI.Hubs
                     {
                         lobby.JoinLobby(joueur);
                         await _lobby.UpdateAsync(lobby);
-
-                        string? lobbyJson = JsonConvert.SerializeObject(lobby);
-                        await Clients.All.SendAsync("JoinLobby", lobbyJson);
                         await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
+                        Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
+                        await RefreshLobbyToClients(lobbyName);
                     }
                     else
                     {
                         Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
                     }
-                   
                 }
             }
         }
@@ -112,7 +105,7 @@ namespace RISKAPI.Hubs
         public override Task OnConnectedAsync()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}" );
+            Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;
             return base.OnConnectedAsync();
         }
@@ -120,15 +113,28 @@ namespace RISKAPI.Hubs
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("Disconnected : " + exception);
+            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             await ExitLobby();
             Console.ForegroundColor = ConsoleColor.White;
-            return base.OnDisconnectedAsync(exception);
-        }  
-        
-        private async Task ExitLobby()
-        {
+            await base.OnDisconnectedAsync(exception);
+        }
 
+        public async Task ExitLobby()
+        {
+            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            object[]? l = (Context.Items.First(x => x.Key == Context.ConnectionId).Value as object[]);
+            try
+            {
+                (l[0] as Lobby).ExitLobby((l[1] as Joueur));
+                await SendLobby(JsonConvert.SerializeObject((l[0] as Lobby)));
+                await _lobby.UpdateAsync((l[0] as Lobby));
+                Context.Items.Remove(Context.ConnectionId);
+                Console.WriteLine($"the player {(l[1] as Joueur).Profil.Pseudo} as succeffuluy leave the lobby {(l[0] as Lobby).Id}");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Failed to leave the lobby '{(l[0] as Lobby).Id}'");
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ namespace JurassicRisk.Views
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            await _lobbyVm.ExitLobby(_lobbyVm.Lobby.Id);
+            await _lobbyVm.ExitLobby();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 

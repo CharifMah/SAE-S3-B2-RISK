@@ -96,9 +96,14 @@ namespace ModelsAPI.ClassMetier
         public bool JoinLobby(Joueur joueur)
         {
             bool res = false;
+            IEnumerable<Joueur?> j = _joueurs.Where(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
             if (_joueurs != null)
             {
-                if (_joueurs.Count < 4)
+                if (_joueurs.Count == 4 && j.Count() == 1)
+                {
+                    res = true;
+                }
+                if (_joueurs.Count < 4 && j.Count() == 0)
                 {
                     _joueurs.Add(joueur);
                     res = true;
