@@ -13,7 +13,7 @@ namespace Models.Player
         private Teams _team;
         private List<IUnit> _units;
         private Profil _profil;
-
+        private string _ready;
         #endregion
 
         #region Property
@@ -37,6 +37,14 @@ namespace Models.Player
             set { _profil = value; }
         }
 
+        public string IsReady
+        {
+            get => _ready;
+            set
+            {
+                _ready = value;
+            }
+        }
 
         #endregion
 

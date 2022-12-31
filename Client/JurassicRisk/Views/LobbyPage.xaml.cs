@@ -32,7 +32,7 @@ namespace JurassicRisk.Views
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
-
+            JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady = "✅";
         }
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)

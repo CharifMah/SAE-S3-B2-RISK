@@ -20,7 +20,7 @@ using TerritoireDecorator = Models.Map.TerritoireDecorator;
 namespace JurassicRisk.ViewsModels
 {
     /// <author>Charif</author>
-    public class CarteViewModel :    observable.Observable
+    public class CarteViewModel : observable.Observable
     {
         #region Attributes
 
@@ -32,6 +32,7 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Property
+
         public Canvas CarteCanvas
         {
             get
@@ -133,8 +134,8 @@ namespace JurassicRisk.ViewsModels
             myCanvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
-            myCanvas.MouseEnter  += (sender, e) => MyCanvas_MouseEnter(sender, e);
-            myCanvas.MouseLeave += async (sender, e) =>await MyCanvas_MouseLeave(sender, e);
+            myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e);
+            myCanvas.MouseLeave += async (sender, e) => await MyCanvas_MouseLeave(sender, e);
             myCanvas.PreviewMouseDown += async (sender, e) => await MyCanvas_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
             _carteCanvas.Children.Add(myCanvas);

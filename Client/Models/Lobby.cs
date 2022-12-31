@@ -27,6 +27,7 @@ namespace Models
                 _id = value;
             }
         }
+
         public bool PlayersReady
         {
             get
