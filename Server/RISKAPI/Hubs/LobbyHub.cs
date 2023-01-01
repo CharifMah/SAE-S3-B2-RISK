@@ -20,6 +20,7 @@ namespace RISKAPI.Hubs
             _provider = provider;
             _lobby = (RedisCollection<Lobby>)provider.RedisCollection<Lobby>();
             RedisProvider.Instance.ManageSubscriber(RefreshLobbyToClients);
+
         }
 
         public async Task RefreshLobbyToClients(string lobbyName)
@@ -44,35 +45,6 @@ namespace RISKAPI.Hubs
             Console.WriteLine($"Lobby try to send {lobby.Id}");
             await Clients.All.SendAsync("ReceiveLobby", lobbyJson);
         }
-  
-        public async Task SetTeam(Teams teams, string joueurName, string lobbyName)
-        {
-            string key = $"Lobby:{lobbyName}";
-            string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]";
-
-            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
-            {
-
-                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key, param }, CommandFlags.None);
-                try
-                {
-                    List<Joueur?> joueur = JsonConvert.DeserializeObject<List<Joueur?>>(result.ToString());
-                    if (joueur != null && joueur.Count > 0)
-                    {
-                        Console.WriteLine($"{joueur[0].Profil.Pseudo} try to Set Team {joueur[0].Team} to {teams}");
-                        joueur[0].Team = teams;
-
-                        string? joueurJson = JsonConvert.SerializeObject(joueur[0]);
-                        await RedisProvider.Instance.RedisDataBase.JsonSetAsync(key, joueurJson, $".Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]");
-                        await RefreshLobbyToClients(lobbyName);
-                    }
-                }
-                catch (JsonSerializationException)
-                {
-                    throw;
-                }
-            }
-        }
 
         public async Task JoinLobby(string joueurJson, string lobbyName)
         {
@@ -92,12 +64,67 @@ namespace RISKAPI.Hubs
                         await _lobby.UpdateAsync(lobby);
                         await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
                         Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
+
                         await RefreshLobbyToClients(lobbyName);
                     }
                     else
                     {
                         Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
                     }
+                }
+            }
+        }
+
+        public async Task SetTeam(Teams teams, string joueurName, string lobbyName)
+        {
+            string key = $"Lobby:{lobbyName}";
+            string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]";
+
+            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
+            {
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key, param }, CommandFlags.None);
+                try
+                {
+                    List<Joueur?> joueur = JsonConvert.DeserializeObject<List<Joueur?>>(result.ToString());
+                    if (joueur != null && joueur.Count > 0)
+                    {
+                        Console.WriteLine($"{joueur[0].Profil.Pseudo} try to Set Team {joueur[0].Team} to {teams}");
+                        joueur[0].Team = teams;
+                        string? joueurJson = JsonConvert.SerializeObject(joueur[0]);
+                        await RedisProvider.Instance.RedisDataBase.JsonSetAsync(key, joueurJson, $".Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]");
+                        await RefreshLobbyToClients(lobbyName);
+                    }
+                }
+                catch (JsonSerializationException)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public async Task IsReady(bool ready, string joueurName, string lobbyName)
+        {
+            string key = $"Lobby:{lobbyName}";
+            string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]";
+
+            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
+            {
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key, param }, CommandFlags.None);
+                try
+                {
+                    List<Joueur?> joueur = JsonConvert.DeserializeObject<List<Joueur?>>(result.ToString());
+                    if (joueur != null && joueur.Count > 0)
+                    {
+                        Console.WriteLine($"{joueur[0].Profil.Pseudo} try to Set Ready to {ready}");
+                        joueur[0].IsReady = ready;
+                        string? joueurJson = JsonConvert.SerializeObject(joueur[0]);
+                        await RedisProvider.Instance.RedisDataBase.JsonSetAsync(key, joueurJson, $".Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]");
+                        await RefreshLobbyToClients(lobbyName);
+                    }
+                }
+                catch (JsonSerializationException)
+                {
+                    throw;
                 }
             }
         }

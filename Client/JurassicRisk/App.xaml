@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:JurassicRisk"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style\CustomSlider1.xaml"/>
@@ -18,7 +17,6 @@
                 <ResourceDictionary Source="Style\CustomListBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
-         
     </Application.Resources>
 </Application>
+    

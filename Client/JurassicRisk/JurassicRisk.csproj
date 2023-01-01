@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="IsReadyConverter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Polices\FruitDays.ttf" />
     <None Remove="Polices\University.otf" />
     <None Remove="Sounds\checkbox.mp3" />
@@ -104,6 +108,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Converter\IsReadyConverter.cs" />
     <Resource Include="Polices\FruitDays.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

@@ -173,6 +173,12 @@ namespace JurassicRisk.ViewsModels
             return true;
         }
 
+        public async Task<bool> IsReady()
+        {
+            await _chatService.IsReady(JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady);
+            return true;
+        }
+
         /// <summary>
         /// Set the team of the current player 
         /// </summary>
@@ -191,6 +197,10 @@ namespace JurassicRisk.ViewsModels
         private void _chatService_Connected(string connectionId)
         {
             _isConnected = true;
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null)
+            {
+                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
+            }
         }
 
         private void ChatService_LobbyReceived(string lobbyJson)
@@ -199,6 +209,9 @@ namespace JurassicRisk.ViewsModels
             {
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
+                Joueur joueurVm = JurassicRiskViewModel.Get.JoueurVm.Joueur;
+                string pseudo = joueurVm.Profil.Pseudo;
+                JurassicRiskViewModel.Get.JoueurVm.Joueur = this._lobby.Joueurs.Find(j => j.Profil.Pseudo == pseudo);
                 NotifyPropertyChanged("Lobby");
             });
         }

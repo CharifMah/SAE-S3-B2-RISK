@@ -11,7 +11,6 @@ namespace ModelsAPI.ClassMetier.Player
     public class Joueur : IGestionTroupe
     {
         #region Attribute
-        private bool _ready;
         private Teams _team;
         private List<IUnit> _units;
         private Profil _profil;
@@ -41,8 +40,8 @@ namespace ModelsAPI.ClassMetier.Player
         [Indexed]
         public bool IsReady
         {
-            get => _ready;
-            set => _ready = value;
+            get;
+            set;
         }
         #endregion
 

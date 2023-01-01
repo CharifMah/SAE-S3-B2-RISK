@@ -18,7 +18,6 @@ namespace JurassicRisk.Views
             InitializeComponent();
             _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
             DataContext= _lobbyVm;
-
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -32,7 +31,11 @@ namespace JurassicRisk.Views
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
-            JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady = "✅";
+            if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
+                JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
+            else
+                JurassicRiskViewModel.Get.JoueurVm.IsReady = "❌";
+
         }
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)

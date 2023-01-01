@@ -31,6 +31,17 @@ namespace JurassicRisk.Services
         }
 
         /// <summary>
+        /// Send lobby to server
+        /// </summary>
+        /// <param name="lobby">lobby to send</param>
+        /// <returns>Task</returns>
+        public async Task SendLobby(Lobby lobby)
+        {
+            string lobbyJson = JsonConvert.SerializeObject(lobby);
+            await _connection.SendAsync("SendLobby", lobbyJson);
+        }
+
+        /// <summary>
         /// Join a Lobby
         /// </summary>
         /// <param name="joueur">player qui rejoint</param>
@@ -42,26 +53,24 @@ namespace JurassicRisk.Services
             await _connection.SendAsync("JoinLobby", joueurJson, lobbyName);
         }
 
-        public async Task SetTeam(Teams teams)
-        {
-            await _connection.SendAsync("SetTeam", teams, ProfilViewModel.Get.SelectedProfil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
-        }
-
         public async Task ExitLobby()
         {
             await _connection.SendAsync("ExitLobby");
         }
 
-        /// <summary>
-        /// Send lobby to server
-        /// </summary>
-        /// <param name="lobby">lobby to send</param>
-        /// <returns>Task</returns>
-        public async Task SendLobby(Lobby lobby)
+        public async Task SetTeam(Teams teams)
         {
-            string lobbyJson = JsonConvert.SerializeObject(lobby);
-            await _connection.SendAsync("SendLobby", lobbyJson);
+            await _connection.SendAsync("SetTeam", teams, ProfilViewModel.Get.SelectedProfil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
         }
+
+        public async Task IsReady(bool ready)
+        {
+            await _connection.SendAsync("IsReady", ready, ProfilViewModel.Get.SelectedProfil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
+        }
+
+       
+
+      
 
 
     }

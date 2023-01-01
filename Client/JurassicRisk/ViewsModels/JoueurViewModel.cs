@@ -1,24 +1,19 @@
 ﻿using Models;
 using Models.Exceptions;
-using Models.Fabriques.FabriqueUnite;
 using Models.Map;
 using Models.Player;
-using Models.Units;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NReJSON;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using IUnit = Models.Units.IUnit;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace JurassicRisk.ViewsModels
 {
     public class JoueurViewModel : observable.Observable
     {
         #region Attributes
+        private string _isReady;
         private Joueur _joueur;
         private ObservableCollection<IUnit> _units;
         private IUnit _selectedUnit;
@@ -29,6 +24,11 @@ namespace JurassicRisk.ViewsModels
         public Joueur Joueur
         {
             get { return _joueur; }
+            set
+            {
+                _joueur = value;
+                NotifyPropertyChanged("Joueur");
+            }
         }
 
         public int NombreTrp
@@ -47,10 +47,35 @@ namespace JurassicRisk.ViewsModels
         public IUnit SelectedUnit
         {
             get { return _selectedUnit; }
-            set 
+            set
             {
                 _selectedUnit = value;
                 NotifyPropertyChanged("SelectedUnit");
+            }
+        }
+
+        public string IsReady
+        {
+            get
+            {
+                if (_joueur.IsReady)
+                    _isReady = "✅";
+                else
+                    _isReady = "❌";
+                return _isReady;
+            }
+
+            set
+            {
+                _isReady = value;
+
+                if (_isReady == "✅")
+                    _joueur.IsReady = true;
+                else
+                    _joueur.IsReady = false;
+
+                JurassicRiskViewModel.Get.LobbyVm.IsReady().Wait();
+                NotifyPropertyChanged("IsReady");
             }
         }
 
@@ -85,11 +110,6 @@ namespace JurassicRisk.ViewsModels
             }
             NotifyPropertyChanged("NombreTrp");
             NotifyPropertyChanged("Units");
-        }
-
-        public async void SetTeam(Teams teams)
-        {
-
         }
     }
 }
