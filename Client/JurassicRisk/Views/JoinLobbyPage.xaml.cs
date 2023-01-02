@@ -37,6 +37,7 @@ namespace JurassicRisk.Views
                     else
                     {
                         Error.Text = Ressource.Strings.NoExistLobby;
+                        Error.Visibility = Visibility.Visible;
                     }
                     //Wait for 500 milliseconds
                     await Task.Delay(WaitTime);
@@ -47,7 +48,6 @@ namespace JurassicRisk.Views
             {
                 Error.Text = ex.Message;
                 Error.Visibility = Visibility.Visible;
-
             }
         }
 
