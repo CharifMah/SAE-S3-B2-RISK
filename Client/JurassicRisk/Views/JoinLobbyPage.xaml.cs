@@ -1,6 +1,6 @@
 ﻿using JurassicRisk.ViewsModels;
-using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,17 +20,34 @@ namespace JurassicRisk.Views
         {
             try
             {
-                bool connection = await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text);
-                if (connection)
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text);
+
+                //Retry Pattern Async
+                var RetryTimes = 3;
+
+                var WaitTime = 500;
+
+                for (int i = 0; i < RetryTimes; i++)
                 {
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                    {
+                        (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                        break;
+                    }
+                    else
+                    {
+                        Error.Text = Ressource.Strings.NoExistLobby;
+                    }
+                    //Wait for 500 milliseconds
+                    await Task.Delay(WaitTime);
                 }
+
             }
             catch (Exception ex)
             {
                 Error.Text = ex.Message;
                 Error.Visibility = Visibility.Visible;
-                
+
             }
         }
 

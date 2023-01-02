@@ -35,7 +35,6 @@
         </Viewbox>
 
         <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" ItemsSource="{Binding JoueurVm.Units}">
-
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Orientation="Vertical">

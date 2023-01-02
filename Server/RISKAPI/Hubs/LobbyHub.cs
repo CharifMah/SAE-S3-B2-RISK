@@ -23,23 +23,31 @@ namespace RISKAPI.Hubs
 
         }
 
-        public async Task RefreshLobbyToClients(string lobbyName)
+        private async Task<Lobby> GetLobby(string lobbyName)
         {
             string key = $"Lobby:{lobbyName}";
-
+            Lobby? lobby = null;
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
                 RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
-                Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
-                if (lobby != null)
-                {
-                    string? lobbyJson = JsonConvert.SerializeObject(lobby);
-                    foreach (Joueur j in lobby.Joueurs)
-                    {
-                        await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
-                    }
+                lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
+            }
 
+            return lobby;
+        }
+
+        public async Task RefreshLobbyToClients(string lobbyName)
+        {
+            Lobby? lobby = await GetLobby(lobbyName);
+
+            if (lobby != null)
+            {
+                string? lobbyJson = JsonConvert.SerializeObject(lobby);
+                foreach (Joueur j in lobby.Joueurs)
+                {
+                    await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
                 }
+
             }
         }
 
@@ -69,7 +77,7 @@ namespace RISKAPI.Hubs
                     {
                         lobby.JoinLobby(joueur);
                         await _lobby.UpdateAsync(lobby);
-                        await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
+                        await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
                         Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
 
                         await RefreshLobbyToClients(lobbyName);
@@ -79,6 +87,11 @@ namespace RISKAPI.Hubs
                         Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
                     }
                 }
+            }
+            else
+            {
+                await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
+                Console.WriteLine("Le lobby n'existe pas");
             }
         }
 
@@ -136,18 +149,18 @@ namespace RISKAPI.Hubs
             }
         }
 
-        public override Task OnConnectedAsync()
+        public override async Task OnConnectedAsync()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
             Console.ForegroundColor = ConsoleColor.White;
-            return base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             await ExitLobby();
-
+            await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
             await base.OnDisconnectedAsync(exception);
         }
 
@@ -160,9 +173,13 @@ namespace RISKAPI.Hubs
             object[]? l = (Context.Items.First(x => x.Key == Context.ConnectionId).Value as object[]);
             try
             {
-                (l[0] as Lobby).ExitLobby((l[1] as Joueur));
-                await SendLobby(JsonConvert.SerializeObject((l[0] as Lobby)));
-                await _lobby.UpdateAsync((l[0] as Lobby));
+                Lobby? lobby = await GetLobby((l[0] as Lobby).Id);
+                if (lobby != null)
+                {
+                    lobby.ExitLobby((l[1] as Joueur));
+                }
+                await SendLobby(JsonConvert.SerializeObject(lobby));
+                await _lobby.UpdateAsync(lobby);
                 Context.Items.Remove(Context.ConnectionId);
                 Console.WriteLine($"the player {(l[1] as Joueur).Profil.Pseudo} as succeffuluy leave the lobby {(l[0] as Lobby).Id}");
             }

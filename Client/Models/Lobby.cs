@@ -36,7 +36,7 @@ namespace Models
 
                 foreach (Joueur joueur in _joueurs)
                 {
-                    if (joueur.Team == Teams.NEUTRE)
+                    if (joueur.Team == Teams.NEUTRE || !joueur.IsReady)
                     {
                         res = false;
                     }
@@ -119,15 +119,17 @@ namespace Models
         public bool ExitLobby(Joueur joueur)
         {
             bool res = false;
-            List<Joueur> joueurToRemove = _joueurs.FindAll(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
+            Joueur joueurToRemove = _joueurs.Find(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
             if (joueurToRemove != null)
             {
-                foreach (Joueur j in joueurToRemove)
-                {
-                    _joueurs.Remove(j);
-                    res = true;
-                }
+                _joueurs.Remove(joueurToRemove);
+                res = true;
             }
+            else
+            {
+                throw new ArgumentNullException();
+            }
+
 
             return res;
         }
