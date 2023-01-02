@@ -34,7 +34,7 @@
             </Canvas>
         </Viewbox>
 
-        <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" ItemsSource="{Binding JoueurVm.Units}" Margin="61,0,0,341" Grid.RowSpan="2" Grid.ColumnSpan="2" Width="151">
+        <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" ItemsSource="{Binding JoueurVm.Units}">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
