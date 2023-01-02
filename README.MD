@@ -71,7 +71,7 @@ mkdir /etc/redis/modules/
 mv redisearch.so /etc/redis/modules/
 ```
 ## Config
-Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf (load conf is RDB is not loaded)
+Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf (load conf if RDB is not loaded)
 
 ## Start Redis
 ```
