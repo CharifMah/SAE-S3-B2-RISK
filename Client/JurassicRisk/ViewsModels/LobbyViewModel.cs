@@ -109,8 +109,6 @@ namespace JurassicRisk.ViewsModels
             });
         }
 
-
-
         /// <summary>
         /// Disconnect the connection
         /// </summary>
