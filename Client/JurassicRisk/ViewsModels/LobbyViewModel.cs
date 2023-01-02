@@ -210,8 +210,12 @@ namespace JurassicRisk.ViewsModels
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
                 Joueur joueurVm = JurassicRiskViewModel.Get.JoueurVm.Joueur;
-                string pseudo = joueurVm.Profil.Pseudo;
-                JurassicRiskViewModel.Get.JoueurVm.Joueur = this._lobby.Joueurs.Find(j => j.Profil.Pseudo == pseudo);
+                if (joueurVm != null)
+                {
+                    string pseudo = joueurVm.Profil.Pseudo;
+                    JurassicRiskViewModel.Get.JoueurVm.Joueur = this._lobby.Joueurs.Find(j => j.Profil.Pseudo == pseudo);
+                }
+
                 NotifyPropertyChanged("Lobby");
             });
         }

@@ -55,7 +55,14 @@ namespace JurassicRisk.Services
 
         public async Task ExitLobby()
         {
-            await _connection.SendAsync("ExitLobby");
+            try
+            {
+                await _connection.SendAsync("ExitLobby");
+            }
+            catch (InvalidOperationException e)
+            {
+                throw e;
+            }        
         }
 
         public async Task SetTeam(Teams teams)
