@@ -365,6 +365,12 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("JoinLobby", resourceCulture);
             }
         }
-
+        public static string NoExistLobby
+        {
+            get
+            {
+                return ResourceManager.GetString("NoExistLobby", resourceCulture);
+            }
+        }      
     }
 }

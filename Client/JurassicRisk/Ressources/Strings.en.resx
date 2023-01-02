@@ -168,6 +168,9 @@
   <data name="NoExiste" xml:space="preserve">
     <value>this account does not existe</value>
   </data>
+  <data name="NoExistLobby" xml:space="preserve">
+    <value>This lobby does not exist</value>
+  </data>
   <data name="NoPseudoEnter" xml:space="preserve">
     <value>You need to enter a pseudo</value>
   </data>

@@ -20,7 +20,6 @@ namespace JurassicRisk.Views
             string connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text,inputPassword.Password));
             if (connexion == "lobby rejoint et refresh")
             {
-
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
             }
             else
