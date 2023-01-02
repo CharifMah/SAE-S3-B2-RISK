@@ -34,7 +34,11 @@ namespace RISKAPI.Hubs
                 if (lobby != null)
                 {
                     string? lobbyJson = JsonConvert.SerializeObject(lobby);
-                    await Clients.All.SendAsync("ReceiveLobby", lobbyJson);
+                    foreach (Joueur j in lobby.Joueurs)
+                    {
+                        await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
+                    }
+
                 }
             }
         }
@@ -43,7 +47,10 @@ namespace RISKAPI.Hubs
         {
             Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
             Console.WriteLine($"Lobby try to send {lobby.Id}");
-            await Clients.All.SendAsync("ReceiveLobby", lobbyJson);
+            foreach (Joueur j in lobby.Joueurs)
+            {
+                await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
+            }
         }
 
         public async Task JoinLobby(string joueurJson, string lobbyName)
