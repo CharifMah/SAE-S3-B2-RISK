@@ -33,7 +33,7 @@ cd RedisJSON
 ```
 ### Build
 ```
-Make build
+make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
@@ -57,7 +57,7 @@ cd RediSearch
 ```
 ### Build
 ```
-Make build
+make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
