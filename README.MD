@@ -30,7 +30,7 @@ sudo apt-get install redis
 git clone --recursive https://github.com/RedisJSON/RedisJSON.git
 cd RedisJSON
 ```
-### Install dependencies
+### Install dependencies 
 ```
 ./sbin/setup
 ```
@@ -40,6 +40,8 @@ Make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
+cd pathToRediJson/
+
 cd src/
 
 mkdir /etc/redis/modules/
@@ -64,6 +66,8 @@ Make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
+cd pathToRediSearch/
+
 cd bin/linux-x64-release/search/
 
 mkdir /etc/redis/modules/
