@@ -13,9 +13,6 @@ Vous devez installer la dependance avant de lancer le projet.
    
 ## Redis Setup
 ### Prérequise (REDISJSON , REDISEARCH , REDIS-SERVER)
-```
-sudo apt install lsb-release
-```
 ### Add apt redis
 ```
 curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
@@ -24,29 +21,33 @@ echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://pack
 
 sudo apt-get update
 sudo apt-get install redis
+
+curl https://sh.rustup.rs -sSf | sh
 ```
 ## Add modules (REDISJSON)
 ```
 git clone --recursive https://github.com/RedisJSON/RedisJSON.git
 cd RedisJSON
 ```
-### Install dependencies
+### Install dependencies 
 ```
 ./sbin/setup
 ```
 ### Build
 ```
-Make build
+make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
-cd src/
+sudo chmod 777 RedisJSON/
+
+cd RedisJSON/
+
+cd bin/linux-x64-release
 
 mkdir /etc/redis/modules/
 
-mv librejson.so /etc/redis/modules/
-
-./deps/readies/bin/getredis
+cp rejson.so /etc/redis/modules/
 ```
 
 ## Add modules (REDISEARCH)
@@ -60,15 +61,19 @@ cd RediSearch
 ```
 ### Build
 ```
-Make build
+make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
+sudo chmod 777 RediSearch/
+
+cd RediSearch/
+
 cd bin/linux-x64-release/search/
 
 mkdir /etc/redis/modules/
 
-mv redisearch.so /etc/redis/modules/
+cp redisearch.so /etc/redis/modules/
 ```
 ## Config
 Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf (load conf is RDB is not loaded)
@@ -79,7 +84,7 @@ sudo redis-server /etc/redis/redis.conf
 ```
 and / or
 ```
-redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/redis/modules/librejson.so
+redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/redis/modules/rejson.so
 ```
 ### Check if modules are loaded
 ```
@@ -95,7 +100,7 @@ In Config File Enable all event with key 'AKEs'
 nano etc/redis/redis.conf
 ```
 ![image](https://user-images.githubusercontent.com/91829231/209959040-aa9dc700-44e5-48ea-9ca9-11b3d4682cf5.png)
-## or In Redis CLI
+## or with Redis CLI
 ```
 config set notify-keyspace-events AKEs
 ```
@@ -105,5 +110,9 @@ config set notify-keyspace-events AKEs
 redis-cli
 
 KEYS *
+```
+## Reset Database from redis-cli
+```
+FLUSHALL
 ```
 
