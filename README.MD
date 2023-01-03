@@ -15,6 +15,8 @@ Vous devez installer la dependance avant de lancer le projet.
 ### Prérequise (REDISJSON , REDISEARCH , REDIS-SERVER)
 ```
 sudo apt install lsb-release
+
+curl https://sh.rustup.rs -sSf | sh
 ```
 ### Add apt redis
 ```
