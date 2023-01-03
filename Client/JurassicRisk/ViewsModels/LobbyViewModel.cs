@@ -240,10 +240,6 @@ namespace JurassicRisk.ViewsModels
             {
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
-
-                    string pseudo = ProfilViewModel.Get.SelectedProfil.Pseudo;
-
-
                 NotifyPropertyChanged("Lobby");
             });
         }
