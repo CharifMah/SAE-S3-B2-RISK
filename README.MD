@@ -105,7 +105,7 @@ redis-cli
 
 KEYS *
 ```
-### Reset Database from redis-cli
+## Reset Database from redis-cli
 ```
 FLUSHALL
 ```
