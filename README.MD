@@ -15,8 +15,6 @@ Vous devez installer la dependance avant de lancer le projet.
 ### Prérequise (REDISJSON , REDISEARCH , REDIS-SERVER)
 ```
 sudo apt install lsb-release
-
-curl https://sh.rustup.rs -sSf | sh
 ```
 ### Add apt redis
 ```
@@ -44,13 +42,11 @@ Make build
 ```
 cd pathToRediJson/
 
-cd src/
+cd bin/linux-x64-release
 
 mkdir /etc/redis/modules/
 
-mv librejson.so /etc/redis/modules/
-
-./deps/readies/bin/getredis
+mv rejson.so /etc/redis/modules/
 ```
 
 ## Add modules (REDISEARCH)
@@ -85,7 +81,7 @@ sudo redis-server /etc/redis/redis.conf
 ```
 and / or
 ```
-redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/redis/modules/librejson.so
+redis-server --loadmodule /etc/redis/modules/redisearch.so --loadmodule /etc/redis/modules/rejson.so
 ```
 ### Check if modules are loaded
 ```
