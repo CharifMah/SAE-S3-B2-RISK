@@ -38,7 +38,7 @@ namespace JurassicRisk.Views
 
             //Get Settings.json if exist and set the background music
             Settings.Get().LoadSettings();
-            Settings.Get().Backgroundmusic = SoundStore.Get("JungleMusic.mp3");
+            Settings.Get().Backgroundmusic = SoundStore.Get("HubJurr.mp3");
             Settings.Get().Backgroundmusic.Play();
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
 

@@ -81,13 +81,14 @@ namespace Models.Player
             {
                 foreach (var unit in unites)
                 {
-                    if (_units.Contains(unit))
+                    if (_units.Find(u => u.Name == unit.Name) != null)
                     {
                         _units.Remove(unit);
 
-                        territoire.AddUnit(unit);
-                        territoire.Team = this._team;
+
                     }
+                    territoire.AddUnit(unit);
+                    territoire.Team = this._team;
                 }
             }
         }

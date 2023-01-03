@@ -17,8 +17,8 @@
     <None Remove="Polices\University.otf" />
     <None Remove="Sounds\checkbox.mp3" />
     <None Remove="Sounds\Click.mp3" />
-    <None Remove="Sounds\DarkJungleMusic.mp3" />
-    <None Remove="Sounds\JungleMusic.mp3" />
+    <None Remove="Sounds\HubJurr.mp3" />
+    <None Remove="Sounds\MusicGameJurr.mp3" />
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
     <None Remove="Sprites\Background\Background3.jpg" />
@@ -88,7 +88,10 @@
     <Content Include="Sounds\Click.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Sounds\DarkJungleMusic.mp3">
+    <Content Include="Sounds\HubJurr.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\MusicGameJurr.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\Background\trexHead.png">
@@ -274,12 +277,6 @@
     <Resource Include="Sprites\Units\Rex.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Sounds\JungleMusic.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
