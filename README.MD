@@ -13,9 +13,6 @@ Vous devez installer la dependance avant de lancer le projet.
    
 ## Redis Setup
 ### Prérequise (REDISJSON , REDISEARCH , REDIS-SERVER)
-```
-sudo apt install lsb-release
-```
 ### Add apt redis
 ```
 curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
