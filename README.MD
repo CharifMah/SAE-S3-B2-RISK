@@ -94,7 +94,7 @@ In Config File Enable all event with key 'AKEs'
 nano etc/redis/redis.conf
 ```
 ![image](https://user-images.githubusercontent.com/91829231/209959040-aa9dc700-44e5-48ea-9ca9-11b3d4682cf5.png)
-## or In Redis CLI
+## or with Redis CLI
 ```
 config set notify-keyspace-events AKEs
 ```
