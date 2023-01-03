@@ -37,7 +37,7 @@ Make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
-cd RedisJson/
+cd RedisJSON/
 
 cd bin/linux-x64-release
 
