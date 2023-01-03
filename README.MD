@@ -47,7 +47,7 @@ cd bin/linux-x64-release
 
 mkdir /etc/redis/modules/
 
-mv rejson.so /etc/redis/modules/
+cp rejson.so /etc/redis/modules/
 ```
 
 ## Add modules (REDISEARCH)
@@ -73,7 +73,7 @@ cd bin/linux-x64-release/search/
 
 mkdir /etc/redis/modules/
 
-mv redisearch.so /etc/redis/modules/
+cp redisearch.so /etc/redis/modules/
 ```
 ## Config
 Add 'LOADMODULE' to Redis.conf /etc/redis/redis.conf (load conf is RDB is not loaded)
