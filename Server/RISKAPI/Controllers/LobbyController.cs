@@ -41,6 +41,7 @@ namespace RISKAPI.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 reponse = new BadRequestObjectResult(e.Message);
             }
             return reponse;
