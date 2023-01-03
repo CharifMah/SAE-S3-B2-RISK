@@ -21,6 +21,8 @@ echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://pack
 
 sudo apt-get update
 sudo apt-get install redis
+
+curl https://sh.rustup.rs -sSf | sh
 ```
 ## Add modules (REDISJSON)
 ```
