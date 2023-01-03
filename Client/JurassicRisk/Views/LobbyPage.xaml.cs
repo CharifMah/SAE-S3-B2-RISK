@@ -125,6 +125,7 @@ namespace JurassicRisk.Views
                     }
                     break;
             }
+            JurassicRiskViewModel.Get.JoueurVm.Joueur.Team= team;
             await this._lobbyVm.SetTeam(team);
         }
     }
