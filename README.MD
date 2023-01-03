@@ -37,7 +37,7 @@ Make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
-cd pathToRediJson/
+cd RedisJson/
 
 cd bin/linux-x64-release
 
@@ -61,7 +61,7 @@ Make build
 ```
 ### Move modules to /etc/redis/modules need to be sudo
 ```
-cd pathToRediSearch/
+cd RediSearch/
 
 cd bin/linux-x64-release/search/
 
