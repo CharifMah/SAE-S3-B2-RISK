@@ -94,12 +94,13 @@ namespace JurassicRisk.ViewsModels
         {
             _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/LobbyHub").Build();
             _chatService = new SignalRLobbyService(_connection);
-
+            
             _chatService.ConnectedToLobby += _chatService_ConnectedToLobby;
             _chatService.LobbyReceived += _chatService_LobbyReceived;
             _chatService.LobbyJoined += _chatService_LobbyJoined;
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
+            
 
             await _connection.StartAsync().ContinueWith(async task =>
             {
@@ -159,7 +160,7 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="lobbyName">le nom du lobby</param>
         /// <returns>bool</returns>
-        public async Task<bool> JoinLobby(string lobbyName)
+        public async Task<bool> JoinLobby(string lobbyName,string password)
         {
             if (_connection == null || _connection.ConnectionId == null)
             {
@@ -167,7 +168,7 @@ namespace JurassicRisk.ViewsModels
             }
 
             Joueur joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, Teams.NEUTRE);
-            await _chatService.JoinLobby(joueur, lobbyName);
+            await _chatService.JoinLobby(joueur, lobbyName, password);
 
             return true;
         }

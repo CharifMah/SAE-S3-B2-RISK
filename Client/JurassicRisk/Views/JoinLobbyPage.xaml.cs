@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,7 +21,7 @@ namespace JurassicRisk.Views
         {
             try
             {
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text);
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text,inputPassword.Password);
 
                 //Retry Pattern Async
                 var RetryTimes = 3;

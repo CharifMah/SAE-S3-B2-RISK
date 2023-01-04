@@ -51,10 +51,10 @@ namespace JurassicRisk.Services
         /// <param name="joueur">player qui rejoint</param>
         /// <param name="lobbyName">lobby to join</param>
         /// <returns>Task</returns>
-        public async Task JoinLobby(Joueur joueur, string lobbyName)
+        public async Task JoinLobby(Joueur joueur, string lobbyName,string password)
         {
             string joueurJson = JsonConvert.SerializeObject(joueur);
-            await _connection.SendAsync("JoinLobby", joueurJson, lobbyName);
+            await _connection.SendAsync("JoinLobby", joueurJson, lobbyName,password);
         }
 
         public async Task ExitLobby()

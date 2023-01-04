@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
@@ -61,7 +62,7 @@ namespace RISKAPI.Hubs
             }
         }
 
-        public async Task JoinLobby(string joueurJson, string lobbyName)
+        public async Task JoinLobby(string joueurJson, string lobbyName, string password)
         {
             Joueur? joueur = JsonConvert.DeserializeObject<Joueur>(joueurJson);
             Console.WriteLine($"{joueur.Profil.Pseudo} try to Join {lobbyName}");
@@ -72,19 +73,27 @@ namespace RISKAPI.Hubs
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
                 if (lobby != null)
                 {
-                    joueur.Profil.ConnectionId = Context.ConnectionId;
-                    if (lobby.Joueurs.Count < 4)
+                    PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
+                    if (passwordHasher.VerifyHashedPassword(lobby, lobby.Password, password) != 0)
                     {
-                        lobby.JoinLobby(joueur);
-                        await _lobby.UpdateAsync(lobby);
-                        await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
-                        Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
+                        joueur.Profil.ConnectionId = Context.ConnectionId;
+                        if (lobby.Joueurs.Count < 4)
+                        {
+                            lobby.JoinLobby(joueur);
+                            await _lobby.UpdateAsync(lobby);
+                            await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
+                            Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
 
-                        await RefreshLobbyToClients(lobbyName);
+                            await RefreshLobbyToClients(lobbyName);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
+                        Console.WriteLine("mauvais mot de passe");
                     }
                 }
             }

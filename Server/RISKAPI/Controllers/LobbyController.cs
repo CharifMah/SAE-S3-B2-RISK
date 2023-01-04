@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using ModelsAPI.ClassMetier;
 using Redis.OM;
 using Redis.OM.Searching;
@@ -28,6 +29,8 @@ namespace RISKAPI.Controllers
                 bool res = RedisProvider.Instance.RedisDataBase.KeyExists($"Lobby:{lobby.Id}");
                 if (!res)
                 {
+                    PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
+                    lobby.Password = passwordHasher.HashPassword(lobby, lobby.Password);
                     await _lobby.InsertAsync(lobby);
                     Console.WriteLine("Created Lobby");
 
@@ -35,7 +38,7 @@ namespace RISKAPI.Controllers
                 }
                 else
                 {
-                    reponse = new JsonResult($"A lobby with name {lobby.Id} already exist");
+                    reponse = new BadRequestResult();
                 }
 
             }
