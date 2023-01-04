@@ -66,7 +66,7 @@ namespace JurassicRisk.Services
             catch (InvalidOperationException e)
             {
                 throw e;
-            }        
+            }
         }
 
         public async Task SetTeam(Teams teams)
@@ -79,9 +79,9 @@ namespace JurassicRisk.Services
             await _connection.SendAsync("IsReady", ready, ProfilViewModel.Get.SelectedProfil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
         }
 
-       
 
-      
+
+
 
 
     }

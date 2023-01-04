@@ -35,6 +35,12 @@
             _carteVm = new CarteViewModel(_joueurVm);
             _lobbyVm = new LobbyViewModel();
         }
+
+        public void DestroyVm()
+        {
+            _instance = null;
+        }
+
         #endregion
     }
 }

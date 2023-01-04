@@ -25,7 +25,7 @@ namespace JurassicRisk.Views
         private async void DeconnectionButton_Click(object sender, RoutedEventArgs e)
         {
             ProfilViewModel.Get.SelectedProfil = null;
-            await JurassicRiskViewModel.Get.LobbyVm.Disconnect();
+            JurassicRiskViewModel.Get.DestroyVm();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
         }
 

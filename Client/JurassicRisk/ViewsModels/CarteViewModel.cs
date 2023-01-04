@@ -29,6 +29,7 @@ namespace JurassicRisk.ViewsModels
         private FabriqueUniteBase f;
         private int zi = 0;
         private JoueurViewModel _joueur;
+        private GraphesViewModel _graphVm;
         #endregion
 
         #region Property
@@ -46,6 +47,14 @@ namespace JurassicRisk.ViewsModels
             get
             {
                 return _carte;
+            }
+        }
+
+        public GraphesViewModel GraphVm
+        {
+            get
+            {
+                return _graphVm;
             }
         }
 
@@ -76,6 +85,8 @@ namespace JurassicRisk.ViewsModels
 
             f = new FabriqueUniteBase();
             _joueur = joueur;
+
+            _graphVm = new GraphesViewModel(this);
 
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
