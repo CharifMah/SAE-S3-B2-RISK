@@ -9,6 +9,7 @@ namespace Models.Player
     public class Joueur : IGestionTroupe
     {
         #region Attribute
+        private bool _isReady;
         private string _connectionId;
         private Teams _team;
         private List<IUnit> _units;
@@ -38,8 +39,8 @@ namespace Models.Player
 
         public bool IsReady
         {
-            get;
-            set;
+            get => _isReady;
+            set => _isReady = value;
         }
 
         #endregion
@@ -48,6 +49,7 @@ namespace Models.Player
 
         public Joueur(Profil profil, Teams team)
         {
+            _isReady = false;
             FabriqueUniteBase f = new FabriqueUniteBase();
             _units = new List<IUnit>();
             Random random = new Random();
