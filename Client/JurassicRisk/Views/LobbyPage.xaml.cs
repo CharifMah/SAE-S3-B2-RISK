@@ -26,7 +26,15 @@ namespace JurassicRisk.Views
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+            if (_lobbyVm.Lobby.PlayersReady)
+            {
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+            }
+            else
+            {
+                Error.Text = "tous les joueur ne sont pas pret";
+                Error.Visibility = Visibility.Visible;
+            }
         }
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
@@ -40,7 +48,7 @@ namespace JurassicRisk.Views
             }
             else
             {
-                Error.Text = "choisissez une equipe avant de vous mettre pret";
+                Error.Text = " choisissez une equipe avant de vous mettre pret ";
                 Error.Visibility = Visibility.Visible;
             }
         }
