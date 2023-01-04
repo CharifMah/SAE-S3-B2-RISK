@@ -31,11 +31,18 @@ namespace JurassicRisk.Views
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
-                JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur.Team != Teams.NEUTRE)
+            {
+                if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
+                    JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
+                else
+                    JurassicRiskViewModel.Get.JoueurVm.IsReady = "❌";
+            }
             else
-                JurassicRiskViewModel.Get.JoueurVm.IsReady = "❌";
-
+            {
+                Error.Text = "choisissez une equipe avant de vous mettre pret";
+                Error.Visibility = Visibility.Visible;
+            }
         }
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
