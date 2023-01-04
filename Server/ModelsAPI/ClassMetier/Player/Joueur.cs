@@ -43,7 +43,7 @@ namespace ModelsAPI.ClassMetier.Player
         public bool IsReady
         {
             get => _isReady;
-            set => _isReady = value;;
+            set => _isReady = value;
         }
         #endregion
 
