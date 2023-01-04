@@ -31,6 +31,7 @@ namespace ModelsAPI.ClassMetier.Player
             get { return _units; }
             set { _units = value; }
         }
+
         [Indexed]
         public Profil Profil
         {
