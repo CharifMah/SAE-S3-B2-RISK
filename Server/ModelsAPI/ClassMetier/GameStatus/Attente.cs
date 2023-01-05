@@ -6,12 +6,27 @@ using System.Threading.Tasks;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
-    public class Attente
+    public class Attente : Etat
     {
-        protected Lobby partie;
-        public void SetContext(Lobby partie)
+        protected Partie partie;
+
+        public void Attaquer()
+        {
+        }
+
+        public void FinDeTour()
+        {
+        }
+
+        public void PositionnerTroupe()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetContext(Partie partie)
         {
             this.partie = partie;
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.GameStatus;
@@ -240,6 +241,37 @@ namespace RISKAPI.Hubs
                     Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        public async Task EndTurn(string lobbyName, string joueurName)
+        {
+            Lobby lobby = null;
+            Joueur joueurSuivant = null;
+            Joueur joueur = null;
+            foreach (Lobby l in JurasicRiskGameServer.Get.Lobby)
+            {
+                if (l.Id == lobbyName)
+                {
+                    lobby = l;
+                }
+            }
+            if (lobby != null)
+            {
+                for (int i = 0; i < lobby.Joueurs.Count; i++)
+                {
+                    if (lobby.Joueurs[i].Profil.Pseudo == lobbyName)
+                    {
+                        joueur = lobby.Joueurs[i];
+                        joueurSuivant = lobby.Joueurs[i + 1 % (lobby.Joueurs.Count + 1)];
+                    }
+                }
+            }
+            if (joueurSuivant != null)
+            {
+                await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("yourTurn");
+                await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("EndTurn");
+            }
+
         }
     }
 }
