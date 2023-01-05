@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
+using ModelsAPI.ClassMetier.GameStatus;
+using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
 using NReJSON;
@@ -51,6 +54,11 @@ namespace RISKAPI.Hubs
             }
         }
 
+        /// <summary>
+        /// Send Lobby to Clients
+        /// </summary>
+        /// <param name="lobbyJson"></param>
+        /// <returns></returns>
         public async Task SendLobby(string lobbyJson)
         {
             Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
@@ -61,7 +69,7 @@ namespace RISKAPI.Hubs
             }
         }
 
-        public async Task JoinLobby(string joueurJson, string lobbyName)
+        public async Task JoinLobby(string joueurJson, string lobbyName, string password)
         {
             Joueur? joueur = JsonConvert.DeserializeObject<Joueur>(joueurJson);
             Console.WriteLine($"{joueur.Profil.Pseudo} try to Join {lobbyName}");
@@ -72,19 +80,29 @@ namespace RISKAPI.Hubs
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
                 if (lobby != null)
                 {
-                    joueur.Profil.ConnectionId = Context.ConnectionId;
-                    if (lobby.Joueurs.Count < 4)
+                    PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
+                    if (passwordHasher.VerifyHashedPassword(lobby, lobby.Password, password) != 0)
                     {
-                        lobby.JoinLobby(joueur);
-                        await _lobby.UpdateAsync(lobby);
-                        await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
-                        Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
+                        joueur.Profil.ConnectionId = Context.ConnectionId;
+                        if (lobby.Joueurs.Count < 4)
+                        {
+                            lobby.JoinLobby(joueur);
+                            await _lobby.UpdateAsync(lobby);
+                            await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
+                            Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
 
-                        await RefreshLobbyToClients(lobbyName);
+                            await RefreshLobbyToClients(lobbyName);
+                        }
+                        else
+                        {
+                            await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
+                            Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
+                        await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
+                        Console.WriteLine("mauvais mot de passe");
                     }
                 }
             }
@@ -186,6 +204,41 @@ namespace RISKAPI.Hubs
             catch (Exception)
             {
                 Console.WriteLine($"Failed to leave the lobby '{(l[0] as Lobby).Id}'");
+            }
+        }
+
+        public async Task StartPartie(string lobbyName, string joueurName,string carteName)
+        {
+            string key = $"Lobby:{lobbyName}";
+            string keyCarte = $"Keys:{carteName}";
+
+
+            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
+            {
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key }, CommandFlags.None);
+                RedisResult resultCarte = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { keyCarte }, CommandFlags.None);
+
+                try
+                {
+                    Lobby? lobby = JsonConvert.DeserializeObject<Lobby?>(result.ToString());
+                    Carte carte = JsonConvert.DeserializeObject<Carte?>(resultCarte.ToString());
+
+                    if (lobby.Owner == joueurName)
+                    {
+                        Console.WriteLine($"{joueurName} try to Start the game");
+                        lobby.Partie = new Partie(new Placement(), carte, lobby.Joueurs);
+                        JurasicRiskGameServer.Get.Lobby.Add(lobby);
+                        foreach (Joueur j in lobby.Joueurs)
+                        {
+                            await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
+                        }
+
+                    }
+                }
+                catch (JsonSerializationException)
+                {
+                    throw;
+                }
             }
         }
     }

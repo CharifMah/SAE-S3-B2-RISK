@@ -2,7 +2,7 @@
 using Models.Player;
 using IUnit = Models.Units.IUnit;
 using Profil = Models.Player.Profil;
-using Teams = Models.Teams;
+using Teams = Models.Player.Teams;
 using TerritoireBase = Models.Map.TerritoireBase;
 using UniteBase = Models.Units.UniteBase;
 
