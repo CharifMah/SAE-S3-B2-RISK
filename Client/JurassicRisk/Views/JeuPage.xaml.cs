@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
 using Models.Son;
 using System.Windows;
 using System.Windows.Controls;
@@ -93,7 +94,7 @@ namespace JurassicRisk.Views
         {
             SoundStore.Get("MusicGameJurr.mp3").Stop();
             SoundStore.Get("HubJurr.mp3").Play(true);
-            await JurassicRiskViewModel.Get.LobbyVm.Disconnect();
+            await JurasicRiskGameClient.Get.Disconnect();
 
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }

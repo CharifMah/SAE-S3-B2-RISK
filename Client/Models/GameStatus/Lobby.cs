@@ -1,9 +1,6 @@
-﻿using Models.GameStatus;
-using Models.Map;
-using Models.Player;
-using System.Collections.Generic;
+﻿using Models.Player;
 
-namespace Models
+namespace Models.GameStatus
 {
     public class Lobby
     {
@@ -72,9 +69,9 @@ namespace Models
         #region Constructor
 
         /// <summary>
-        /// Create a lobby
+        /// Create a Lobby
         /// </summary>
-        /// <param name="Id">Id of the lobby</param>
+        /// <param name="Id">Id of the Lobby</param>
         /// <param name="Password">not required Password</param>
         public Lobby(string Id, string? Password = null)
         {
@@ -93,7 +90,7 @@ namespace Models
         #endregion
 
         /// <summary>
-        /// Rejoins le lobby (ajoute le joueur dans la liste des joueurs)
+        /// Rejoins le Lobby (ajoute le joueur dans la liste des joueurs)
         /// </summary>
         /// <param name="joueur">le joueur qui rejoint</param>
         /// <returns>vrai si le joueur a rejoin</returns>
@@ -119,7 +116,7 @@ namespace Models
         }
 
         /// <summary>
-        /// Quitte le lobby retire le joueur de la liste
+        /// Quitte le Lobby retire le joueur de la liste
         /// </summary>
         /// <param name="joueur">Joueur qui quitte</param>
         /// <returns>vrai si le joueur a quitter</returns>

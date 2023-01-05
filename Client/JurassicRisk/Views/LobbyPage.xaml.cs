@@ -1,7 +1,7 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models;
+using Models.Player;
+using Models.Settings;
 using Models.Son;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,7 +17,7 @@ namespace JurassicRisk.Views
         {
             InitializeComponent();
             _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
-            DataContext= _lobbyVm;
+            DataContext = _lobbyVm;
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -140,7 +140,7 @@ namespace JurassicRisk.Views
                     }
                     break;
             }
-            JurassicRiskViewModel.Get.JoueurVm.Joueur.Team= team;
+            JurassicRiskViewModel.Get.JoueurVm.Joueur.Team = team;
             await this._lobbyVm.SetTeam(team);
         }
     }

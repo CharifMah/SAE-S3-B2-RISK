@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Models.Player;
+using Newtonsoft.Json;
 using Stockage.Converters;
 using System.Runtime.Serialization;
 

@@ -1,43 +1,27 @@
 ﻿using Models.Map;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models.GameStatus
 {
     public class Partie
     {
+        #region Attributes
         private Etat etat = null;
 
         private Carte _carte;
 
+        #endregion
+
+        #region Property
         public Carte Carte { get => _carte; set => _carte = value; }
+
+        #endregion
+
+        #region Constructor
 
         public Partie(Etat etat, Carte carte)
         {
             TransitionTo(etat);
             this.Carte = carte;
-        }
-
-        #region Attributes
-        private Etat etat = null;
-
-        private Lobby lobby;
-        #endregion
-
-        #region Property
-        public Lobby Lobby { get => lobby; }
-        #endregion
-
-        #region Constructor
-
-        public Partie(Etat etat, Lobby lobby)
-        {
-            TransitionTo(etat);
-            this.lobby = lobby;
         }
 
         #endregion

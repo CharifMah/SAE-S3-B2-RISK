@@ -1,10 +1,10 @@
-﻿using JurassicRisk.ViewsModels;
-using Models;
-using System.Threading.Tasks;
+﻿using JurassicRisk.Ressource;
+using JurassicRisk.ViewsModels;
+using Models.GameStatus;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using JurassicRisk.Ressource;
 
 namespace JurassicRisk.Views
 {
@@ -47,7 +47,7 @@ namespace JurassicRisk.Views
                 Error.Text = Strings.NoPseudoEnter;
                 Error.Visibility = Visibility.Visible;
             }
-        
+
 
         }
 
@@ -55,7 +55,7 @@ namespace JurassicRisk.Views
         {
             try
             {
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text,inputPassword.Password);
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
 
                 //Retry Pattern Async
                 var RetryTimes = 3;
