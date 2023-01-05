@@ -4,6 +4,7 @@ using Models.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -74,10 +75,10 @@ namespace Models.Combat
         public List<int> LancerDes(int nombreDes)
         {
             List<int> res = new List<int>();
-            Random rand = new Random();
+            Des dice = new Des(6);
             for (int i = 0; i < nombreDes; i++)
             {
-                res.Add(rand.Next(1, 6));
+                res.Add(dice.Roll());
             }
             return res;
         }
