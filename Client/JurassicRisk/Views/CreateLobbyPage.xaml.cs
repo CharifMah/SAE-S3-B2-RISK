@@ -23,7 +23,7 @@ namespace JurassicRisk.Views
         private async void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             string connexion = "";
-            SoundStore.Get("ClickButton.mp3").Play();
+            
 
             if (inputLobbyName.Text != "")
             {
@@ -100,7 +100,7 @@ namespace JurassicRisk.Views
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
     }

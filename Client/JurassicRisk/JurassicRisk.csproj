@@ -18,6 +18,7 @@
     <None Remove="Sounds\checkbox.mp3" />
     <None Remove="Sounds\Click.mp3" />
     <None Remove="Sounds\ClickButton.mp3" />
+    <None Remove="Sounds\ClickButton.wav" />
     <None Remove="Sounds\HubJurr.mp3" />
     <None Remove="Sounds\MusicGameJurr.mp3" />
     <None Remove="Sounds\PassageMap.mp3" />
@@ -83,6 +84,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Sounds\ClickButton.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sounds\PassageMap.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

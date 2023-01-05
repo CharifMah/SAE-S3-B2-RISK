@@ -35,7 +35,7 @@ namespace JurassicRisk.Views
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             if (!await ProfilViewModel.Get.VerifProfilCreation(inputPseudo.Text))
             {
                 if (inputPseudo.Text != "")
@@ -67,7 +67,7 @@ namespace JurassicRisk.Views
         {
             Profil profil = new Profil(inputPseudo.Text, inputPassword.Password);
             string inscription = await ProfilViewModel.Get.Inscription(profil);
-            SoundStore.Get("ClickButton.mp3").Play();
+            
 
             if (inscription == "Ok")
             {
@@ -85,7 +85,7 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
         }
 
