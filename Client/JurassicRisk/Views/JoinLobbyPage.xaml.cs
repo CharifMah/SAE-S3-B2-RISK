@@ -38,6 +38,7 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
+                        await JurassicRiskViewModel.Get.LobbyVm.Connect();
                         Error.Text = Ressource.Strings.NoExistLobby;
                         Error.Visibility = Visibility.Visible;
                     }

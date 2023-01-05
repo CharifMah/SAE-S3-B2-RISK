@@ -91,17 +91,13 @@ namespace JurassicRisk.ViewsModels
         /// Starts a connection to the server
         /// </summary>
         /// <returns>Task</returns>
-        private async Task Connect()
+        public async Task Connect()
         {
             await JurasicRiskGameClient.Get.Connect();
 
             _chatService.ConnectedToLobby += _chatService_ConnectedToLobby;
             _chatService.LobbyReceived += _chatService_LobbyReceived;
             _chatService.LobbyJoined += _chatService_LobbyJoined;
-
-
-
-
         }
 
 
@@ -196,7 +192,10 @@ namespace JurassicRisk.ViewsModels
 
         private void _chatService_PartieReceived()
         {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            {
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+            });
         }
 
         private void _chatService_Connected(string connectionId)

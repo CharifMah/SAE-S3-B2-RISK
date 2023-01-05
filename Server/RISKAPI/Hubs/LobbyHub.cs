@@ -210,13 +210,13 @@ namespace RISKAPI.Hubs
         public async Task StartPartie(string lobbyName, string joueurName,string carteName)
         {
             string key = $"Lobby:{lobbyName}";
-            string keyCarte = $"Keys:{carteName}";
+            string keyCarte = $"{carteName}";
 
 
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
-                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key }, CommandFlags.None);
-                RedisResult resultCarte = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { keyCarte }, CommandFlags.None);
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
+                RedisResult resultCarte = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(keyCarte);
 
                 try
                 {
@@ -235,9 +235,9 @@ namespace RISKAPI.Hubs
 
                     }
                 }
-                catch (JsonSerializationException)
+                catch (Exception e )
                 {
-                    throw;
+                    Console.WriteLine(e.Message);
                 }
             }
         }

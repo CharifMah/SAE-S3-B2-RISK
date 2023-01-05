@@ -24,7 +24,7 @@ namespace RISKAPI.Controllers
         public async Task<IActionResult> CreateLobby(Lobby lobby)
         {
             IActionResult reponse = null;
-            try
+            try 
             {
                 bool res = RedisProvider.Instance.RedisDataBase.KeyExists($"Lobby:{lobby.Id}");
                 if (!res)

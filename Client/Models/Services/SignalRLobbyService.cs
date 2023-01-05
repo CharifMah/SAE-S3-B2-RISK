@@ -33,7 +33,7 @@ namespace Models.Services
 
         public async Task StartPartie(string lobbyName, string joueurName, string carteName)
         {
-            await _connection.SendAsync("JoinLobby", lobbyName, joueurName, carteName);
+            await _connection.SendAsync("StartPartie", lobbyName, joueurName, carteName);
         }
 
         /// <summary>

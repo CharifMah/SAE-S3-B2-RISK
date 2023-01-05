@@ -90,12 +90,13 @@ namespace Models
 
         public async Task Connect()
         {
-            await Connection.StartAsync().ContinueWith(async task =>
+            await _connection.StartAsync().ContinueWith(async task =>
             {
                 if (task.Exception != null)
                 {
                     //this._errorMessage = "Unable to connect to Lobby chat hub";
                 }
+                _isConnected = true;
             });
 
 
@@ -108,9 +109,9 @@ namespace Models
         /// <returns></returns>
         public async Task Disconnect()
         {
-            if (Connection != null)
+            if (_connection != null)
             {
-                await Connection.DisposeAsync();
+                await _connection.DisposeAsync();
             }
             _isConnected = false;
         }
