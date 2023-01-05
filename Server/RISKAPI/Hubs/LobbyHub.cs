@@ -88,11 +88,13 @@ namespace RISKAPI.Hubs
                         }
                         else
                         {
+                            await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
                             Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
                         }
                     }
                     else
                     {
+                        await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
                         Console.WriteLine("mauvais mot de passe");
                     }
                 }
