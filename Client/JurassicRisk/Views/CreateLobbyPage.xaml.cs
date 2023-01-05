@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Models;
 using System.Windows;
 using System.Windows.Controls;
+using Models.Son;
+using Models.GameStatus;
 
 namespace JurassicRisk.Views
 {
@@ -20,23 +22,29 @@ namespace JurassicRisk.Views
 
         private async void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (inputLobbyName.Text != "")
-            string connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text,inputPassword.Password));
+            string connexion = "";
             SoundStore.Get("ClickButton.mp3").Play();
+
+            if (inputLobbyName.Text != "")
+            {
+                connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
+            }
+          
+ 
 
             if (connexion == "lobby rejoint et refresh")
             {
                 if (inputPassword.Password == inputPassword2.Password)
                 {
-                    string connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
+                    string connexion1 = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
 
-                    if (connexion.Contains("Lobby Created with name"))
+                    if (connexion1.Contains("Lobby Created with name"))
                     {
                         JoinLobby();
                     }
                     else
                     {
-                        Error.Text = connexion;
+                        Error.Text = connexion1;
                         Error.Visibility = Visibility.Visible;
                     }
                 }
