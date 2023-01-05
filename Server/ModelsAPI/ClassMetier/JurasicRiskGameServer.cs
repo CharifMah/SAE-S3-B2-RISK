@@ -1,4 +1,5 @@
-﻿using ModelsAPI.ClassMetier.Player;
+﻿using ModelsAPI.ClassMetier.PartieTest;
+using ModelsAPI.ClassMetier.Player;
 using StackExchange.Redis;
 
 namespace ModelsAPI.ClassMetier
@@ -6,12 +7,14 @@ namespace ModelsAPI.ClassMetier
     public class JurasicRiskGameServer
     {
         #region Attributes
-        private List<Profil> _profils;
+
+        private List<Partie> _parties;
+
         #endregion
 
         #region Property
 
-
+        public List<Partie> Parties { get => _parties; set => _parties = value; }
 
         #endregion
 
@@ -31,9 +34,10 @@ namespace ModelsAPI.ClassMetier
             }
         }
 
+
         private JurasicRiskGameServer()
         {
-            _profils = new List<Profil>();
+            Parties = new List<Partie>();
         }
 
         #endregion
