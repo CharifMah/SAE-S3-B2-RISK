@@ -34,7 +34,6 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            SoundStore.Get("checkbox.mp3").Play();
             settingVm.Volume = slider_Son.Value;
         }
 

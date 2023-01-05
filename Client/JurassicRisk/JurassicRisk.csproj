@@ -22,6 +22,7 @@
     <None Remove="Sounds\HubJurr.mp3" />
     <None Remove="Sounds\MusicGameJurr.mp3" />
     <None Remove="Sounds\PassageMap.mp3" />
+    <None Remove="Sounds\SliderSounds.wav" />
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
     <None Remove="Sprites\Background\Background3.jpg" />
@@ -107,6 +108,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sounds\MusicGameJurr.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\SliderSounds.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\Background\trexHead.png">
