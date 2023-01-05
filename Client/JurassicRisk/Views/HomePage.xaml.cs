@@ -1,3 +1,4 @@
+using Models.Son;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,21 +17,25 @@ namespace JurassicRisk.Views
 
         private async void ConnexionButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new ConnexionPage());
         }
 
         private async void InscriptionButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new InscriptionPage());
         }
 
         private void OptionButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             Environment.Exit(0);
         }
     }
