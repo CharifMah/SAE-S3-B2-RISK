@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
 using Models.Player;
 using Models.Settings;
 using Models.Son;
@@ -20,7 +21,7 @@ namespace JurassicRisk.Views
             DataContext = _lobbyVm;
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        private async void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             SoundStore.Get("ClickButton.mp3").Play();
             SoundStore.Get("HubJurr.mp3").Stop();
@@ -30,6 +31,7 @@ namespace JurassicRisk.Views
             if (_lobbyVm.Lobby.PlayersReady)
             {
                 Error.Visibility = Visibility.Hidden;
+                await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id,ProfilViewModel.Get.SelectedProfil.Pseudo,"carte") ;
             }
             else
             {
