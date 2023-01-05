@@ -25,11 +25,11 @@ namespace Models.PartieTest
         {
            // PlaceUnits();
         }
-        public void PlaceUnits(IUnit unitToPlace, Joueur _joueur)
+        public void PlaceUnits(List<IUnit> unitToPlace, Joueur _joueur)
         {
             if (_joueur.Units.Count > 0)
             {
-                _joueur.AddUnits(new List<IUnit>() { unitToPlace }, JurasicRiskGameClient.Get.Carte.SelectedTerritoire);
+                _joueur.AddUnits(unitToPlace, JurasicRiskGameClient.Get.Carte.SelectedTerritoire);
             }
         }
 
