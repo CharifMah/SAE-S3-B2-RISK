@@ -1,4 +1,5 @@
 ﻿using Models.Fabriques.FabriqueUnite;
+using Models.Units;
 
 namespace ModelTestUnit
 {
