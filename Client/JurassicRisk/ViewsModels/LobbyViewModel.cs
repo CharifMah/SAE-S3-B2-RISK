@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using JurassicRisk.observable;
+using JurassicRisk.Views;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
 using Models.GameStatus;
@@ -7,12 +8,11 @@ using Models.Player;
 using Models.Services;
 using Newtonsoft.Json;
 using System;
-using System.Data.Common;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace JurassicRisk.ViewsModels
@@ -37,7 +37,7 @@ namespace JurassicRisk.ViewsModels
             get { return _lobby; }
             set
             {
-                _lobby = value;                
+                _lobby = value;
                 NotifyPropertyChanged("Lobby");
             }
         }
@@ -58,7 +58,7 @@ namespace JurassicRisk.ViewsModels
 
         public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
 
-      
+
 
         public bool IsConnectedToLobby { get => _isConnectedToLobby; set => _isConnectedToLobby = value; }
 
@@ -70,14 +70,18 @@ namespace JurassicRisk.ViewsModels
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
             _lobby = JurasicRiskGameClient.Get.Lobby;
-        
+
             _isConnectedToLobby = false;
             _connection = JurasicRiskGameClient.Get.Connection;
             _chatService = JurasicRiskGameClient.Get.ChatService;
 
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
+            _chatService.PartieReceived += _chatService_PartieReceived; ;
         }
+
+
+
 
         #endregion
 
@@ -90,14 +94,14 @@ namespace JurassicRisk.ViewsModels
         private async Task Connect()
         {
             await JurasicRiskGameClient.Get.Connect();
-            
+
             _chatService.ConnectedToLobby += _chatService_ConnectedToLobby;
             _chatService.LobbyReceived += _chatService_LobbyReceived;
             _chatService.LobbyJoined += _chatService_LobbyJoined;
 
-            
 
-           
+
+
         }
 
 
@@ -137,7 +141,7 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="lobbyName">le nom du Lobby</param>
         /// <returns>bool</returns>
-        public async Task<bool> JoinLobby(string lobbyName,string password)
+        public async Task<bool> JoinLobby(string lobbyName, string password)
         {
             if (_connection == null || _connection.ConnectionId == null)
             {
@@ -165,7 +169,7 @@ namespace JurassicRisk.ViewsModels
         {
 
             Joueur j = JurassicRiskViewModel.Get.JoueurVm.Joueur;
-            await _chatService.IsReady(j.IsReady,j.Profil.Pseudo,JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
+            await _chatService.IsReady(j.IsReady, j.Profil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
             return true;
         }
 
@@ -183,6 +187,11 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Events
+
+        private void _chatService_PartieReceived()
+        {
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+        }
 
         private void _chatService_Connected(string connectionId)
         {

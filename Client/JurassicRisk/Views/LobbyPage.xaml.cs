@@ -28,7 +28,7 @@ namespace JurassicRisk.Views
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
             if (_lobbyVm.Lobby.PlayersReady)
             {
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+                Error.Visibility = Visibility.Hidden;
             }
             else
             {

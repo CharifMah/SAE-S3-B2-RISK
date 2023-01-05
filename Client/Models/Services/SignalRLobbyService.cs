@@ -9,7 +9,7 @@ namespace Models.Services
     public class SignalRLobbyService
     {
         private readonly HubConnection _connection;
-        public event Action<string> PartieReceived;
+        public event Action PartieReceived;
         public event Action<string> LobbyReceived;
         public event Action<string> LobbyJoined;
         public event Action<string> Connected;
@@ -23,7 +23,7 @@ namespace Models.Services
         public SignalRLobbyService(HubConnection connection)
         {
             _connection = connection;
-            _connection.On<string>("ReceivePartie", (partieJson) => PartieReceived?.Invoke(partieJson));
+            _connection.On("ReceivePartie", () => PartieReceived?.Invoke());
             _connection.On<string>("ReceiveLobby", (lobbyJson) => LobbyReceived?.Invoke(lobbyJson));
             _connection.On<string>("JoinLobby", (lobbyJson) => LobbyJoined?.Invoke(lobbyJson));
             _connection.On<string>("connectedToLobby", (connected) => ConnectedToLobby?.Invoke(connected));
