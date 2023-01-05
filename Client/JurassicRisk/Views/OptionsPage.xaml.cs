@@ -1,5 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models;
+using Models.Settings;
 using Stockage;
 using System;
 using System.Windows;

@@ -1,6 +1,6 @@
 using GalaSoft.MvvmLight.Threading;
-using JurassicRisk.ViewsModels;
 using Models;
+using Models.Settings;
 using Models.Son;
 using System;
 using System.Globalization;
@@ -21,7 +21,7 @@ namespace JurassicRisk.Views
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             DispatcherHelper.Initialize();
-            this.Closed += async (sender, e) => await FentrePrincipal_Closed(sender,e);
+            this.Closed += async (sender, e) => await FentrePrincipal_Closed(sender, e);
 
             StartupSettings();
         }
@@ -69,6 +69,7 @@ namespace JurassicRisk.Views
         /// <Author>Charif</Author>
         private async Task FentrePrincipal_Closed(object sender, System.EventArgs e)
         {
+            await JurasicRiskGameClient.Get.Disconnect();
             Environment.Exit(0);
         }
     }

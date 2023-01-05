@@ -1,5 +1,8 @@
-﻿using JurassicRisk.ViewsModels;
-using Models;
+﻿using JurassicRisk.Ressource;
+using JurassicRisk.ViewsModels;
+using Models.GameStatus;
+using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,18 +20,72 @@ namespace JurassicRisk.Views
 
         private async void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            string connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text,inputPassword.Password));
-            if (connexion == "lobby rejoint et refresh")
+            if (inputLobbyName.Text != "")
             {
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                if (inputPassword.Password == inputPassword2.Password)
+                {
+                    string connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
+
+                    if (connexion.Contains("Lobby Created with name"))
+                    {
+                        JoinLobby();
+                    }
+                    else
+                    {
+                        Error.Text = connexion;
+                        Error.Visibility = Visibility.Visible;
+                    }
+                }
+                else
+                {
+                    Error.Text = Strings.PasswordNotMatch;
+                    Error.Visibility = Visibility.Visible;
+                }
             }
             else
             {
-                Error.Text = connexion;
+                Error.Text = Strings.NoPseudoEnter;
                 Error.Visibility = Visibility.Visible;
             }
+
+
         }
 
+        private async void JoinLobby()
+        {
+            try
+            {
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
+
+                //Retry Pattern Async
+                var RetryTimes = 3;
+
+                var WaitTime = 500;
+
+                for (int i = 0; i < RetryTimes; i++)
+                {
+                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                    {
+                        (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                        break;
+                    }
+                    else
+                    {
+                        Error.Text = Ressource.Strings.NoExistLobby;
+                        Error.Visibility = Visibility.Visible;
+                    }
+                    //Wait for 500 milliseconds
+                    await Task.Delay(WaitTime);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Error.Text = ex.Message;
+                Error.Visibility = Visibility.Visible;
+            }
+
+        }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());

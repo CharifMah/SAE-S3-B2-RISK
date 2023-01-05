@@ -1,11 +1,8 @@
 ﻿using JurassicRisk.Views;
-using Models;
+using Models.Settings;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -111,8 +108,8 @@ namespace JurassicRisk.ViewsModels
         public void ChangeLanguage(string culture)
         {
             Ressource.Strings.Culture = new CultureInfo(culture);
-           
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage(Settings.Get().ActualPage));         
+
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.Navigate(new OptionsPage(Settings.Get().ActualPage));
         }
     }
 }

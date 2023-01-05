@@ -14,19 +14,19 @@ namespace JurassicRisk.Views
             InitializeComponent();
         }
 
-        private async void ConnexionButton_Click(object sender, RoutedEventArgs e)
+        private void ConnexionButton_Click(object sender, RoutedEventArgs e)
         {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new ConnexionPage());
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new ConnexionPage());
         }
 
-        private async void InscriptionButton_Click(object sender, RoutedEventArgs e)
+        private void InscriptionButton_Click(object sender, RoutedEventArgs e)
         {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new InscriptionPage());
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new InscriptionPage());
         }
 
         private void OptionButton_Click(object sender, RoutedEventArgs e)
         {
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new OptionsPage(this));
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)

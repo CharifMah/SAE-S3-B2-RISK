@@ -1,41 +1,28 @@
-﻿using Models.Map;
-using Models.Player;
-using Models.Tours;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using Models.GameStatus;
+using Models.Services;
 using System.Net.Http;
-using System.Net.WebSockets;
 
 namespace Models
 {
     public class JurasicRiskGameClient
     {
         #region Attributes
+        private Lobby? _lobby;
         private HttpClient _client;
-        private ClientWebSocket _clientWebSocket;
         private string _ip;
-        private Carte _carte;
-        private List<Joueur> _joueurs;
-        private List<ITour> _tours;
-        private TaskCompletionSource<bool> _clickWaitTask;
+        private HubConnection _connection;
+        private bool _isConnected;
+
+        private SignalRLobbyService _chatService;
         #endregion
 
         #region Property
 
-        public Carte Carte
+        public Lobby? Lobby
         {
-            get
-            {
-                return _carte;
-            }
-            set
-            {
-                _carte = value;
-            }
-        }
-
-        public List<Joueur> Joueurs
-        {
-            get { return _joueurs; }
-            set { _joueurs = value; }
+            get { return _lobby; }
+            set { _lobby = value; }
         }
 
         public HttpClient Client
@@ -46,6 +33,22 @@ namespace Models
         public string Ip
         {
             get { return _ip; }
+        }
+
+        public SignalRLobbyService ChatService { get => _chatService; set => _chatService = value; }
+
+        public HubConnection Connection { get => _connection; set => _connection = value; }
+
+        public bool IsConnected
+        {
+            get
+            {
+                return _isConnected;
+            }
+            set
+            {
+                _isConnected = value;
+            }
         }
 
         #endregion
@@ -65,27 +68,58 @@ namespace Models
             }
         }
 
+
+
         private JurasicRiskGameClient()
         {
             _ip = "localhost:7215";
             _client = new HttpClient();
+            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk").Build();
+
+            _chatService = new SignalRLobbyService(Connection);
+            _isConnected = false;
+            _lobby = null;
         }
+
+        private void StartPartie()
+        {
+
+        }
+
+        public void StopPartie() { }
+
+        public async Task Connect()
+        {
+            await Connection.StartAsync().ContinueWith(async task =>
+            {
+                if (task.Exception != null)
+                {
+                    //this._errorMessage = "Unable to connect to Lobby chat hub";
+                }
+            });
+
+
+        }
+
+
+        /// <summary>
+        /// Disconnect the connection
+        /// </summary>
+        /// <returns></returns>
+        public async Task Disconnect()
+        {
+            if (Connection != null)
+            {
+                await Connection.DisposeAsync();
+            }
+            _isConnected = false;
+        }
+
+
+
+
+
         #endregion
 
-        public async Task StartGame()
-        {
-            TourPlacement t = new TourPlacement();
-            _clickWaitTask = new TaskCompletionSource<bool>();
-
-            while (_carte.GetNombreTerritoireOccupe != 0)
-            {
-                foreach (Joueur joueur in _joueurs)
-                {
-                    t.PlaceUnits(joueur.Units[0], joueur);
-
-                    await _clickWaitTask.Task;
-                }
-            }
-        }
     }
 }
