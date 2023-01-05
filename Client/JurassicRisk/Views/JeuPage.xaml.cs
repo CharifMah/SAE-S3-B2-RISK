@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
 using Models.Son;
 using System.Windows;
 using System.Windows.Controls;
@@ -92,11 +93,13 @@ namespace JurassicRisk.Views
             }
         }
 
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             SoundStore.Get("ClickButton.mp3").Play();
             SoundStore.Get("MusicGameJurr.mp3").Stop();
             SoundStore.Get("HubJurr.mp3").Play(true);
+            await JurasicRiskGameClient.Get.Disconnect();
+
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 

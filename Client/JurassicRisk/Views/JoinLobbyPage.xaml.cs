@@ -22,7 +22,7 @@ namespace JurassicRisk.Views
             SoundStore.Get("ClickButton.mp3").Play();
             try
             {
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text);
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
 
                 //Retry Pattern Async
                 var RetryTimes = 3;

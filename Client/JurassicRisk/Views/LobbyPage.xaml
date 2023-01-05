@@ -75,8 +75,8 @@
         
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Content="{x:Static Ressources:Strings.Ready}" Style="{StaticResource CustomAnimationButton}" Width="400" Click="ReadyButton_Click"/>
-
             <Button Content="{x:Static Ressources:Strings.Play}" Style="{StaticResource CustomAnimationButton}" Width="400" Click="PlayButton_Click"/>
+            <TextBlock x:Name="Error" FontSize="18" HorizontalAlignment="Center" Text="Error" Visibility="Hidden" Background="AntiqueWhite" Style="{StaticResource FruitDays}"></TextBlock>
 
         </StackPanel >
        

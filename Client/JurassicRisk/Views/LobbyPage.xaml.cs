@@ -1,7 +1,7 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models;
+using Models.Player;
+using Models.Settings;
 using Models.Son;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,7 +17,7 @@ namespace JurassicRisk.Views
         {
             InitializeComponent();
             _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
-            DataContext= _lobbyVm;
+            DataContext = _lobbyVm;
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -27,17 +27,32 @@ namespace JurassicRisk.Views
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+            if (_lobbyVm.Lobby.PlayersReady)
+            {
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+            }
+            else
+            {
+                Error.Text = "tous les joueur ne sont pas pret";
+                Error.Visibility = Visibility.Visible;
+            }
         }
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
             SoundStore.Get("ClickButton.mp3").Play();
-            if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
-                JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur.Team != Teams.NEUTRE)
+            {
+                if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
+                    JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
+                else
+                    JurassicRiskViewModel.Get.JoueurVm.IsReady = "❌";
+            }
             else
-                JurassicRiskViewModel.Get.JoueurVm.IsReady = "❌";
-
+            {
+                Error.Text = " choisissez une equipe avant de vous mettre pret ";
+                Error.Visibility = Visibility.Visible;
+            }
         }
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
@@ -129,7 +144,7 @@ namespace JurassicRisk.Views
                     }
                     break;
             }
-            JurassicRiskViewModel.Get.JoueurVm.Joueur.Team= team;
+            JurassicRiskViewModel.Get.JoueurVm.Joueur.Team = team;
             await this._lobbyVm.SetTeam(team);
         }
     }
