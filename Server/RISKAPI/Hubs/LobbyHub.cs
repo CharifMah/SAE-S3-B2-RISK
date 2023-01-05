@@ -227,6 +227,7 @@ namespace RISKAPI.Hubs
                     {
                         Console.WriteLine($"{joueurName} try to Start the game");
                         lobby.Partie = new Partie(new Placement(), carte, lobby.Joueurs);
+                        JurasicRiskGameServer.Get.Lobby.Add(lobby);
                         foreach (Joueur j in lobby.Joueurs)
                         {
                             await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
