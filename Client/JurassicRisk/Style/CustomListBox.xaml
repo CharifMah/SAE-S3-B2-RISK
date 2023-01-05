@@ -12,5 +12,10 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
 
 </ResourceDictionary>
