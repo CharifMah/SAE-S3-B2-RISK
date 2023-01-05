@@ -122,7 +122,7 @@ FLUSHALL
 
 ## if the API does not start
 
-check on wsl if you do not have several instances of the redis server 
+check if you do not have several instances of the redis server 
 
 ```
 ps aux
