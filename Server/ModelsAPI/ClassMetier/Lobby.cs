@@ -66,7 +66,7 @@ namespace ModelsAPI.ClassMetier
         }
 
 
-        public Partie? Partie { get => _partie; }
+        public Partie? Partie { get => _partie; set => _partie = value; }
 
         #endregion
 

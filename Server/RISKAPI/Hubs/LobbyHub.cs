@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
+using ModelsAPI.ClassMetier.GameStatus;
+using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
 using NReJSON;
@@ -51,6 +53,7 @@ namespace RISKAPI.Hubs
 
             }
         }
+
         /// <summary>
         /// Send Lobby to Clients
         /// </summary>
@@ -201,6 +204,40 @@ namespace RISKAPI.Hubs
             catch (Exception)
             {
                 Console.WriteLine($"Failed to leave the lobby '{(l[0] as Lobby).Id}'");
+            }
+        }
+
+        public async Task StartPartie(string lobbyName, string joueurName,string carteName)
+        {
+            string key = $"Lobby:{lobbyName}";
+            string keyCarte = $"Keys:{carteName}";
+
+
+            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
+            {
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key }, CommandFlags.None);
+                RedisResult resultCarte = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { keyCarte }, CommandFlags.None);
+
+                try
+                {
+                    Lobby? lobby = JsonConvert.DeserializeObject<Lobby?>(result.ToString());
+                    Carte carte = JsonConvert.DeserializeObject<Carte?>(resultCarte.ToString());
+
+                    if (lobby.Owner == joueurName)
+                    {
+                        Console.WriteLine($"{joueurName} try to Start the game");
+                        lobby.Partie = new Partie(new Placement(), carte, lobby.Joueurs);
+                        foreach (Joueur j in lobby.Joueurs)
+                        {
+                            await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
+                        }
+
+                    }
+                }
+                catch (JsonSerializationException)
+                {
+                    throw;
+                }
             }
         }
     }
