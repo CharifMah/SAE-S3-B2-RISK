@@ -116,7 +116,11 @@
 
             </Setter.Value>
         </Setter>
-
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="PreviewMouseDown">
+                <SoundPlayerAction Source="Sounds/ClickButton.wav" />
+            </EventTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="Button" x:Key="ButtonStyle">

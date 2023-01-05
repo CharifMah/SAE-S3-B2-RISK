@@ -34,13 +34,12 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            SoundStore.Get("checkbox.mp3").Play();
             settingVm.Volume = slider_Son.Value;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(Settings.Get().ActualPage);
 
             switch (Settings.Get().ActualPage.Name)
@@ -59,7 +58,7 @@ namespace JurassicRisk.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             Settings.Get().SaveSettings();
         }
     }

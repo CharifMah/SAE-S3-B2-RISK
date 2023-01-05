@@ -23,7 +23,7 @@ namespace JurassicRisk.Views
 
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             SoundStore.Get("HubJurr.mp3").Stop();
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
@@ -42,7 +42,7 @@ namespace JurassicRisk.Views
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur.Team != Teams.NEUTRE)
             {
                 if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
@@ -59,14 +59,14 @@ namespace JurassicRisk.Views
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             await _lobbyVm.ExitLobby();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 
         private async void SelectTeamButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             Teams team = Teams.NEUTRE;
             Button b = (sender as Button);
             switch (b.Name)

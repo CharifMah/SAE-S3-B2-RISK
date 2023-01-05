@@ -25,7 +25,7 @@ namespace JurassicRisk.Views
             string connexion = await ProfilViewModel.Get.Connexion(profil);
 
 
-            SoundStore.Get("ClickButton.mp3").Play();
+            
 
             if (connexion == "Ok")
             {
@@ -40,7 +40,7 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundStore.Get("ClickButton.mp3").Play();
+            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
         }
     }
