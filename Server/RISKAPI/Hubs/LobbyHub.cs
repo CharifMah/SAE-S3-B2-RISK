@@ -269,7 +269,7 @@ namespace RISKAPI.Hubs
             if (joueurSuivant != null)
             {
                 await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("yourTurn");
-                await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("EndTurn");
+                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("EndTurn");
             }
 
         }
