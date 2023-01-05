@@ -1,8 +1,8 @@
-﻿using JurassicRisk.Ressource;
+using JurassicRisk.Ressource;
 using JurassicRisk.ViewsModels;
-using Models.GameStatus;
 using System;
 using System.Threading.Tasks;
+using Models;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -21,6 +21,10 @@ namespace JurassicRisk.Views
         private async void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             if (inputLobbyName.Text != "")
+            string connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text,inputPassword.Password));
+            SoundStore.Get("ClickButton.mp3").Play();
+
+            if (connexion == "lobby rejoint et refresh")
             {
                 if (inputPassword.Password == inputPassword2.Password)
                 {
@@ -88,6 +92,7 @@ namespace JurassicRisk.Views
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
     }

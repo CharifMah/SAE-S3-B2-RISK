@@ -1,5 +1,6 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models.Settings;
+using Models;
+using Models.Son;
 using Stockage;
 using System;
 using System.Windows;
@@ -33,29 +34,32 @@ namespace JurassicRisk.Views
 
         private void slider_Son_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
+            SoundStore.Get("checkbox.mp3").Play();
             settingVm.Volume = slider_Son.Value;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(Settings.Get().ActualPage);
 
             switch (Settings.Get().ActualPage.Name)
             {
                 case "_MenuPage":
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
                     break;
                 case "_HomePage":
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new HomePage());
                     break;
                 case "_JeuPage":
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.GoBack();
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.GoBack();
                     break;
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             Settings.Get().SaveSettings();
         }
     }

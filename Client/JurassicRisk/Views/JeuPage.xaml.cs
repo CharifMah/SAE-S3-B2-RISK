@@ -70,11 +70,13 @@ namespace JurassicRisk.Views
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             Resume();
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             bool Pressed = false;
             //Pause
             if (GroupBoxPause.Visibility == Visibility.Hidden && !Pressed)
@@ -92,6 +94,7 @@ namespace JurassicRisk.Views
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             SoundStore.Get("MusicGameJurr.mp3").Stop();
             SoundStore.Get("HubJurr.mp3").Play(true);
             await JurasicRiskGameClient.Get.Disconnect();
