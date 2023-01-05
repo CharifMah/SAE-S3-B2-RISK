@@ -36,7 +36,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public Partie(Etat etat, Carte carte, List<Joueur> joueur)
         {
             TransitionTo(etat);
-            this.Carte = carte;
+            this._carte = carte;
             this._joueurs = joueur;
         }
 
