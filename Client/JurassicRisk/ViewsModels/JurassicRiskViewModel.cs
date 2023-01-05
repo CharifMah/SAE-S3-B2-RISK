@@ -1,4 +1,6 @@
 ﻿using Models;
+using Models.Tours;
+using System.Threading.Tasks;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -9,6 +11,7 @@ namespace JurassicRisk.ViewsModels
         private CarteViewModel _carteVm;
         private JoueurViewModel _joueurVm;
         private LobbyViewModel _lobbyVm;
+        private TaskCompletionSource<bool> _clickWaitTask;
         #endregion
 
         #region Property
@@ -38,5 +41,12 @@ namespace JurassicRisk.ViewsModels
             _lobbyVm = new LobbyViewModel();
         }
         #endregion
+
+        public async Task StartGame()
+        {
+            TourPlacement tp = new TourPlacement();
+
+
+        }
     }
 }

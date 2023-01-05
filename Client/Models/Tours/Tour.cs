@@ -1,5 +1,8 @@
-﻿using Models.Exceptions;
+﻿using Models;
+using Models.Combat;
+using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
+using Models.Fight;
 using Models.Player;
 using Models.Units;
 using System;
@@ -23,7 +26,7 @@ namespace Models.Tours
             _tourEnd = false;
         }
 
-
+        /* Plus possible de récupérer la carte
         public void Strengthen(int nbRenfort)
         {
             FabriqueUniteBase f = new FabriqueUniteBase();
@@ -49,6 +52,7 @@ namespace Models.Tours
 
             if (_joueur.Units.Count > 0)
             {
+                
                 if(JurasicRiskGameClient.Get.Carte.SelectedTerritoire.Team == _joueur.Team)
                 {
                     IUnit unitToPlace = _joueur.Units[0];
@@ -64,9 +68,11 @@ namespace Models.Tours
                 throw new NotEnoughUniteBasexception();
             }
         }
+        */
 
         public void Attack()
         {
+            Combat c = new Combat();
 
         }
 

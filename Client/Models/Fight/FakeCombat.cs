@@ -4,26 +4,23 @@ using Models.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
-namespace Models.Combat
+namespace Models.Fight
 {
-    public class Combat : ICombat
+    public class FakeCombat : ICombat
     {
-        public Combat(List<IUnit> attaquant, List<IUnit> defenseur, ITerritoireBase territoireAttaquant, ITerritoireBase cible, Joueur assaillant, Joueur victime)
+        public FakeCombat(List<IUnit> attaquant, List<IUnit> defenseur, ITerritoireBase territoireAttaquant, ITerritoireBase cible, Joueur assaillant, Joueur victime)
         {
             DerouleCombat(attaquant, defenseur, territoireAttaquant, cible, assaillant, victime);
         }
-
         public void DerouleCombat(List<IUnit> attaquant, List<IUnit> defenseur, ITerritoireBase territoireAttaquant, ITerritoireBase cible, Joueur assaillant, Joueur victime)
         {
             int nbAttaque = Attaquer(attaquant, cible, assaillant);
             int nbDefense = Defendre(defenseur, territoireAttaquant, victime);
-            List<int> resAttaque = LancerDes(nbAttaque);
-            List<int> resDefense = LancerDes(nbDefense);
+            List<int> resAttaque = LancerDesA(nbAttaque);
+            List<int> resDefense = LancerDesB(nbDefense);
             (List<int>, List<int>) res = TriLances(resAttaque, resDefense);
             resAttaque = res.Item1;
             resDefense = res.Item2;
@@ -57,6 +54,35 @@ namespace Models.Combat
             }
         }
 
+        public (int, int) CompareLances(List<int> lanceAttaque, List<int> lanceDefense)
+        {
+            int attaqueReussie = 0;
+            int nbAttaque = 0;
+            if (lanceAttaque.Count < lanceDefense.Count)
+            {
+                for (int i = 0; i < lanceAttaque.Count; i++)
+                {
+                    if (lanceAttaque[i] > lanceDefense[i])
+                    {
+                        attaqueReussie++;
+                    }
+                    nbAttaque++;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < lanceDefense.Count; i++)
+                {
+                    if (lanceAttaque[i] > lanceDefense[i])
+                    {
+                        attaqueReussie++;
+                    }
+                    nbAttaque++;
+                }
+            }
+            return (attaqueReussie, nbAttaque);
+        }
+
         public int Defendre(List<IUnit> defenseur, ITerritoireBase territoireAttaquant, Joueur j)
         {
             switch (defenseur.Count)
@@ -72,15 +98,37 @@ namespace Models.Combat
             }
         }
 
-        public List<int> LancerDes(int nombreDes)
+
+        public List<int> LancerDesA(int nombreDes)
         {
             List<int> res = new List<int>();
-            Des dice = new Des(6);
-            for (int i = 0; i < nombreDes; i++)
-            {
-                res.Add(dice.Roll());
-            }
+            res.Add(6);
+            res.Add(1);
+            res.Add(3);
             return res;
+        }
+
+        public List<int> LancerDesB(int nombreDes)
+        {
+            List<int> res = new List<int>();
+            res.Add(4);
+            res.Add(2);
+            res.Add(3);
+            return res;
+        }
+
+        public void RemoveUnits(int attaqueReussie, int nbAttaque, ITerritoireBase territoireAttaquant, ITerritoireBase cible)
+        {
+            List<IUnit> troupe = cible.Units;
+            for (int i = 0; i < attaqueReussie; i++)
+            {
+                cible.RemoveUnit(troupe[0]);
+            }
+            troupe = territoireAttaquant.Units;
+            for (int i = 0; i < nbAttaque - attaqueReussie; i++)
+            {
+                territoireAttaquant.RemoveUnit(troupe[0]);
+            }
         }
 
         public (List<int>, List<int>) TriLances(List<int> attaqueScore, List<int> defenseScore)
@@ -118,47 +166,9 @@ namespace Models.Combat
             return (attaqueScore, defenseScore);
         }
 
-        public (int, int) CompareLances(List<int> lanceAttaque, List<int> lanceDefense)
+        public List<int> LancerDes(int nombreDes)
         {
-            int attaqueReussie = 0;
-            int nbAttaque = 0;
-            if (lanceAttaque.Count < lanceDefense.Count)
-            {
-                for (int i = 0; i < lanceAttaque.Count; i++)
-                {
-                    if (lanceAttaque[i] > lanceDefense[i])
-                    {
-                        attaqueReussie++;
-                    }
-                    nbAttaque++;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < lanceDefense.Count; i++)
-                {
-                    if (lanceAttaque[i] > lanceDefense[i])
-                    {
-                        attaqueReussie++;
-                    }
-                    nbAttaque++;
-                }
-            }
-            return (attaqueReussie, nbAttaque);
-        }
-
-        public void RemoveUnits(int attaqueReussie, int nbAttaque, ITerritoireBase territoireAttaquant, ITerritoireBase cible)
-        {
-            List<IUnit> troupe = cible.Units;
-            for (int i = 0; i < attaqueReussie; i++)
-            {
-                cible.RemoveUnit(troupe[0]);
-            }
-            troupe = territoireAttaquant.Units;
-            for (int i = 0; i < nbAttaque - attaqueReussie; i++)
-            {
-                territoireAttaquant.RemoveUnit(troupe[0]);
-            }
+            throw new NotImplementedException();
         }
     }
 }

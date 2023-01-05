@@ -2,7 +2,7 @@
 using Models.Player;
 using Models.Units;
 
-namespace Models.Combat
+namespace Models.Fight
 {
     public interface ICombat
     {
