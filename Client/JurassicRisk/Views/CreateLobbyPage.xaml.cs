@@ -27,40 +27,31 @@ namespace JurassicRisk.Views
 
             if (inputLobbyName.Text != "")
             {
-                connexion = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
-            }
-          
- 
-
-            if (connexion == "lobby rejoint et refresh")
-            {
-                if (inputPassword.Password == inputPassword2.Password)
-                {
-                    string connexion1 = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
-
-                    if (connexion1.Contains("Lobby Created with name"))
+                    if (inputPassword.Password == inputPassword2.Password)
                     {
-                        JoinLobby();
+                        string connexion1 = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
+
+                        if (connexion1.Contains("Lobby Created with name"))
+                        {
+                            JoinLobby();
+                        }
+                        else
+                        {
+                            Error.Text = connexion1;
+                            Error.Visibility = Visibility.Visible;
+                        }
                     }
                     else
                     {
-                        Error.Text = connexion1;
+                        Error.Text = Strings.PasswordNotMatch;
                         Error.Visibility = Visibility.Visible;
                     }
-                }
+            }
                 else
                 {
-                    Error.Text = Strings.PasswordNotMatch;
+                    Error.Text = Strings.NoPseudoEnter;
                     Error.Visibility = Visibility.Visible;
                 }
-            }
-            else
-            {
-                Error.Text = Strings.NoPseudoEnter;
-                Error.Visibility = Visibility.Visible;
-            }
-
-
         }
 
         private async void JoinLobby()
@@ -98,6 +89,7 @@ namespace JurassicRisk.Views
             }
 
         }
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             SoundStore.Get("ClickButton.mp3").Play();
