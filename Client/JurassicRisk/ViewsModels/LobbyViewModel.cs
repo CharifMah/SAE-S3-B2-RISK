@@ -184,6 +184,12 @@ namespace JurassicRisk.ViewsModels
             return true;
         }
 
+        public async Task<bool> StartPartie(string lobbyName, string joueurName, string carteName)
+        {
+            await _chatService.StartPartie(lobbyName,joueurName, carteName);
+            return true;
+        }
+
         #endregion
 
         #region Events

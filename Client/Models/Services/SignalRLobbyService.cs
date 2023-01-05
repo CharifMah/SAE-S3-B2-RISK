@@ -31,6 +31,11 @@ namespace Models.Services
             _connection.On("disconnected", () => Disconnected?.Invoke());
         }
 
+        public async Task StartPartie(string lobbyName, string joueurName, string carteName)
+        {
+            await _connection.SendAsync("JoinLobby", lobbyName, joueurName, carteName);
+        }
+
         /// <summary>
         /// Send Lobby to server
         /// </summary>
