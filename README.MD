@@ -120,3 +120,18 @@ KEYS *
 FLUSHALL
 ```
 
+## if the API does not start
+
+check on wsl if you do not have several instances of the redis server 
+
+```
+ps aux
+```
+## kill instances of redis
+```
+sudo kill -9 <pid du processus> <..>
+```
+
+ 
+
+
