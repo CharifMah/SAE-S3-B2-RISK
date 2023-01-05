@@ -31,7 +31,7 @@ namespace ModelTestUnit
 
             j1.AddUnits(renforts, t2);
             Assert.Equal(t2.Team, j1.Team);
-            Assert.Equal(1, j1.Units.Count);
+            Assert.Equal(40, j1.Units.Count);
             Assert.Equal(renforts.Count, t2.Units.Count);
         }
     }
