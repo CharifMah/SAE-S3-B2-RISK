@@ -51,7 +51,7 @@ namespace RISKAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<LobbyHub>("/LobbyHub");
+                endpoints.MapHub<LobbyHub>("/JurrasicRisk");
             });
 
             app.Run();

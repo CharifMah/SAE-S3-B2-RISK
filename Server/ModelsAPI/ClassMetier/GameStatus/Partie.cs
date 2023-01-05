@@ -1,4 +1,5 @@
 ﻿using ModelsAPI.ClassMetier.Map;
+using ModelsAPI.ClassMetier.Player;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,8 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         private Etat etat = null;
 
+        private List<Joueur> _joueurs;
+
         private Carte _carte;
 
         #endregion
@@ -21,14 +24,20 @@ namespace ModelsAPI.ClassMetier.GameStatus
         #region Property
         public Carte Carte { get => _carte; set => _carte = value; }
 
+        public List<Joueur> Joueurs
+        {
+            get { return _joueurs; }
+        }
+
         #endregion
 
         #region Constructor
 
-        public Partie(Etat etat, Carte carte)
+        public Partie(Etat etat, Carte carte, List<Joueur> joueur)
         {
             TransitionTo(etat);
             this.Carte = carte;
+            this._joueurs = joueur;
         }
 
         #endregion
