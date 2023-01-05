@@ -1,5 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models;
+using Models.Son;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,9 +19,10 @@ namespace JurassicRisk.Views
 
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             try
             {
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text,inputPassword.Password);
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
 
                 //Retry Pattern Async
                 var RetryTimes = 3;
@@ -54,6 +55,7 @@ namespace JurassicRisk.Views
 
         private async void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            SoundStore.Get("ClickButton.mp3").Play();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Models.Fabriques.FabriqueUnite;
+using Models.Units;
 
 namespace ModelTestUnit
 {
@@ -8,8 +9,8 @@ namespace ModelTestUnit
         public void CreationBrachiosaurus()
         {
             FabriqueUniteBase fabrique = new FabriqueUniteBase();
-            //UniteBase b1 = fabrique.Create("Brachiosaurus");
-            //Assert.IsType<Brachiosaurus>(b1);
+            UniteBase b1 = fabrique.Create("Brachiosaurus");
+            Assert.IsType<Brachiosaurus>(b1);
         }
     }
 }
