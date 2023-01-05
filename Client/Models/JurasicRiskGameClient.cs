@@ -74,9 +74,9 @@ namespace Models
         {
             _ip = "localhost:7215";
             _client = new HttpClient();
-            Connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk").Build();
+            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk").Build();
 
-            ChatService = new SignalRLobbyService(Connection);
+            _chatService = new SignalRLobbyService(Connection);
             _isConnected = false;
             _lobby = null;
         }
