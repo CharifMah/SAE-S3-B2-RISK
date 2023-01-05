@@ -51,7 +51,11 @@ namespace RISKAPI.Hubs
 
             }
         }
-
+        /// <summary>
+        /// Send Lobby to Clients
+        /// </summary>
+        /// <param name="lobbyJson"></param>
+        /// <returns></returns>
         public async Task SendLobby(string lobbyJson)
         {
             Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);

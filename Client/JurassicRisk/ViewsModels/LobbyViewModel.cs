@@ -77,7 +77,7 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
-            _lobby = new Lobby();
+            _lobby = JurasicRiskGameClient.Get.Lobby;
             _isConnected = false;
             _isConnectedToLobby = false;
         }

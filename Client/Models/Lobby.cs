@@ -1,4 +1,6 @@
-﻿using Models.Player;
+﻿using Models.GameStatus;
+using Models.Map;
+using Models.Player;
 using System.Collections.Generic;
 
 namespace Models
@@ -6,6 +8,8 @@ namespace Models
     public class Lobby
     {
         #region Attributes
+
+        private Partie? _partie;
 
         private string _id;
         private string? _password;
@@ -50,6 +54,8 @@ namespace Models
             get { return _joueurs; }
         }
 
+        public Partie? Partie { get => _partie; }
+
         public string? Owner
         {
             get => _owner;
@@ -81,6 +87,7 @@ namespace Models
         public Lobby()
         {
             _joueurs = new List<Joueur>();
+            _partie = null;
         }
 
         #endregion

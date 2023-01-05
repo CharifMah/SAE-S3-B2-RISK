@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.PartieTest
+namespace Models.GameStatus
 {
     public class Placement : Etat
     {
@@ -23,13 +23,13 @@ namespace Models.PartieTest
 
         public void PositionnerTroupe()
         {
-           // PlaceUnits();
+            // PlaceUnits();
         }
         public void PlaceUnits(List<IUnit> unitToPlace, Joueur _joueur)
         {
             if (_joueur.Units.Count > 0)
             {
-                _joueur.AddUnits(unitToPlace, JurasicRiskGameClient.Get.Carte.SelectedTerritoire);
+                _joueur.AddUnits(unitToPlace, JurasicRiskGameClient.Get.Lobby.Partie.Carte.SelectedTerritoire);
             }
         }
 

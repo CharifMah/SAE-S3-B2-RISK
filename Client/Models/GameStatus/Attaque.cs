@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.PartieTest
+namespace Models.GameStatus
 {
-    public class Attente
+    public class Attaque
     {
         protected Partie partie;
         public void SetContext(Partie partie)

@@ -1,6 +1,4 @@
-﻿using Models.Map;
-using Models.Player;
-using Models.Tours;
+﻿using Models.GameStatus;
 using System.Net.Http;
 using System.Net.WebSockets;
 
@@ -9,33 +7,19 @@ namespace Models
     public class JurasicRiskGameClient
     {
         #region Attributes
+        private Lobby? _lobby;
         private HttpClient _client;
         private ClientWebSocket _clientWebSocket;
         private string _ip;
-        private Carte _carte;
-        private List<Joueur> _joueurs;
-        private List<ITour> _tours;
-        private TaskCompletionSource<bool> _clickWaitTask;
+
         #endregion
 
         #region Property
 
-        public Carte Carte
+        public Lobby? Lobby
         {
-            get
-            {
-                return _carte;
-            }
-            set
-            {
-                _carte = value;
-            }
-        }
-
-        public List<Joueur> Joueurs
-        {
-            get { return _joueurs; }
-            set { _joueurs = value; }
+            get { return _lobby; }
+            set { _lobby = value; }
         }
 
         public HttpClient Client
@@ -69,23 +53,10 @@ namespace Models
         {
             _ip = "localhost:7215";
             _client = new HttpClient();
+            _lobby = null;
         }
+
         #endregion
 
-        public async Task StartGame()
-        {
-            TourPlacement t = new TourPlacement();
-            _clickWaitTask = new TaskCompletionSource<bool>();
-
-            while (_carte.GetNombreTerritoireOccupe != 0)
-            {
-                foreach (Joueur joueur in _joueurs)
-                {
-                    t.PlaceUnits(joueur.Units[0], joueur);
-
-                    await _clickWaitTask.Task;
-                }
-            }
-        }
     }
 }

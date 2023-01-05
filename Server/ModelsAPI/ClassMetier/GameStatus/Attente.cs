@@ -8,8 +8,8 @@ namespace ModelsAPI.ClassMetier.PartieTest
 {
     public class Attente
     {
-        protected Partie partie;
-        public void SetContext(Partie partie)
+        protected Lobby partie;
+        public void SetContext(Lobby partie)
         {
             this.partie = partie;
         }

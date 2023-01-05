@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelsAPI.ClassMetier.PartieTest
+namespace ModelsAPI.ClassMetier.GameStatus
 {
     public class Placement : Etat
     {
-        protected Partie partie;
+        protected Lobby partie;
 
         public void Attaquer()
         {
@@ -33,7 +33,7 @@ namespace ModelsAPI.ClassMetier.PartieTest
             }
         }
 
-        public void SetContext(Partie partie)
+        public void SetContext(Lobby partie)
         {
             this.partie = partie;
         }
