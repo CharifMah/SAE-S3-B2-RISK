@@ -53,7 +53,7 @@ namespace Models.Player
             FabriqueUniteBase f = new FabriqueUniteBase();
             _units = new List<IUnit>();
             Random random = new Random();
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 41; i++)
             {
                 switch (random.Next(4))
                 {
