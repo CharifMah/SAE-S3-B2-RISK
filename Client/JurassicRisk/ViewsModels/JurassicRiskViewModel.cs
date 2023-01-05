@@ -1,4 +1,6 @@
-﻿namespace JurassicRisk.ViewsModels
+﻿using Models;
+
+namespace JurassicRisk.ViewsModels
 {
     public class JurassicRiskViewModel
     {

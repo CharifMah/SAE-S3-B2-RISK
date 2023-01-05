@@ -28,10 +28,10 @@ namespace RISKAPI
 
             builder.Services.AddHostedService<IndexCreationService>();
             // Register the RedisCache service
-            builder.Services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = builder.Configuration["Redis"];
-            });
+            //builder.Services.AddStackExchangeRedisCache(options =>
+            //{
+            //    options.Configuration = builder.Configuration["Redis"];
+            //});
 
             builder.Services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
 
@@ -51,7 +51,7 @@ namespace RISKAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<LobbyHub>("/LobbyHub");
+                endpoints.MapHub<LobbyHub>("/JurrasicRisk");
             });
 
             app.Run();

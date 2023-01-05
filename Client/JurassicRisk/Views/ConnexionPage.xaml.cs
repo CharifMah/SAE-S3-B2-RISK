@@ -2,6 +2,7 @@
 using JurassicRisk.ViewsModels;
 using Models;
 using Models.Player;
+using Models.Son;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,6 +24,9 @@ namespace JurassicRisk.Views
             Profil profil = new Profil(inputPseudo.Text, inputPassword.Password);
             string connexion = await ProfilViewModel.Get.Connexion(profil);
 
+
+            
+
             if (connexion == "Ok")
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
@@ -36,6 +40,7 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
         }
     }

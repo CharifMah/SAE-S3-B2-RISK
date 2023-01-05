@@ -4,13 +4,13 @@ using Stockage;
 using System.Runtime.Serialization;
 using System.Windows.Controls;
 
-namespace Models
+namespace Models.Settings
 {
     [DataContract]
     public class Settings
     {
         #region Attribute
-        
+
         private Page actualPageName;
         private ICharge _loadSettings;
         private ISauve _saveSettings;
@@ -23,7 +23,7 @@ namespace Models
         private List<string> _availableCulture;
         [DataMember]
         private bool _musique;
- 
+
         private Sound _backgroundMusic;
 
         [DataMember]
@@ -52,7 +52,7 @@ namespace Models
             }
         }
 
-        public List<String> AvailableCutlures
+        public List<string> AvailableCutlures
         {
             get
             {
@@ -65,9 +65,9 @@ namespace Models
         }
 
         public Page ActualPage { get => actualPageName; set => actualPageName = value; }
-        
-        public bool MusiqueOnOff 
-        { 
+
+        public bool MusiqueOnOff
+        {
             get { return _musique; }
             set { _musique = value; }
         }
@@ -80,10 +80,10 @@ namespace Models
             }
             set
             {
-               _musicVolume= value;
+                _musicVolume = value;
             }
         }
-       
+
 
         public Sound Backgroundmusic
         {
@@ -120,7 +120,7 @@ namespace Models
         {
             _availableCulture = new List<string>() { "fr-FR", "en-US" };
             _pleinEcran = false;
-            _culturename = Thread.CurrentThread.CurrentCulture.Name;     
+            _culturename = Thread.CurrentThread.CurrentCulture.Name;
         }
 
         #endregion
@@ -128,7 +128,7 @@ namespace Models
         public void SaveSettings()
         {
             _saveSettings = new SauveCollection(Environment.CurrentDirectory);
-            _saveSettings.Sauver(this,"Settings");
+            _saveSettings.Sauver(this, "Settings");
         }
 
         public void LoadSettings()
@@ -137,15 +137,15 @@ namespace Models
             _instance = _loadSettings.Charger<Settings>("Settings");
             if (_instance != null)
             {
-                this._culturename = _instance._culturename;
-                this._pleinEcran = _instance._pleinEcran;
-                       
-                this._musique = _instance._musique;
-                this._backgroundMusic = _instance._backgroundMusic;
-                this._musicVolume = _instance._musicVolume;
+                _culturename = _instance._culturename;
+                _pleinEcran = _instance._pleinEcran;
+
+                _musique = _instance._musique;
+                _backgroundMusic = _instance._backgroundMusic;
+                _musicVolume = _instance._musicVolume;
             }
 
-            
+
         }
     }
 }

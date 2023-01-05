@@ -1,4 +1,5 @@
-﻿using ModelsAPI.ClassMetier.Player;
+﻿using ModelsAPI.ClassMetier.GameStatus;
+using ModelsAPI.ClassMetier.Player;
 using Redis.OM.Modeling;
 
 namespace ModelsAPI.ClassMetier
@@ -7,7 +8,7 @@ namespace ModelsAPI.ClassMetier
     public class Lobby
     {
         #region Attributes
-
+        private Partie? _partie;
         private string _id;
         private string _password;
         private List<Joueur> _joueurs;
@@ -29,7 +30,6 @@ namespace ModelsAPI.ClassMetier
                 _id = value;
             }
         }
-
         [Indexed]
         public bool PlayersReady
         {
@@ -65,6 +65,9 @@ namespace ModelsAPI.ClassMetier
             set => _password = value;
         }
 
+
+        public Partie? Partie { get => _partie; set => _partie = value; }
+
         #endregion
 
         #region Constructor
@@ -84,6 +87,7 @@ namespace ModelsAPI.ClassMetier
         public Lobby()
         {
             _joueurs = new List<Joueur>();
+            _partie = null;
         }
 
         #endregion

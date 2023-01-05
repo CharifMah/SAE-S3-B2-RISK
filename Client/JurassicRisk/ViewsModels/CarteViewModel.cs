@@ -1,11 +1,14 @@
 
 using Models;
 using Models.Fabriques.FabriqueUnite;
+using Models.Player;
+using Models.Son;
 using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -132,7 +135,7 @@ namespace JurassicRisk.ViewsModels
         /// <param name="height">hauteur</param>
         /// <param name="width">largeur</param>
         /// <Author>Charif</Author>
-        private async Task DrawRegion(TerritoireDecorator territoire)
+        private void DrawRegion(TerritoireDecorator territoire)
         {
             ImageBrush myImageBrush = new ImageBrush(new BitmapImage(new Uri(territoire.UriSource)));
             Canvas myCanvas = new Canvas();
@@ -208,6 +211,7 @@ namespace JurassicRisk.ViewsModels
             c.Width += 15;
             c.Height += 15;
             zi++;
+            SoundStore.Get("PassageMap.mp3").Play();
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
         }

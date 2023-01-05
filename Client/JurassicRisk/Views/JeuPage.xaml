@@ -67,7 +67,7 @@
             </TextBlock.Text>
         </TextBlock>
 
-        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Top" HorizontalAlignment="Left" Height="306" Width="324" Grid.ColumnSpan="4" Margin="238,31,0,0" Grid.Row="1">
+        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Height="306" Width="324" Grid.ColumnSpan="4" Grid.Row="1">
             <GroupBox.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"/>
             </GroupBox.Background>
@@ -83,7 +83,7 @@
 
         <Button HorizontalAlignment="Right" Width="50" Grid.Row="2" Grid.Column="3" Height="50" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click" Margin="0,20,20,-2"></Button>
 
-        <Button HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" Margin="34,20,0,18">Fin de Tour</Button>
+        <Button HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" >Fin de Tour</Button>
 
     </Grid>
 </Page>

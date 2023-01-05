@@ -18,8 +18,12 @@
     <None Remove="Ressources\GrapheSimple1.gph" />
     <None Remove="Sounds\checkbox.mp3" />
     <None Remove="Sounds\Click.mp3" />
+    <None Remove="Sounds\ClickButton.mp3" />
+    <None Remove="Sounds\ClickButton.wav" />
     <None Remove="Sounds\HubJurr.mp3" />
     <None Remove="Sounds\MusicGameJurr.mp3" />
+    <None Remove="Sounds\PassageMap.mp3" />
+    <None Remove="Sounds\SliderSounds.wav" />
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
     <None Remove="Sprites\Background\Background3.jpg" />
@@ -82,6 +86,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Sounds\ClickButton.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\PassageMap.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Logo.ico" />
     <Content Include="Ressources\GrapheSimple1.gph">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -92,10 +105,16 @@
     <Content Include="Sounds\Click.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sounds\ClickButton.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sounds\HubJurr.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sounds\MusicGameJurr.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\SliderSounds.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\Background\trexHead.png">
