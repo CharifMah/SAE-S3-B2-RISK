@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelsAPI.ClassMetier.PartieTest
+namespace ModelsAPI.ClassMetier.GameStatus
 {
     public class Attaque
     {

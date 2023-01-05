@@ -4,13 +4,13 @@
     {
         #region Attributes
 
-        private List<GameStatus.Lobby> _lobby;
+        private List<Lobby> _lobby;
 
         #endregion
 
         #region Property
 
-        public List<GameStatus.Lobby> Lobby { get => _lobby; set => _lobby = value; }
+        public List<Lobby> Lobby { get => _lobby; set => _lobby = value; }
 
         #endregion
 
@@ -33,7 +33,7 @@
 
         private JurasicRiskGameServer()
         {
-            Lobby = new List<GameStatus.Lobby>();
+            Lobby = new List<Lobby>();
         }
 
         #endregion

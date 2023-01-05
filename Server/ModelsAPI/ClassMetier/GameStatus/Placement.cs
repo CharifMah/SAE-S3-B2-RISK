@@ -1,16 +1,11 @@
-﻿using Models.Player;
-using Models.Units;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ModelsAPI.ClassMetier.Player;
+using ModelsAPI.ClassMetier.Units;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
     public class Placement : Etat
     {
-        protected Lobby partie;
+        protected Partie partie;
 
         public void Attaquer()
         {
@@ -29,11 +24,11 @@ namespace ModelsAPI.ClassMetier.GameStatus
         {
             if (_joueur.Units.Count > 0)
             {
-                _joueur.AddUnits(unitToPlace, JurasicRiskGameClient.Get.Carte.SelectedTerritoire);
+                _joueur.AddUnits(unitToPlace, partie.Carte.SelectedTerritoire);
             }
         }
 
-        public void SetContext(Lobby partie)
+        public void SetContext(Partie partie)
         {
             this.partie = partie;
         }
