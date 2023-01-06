@@ -83,7 +83,7 @@
 
         <Button HorizontalAlignment="Right" Width="50" Grid.Row="2" Grid.Column="3" Height="50" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click" Margin="0,20,20,-2"></Button>
 
-        <Button HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" >Fin de Tour</Button>
+        <Button HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" Click="FinTourButton_Click">Fin de Tour</Button>
 
     </Grid>
 </Page>

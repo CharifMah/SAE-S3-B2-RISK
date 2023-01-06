@@ -1,5 +1,4 @@
 ﻿using Models;
-using Models.Combat;
 using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
 using Models.Fight;
@@ -9,7 +8,7 @@ using System;
 
 namespace Models.Tours
 {
-    public class Tour : ITour
+    public class Tour
     {
         private Joueur _joueur;
         private bool _tourEnd;
@@ -72,7 +71,6 @@ namespace Models.Tours
 
         public void Attack()
         {
-            Combat c = new Combat();
 
         }
 

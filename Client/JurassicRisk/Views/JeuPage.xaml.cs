@@ -120,6 +120,12 @@ namespace JurassicRisk.Views
             JurassicRiskViewModel.Get.JoueurVm.SelectedUnit = (sender as ListBox).SelectedItem as IUnit;
         }
 
+        
+        private void FinTourButton_Click(object sender, RoutedEventArgs e)
+        {
+            JurassicRiskViewModel.Get.SendEndTurn();
+        }
+
         #endregion
 
     }

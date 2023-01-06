@@ -191,5 +191,15 @@ namespace Models.Fight
                 territoireAttaquant.RemoveUnit(troupe[0]);
             }
         }
+
+        public int Attaquer(List<IUnit> attaquant, ITerritoireBase cible, Joueur assaillant)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Defendre(List<IUnit> defenseur, ITerritoireBase territoireAttaquant, Joueur j)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
