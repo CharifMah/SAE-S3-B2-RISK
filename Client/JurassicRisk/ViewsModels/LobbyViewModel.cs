@@ -273,7 +273,7 @@ namespace JurassicRisk.ViewsModels
 
         public void _chatService_EndTurn()
         {
-            "new tourAttente"
+            //new tourAttente
         }
 
         #endregion
