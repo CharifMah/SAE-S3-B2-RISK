@@ -1,0 +1,7 @@
+for file in *; do 
+    filename=$(basename "$file")  
+    extension="${filename##*.}"  
+    filename="${filename%.*}"   
+    new_name=$(echo "$filename" | cut -c -8)
+    mv "$file" "${filename}.${extension}"  
+done

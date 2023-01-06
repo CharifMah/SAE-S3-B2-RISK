@@ -57,6 +57,17 @@ namespace Models.Map
 
         }
 
+        public TerritoireDecorator(TerritoireBase TerritoireBase, string UriSource)
+        {
+            this._territoire = TerritoireBase;         
+            this._id = TerritoireBase.ID;
+            this.uriSource = UriSource;
+            if (TerritoireBase.Team != this.Team)
+            {
+                TerritoireBase.Team = this.Team;
+            }
+        }
+
         public TerritoireDecorator()
         {
 

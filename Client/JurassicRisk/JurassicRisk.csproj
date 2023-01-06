@@ -38,6 +38,47 @@
     <None Remove="Sprites\Background\water.gif" />
     <None Remove="Sprites\Background\WaterOceanPixel.gif" />
     <None Remove="Sprites\Capture.PNG" />
+    <None Remove="Sprites\Carte2\1c1r.png" />
+    <None Remove="Sprites\Carte2\1c2r.png" />
+    <None Remove="Sprites\Carte2\1c3r.png" />
+    <None Remove="Sprites\Carte2\1c4r.png" />
+    <None Remove="Sprites\Carte2\1c5r.png" />
+    <None Remove="Sprites\Carte2\1c6r.png" />
+    <None Remove="Sprites\Carte2\1c7r.png" />
+    <None Remove="Sprites\Carte2\2c1r.png" />
+    <None Remove="Sprites\Carte2\2c2r.png" />
+    <None Remove="Sprites\Carte2\2c3r.png" />
+    <None Remove="Sprites\Carte2\2c4r.png" />
+    <None Remove="Sprites\Carte2\2c5r.png" />
+    <None Remove="Sprites\Carte2\2c6r.png" />
+    <None Remove="Sprites\Carte2\2c7r.png" />
+    <None Remove="Sprites\Carte2\3c1r.png" />
+    <None Remove="Sprites\Carte2\3c2r.png" />
+    <None Remove="Sprites\Carte2\3c3r.png" />
+    <None Remove="Sprites\Carte2\3c4r.png" />
+    <None Remove="Sprites\Carte2\3c5r.png" />
+    <None Remove="Sprites\Carte2\3c6r.png" />
+    <None Remove="Sprites\Carte2\3c7r.png" />
+    <None Remove="Sprites\Carte2\3c8r.png" />
+    <None Remove="Sprites\Carte2\4c1r.png" />
+    <None Remove="Sprites\Carte2\4c2r.png" />
+    <None Remove="Sprites\Carte2\4c3r.png" />
+    <None Remove="Sprites\Carte2\4c4r.png" />
+    <None Remove="Sprites\Carte2\4c5r.png" />
+    <None Remove="Sprites\Carte2\4c6r.png" />
+    <None Remove="Sprites\Carte2\4c7r.png" />
+    <None Remove="Sprites\Carte2\5c1r.png" />
+    <None Remove="Sprites\Carte2\5c2r.png" />
+    <None Remove="Sprites\Carte2\5c3r.png" />
+    <None Remove="Sprites\Carte2\5c4r.png" />
+    <None Remove="Sprites\Carte2\5c5r.png" />
+    <None Remove="Sprites\Carte2\6c1r.png" />
+    <None Remove="Sprites\Carte2\6c2r.png" />
+    <None Remove="Sprites\Carte2\6c3r.png" />
+    <None Remove="Sprites\Carte2\6c4r.png" />
+    <None Remove="Sprites\Carte2\6c5r.png" />
+    <None Remove="Sprites\Carte2\6c6r.png" />
+    <None Remove="Sprites\Carte2\6c7r.png" />
     <None Remove="Sprites\Carte\1c1r.png" />
     <None Remove="Sprites\Carte\1c2r.png" />
     <None Remove="Sprites\Carte\1c3r.png" />
@@ -163,6 +204,129 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Sprites\Background\WaterOceanPixel.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\1c1r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\1c2r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\1c3r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\1c4r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\1c5r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\1c6r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\1c7r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\2c1r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\2c2r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\2c3r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\2c4r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\2c5r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\2c6r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\2c7r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\3c1r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\3c2r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\3c3r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\3c4r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\3c5r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\3c6r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\3c7r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\3c8r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\4c1r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\4c2r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\4c3r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\4c4r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\4c5r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\4c6r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\4c7r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\5c1r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\5c2r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\5c3r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\5c4r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\5c5r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\6c1r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\6c2r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\6c3r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\6c4r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\6c5r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\6c6r.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sprites\Carte2\6c7r.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Sprites\Carte\1c1r.png">
