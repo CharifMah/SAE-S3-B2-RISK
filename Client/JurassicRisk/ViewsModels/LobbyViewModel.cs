@@ -6,6 +6,7 @@ using Models;
 using Models.GameStatus;
 using Models.Player;
 using Models.Services;
+using Models.Tours;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -255,6 +256,7 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("Lobby");
             });
         }
+
 
         #endregion
     }

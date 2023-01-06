@@ -268,10 +268,12 @@ namespace RISKAPI.Hubs
             }
             if (joueurSuivant != null)
             {
-                await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("yourTurn");
+                if (lobby.Partie.Etat.GetType().Name == "Placement" )
+                {
+                    await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("yourTurn", "placement");
+                }
                 await Clients.Client(joueur.Profil.ConnectionId).SendAsync("EndTurn");
             }
-
         }
     }
 }
