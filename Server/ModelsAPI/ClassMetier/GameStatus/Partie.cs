@@ -29,6 +29,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
             get { return _joueurs; }
         }
 
+        public Etat Etat { get { return etat; } }
         #endregion
 
         #region Constructor
