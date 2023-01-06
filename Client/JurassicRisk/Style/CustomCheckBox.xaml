@@ -44,6 +44,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="PreviewMouseDown">
+                <SoundPlayerAction Source="Sounds/SliderSounds.wav" />
+            </EventTrigger>
+        </Style.Triggers>
     </Style>
    
 </ResourceDictionary>

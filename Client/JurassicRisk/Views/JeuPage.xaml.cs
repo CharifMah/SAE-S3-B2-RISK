@@ -36,6 +36,7 @@ namespace JurassicRisk.Views
 
         private async void OptionButton_Click(object sender, RoutedEventArgs e)
         {
+            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
             await JurassicRiskViewModel.Get.CarteVm.SetCarte(JurassicRiskViewModel.Get.CarteVm.Carte);
         }
@@ -70,11 +71,13 @@ namespace JurassicRisk.Views
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            
             Resume();
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
+            
             bool Pressed = false;
             //Pause
             if (GroupBoxPause.Visibility == Visibility.Hidden && !Pressed)
@@ -92,6 +95,7 @@ namespace JurassicRisk.Views
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
+            
             SoundStore.Get("MusicGameJurr.mp3").Stop();
             SoundStore.Get("HubJurr.mp3").Play(true);
             await JurasicRiskGameClient.Get.Disconnect();

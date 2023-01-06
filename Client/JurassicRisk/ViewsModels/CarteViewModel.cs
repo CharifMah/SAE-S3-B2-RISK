@@ -1,6 +1,7 @@
 using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Player;
+using Models.Son;
 using Stockage;
 using System;
 using System.Collections.Generic;
@@ -198,6 +199,7 @@ namespace JurassicRisk.ViewsModels
             c.Width += 15;
             c.Height += 15;
             zi++;
+            SoundStore.Get("PassageMap.mp3").Play();
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
         }

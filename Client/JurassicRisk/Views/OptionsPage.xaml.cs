@@ -1,5 +1,6 @@
 ﻿using JurassicRisk.ViewsModels;
 using Models.Settings;
+using Models.Son;
 using Stockage;
 using System;
 using System.Windows;
@@ -38,24 +39,26 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(Settings.Get().ActualPage);
 
             switch (Settings.Get().ActualPage.Name)
             {
                 case "_MenuPage":
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
                     break;
                 case "_HomePage":
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new HomePage());
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new HomePage());
                     break;
                 case "_JeuPage":
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.GoBack();
+                    (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.GoBack();
                     break;
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            
             Settings.Get().SaveSettings();
         }
     }

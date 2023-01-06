@@ -9,12 +9,14 @@ namespace Models.Services
     public class SignalRLobbyService
     {
         private readonly HubConnection _connection;
-        public event Action<string> PartieReceived;
+        public event Action PartieReceived;
         public event Action<string> LobbyReceived;
         public event Action<string> LobbyJoined;
         public event Action<string> Connected;
         public event Action Disconnected;
         public event Action<string> ConnectedToLobby;
+        public event Action YourTurn;
+        public event Action EndTurn;
 
         /// <summary>
         /// SignalRLobbyService
@@ -23,12 +25,19 @@ namespace Models.Services
         public SignalRLobbyService(HubConnection connection)
         {
             _connection = connection;
-            _connection.On<string>("ReceivePartie", (partieJson) => PartieReceived?.Invoke(partieJson));
+            _connection.On("ReceivePartie", () => PartieReceived?.Invoke());
             _connection.On<string>("ReceiveLobby", (lobbyJson) => LobbyReceived?.Invoke(lobbyJson));
             _connection.On<string>("JoinLobby", (lobbyJson) => LobbyJoined?.Invoke(lobbyJson));
             _connection.On<string>("connectedToLobby", (connected) => ConnectedToLobby?.Invoke(connected));
             _connection.On<string>("connected", (connexionId) => Connected?.Invoke(connexionId));
             _connection.On("disconnected", () => Disconnected?.Invoke());
+            _connection.On("yourTurn", () => YourTurn?.Invoke());
+            _connection.On("endTurn", () => YourTurn?.Invoke());
+        }
+
+        public async Task StartPartie(string lobbyName, string joueurName, string carteName)
+        {
+            await _connection.SendAsync("StartPartie", lobbyName, joueurName, carteName);
         }
 
         /// <summary>

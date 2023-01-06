@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
 using Models.Player;
 using Models.Settings;
 using Models.Son;
@@ -20,15 +21,17 @@ namespace JurassicRisk.Views
             DataContext = _lobbyVm;
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        private async void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            
             SoundStore.Get("HubJurr.mp3").Stop();
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
             if (_lobbyVm.Lobby.PlayersReady)
             {
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+                Error.Visibility = Visibility.Hidden;
+                await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id,ProfilViewModel.Get.SelectedProfil.Pseudo,"carte") ;
             }
             else
             {
@@ -39,6 +42,7 @@ namespace JurassicRisk.Views
 
         private void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
+            
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur.Team != Teams.NEUTRE)
             {
                 if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
@@ -55,12 +59,14 @@ namespace JurassicRisk.Views
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
+            
             await _lobbyVm.ExitLobby();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 
         private async void SelectTeamButton_Click(object sender, RoutedEventArgs e)
         {
+            
             Teams team = Teams.NEUTRE;
             Button b = (sender as Button);
             switch (b.Name)

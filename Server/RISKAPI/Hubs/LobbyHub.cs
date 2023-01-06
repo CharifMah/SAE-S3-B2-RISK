@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.GameStatus;
@@ -210,13 +211,13 @@ namespace RISKAPI.Hubs
         public async Task StartPartie(string lobbyName, string joueurName,string carteName)
         {
             string key = $"Lobby:{lobbyName}";
-            string keyCarte = $"Keys:{carteName}";
+            string keyCarte = $"{carteName}";
 
 
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
-                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key }, CommandFlags.None);
-                RedisResult resultCarte = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { keyCarte }, CommandFlags.None);
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
+                RedisResult resultCarte = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(keyCarte);
 
                 try
                 {
@@ -235,11 +236,42 @@ namespace RISKAPI.Hubs
 
                     }
                 }
-                catch (JsonSerializationException)
+                catch (Exception e )
                 {
-                    throw;
+                    Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        public async Task EndTurn(string lobbyName, string joueurName)
+        {
+            Lobby lobby = null;
+            Joueur joueurSuivant = null;
+            Joueur joueur = null;
+            foreach (Lobby l in JurasicRiskGameServer.Get.Lobby)
+            {
+                if (l.Id == lobbyName)
+                {
+                    lobby = l;
+                }
+            }
+            if (lobby != null)
+            {
+                for (int i = 0; i < lobby.Joueurs.Count; i++)
+                {
+                    if (lobby.Joueurs[i].Profil.Pseudo == lobbyName)
+                    {
+                        joueur = lobby.Joueurs[i];
+                        joueurSuivant = lobby.Joueurs[i + 1 % (lobby.Joueurs.Count + 1)];
+                    }
+                }
+            }
+            if (joueurSuivant != null)
+            {
+                await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("yourTurn");
+                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("EndTurn");
+            }
+
         }
     }
 }
