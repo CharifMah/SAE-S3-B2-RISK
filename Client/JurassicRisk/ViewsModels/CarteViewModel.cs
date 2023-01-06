@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
@@ -299,12 +300,16 @@ namespace JurassicRisk.ViewsModels
             eclipse.Width = 30;
             eclipse.Height = 30;
             eclipse.Fill = Brushes.White; eclipse.Stroke = Brushes.Blue; eclipse.StrokeThickness = 2;
+            eclipse.IsHitTestVisible = true;
+            eclipse.MouseEnter += Eclipse_MouseEnter;
+            eclipse.MouseLeave += Eclipse_MouseLeave;
+            Canvas.SetZIndex(eclipse, 10);
             Canvas.SetLeft(eclipse, (myCanvas.Width / 2));
             Canvas.SetTop(eclipse, (myCanvas.Height / 2));
-            eclipse.ToolTip = $"Name : {territoire.ID} Number Of Voisin {_graph.GetAdjacentVertices(territoire).Count()}";
+            eclipse.ToolTip = new ToolTip() { Content= $"Name : {territoire.ID} Number Of Voisin {_graph.GetAdjacentVertices(territoire).Count()}" } ;
             myCanvas.Children.Add(eclipse);
 
-            myCanvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
+            myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}"}; 
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
             myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e);
@@ -312,6 +317,18 @@ namespace JurassicRisk.ViewsModels
             myCanvas.PreviewMouseDown += async (sender, e) => await MyCanvas_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
             _carteCanvas.Children.Add(myCanvas);
+        }
+
+        private void Eclipse_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((ToolTip)(sender as Ellipse).ToolTip).StaysOpen = false;
+            ((ToolTip)(sender as Ellipse).ToolTip).IsOpen = false;
+        }
+
+        private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            ((ToolTip)((sender as Ellipse).ToolTip)).StaysOpen = true;
+            ((ToolTip)((sender as Ellipse).ToolTip)).IsOpen = true;
         }
 
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
