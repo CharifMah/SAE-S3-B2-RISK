@@ -6,7 +6,6 @@ namespace JurassicRisk.ViewsModels
 {
     public class JurassicRiskViewModel
     {
-
         #region Attributes
         private CarteViewModel _carteVm;
         private JoueurViewModel _joueurVm;

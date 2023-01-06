@@ -26,29 +26,36 @@ namespace Models.Tours
             _tourEnd = false;
         }
 
-        /* Plus possible de récupérer la carte
-        public void Strengthen(int nbRenfort)
+        /// <summary>
+        /// Gestion de la phase de renforcement
+        /// </summary>
+        /// <param name="nbRenforts">Renforts calculé par la division par 3 des territoires occupés par le joueur</param>
+        public void Strengthen(int nbRenforts)
         {
+            // Attribution des renforts
             FabriqueUniteBase f = new FabriqueUniteBase();
             Random random = new Random();
-            for(int i = 0; i < nbRenfort; i++)
+            for (int i = 0; i < nbRenforts; i++)
             {
                 switch (random.Next(4))
                 {
                     case 0:
-                        _joueur.Units.Add(new UniteDecorator(f.Create("Rex")));
+                        _joueur.AddUnit(f.Create("Rex"));
                         break;
                     case 1:
-                        _joueur.Units.Add(new UniteDecorator(f.Create("Brachiosaurus")));
+                        _joueur.AddUnit(f.Create("Brachiosaurus"));
                         break;
                     case 2:
-                        _joueur.Units.Add(new UniteDecorator(f.Create("Baryonyx")));
+                        _joueur.AddUnit(f.Create("Baryonyx"));
                         break;
                     case 3:
-                        _joueur.Units.Add(new UniteDecorator(f.Create("Pterosaure")));
+                        _joueur.AddUnit(f.Create("Pterosaure"));
                         break;
                 }
-            } // Attribution des renforts
+            }
+
+            
+        }
 
             if (_joueur.Units.Count > 0)
             {
@@ -67,6 +74,9 @@ namespace Models.Tours
             {
                 throw new NotEnoughUniteBasexception();
             }
+            /*
+            Combat c = new Combat();
+            */
         }
         */
 
@@ -76,10 +86,7 @@ namespace Models.Tours
 
         }
 
-        public void Move()
-        {
 
-        }
 
 
         public void TerminerTour()
