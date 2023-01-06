@@ -6,6 +6,7 @@ using Models;
 using Models.GameStatus;
 using Models.Player;
 using Models.Services;
+using Models.Tours;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -78,6 +79,8 @@ namespace JurassicRisk.ViewsModels
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
             _chatService.PartieReceived += _chatService_PartieReceived; ;
+            _chatService.YourTurn += _chatService_YourTurn;
+            _chatService.EndTurn += _chatService_EndTurn;
         }
 
 
@@ -254,6 +257,23 @@ namespace JurassicRisk.ViewsModels
                 }
                 NotifyPropertyChanged("Lobby");
             });
+        }
+
+        public void _chatService_YourTurn(string turnType)
+        {
+            switch (turnType)
+            {
+                case "placement":
+                    {
+                        new TourPlacement();
+                        break;
+                    }
+            }
+        }
+
+        public void _chatService_EndTurn()
+        {
+            "new tourAttente"
         }
 
         #endregion
