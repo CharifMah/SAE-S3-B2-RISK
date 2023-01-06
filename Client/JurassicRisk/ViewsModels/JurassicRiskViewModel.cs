@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Services;
 using Models.Tours;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace JurassicRisk.ViewsModels
         private JoueurViewModel _joueurVm;
         private LobbyViewModel _lobbyVm;
         private TaskCompletionSource<bool> _clickWaitTask;
+        private SignalRLobbyService _chatService;
         #endregion
 
         #region Property
@@ -39,14 +41,30 @@ namespace JurassicRisk.ViewsModels
             _joueurVm = new JoueurViewModel();
             _carteVm = new CarteViewModel(_joueurVm);
             _lobbyVm = new LobbyViewModel();
+
+            _chatService = JurasicRiskGameClient.Get.ChatService;
+            _chatService.YourTurn += _chatService_YourTurn;
+            _chatService.EndTurn += _chatService_EndTurn;
+
         }
         #endregion
 
-        public async Task StartGame()
+        public void _chatService_YourTurn(string turnType)
         {
-            TourPlacement tp = new TourPlacement();
-
-
+            switch (turnType)
+            {
+                case "placement":
+                    {
+                        new TourPlacement();
+                        break;
+                    }
+            }
         }
+
+        public void _chatService_EndTurn()
+        {
+            //new tourAttente
+        }
+
     }
 }

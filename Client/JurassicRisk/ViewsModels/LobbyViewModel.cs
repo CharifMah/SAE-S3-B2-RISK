@@ -79,8 +79,6 @@ namespace JurassicRisk.ViewsModels
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
             _chatService.PartieReceived += _chatService_PartieReceived; ;
-            _chatService.YourTurn += _chatService_YourTurn;
-            _chatService.EndTurn += _chatService_EndTurn;
         }
 
 
@@ -259,22 +257,6 @@ namespace JurassicRisk.ViewsModels
             });
         }
 
-        public void _chatService_YourTurn(string turnType)
-        {
-            switch (turnType)
-            {
-                case "placement":
-                    {
-                        new TourPlacement();
-                        break;
-                    }
-            }
-        }
-
-        public void _chatService_EndTurn()
-        {
-            //new tourAttente
-        }
 
         #endregion
     }
