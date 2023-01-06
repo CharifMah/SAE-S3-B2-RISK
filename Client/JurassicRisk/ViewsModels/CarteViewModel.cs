@@ -67,13 +67,13 @@ namespace JurassicRisk.ViewsModels
         /// <author>Charif</author>
         public CarteViewModel(JoueurViewModel joueur)
         {
-            InitCarte();
+            _ = InitCarte();
 
             f = new FabriqueUniteBase();
             _joueur = joueur;
         }
 
-        private void InitCarte()
+        private async Task InitCarte()
         {
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
@@ -83,7 +83,7 @@ namespace JurassicRisk.ViewsModels
             TerritoireBase t = new TerritoireBase(999999);
             t.Team = Teams.BLEU;
             _carte.SelectedTerritoire = t;
-            SetCarte(_carte);
+   
 
 
             Territoires = new List<ITerritoireBase>();
@@ -98,15 +98,7 @@ namespace JurassicRisk.ViewsModels
                 }
             }
             _graph = new AdjacencySetGraph(Territoires);
-
-            foreach (TerritoireDecorator Territoire in Territoires)
-            {
-                DrawRegion(Territoire);
-            }
-
-            new SaveMap(_carte);
-
-
+      
             #region Territoire 1
             _graph.AddEdge(Territoires[0], Territoires[1], 1);
             _graph.AddEdge(Territoires[0], Territoires[2], 1);
@@ -237,6 +229,13 @@ namespace JurassicRisk.ViewsModels
 
             #endregion
 
+            foreach (TerritoireDecorator Territoire in Territoires)
+            {
+                DrawRegion(Territoire);
+            }
+
+            //new SaveMap(_carte);
+            await SetCarte(_carte);
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
         }
