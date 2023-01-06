@@ -67,13 +67,13 @@ namespace JurassicRisk.ViewsModels
         /// <author>Charif</author>
         public CarteViewModel(JoueurViewModel joueur)
         {
-            _ = InitCarte();
+            InitCarte();
 
             f = new FabriqueUniteBase();
             _joueur = joueur;
         }
 
-        private async Task InitCarte()
+        private void InitCarte()
         {
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
@@ -84,8 +84,6 @@ namespace JurassicRisk.ViewsModels
             t.Team = Teams.BLEU;
             _carte.SelectedTerritoire = t;
    
-
-
             Territoires = new List<ITerritoireBase>();
             int i = 0;
             foreach (Continent continent in _carte.DicoContinents.Values)
@@ -119,6 +117,7 @@ namespace JurassicRisk.ViewsModels
             _graph.AddEdge(Territoires[5], Territoires[6], 1);
 
             _graph.AddEdge(Territoires[6], Territoires[18], 1);
+
             #endregion
 
             #region Territoire 2
@@ -235,7 +234,7 @@ namespace JurassicRisk.ViewsModels
             }
 
             //new SaveMap(_carte);
-            await SetCarte(_carte);
+            SetCarte(_carte);
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
         }
@@ -286,13 +285,14 @@ namespace JurassicRisk.ViewsModels
         private void DrawRegion(TerritoireDecorator territoire)
         {
             //TerritoireDecorator
-            ImageBrush myImageBrush = new ImageBrush(new BitmapImage(new Uri(territoire.UriSource)));
+            MyImage myImageBrush = new MyImage();
+            myImageBrush.Source = new BitmapImage(new Uri(territoire.UriSource));
+           
             Canvas myCanvas = new Canvas();
-            myCanvas.Background = myImageBrush;
-            myCanvas.Height = territoire.Width;
-            myCanvas.Width = territoire.Height;
-            Canvas.SetLeft(myCanvas, territoire.X);
-            Canvas.SetTop(myCanvas, territoire.Y);
+
+            Canvas.SetLeft(myImageBrush, (myImageBrush.Width/2));
+            Canvas.SetTop(myImageBrush, (myImageBrush.Height/ 2));
+            myCanvas.Children.Add(myImageBrush);
 
             //Node Eclipse
             Ellipse eclipse = new Ellipse();
@@ -300,13 +300,15 @@ namespace JurassicRisk.ViewsModels
             eclipse.Height = 30;
             eclipse.Fill = Brushes.White; eclipse.Stroke = Brushes.Blue; eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
-            eclipse.MouseEnter += Eclipse_MouseEnter;
-            eclipse.MouseLeave += Eclipse_MouseLeave;
+ 
             Canvas.SetZIndex(eclipse, 10);
             Canvas.SetLeft(eclipse, (myCanvas.Width / 2));
             Canvas.SetTop(eclipse, (myCanvas.Height / 2));
             eclipse.ToolTip = new ToolTip() { Content= $"Name : {territoire.ID} Number Of Voisin {_graph.GetAdjacentVertices(territoire).Count()}" } ;
             myCanvas.Children.Add(eclipse);
+
+            eclipse.MouseEnter += (sender, e) => Eclipse_MouseEnter(sender, e, (ToolTip)eclipse.ToolTip);
+            eclipse.MouseLeave += (sender, e) => Eclipse_MouseLeave(sender, e, (ToolTip)eclipse.ToolTip);
 
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}"}; 
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
@@ -318,16 +320,16 @@ namespace JurassicRisk.ViewsModels
             _carteCanvas.Children.Add(myCanvas);
         }
 
-        private void Eclipse_MouseLeave(object sender, MouseEventArgs e)
+        private void Eclipse_MouseLeave(object sender, MouseEventArgs e,ToolTip tip)
         {
-            ((ToolTip)(sender as Ellipse).ToolTip).StaysOpen = false;
-            ((ToolTip)(sender as Ellipse).ToolTip).IsOpen = false;
+            tip.StaysOpen = false;
+            tip.IsOpen = false;
         }
 
-        private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e, ToolTip tip)
         {
-            ((ToolTip)((sender as Ellipse).ToolTip)).StaysOpen = true;
-            ((ToolTip)((sender as Ellipse).ToolTip)).IsOpen = true;
+            tip.StaysOpen = true;
+            tip.IsOpen = true;
         }
 
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
