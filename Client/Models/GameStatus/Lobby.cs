@@ -81,10 +81,10 @@ namespace Models.GameStatus
             _password = Password;
         }
 
-        public Lobby()
+        public Lobby(Partie partie = null)
         {
             _joueurs = new List<Joueur>();
-            _partie = null;
+            _partie = partie;
         }
 
         #endregion

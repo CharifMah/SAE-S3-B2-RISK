@@ -17,8 +17,8 @@ namespace Models.Fight
         }
         public void DerouleCombat(List<IUnit> attaquant, List<IUnit> defenseur, ITerritoireBase territoireAttaquant, ITerritoireBase cible, Joueur assaillant, Joueur victime)
         {
-            int nbAttaque = Attaquer(attaquant, cible, assaillant);
-            int nbDefense = Defendre(defenseur, territoireAttaquant, victime);
+            int nbAttaque = Attaquer(attaquant);
+            int nbDefense = Defendre(defenseur);
             List<int> resAttaque = LancerDesA(nbAttaque);
             List<int> resDefense = LancerDesB(nbDefense);
             (List<int>, List<int>) res = TriLances(resAttaque, resDefense);
@@ -30,27 +30,20 @@ namespace Models.Fight
             RemoveUnits(attaqueReussie, nombreAttaque, territoireAttaquant, cible);
         }
 
-        public int Attaquer(List<IUnit> attaquant, ITerritoireBase cible, Joueur assaillant)
+        public int Attaquer(List<IUnit> attaquant)
         {
-            if (cible.Team != assaillant.Team)
+            switch (attaquant.Count)
             {
-                switch (attaquant.Count)
-                {
-                    case 0:
-                        throw new Exception("You can't attack without unit on your territory !");
-                    case 1:
-                        return 1;
-                    case 2:
-                        return 2;
-                    case 3:
-                        return 3;
-                    default:
-                        return -1;
-                }
-            }
-            else
-            {
-                throw new Exception("You can't attack your territory !");
+                case 0:
+                    throw new Exception("You can't attack without unit on your territory !");
+                case 1:
+                    return 1;
+                case 2:
+                    return 2;
+                case 3:
+                    return 3;
+                default:
+                    return -1;
             }
         }
 
@@ -83,7 +76,7 @@ namespace Models.Fight
             return (attaqueReussie, nbAttaque);
         }
 
-        public int Defendre(List<IUnit> defenseur, ITerritoireBase territoireAttaquant, Joueur j)
+        public int Defendre(List<IUnit> defenseur)
         {
             switch (defenseur.Count)
             {

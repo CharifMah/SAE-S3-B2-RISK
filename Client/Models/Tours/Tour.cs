@@ -1,8 +1,8 @@
 ﻿using Models;
-using Models.Combat;
+using Models.Fight;
 using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
-using Models.Fight;
+using Models.Map;
 using Models.Player;
 using Models.Units;
 using System;
@@ -14,6 +14,8 @@ namespace Models.Tours
         private Joueur _joueur;
         private bool _tourEnd;
         private bool _phaseEnd;
+        private Carte carte;
+        private ITerritoireBase? selectedTerritory;
 
         public bool TourEnd => false;
 
@@ -24,12 +26,13 @@ namespace Models.Tours
             _joueur = joueur;
             _phaseEnd = false;
             _tourEnd = false;
+            carte = JurasicRiskGameClient.Get.Lobby.Partie.Carte;
         }
 
         /// <summary>
-        /// Gestion de la phase de renforcement
+        /// Gestion du renforcement d'un territoire (à répéter jusqu'à ce que tout les renforts soient posés)
         /// </summary>
-        /// <param name="nbRenforts">Renforts calculé par la division par 3 des territoires occupés par le joueur</param>
+        /// <param name="nbRenforts">Nombre de renforts a placé sur le territoire choisi</param>
         public void Strengthen(int nbRenforts)
         {
             // Attribution des renforts
@@ -54,40 +57,40 @@ namespace Models.Tours
                 }
             }
 
-            
+
+            selectedTerritory = carte.SelectedTerritoire;
+            if(selectedTerritory != null)
+            {
+                for(int i=0; i < nbRenforts; i++)
+                {
+                    selectedTerritory.AddUnit(_joueur.Units[0]);
+                    _joueur.RemoveUnit(_joueur.Units[0]);
+                }
+            }
         }
 
-            if (_joueur.Units.Count > 0)
-            {
-                
-                if(JurasicRiskGameClient.Get.Carte.SelectedTerritoire.Team == _joueur.Team)
-                {
-                    IUnit unitToPlace = _joueur.Units[0];
-                    _joueur.AddUnits((List<IUnit>)unitToPlace, JurasicRiskGameClient.Get.Carte.SelectedTerritoire);
-                }
-                else
-                {
-                    throw new NotYourTerritoryException();
-                }
-            }
-            else
-            {
-                throw new NotEnoughUniteBasexception();
-            }
+        public void Attack()
+        {
+            // Récupérer Joueur attaquant (attribut _joueur)
+            // Récupérer infos adversaires (joueur cible)
+            // Récupérer le territoire attaquant (selected territory)
+            // Récupérer le territoire attaqué (2nd selected territory)
+            // Récupérer le nombre et les troupes envoyés à l'attaque
+            // Récupérer le nombre et les troupes envoyés en défense
+
             /*
             Combat c = new Combat();
             */
         }
-        */
+            
 
-        public void Attack()
+        public void Move()
         {
-            Combat c = new Combat();
-
+            // Récupérer le territoire 
+            // Récupérer le territoire où envoyer les troupes
+            // Ajouter les troupes au territoire cible
+            // Retirer les troupes au 1er territoire 
         }
-
-
-
 
         public void TerminerTour()
         {
