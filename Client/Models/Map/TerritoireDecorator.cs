@@ -46,6 +46,7 @@ namespace Models.Map
             this._territoire = TerritoireBase;
             this._x = X;
             this._y = Y;
+            this._id = TerritoireBase.ID;
             this.uriSource = UriSource;
             this.Width = Width;
             this.Height = Height;
