@@ -8,6 +8,7 @@ using Models.Son;
 using Stockage;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -16,6 +17,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Carte = Models.Map.Carte;
 using Continent = Models.Map.Continent;
 using IUnit = Models.Units.IUnit;
@@ -89,15 +91,20 @@ namespace JurassicRisk.ViewsModels
             {
                 foreach (TerritoireDecorator Territoire in continent.DicoTerritoires.Values)
                 {
-
-                    DrawRegion(Territoire);
                     Territoire.ID = i;
                     i++;
                     Territoires.Add(Territoire);
                 }
             }
-            new SaveMap(_carte);
             _graph = new AdjacencySetGraph(Territoires);
+
+            foreach (TerritoireDecorator Territoire in Territoires)
+            {
+                DrawRegion(Territoire);
+            }
+
+            new SaveMap(_carte);
+
 
             #region Territoire 1
             _graph.AddEdge(Territoires[0], Territoires[1], 1);
@@ -278,14 +285,25 @@ namespace JurassicRisk.ViewsModels
         /// <Author>Charif</Author>
         private void DrawRegion(TerritoireDecorator territoire)
         {
+            //TerritoireDecorator
             ImageBrush myImageBrush = new ImageBrush(new BitmapImage(new Uri(territoire.UriSource)));
             Canvas myCanvas = new Canvas();
-
             myCanvas.Background = myImageBrush;
             myCanvas.Height = territoire.Width;
             myCanvas.Width = territoire.Height;
             Canvas.SetLeft(myCanvas, territoire.X);
             Canvas.SetTop(myCanvas, territoire.Y);
+
+            //Node Eclipse
+            Ellipse eclipse = new Ellipse();
+            eclipse.Width = 30;
+            eclipse.Height = 30;
+            eclipse.Fill = Brushes.White; eclipse.Stroke = Brushes.Blue; eclipse.StrokeThickness = 2;
+            Canvas.SetLeft(eclipse, (myCanvas.Width / 2));
+            Canvas.SetTop(eclipse, (myCanvas.Height / 2));
+            eclipse.ToolTip = $"Name : {territoire.ID} Number Of Voisin {_graph.GetAdjacentVertices(territoire).Count()}";
+            myCanvas.Children.Add(eclipse);
+
             myCanvas.ToolTip = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
