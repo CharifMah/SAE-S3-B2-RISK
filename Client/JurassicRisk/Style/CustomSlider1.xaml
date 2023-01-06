@@ -66,7 +66,7 @@
         </Setter>
         <Style.Triggers>
             <EventTrigger RoutedEvent="PreviewMouseDown">
-                <SoundPlayerAction Source="Sounds/SliderSounds.wav" />
+                <SoundPlayerAction Source="Sounds/slidersound.wav" />
             </EventTrigger>
         </Style.Triggers>
     </Style>
