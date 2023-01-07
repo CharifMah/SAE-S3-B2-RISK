@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -6,11 +7,16 @@ using System.Windows.Media.Imaging;
 
 namespace JurassicRisk
 {
+    /// <summary>
+    /// Image compatible avec le canal alpha
+    /// </summary>
+    /// <Author>Charif</Author>
     public class MyImage : Image
     {
-        private int _height;
-        private int _width;
-
+        private static int _height;
+        private static int _width;
+        private static int _x;
+        private static int _y;
         public MyImage()
         {
 
@@ -43,75 +49,114 @@ namespace JurassicRisk
             return new Size(totalWidth, totalHeight);
         }
 
+        /// <summary>
+        /// GetSize based on bitmapSource with Alpha CHANNEL.
+        /// </summary>
+        /// <param name="source">BitmapSource</param>
+        /// <returns>Size</returns>
+        /// <Author>Mahmoud Charif</Author>
         private static Size GetSize(BitmapSource source)
         {
-            Int16 totalWidth = 0;
+            Int16 h = GetHeight(source);
+            Int16 w = GetWidth(source);
+            return new Size(w,h);
+        }
+
+        private static Int16 GetHeight(BitmapSource source)
+        {
             Int16 totalHeight = 0;
             Int16 heightTemp = 0;
-            Int16 widthTemp = 0;
-            for (int i = 0; i < source.Height; i++)
-            {
-                widthTemp = 0;
-                for (int ii = 0; ii < source.Width; ii++)
-                {
-                    if (GetPixelColor(source, ii, i).A != 0)
-                    {
-                        widthTemp++;
-                        if (widthTemp > totalWidth)
-                        {
-                            totalWidth = widthTemp;
-                        }
-                    }
-                    else
-                    {
-                        widthTemp = 0;
-                    }
-                }
-            }
-            for (int i = 0; i < source.Width; i++)
+
+
+            // Pour chaque colonne de l'image
+            for (Int16 x = 0; x < source.Width; x++)
             {
                 heightTemp = 0;
-                for (int ii = 0; ii < source.Height; ii++)
+
+                // Pour chaque pixel de la colonne
+                for (Int16 y = 0; y < source.Height; y++)
                 {
-                    if (GetPixelColor(source, i, ii).A != 0)
+                    // Si le pixel n'est pas transparent
+                    if (GetPixelColor(source, x, y).A != 0)
                     {
-                        heightTemp++;
-                        if (heightTemp > totalHeight)
+                        heightTemp++; // Incrémente la hauteur temporaire
+                        if (heightTemp > totalHeight) // test si la hauteur temporaire est plus élever
                         {
+                            if (heightTemp == 1)
+                            {
+                                _x = x;
+                                _y = y;
+                            }
+                           
                             totalHeight = heightTemp;
                         }
                     }
                     else
                     {
-                        heightTemp = 0;
+                        heightTemp = 0; // Réinitialise la hauteur temporaire
                     }
                 }
             }
-           
 
-            return new Size();
+            return totalHeight;
         }
 
-        
+        private static Int16 GetWidth(BitmapSource source)
+        {
+            Int16 totalWidth = 0;
+            Int16 widthTemp = 0;
 
+            // Pour chaque ligne de l'image
+            for (Int16 y = 0; y < source.Height; y++)
+            {
+                widthTemp = 0;
+
+                // Pour chaque pixel de la ligne
+                for (Int16 x = 0; x < source.Width; x++)
+                {
+                    // Si le pixel n'est pas transparent
+                    if (GetPixelColor(source, x, y).A != 0)
+                    {
+                        widthTemp++; // Incrémenter la largeur temporaire
+                        if (widthTemp > totalWidth) // Mettre à jour la largeur totale si nécessaire
+                        {
+                            if (widthTemp == 1)
+                            {
+                                _x = x;
+                                _y = y;
+                            }
+                            totalWidth = widthTemp;
+                        }
+                    }
+                    else
+                    {
+                        widthTemp = 0; // Réinitialiser la largeur temporaire
+
+                    }
+                }
+            }
+            return totalWidth;
+        }
+
+
+
+        /// <summary>
+        /// Obtient la couleur d'un pixel à une position x, y
+        /// </summary>
+        /// <param name="bitmap">source</param>
+        /// <param name="x">x</param>
+        /// <param name="y">y</param>
+        /// <returns>Color</returns>
         private static Color GetPixelColor(BitmapSource bitmap, int x, int y)
         {
-            int width = bitmap.PixelWidth;
-            int height = bitmap.PixelHeight;
-            int stride = width * bitmap.Format.BitsPerPixel; // 8 bytes par pixel
-            byte[] pixels = new byte[height * stride];
+            int stride = bitmap.PixelWidth * bitmap.Format.BitsPerPixel; // 8 bytes par pixel en théorie sauf si on change l'image
+            byte[] pixels = new byte[bitmap.PixelHeight * stride];
             bitmap.CopyPixels(pixels, stride, 0);
 
-            // Calculer l'index du pixel dans le tableau
+            // Calcule l'index du pixel dans le tableau
             int pixelIndex = y * stride + bitmap.Format.BitsPerPixel * x;
 
-            // Extraire les valeurs ARGB du pixel
-            byte b = ;
-            byte g = ;
-            byte r = ;
-            byte a = ;
-
-            // Retourner la couleur du pixel
+            // Retourne la couleur du pixel
             return Color.FromArgb(pixels[pixelIndex + 3], pixels[pixelIndex + 2], pixels[pixelIndex + 1], pixels[pixelIndex]);
         }
     }
