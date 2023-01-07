@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -35,42 +34,85 @@ namespace JurassicRisk
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            double totalWidth = 0;
-            double totalHeight = 0;
-            var source = (BitmapSource)Source;
-            GetPixelColor(source, 0, 0);
+            BitmapSource source = (BitmapSource)Source;
+            double totalWidth = source.Width;
+            double totalHeight = source.Height;
 
-            GetPixelColor(source, 2000, 0);
-
-            GetPixelColor(source, 4000, 2000);
+            GetSize(source);
 
             return new Size(totalWidth, totalHeight);
         }
 
+        private static Size GetSize(BitmapSource source)
+        {
+            Int16 totalWidth = 0;
+            Int16 totalHeight = 0;
+            Int16 heightTemp = 0;
+            Int16 widthTemp = 0;
+            for (int i = 0; i < source.Height; i++)
+            {
+                widthTemp = 0;
+                for (int ii = 0; ii < source.Width; ii++)
+                {
+                    if (GetPixelColor(source, ii, i).A != 0)
+                    {
+                        widthTemp++;
+                        if (widthTemp > totalWidth)
+                        {
+                            totalWidth = widthTemp;
+                        }
+                    }
+                    else
+                    {
+                        widthTemp = 0;
+                    }
+                }
+            }
+            for (int i = 0; i < source.Width; i++)
+            {
+                heightTemp = 0;
+                for (int ii = 0; ii < source.Height; ii++)
+                {
+                    if (GetPixelColor(source, i, ii).A != 0)
+                    {
+                        heightTemp++;
+                        if (heightTemp > totalHeight)
+                        {
+                            totalHeight = heightTemp;
+                        }
+                    }
+                    else
+                    {
+                        heightTemp = 0;
+                    }
+                }
+            }
+           
+
+            return new Size();
+        }
+
+        
+
         private static Color GetPixelColor(BitmapSource bitmap, int x, int y)
         {
-            Color color;
-            int stride = ((int)bitmap.Width * bitmap.Format.BitsPerPixel + 7) / 8;
-            var bytes = new byte[stride];
-            var rect = new Int32Rect(x, y, (int)bitmap.Width,(int)bitmap.Height);
+            int width = bitmap.PixelWidth;
+            int height = bitmap.PixelHeight;
+            int stride = width * bitmap.Format.BitsPerPixel; // 8 bytes par pixel
+            byte[] pixels = new byte[height * stride];
+            bitmap.CopyPixels(pixels, stride, 0);
 
-            bitmap.CopyPixels(rect, bytes, stride, 0);
+            // Calculer l'index du pixel dans le tableau
+            int pixelIndex = y * stride + bitmap.Format.BitsPerPixel * x;
 
-            if (bitmap.Format == PixelFormats.Bgra32)
-            {
-                color = Color.FromArgb(bytes[3], bytes[2], bytes[1], bytes[0]);
-            }
-            else if (bitmap.Format == PixelFormats.Bgr32)
-            {
-                color = Color.FromRgb(bytes[2], bytes[1], bytes[0]);
-            }
-            // handle other required formats
-            else
-            {
-                color = Colors.Black;
-            }
+            // Extraire les valeurs ARGB du pixel
+            byte b = ;
+            byte g = ;
+            byte r = ;
+            byte a = ;
 
-            return color;
+            // Retourner la couleur du pixel
+            return Color.FromArgb(pixels[pixelIndex + 3], pixels[pixelIndex + 2], pixels[pixelIndex + 1], pixels[pixelIndex]);
         }
     }
 }
