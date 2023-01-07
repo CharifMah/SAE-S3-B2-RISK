@@ -1,4 +1,5 @@
 
+using GalaSoft.MvvmLight.Threading;
 using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Graph;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -252,20 +254,24 @@ namespace JurassicRisk.ViewsModels
         private void DrawRegion(TerritoireDecorator territoire)
         {
             //TerritoireDecorator
-            MyImage myImageBrush = new MyImage();
-            myImageBrush.Source = new BitmapImage(new Uri(territoire.UriSource));
-
             Canvas myCanvas = new Canvas();
 
+            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            {
+                MyImage myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
 
-            DrawNode( myImageBrush, territoire);
+                DrawNode(myImageBrush, territoire);
 
-            myCanvas.Children.Add(myImageBrush);
-  
-      
-           
+
+                myCanvas.Children.Add(myImageBrush);
+            });
+
+
+
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
+        
+            
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
             
             myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e);
@@ -293,13 +299,13 @@ namespace JurassicRisk.ViewsModels
             eclipse.Fill = Brushes.White; eclipse.Stroke = Brushes.Blue; eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
             Canvas.SetZIndex(eclipse, 10);
-            Canvas.SetLeft(eclipse, (myImageBrush.Source.Width / 2));
-            Canvas.SetTop(eclipse, (myImageBrush.Source.Height / 2));
+            Canvas.SetLeft(eclipse, myImageBrush.X + (myImageBrush.Size.Width / 2));
+            Canvas.SetTop(eclipse, myImageBrush.Y + (myImageBrush.Size.Height / 2));
 
             eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} Number Of Voisin {_graph.GetAdjacentVertices(territoire).Count()}" };
-            eclipse.MouseEnter += (sender, e) => Eclipse_MouseEnter(sender, e, (ToolTip)eclipse.ToolTip);
-            eclipse.MouseLeave += (sender, e) => Eclipse_MouseLeave(sender, e, (ToolTip)eclipse.ToolTip);
-
+            eclipse.MouseEnter += (sender, e) => Eclipse_MouseEnter(sender, e, eclipse.ToolTip);
+            eclipse.MouseLeave += (sender, e) => Eclipse_MouseLeave(sender, e, eclipse.ToolTip);
+            
             CarteCanvas.Children.Add(eclipse);
         }
 
@@ -339,16 +345,18 @@ namespace JurassicRisk.ViewsModels
 
 
 
-        private void Eclipse_MouseLeave(object sender, MouseEventArgs e, ToolTip tip)
+        private void Eclipse_MouseLeave(object sender, MouseEventArgs e, object tip)
         {
-            tip.StaysOpen = false;
-            tip.IsOpen = false;
+            ToolTip tool = (tip as ToolTip);
+            tool.StaysOpen = false;
+            tool.IsOpen = false;
         }
 
-        private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e, ToolTip tip)
+        private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e, object tip)
         {
-            tip.StaysOpen = true;
-            tip.IsOpen = true;
+            ToolTip tool = (tip as ToolTip);
+            tool.StaysOpen = true;
+            tool.IsOpen = true;
         }
 
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)

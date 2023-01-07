@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Image = System.Windows.Controls.Image;
+using Size = System.Windows.Size;
 
 namespace JurassicRisk
 {
@@ -13,13 +17,40 @@ namespace JurassicRisk
     /// <Author>Charif</Author>
     public class MyImage : Image
     {
-        private static int _height;
-        private static int _width;
-        private static int _x;
-        private static int _y;
-        public MyImage()
-        {
+        #region Attribues
+        private Int16 _mult;
+        private Bitmap _bitmap;
+        private double _x;
+        private double _y;
+        private Size _size;
 
+        #endregion
+
+        #region Property
+
+        public Size Size { get { return _size; } }
+        public double X { get => _x; set => _x = value; }
+        public double Y { get => _y; set => _y = value; }
+
+        #endregion
+
+        public MyImage(BitmapSource source)
+        {
+            Source = source;
+            _mult = 1;
+            _x = 0;
+            _y = 0;
+
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(source));
+                enc.Save(outStream);
+                _bitmap = new System.Drawing.Bitmap(outStream);
+                _bitmap.MakeTransparent();
+            };
+
+            _size = GetSize(_bitmap);
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
@@ -37,44 +68,45 @@ namespace JurassicRisk
 
             return (pixels[3] < 1) ? null : new PointHitTestResult(this, hitTestParameters.HitPoint);
         }
-
-        protected override Size MeasureOverride(Size availableSize)
-        {
-            BitmapSource source = (BitmapSource)Source;
-            return GetSize(source);
-        }
-
+        
         /// <summary>
         /// GetSize based on bitmapSource with Alpha CHANNEL.
         /// </summary>
-        /// <param name="source">BitmapSource</param>
+        /// <param name="bitmap">BitmapSource</param>
         /// <returns>Size</returns>
         /// <Author>Mahmoud Charif</Author>
-        private static Size GetSize(BitmapSource source)
+        private Size GetSize(Bitmap bitmap)
         {
-            Int16 h = GetHeight(source);
-            Int16 w = GetWidth(source);
-            return new Size(w,h);
+            Int32 h = 0;
+            Int32 w = 0;
+            Bitmap bitmap1=new Bitmap(bitmap);
+            Bitmap bitmap2= new Bitmap(bitmap);
+            Thread firstThread = new Thread(() => { h = GetHeight(bitmap1); });
+            Thread secondThread = new Thread(()=> { w = GetWidth(bitmap2); });
+            firstThread.Start();
+            secondThread.Start();
+            firstThread.Join();
+            secondThread.Join();
+
+            return new Size(w, h);
         }
 
-        private static Int16 GetHeight(BitmapSource source)
+        private Int16 GetHeight(Bitmap bitmap)
         {
             Int16 totalHeight = 0;
             Int16 heightTemp = 0;
-
-            Int16 mult = 30;
             // Pour chaque colonne de l'image
-            for (Int16 x = 0; x < source.Width; x+= mult)
+            for (Int16 x = 0; x < bitmap.Width; x+= _mult)
             {
                 heightTemp = 0;
 
                 // Pour chaque pixel de la colonne
-                for (Int16 y = 0; y < source.Height; y += mult)
+                for (Int16 y = 0; y < bitmap.Height; y += _mult)
                 {
                     // Si le pixel n'est pas transparent
-                    if (GetPixelColor(source, x, y).A != 0)
+                    if (bitmap.GetPixel(x, y).A != 0)
                     {
-                        heightTemp += mult; // Incrémente la hauteur temporaire
+                        heightTemp += _mult; // Incrémente la hauteur temporaire
                         if (heightTemp > totalHeight) // test si la hauteur temporaire est plus élever
                         {
                             if (heightTemp == 1)
@@ -96,23 +128,22 @@ namespace JurassicRisk
             return totalHeight;
         }
 
-        private static Int16 GetWidth(BitmapSource source)
+        private Int16 GetWidth(Bitmap bitmap)
         {
             Int16 totalWidth = 0;
             Int16 widthTemp = 0;
-            Int16 mult = 30;
             // Pour chaque ligne de l'image
-            for (Int16 y = 0; y < source.Height; y += mult)
+            for (Int16 y = 0; y < bitmap.Height; y += _mult)
             {
                 widthTemp = 0;
 
                 // Pour chaque pixel de la ligne
-                for (Int16 x = 0; x < source.Width; x+=  mult)
+                for (Int16 x = 0; x < bitmap.Width; x+=  _mult)
                 {
                     // Si le pixel n'est pas transparent
-                    if (GetPixelColor(source, x, y).A != 0)
+                    if (bitmap.GetPixel(x, y).A != 0)
                     {
-                        widthTemp += mult; // Incrémenter la largeur temporaire
+                        widthTemp += _mult; // Incrémenter la largeur temporaire
                         if (widthTemp > totalWidth) // Mettre à jour la largeur totale si nécessaire
                         {
                             if (widthTemp == 1)
@@ -131,27 +162,6 @@ namespace JurassicRisk
                 }
             }
             return totalWidth;
-        }
-
-        /// <summary>
-        /// Obtient la couleur d'un pixel à une position x, y
-        /// </summary>
-        /// <param name="bitmap">source</param>
-        /// <param name="x">x</param>
-        /// <param name="y">y</param>
-        /// <returns>Color</returns>
-        private static Color GetPixelColor(BitmapSource bitmap, int x, int y)
-        {
-            int stride = bitmap.PixelWidth * bitmap.Format.BitsPerPixel; // 8 bytes par pixel en théorie sauf si on change l'image
-            byte[] pixels = new byte[bitmap.PixelHeight * stride];
-
-
-            // Calcule l'index du pixel dans le tableau
-            int pixelIndex = (y * bitmap.PixelWidth + x) * bitmap.Format.BitsPerPixel;
-
-            bitmap.CopyPixels(pixels, stride, x);
-            // Retourne la couleur du pixel
-            return Color.FromArgb(pixels[pixelIndex + 3], pixels[pixelIndex + 2], pixels[pixelIndex + 1], pixels[pixelIndex]);
-        }
+        }      
     }
 }
