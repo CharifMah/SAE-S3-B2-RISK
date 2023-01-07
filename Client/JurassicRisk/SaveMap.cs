@@ -21,16 +21,17 @@ namespace JurassicRisk
         private List<string> _fileEntries;
         private Dictionary<string, ITerritoireBase> _decorations;
         private int i = 0;
+
         /// <summary>
         /// Save the carte
         /// </summary>
         /// <param name="carte">null if we don't have map</param>
-        public SaveMap(Carte carte)
+        public SaveMap(Carte? carte = null)
         {
             SaveCarte(carte);
         }
 
-        private Carte CreateCarte(Dictionary<string, ITerritoireBase> _decorations)
+        private Carte CreateCarte1(Dictionary<string, ITerritoireBase> _decorations)
         {
             List<IContinent> _continents = new List<IContinent>
             {
@@ -54,7 +55,7 @@ namespace JurassicRisk
         /// <summary>
         /// Save the map into list of territoire decorator
         /// </summary>
-        private void SaveCarte(Carte carte)
+        private void SaveCarte(Carte? carte)
         {
             if (carte == null)
             {
@@ -62,12 +63,12 @@ namespace JurassicRisk
                 _fileEntries = GetResource.GetResourceFileName("carte2/");
                 foreach (string fileName in _fileEntries)
                 {
-                    SerializeConf($"pack://application:,,,/Sprites/Carte2/{fileName.Substring(fileName.Length - 8)}"); 
+                    SerializeConf($"pack://application:,,,/Sprites/Carte2/{fileName}"); 
                 }
 
                 SauveCollection s = new SauveCollection(Environment.CurrentDirectory);
 
-                s.Sauver(CreateCarte(_decorations), "Map/Cartee");
+                s.Sauver(CreateCarte1(_decorations), "Map/Cartee");
 
             }
             else
