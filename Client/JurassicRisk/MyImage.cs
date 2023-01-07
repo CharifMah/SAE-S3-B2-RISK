@@ -41,12 +41,7 @@ namespace JurassicRisk
         protected override Size MeasureOverride(Size availableSize)
         {
             BitmapSource source = (BitmapSource)Source;
-            double totalWidth = source.Width;
-            double totalHeight = source.Height;
-
-            GetSize(source);
-
-            return new Size(totalWidth, totalHeight);
+            return GetSize(source);
         }
 
         /// <summary>
@@ -137,8 +132,6 @@ namespace JurassicRisk
             }
             return totalWidth;
         }
-
-
 
         /// <summary>
         /// Obtient la couleur d'un pixel à une position x, y
