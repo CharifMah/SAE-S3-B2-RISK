@@ -62,19 +62,19 @@ namespace JurassicRisk
             Int16 totalHeight = 0;
             Int16 heightTemp = 0;
 
-
+            Int16 mult = 30;
             // Pour chaque colonne de l'image
-            for (Int16 x = 0; x < source.Width; x++)
+            for (Int16 x = 0; x < source.Width; x+= mult)
             {
                 heightTemp = 0;
 
                 // Pour chaque pixel de la colonne
-                for (Int16 y = 0; y < source.Height; y++)
+                for (Int16 y = 0; y < source.Height; y += mult)
                 {
                     // Si le pixel n'est pas transparent
                     if (GetPixelColor(source, x, y).A != 0)
                     {
-                        heightTemp++; // Incrémente la hauteur temporaire
+                        heightTemp += mult; // Incrémente la hauteur temporaire
                         if (heightTemp > totalHeight) // test si la hauteur temporaire est plus élever
                         {
                             if (heightTemp == 1)
@@ -100,19 +100,19 @@ namespace JurassicRisk
         {
             Int16 totalWidth = 0;
             Int16 widthTemp = 0;
-
+            Int16 mult = 30;
             // Pour chaque ligne de l'image
-            for (Int16 y = 0; y < source.Height; y++)
+            for (Int16 y = 0; y < source.Height; y += mult)
             {
                 widthTemp = 0;
 
                 // Pour chaque pixel de la ligne
-                for (Int16 x = 0; x < source.Width; x++)
+                for (Int16 x = 0; x < source.Width; x+=  mult)
                 {
                     // Si le pixel n'est pas transparent
                     if (GetPixelColor(source, x, y).A != 0)
                     {
-                        widthTemp++; // Incrémenter la largeur temporaire
+                        widthTemp += mult; // Incrémenter la largeur temporaire
                         if (widthTemp > totalWidth) // Mettre à jour la largeur totale si nécessaire
                         {
                             if (widthTemp == 1)
@@ -144,11 +144,12 @@ namespace JurassicRisk
         {
             int stride = bitmap.PixelWidth * bitmap.Format.BitsPerPixel; // 8 bytes par pixel en théorie sauf si on change l'image
             byte[] pixels = new byte[bitmap.PixelHeight * stride];
-            bitmap.CopyPixels(pixels, stride, 0);
+
 
             // Calcule l'index du pixel dans le tableau
-            int pixelIndex = y * stride + bitmap.Format.BitsPerPixel * x;
+            int pixelIndex = (y * bitmap.PixelWidth + x) * bitmap.Format.BitsPerPixel;
 
+            bitmap.CopyPixels(pixels, stride, x);
             // Retourne la couleur du pixel
             return Color.FromArgb(pixels[pixelIndex + 3], pixels[pixelIndex + 2], pixels[pixelIndex + 1], pixels[pixelIndex]);
         }
