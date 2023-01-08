@@ -34,10 +34,9 @@ namespace JurassicRisk.Views
 
         #region Async
 
-        private async void OptionButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        {     
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new OptionsPage(this));
         }
 
         #endregion

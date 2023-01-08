@@ -29,15 +29,13 @@ namespace JurassicRisk.ViewsModels
         private SignalRLobbyService _chatService;
         private Lobby? _lobby;
         private bool _isConnected;
-
-        private string _errorMessage = string.Empty;
         #endregion
 
         #region Property
 
-        public CarteViewModel CarteVm { get => _carteVm; }
+        public CarteViewModel? CarteVm { get => _carteVm; }
 
-        public Lobby Lobby
+        public Lobby? Lobby
         {
             get { return _lobby; }
             set
@@ -74,9 +72,6 @@ namespace JurassicRisk.ViewsModels
             _chatService.PartieReceived += _chatService_PartieReceived;
 
         }
-
-
-
 
         #endregion
 
