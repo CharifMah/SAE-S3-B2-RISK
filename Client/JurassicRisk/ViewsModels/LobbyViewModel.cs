@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.Threading;
-using JurassicRisk.observable;
+﻿using JurassicRisk.observable;
 using JurassicRisk.Views;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
@@ -182,7 +181,7 @@ namespace JurassicRisk.ViewsModels
 
         public async Task<bool> StartPartie(string lobbyName, string joueurName, string carteName)
         {
-            await _chatService.StartPartie(lobbyName,joueurName, carteName);
+            await _chatService.StartPartie(lobbyName, joueurName, carteName);
             return true;
         }
 
@@ -192,10 +191,11 @@ namespace JurassicRisk.ViewsModels
 
         private void _chatService_PartieReceived()
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
             });
+
         }
 
         private void _chatService_Connected(string connectionId)
@@ -230,7 +230,7 @@ namespace JurassicRisk.ViewsModels
 
         private void _chatService_LobbyReceived(string lobbyJson)
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
@@ -240,7 +240,7 @@ namespace JurassicRisk.ViewsModels
 
         private void _chatService_LobbyJoined(string lobbyJson)
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 if (lobbyJson != "false")
                 {

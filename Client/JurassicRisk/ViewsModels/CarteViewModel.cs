@@ -1,5 +1,3 @@
-
-using GalaSoft.MvvmLight.Threading;
 using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Graph;
@@ -253,7 +251,7 @@ namespace JurassicRisk.ViewsModels
             //TerritoireDecorator
             Canvas myCanvas = new Canvas();
 
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 MyImage myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
 
@@ -261,6 +259,7 @@ namespace JurassicRisk.ViewsModels
 
                 myCanvas.Children.Add(myImageBrush);
             });
+
 
 
 
@@ -290,8 +289,8 @@ namespace JurassicRisk.ViewsModels
         {
             //Node Eclipse
             Ellipse eclipse = new Ellipse();
-            eclipse.Width = 30;
-            eclipse.Height = 30;
+            eclipse.Width = 50;
+            eclipse.Height = 50;
             eclipse.Fill = Brushes.White; eclipse.Stroke = Brushes.Blue; eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
             Canvas.SetZIndex(eclipse, 10);
