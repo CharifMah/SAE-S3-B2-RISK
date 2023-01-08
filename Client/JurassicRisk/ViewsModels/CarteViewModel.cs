@@ -6,10 +6,12 @@ using Models.Son;
 using Stockage;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +30,7 @@ namespace JurassicRisk.ViewsModels
     public class CarteViewModel : observable.Observable
     {
         #region Attributes
+
         private AdjacencySetGraph _graph;
         private Canvas _carteCanvas;
         private Carte _carte;
@@ -35,6 +38,13 @@ namespace JurassicRisk.ViewsModels
         private int zi = 0;
         private JoueurViewModel _joueur;
         private List<ITerritoireBase> _territoires;
+
+        public delegate void DrawEnd();
+        public delegate void Progression(double rate);
+        private DrawEnd toDoWhenFinished;
+        private Progression progress;
+        private long currentPosition;
+        private bool copying;
         #endregion
 
         #region Property
@@ -62,12 +72,18 @@ namespace JurassicRisk.ViewsModels
         /// Cree la carte et la dessine
         /// </summary>
         /// <author>Charif</author>
-        public CarteViewModel(JoueurViewModel joueur)
+        public CarteViewModel(JoueurViewModel joueur, DrawEnd drawEnd, Progression progression)
         {
+            currentPosition = 0;
+            copying = false;
+            toDoWhenFinished = drawEnd;
+            progress = progression;
+
             new SaveMap(null);
             InitCarte();
             f = new FabriqueUniteBase();
-            _joueur = joueur;
+            _joueur = joueur; 
+
         }
 
         private void InitCarte()
@@ -237,6 +253,23 @@ namespace JurassicRisk.ViewsModels
             #endregion
         }
 
+        public void StartDrawRegion(TerritoireDecorator territoire)
+        {
+            copying = true;
+            Thread t = new Thread(new ThreadStart(()=> { DrawRegion(territoire); }));
+            t.Start();
+
+        }
+
+        /// <summary>
+        /// Cancel the copy
+        /// </summary>
+        public void CancelDrawRegion()
+        {
+            copying = false;
+        }
+
+
         /// <summary>
         /// Dessine les regions et les ajoute a la carte
         /// </summary>
@@ -260,9 +293,6 @@ namespace JurassicRisk.ViewsModels
                 myCanvas.Children.Add(myImageBrush);
             });
 
-
-
-
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
 
@@ -278,6 +308,9 @@ namespace JurassicRisk.ViewsModels
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
 
             _carteCanvas.Children.Add(myCanvas);
+            currentPosition += (100 / 41);
+            progress((double)currentPosition);
+            toDoWhenFinished();
         }
 
         /// <summary>
@@ -289,8 +322,8 @@ namespace JurassicRisk.ViewsModels
         {
             //Node Eclipse
             Ellipse eclipse = new Ellipse();
-            eclipse.Width = 50;
-            eclipse.Height = 50;
+            eclipse.Width = 30;
+            eclipse.Height = 30;
             eclipse.Fill = Brushes.White; eclipse.Stroke = Brushes.Blue; eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
             Canvas.SetZIndex(eclipse, 10);
@@ -303,20 +336,7 @@ namespace JurassicRisk.ViewsModels
             _carteCanvas.Children.Add(eclipse);
         }
 
-        private void Eclipse_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            //ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
-            //el.StaysOpen = false;
-            //el.IsOpen = false;
-        }
-
-        private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            //ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
-            //el.StaysOpen = true;
-            //el.IsOpen = true;
-        }
-
+       
 
         #region Request
 
@@ -351,6 +371,21 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Event
+
+        private void Eclipse_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            //ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
+            //el.StaysOpen = false;
+            //el.IsOpen = false;
+        }
+
+        private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            //ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
+            //el.StaysOpen = true;
+            //el.IsOpen = true;
+        }
+
 
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
         {

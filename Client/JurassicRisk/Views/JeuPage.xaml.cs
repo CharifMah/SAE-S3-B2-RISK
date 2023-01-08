@@ -38,7 +38,6 @@ namespace JurassicRisk.Views
         {
             
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
-            await JurassicRiskViewModel.Get.CarteVm.SetCarte(JurassicRiskViewModel.Get.CarteVm.Carte);
         }
 
         #endregion

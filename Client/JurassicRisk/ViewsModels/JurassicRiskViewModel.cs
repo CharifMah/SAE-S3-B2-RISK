@@ -1,20 +1,27 @@
 ﻿using Models;
+using System.Windows;
+using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.ViewsModels
 {
-    public class JurassicRiskViewModel
+    public class JurassicRiskViewModel : observable.Observable
     {
 
         #region Attributes
-        private CarteViewModel _carteVm;
+
         private JoueurViewModel _joueurVm;
         private LobbyViewModel _lobbyVm;
+
         #endregion
 
         #region Property
-        public CarteViewModel CarteVm { get => _carteVm; }
+
         public JoueurViewModel JoueurVm { get => _joueurVm; }
         public LobbyViewModel LobbyVm { get => _lobbyVm; set => _lobbyVm = value; }
+
+
+
+
         #endregion
 
         #region Singleton
@@ -30,19 +37,25 @@ namespace JurassicRisk.ViewsModels
         }
 
 
-
         private JurassicRiskViewModel()
         {
             _joueurVm = new JoueurViewModel();
-            _carteVm = new CarteViewModel(_joueurVm);
+
             _lobbyVm = new LobbyViewModel();
+  
         }
+
+ 
+
+        #endregion
+
+
+      
 
         public void DestroyVm()
         {
             _instance = null;
         }
 
-        #endregion
     }
 }

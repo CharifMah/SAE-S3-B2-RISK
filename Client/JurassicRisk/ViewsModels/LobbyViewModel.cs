@@ -13,16 +13,20 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.ViewsModels
 {
     public class LobbyViewModel : Observable
     {
         #region Attributes
+
+        private bool _carteLoaded;
+        private double _progression;
+        private CarteViewModel _carteVm;
         private HubConnection _connection;
         private bool _isConnectedToLobby;
         private SignalRLobbyService _chatService;
-        readonly Dispatcher _dispatcher;
         private Lobby _lobby;
         private bool _isConnected;
 
@@ -30,6 +34,8 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Property
+
+        public CarteViewModel CarteVm { get => _carteVm; }
 
         public Lobby Lobby
         {
@@ -40,24 +46,9 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("Lobby");
             }
         }
-
-        public string ErrorMessage
-        {
-            get
-            {
-                return _errorMessage;
-            }
-            set
-            {
-                _errorMessage = value;
-                NotifyPropertyChanged(nameof(ErrorMessage));
-                NotifyPropertyChanged(nameof(HasErrorMessage));
-            }
-        }
-
-        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
-
-
+ 
+        public bool CarteLoaded { get => _carteLoaded; set => _carteLoaded = value; }
+        public double Progress { get => _progression; set => _progression = value; }
 
         public bool IsConnectedToLobby { get => _isConnectedToLobby; set => _isConnectedToLobby = value; }
 
@@ -67,16 +58,18 @@ namespace JurassicRisk.ViewsModels
 
         public LobbyViewModel()
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
+            _carteLoaded = false;
+            _progression = 0;
             _lobby = JurasicRiskGameClient.Get.Lobby;
-
+            
             _isConnectedToLobby = false;
             _connection = JurasicRiskGameClient.Get.Connection;
             _chatService = JurasicRiskGameClient.Get.ChatService;
 
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
-            _chatService.PartieReceived += _chatService_PartieReceived; ;
+            _chatService.PartieReceived += _chatService_PartieReceived;
+
         }
 
 
@@ -181,8 +174,27 @@ namespace JurassicRisk.ViewsModels
 
         public async Task<bool> StartPartie(string lobbyName, string joueurName, string carteName)
         {
+            _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
             await _chatService.StartPartie(lobbyName, joueurName, carteName);
             return true;
+        }
+
+        private void DrawEnd()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _carteLoaded = true;
+                NotifyPropertyChanged("CarteLoaded");
+            });
+        }
+
+        private void Progression(double taux)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _progression = taux;
+                NotifyPropertyChanged("Progress");
+            });
         }
 
         #endregion

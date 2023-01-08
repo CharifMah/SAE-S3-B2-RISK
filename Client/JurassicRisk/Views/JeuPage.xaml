@@ -28,7 +28,7 @@
 
         <Viewbox Stretch="Fill" x:Name="ViewboxCanvas" Grid.RowSpan="3" Grid.ColumnSpan="4" Margin="0,35,0,0">
             <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="70,0,0,80">
-                <ContentPresenter Panel.ZIndex="0" Height="1080" Width="1920" Content="{Binding CarteVm.CarteCanvas}" />
+                <ContentPresenter Panel.ZIndex="0" Height="1080" Width="1920" Content="{Binding LobbyVm.CarteVm.CarteCanvas}" />
 
             </Canvas>
         </Viewbox>
