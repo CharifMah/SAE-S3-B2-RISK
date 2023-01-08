@@ -199,10 +199,10 @@ namespace JurassicRisk
             Int16 totalHeight = 0;
             Int16 HeightTemp = 0;
             // Pour chaque pixel de la ligne
-            for (Int16 x = (short)_x; x < _x + _size.Height / 2; x += _pixelIncrement)
+            for (Int16 y = (short)_y; y < _y + _size.Height / 2; y += _pixelIncrement)
             {
                 // Si le pixel n'est pas transparent
-                if (bitmap.GetPixel(x, (int)(_y + (_size.Width / 2))).A != 0)
+                if (bitmap.GetPixel((int)(_x + (_size.Width / 2)), y).A != 0)
                 {
                     HeightTemp += _pixelIncrement; // Incrémenter la largeur temporaire
                     if (HeightTemp > totalHeight) // Mettre à jour la largeur totale si nécessaire
