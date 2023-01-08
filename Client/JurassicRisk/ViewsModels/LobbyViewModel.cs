@@ -20,14 +20,14 @@ namespace JurassicRisk.ViewsModels
     public class LobbyViewModel : Observable
     {
         #region Attributes
-
+        private string _lobbyNameTmp;
         private bool _carteLoaded;
         private double _progression;
-        private CarteViewModel _carteVm;
+        private CarteViewModel? _carteVm;
         private HubConnection _connection;
         private bool _isConnectedToLobby;
         private SignalRLobbyService _chatService;
-        private Lobby _lobby;
+        private Lobby? _lobby;
         private bool _isConnected;
 
         private string _errorMessage = string.Empty;
@@ -58,6 +58,9 @@ namespace JurassicRisk.ViewsModels
 
         public LobbyViewModel()
         {
+            _lobby = null;
+            _carteVm = null;
+            _lobbyNameTmp = "";
             _carteLoaded = false;
             _progression = 0;
             _lobby = JurasicRiskGameClient.Get.Lobby;
@@ -135,7 +138,7 @@ namespace JurassicRisk.ViewsModels
             {
                 await Connect();
             }
-
+            _lobbyNameTmp = lobbyName;
             Joueur joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, Teams.NEUTRE);
             await _chatService.JoinLobby(joueur, lobbyName, password);
 
@@ -168,7 +171,8 @@ namespace JurassicRisk.ViewsModels
         /// <returns></returns>
         public async Task<bool> SetTeam(Teams team)
         {
-            await _chatService.SetTeam(team, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
+            await _chatService.SetTeam(team, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, _lobby.Id);
+
             return true;
         }
 
@@ -178,6 +182,11 @@ namespace JurassicRisk.ViewsModels
             await _chatService.StartPartie(lobbyName, joueurName, carteName);
             return true;
         }
+
+
+        #endregion
+
+        #region Events
 
         private void DrawEnd()
         {
@@ -197,15 +206,11 @@ namespace JurassicRisk.ViewsModels
             });
         }
 
-        #endregion
-
-        #region Events
-
         private void _chatService_PartieReceived()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
             });
 
         }

@@ -26,8 +26,8 @@
 
         <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif" Stretch="Fill" Grid.RowSpan="3" Grid.ColumnSpan="4"/>
 
-        <Viewbox Stretch="Fill" x:Name="ViewboxCanvas" Grid.RowSpan="3" Grid.ColumnSpan="4" Margin="0,35,0,0">
-            <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="70,0,0,80">
+        <Viewbox Stretch="Fill" x:Name="ViewboxCanvas" Grid.RowSpan="3" Grid.ColumnSpan="4">
+            <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="0,0,0,30">
                 <ContentPresenter Panel.ZIndex="0" Height="1080" Width="1920" Content="{Binding LobbyVm.CarteVm.CarteCanvas}" />
 
             </Canvas>
@@ -61,7 +61,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0} {1}">
                     <Binding Source="{x:Static Ressources:Strings.NbTerritoireVide}"/>
-                    <Binding Path="CarteVm.Carte.GetNombreTerritoireOccupe"/>
+                    <Binding Path="LobbyVm.CarteVm.Carte.GetNombreTerritoireOccupe"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

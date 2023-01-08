@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -81,8 +82,8 @@ namespace JurassicRisk
             Int32 w = 0;
             Bitmap bitmap1=new Bitmap(bitmap);
             Bitmap bitmap2= new Bitmap(bitmap);
-            Thread firstThread = new Thread(() => { h = GetHeight(bitmap1); });
-            Thread secondThread = new Thread(()=> { w = GetWidth(bitmap2); });
+            Thread firstThread = new Thread(new ThreadStart(() => { h = GetHeight(bitmap1); }));
+            Thread secondThread = new Thread(new ThreadStart(() => { w = GetWidth(bitmap2); }));
             firstThread.Start();
             secondThread.Start();
             firstThread.Join();

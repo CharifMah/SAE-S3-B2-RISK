@@ -35,9 +35,9 @@ namespace Models
             get { return _ip; }
         }
 
-        public SignalRLobbyService ChatService { get => _chatService; set => _chatService = value; }
+        public SignalRLobbyService? ChatService { get => _chatService; set => _chatService = value; }
 
-        public HubConnection Connection { get => _connection; set => _connection = value; }
+        public HubConnection? Connection { get => _connection; set => _connection = value; }
 
         public bool IsConnected
         {

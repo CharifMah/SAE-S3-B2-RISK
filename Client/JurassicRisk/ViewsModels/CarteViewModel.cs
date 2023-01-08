@@ -11,7 +11,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +29,7 @@ namespace JurassicRisk.ViewsModels
     public class CarteViewModel : observable.Observable
     {
         #region Attributes
-
+        private Stopwatch _timer;
         private AdjacencySetGraph _graph;
         private Canvas _carteCanvas;
         private Carte _carte;
@@ -44,7 +43,7 @@ namespace JurassicRisk.ViewsModels
         private DrawEnd toDoWhenFinished;
         private Progression progress;
         private long currentPosition;
-        private bool copying;
+        private bool drawing;
         #endregion
 
         #region Property
@@ -75,14 +74,14 @@ namespace JurassicRisk.ViewsModels
         public CarteViewModel(JoueurViewModel joueur, DrawEnd drawEnd, Progression progression)
         {
             currentPosition = 0;
-            copying = false;
+            drawing = false;
             toDoWhenFinished = drawEnd;
             progress = progression;
 
-            new SaveMap(null);
+            //new SaveMap(null);
             InitCarte();
             f = new FabriqueUniteBase();
-            _joueur = joueur; 
+            _joueur = joueur;
 
         }
 
@@ -107,20 +106,21 @@ namespace JurassicRisk.ViewsModels
 
             InitGraph();
 
-            foreach (TerritoireDecorator Territoire in Territoires)
-            {
-                DrawRegion(Territoire);
-            }
 
-            SetCarte(_carte);
-            NotifyPropertyChanged("CarteCanvas");
-            NotifyPropertyChanged("Carte");
+            Application.Current.Dispatcher.Invoke(() =>
+            { StartDrawRegion(); });
+
         }
 
         private void InitGraph()
         {
+            var timer = new Stopwatch();
+            timer.Start();
+
             _graph = new AdjacencySetGraph(Territoires);
 
+            currentPosition = 1;
+            progress((double)currentPosition);
             #region Territoire 1
             _graph.AddEdge(Territoires[0], Territoires[1], 1);
             _graph.AddEdge(Territoires[0], Territoires[2], 1);
@@ -143,7 +143,8 @@ namespace JurassicRisk.ViewsModels
             _graph.AddEdge(Territoires[6], Territoires[18], 1);
 
             #endregion
-
+            currentPosition = 33;
+            progress((double)currentPosition);
             #region Territoire 2
 
             _graph.AddEdge(Territoires[7], Territoires[10], 1);
@@ -163,7 +164,8 @@ namespace JurassicRisk.ViewsModels
             _graph.AddEdge(Territoires[12], Territoires[13], 1);
 
             #endregion
-
+            currentPosition = 66;
+            progress((double)currentPosition);
             #region Territoire 3
 
             _graph.AddEdge(Territoires[14], Territoires[15], 1);
@@ -251,14 +253,35 @@ namespace JurassicRisk.ViewsModels
             #endregion
 
             #endregion
+            currentPosition = 100;
+            progress((double)currentPosition);
+            drawing = false; // copy ended
+            toDoWhenFinished();
+
+            timer.Stop();
+
+            TimeSpan timeTaken = timer.Elapsed;
+            MessageBox.Show("Time taken: " + timeTaken.ToString(@"m\:ss\.fff"));
         }
 
-        public void StartDrawRegion(TerritoireDecorator territoire)
+        public void StartDrawRegion()
         {
-            copying = true;
-            Thread t = new Thread(new ThreadStart(()=> { DrawRegion(territoire); }));
-            t.Start();
+            _timer = new Stopwatch();
+            _timer.Start();
+            drawing = true;
+            currentPosition = 0;
+            progress((double)currentPosition);
+            foreach (TerritoireDecorator Territoire in Territoires)
+            {
+                DrawRegion(Territoire);
+            }
 
+            _timer.Stop();
+            TimeSpan timeTaken = _timer.Elapsed;
+            MessageBox.Show("Time taken: " + timeTaken.ToString(@"m\:ss\.fff"));
+
+            NotifyPropertyChanged("CarteCanvas");
+            NotifyPropertyChanged("Carte");
         }
 
         /// <summary>
@@ -266,9 +289,8 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         public void CancelDrawRegion()
         {
-            copying = false;
+            drawing = false;
         }
-
 
         /// <summary>
         /// Dessine les regions et les ajoute a la carte
@@ -281,21 +303,27 @@ namespace JurassicRisk.ViewsModels
         /// <Author>Charif</Author>
         private void DrawRegion(TerritoireDecorator territoire)
         {
+            Canvas myCanvas = null;
+
+            currentPosition += (100 / 41);
+            progress((double)currentPosition);
+
+
             //TerritoireDecorator
-            Canvas myCanvas = new Canvas();
+            myCanvas = new Canvas();
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                MyImage myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
+            MyImage myImageBrush = null;
 
-                DrawNode(myImageBrush, territoire);
 
-                myCanvas.Children.Add(myImageBrush);
-            });
+            myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
+
+
+            DrawNode(myImageBrush, territoire);
+
+            myCanvas.Children.Add(myImageBrush);
 
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
-
 
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
 
@@ -308,9 +336,6 @@ namespace JurassicRisk.ViewsModels
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
 
             _carteCanvas.Children.Add(myCanvas);
-            currentPosition += (100 / 41);
-            progress((double)currentPosition);
-            toDoWhenFinished();
         }
 
         /// <summary>
@@ -335,8 +360,6 @@ namespace JurassicRisk.ViewsModels
             eclipse.MouseLeave += Eclipse_MouseLeave;
             _carteCanvas.Children.Add(eclipse);
         }
-
-       
 
         #region Request
 
@@ -404,7 +427,7 @@ namespace JurassicRisk.ViewsModels
 
         private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
-            Canvas c = sender as Canvas;
+            Canvas? c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
 
             shadow.Color = Brushes.Green.Color;
@@ -422,7 +445,7 @@ namespace JurassicRisk.ViewsModels
 
         private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Canvas c = (sender as Canvas);
+            Canvas c = ((sender as Canvas));
             c.Width -= 35;
             c.Height -= 35;
             DropShadowEffect shadow = new DropShadowEffect();
