@@ -303,39 +303,30 @@ namespace JurassicRisk.ViewsModels
         /// <Author>Charif</Author>
         private void DrawRegion(TerritoireDecorator territoire)
         {
-            Canvas myCanvas = null;
-
-            currentPosition += (100 / 41);
-            progress((double)currentPosition);
-
-
             //TerritoireDecorator
-            myCanvas = new Canvas();
-
-            MyImage myImageBrush = null;
-
-
-            myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
-
-
+            Canvas myCanvas = new Canvas();
+            MyImage myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
             DrawNode(myImageBrush, territoire);
 
             myCanvas.Children.Add(myImageBrush);
 
+            currentPosition += ((100 / 41) / 2);
+            progress((double)currentPosition);
+
+
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
-
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
-
             myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e);
             myCanvas.MouseLeave += (sender, e) => MyCanvas_MouseLeave(sender, e);
-
             myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
-
             ToolTipService.SetInitialShowDelay(myCanvas, 0);
 
             _carteCanvas.Children.Add(myCanvas);
+
+            currentPosition += ((100 / 41) / 2);
+            progress((double)currentPosition);
         }
 
         /// <summary>
@@ -352,10 +343,10 @@ namespace JurassicRisk.ViewsModels
             eclipse.Fill = Brushes.White; eclipse.Stroke = Brushes.Blue; eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
             Canvas.SetZIndex(eclipse, 10);
-            Canvas.SetLeft(eclipse, myImageBrush.X + (myImageBrush.Size.Width / 2));
-            Canvas.SetTop(eclipse, myImageBrush.Y + (myImageBrush.Size.Height / 2));
+            Canvas.SetLeft(eclipse, myImageBrush.XCenter);
+            Canvas.SetTop(eclipse, myImageBrush.YCenter);
 
-            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} Number Of Voisin {_graph.GetAdjacentVertices(territoire).Count()}" };
+            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} Number Of Voisin {_graph.GetAdjacentVertices(territoire).Count()} {myImageBrush.XCenter},{myImageBrush.YCenter} : {myImageBrush.X},{myImageBrush.Y}" };
             eclipse.MouseEnter += Eclipse_MouseEnter;
             eclipse.MouseLeave += Eclipse_MouseLeave;
             _carteCanvas.Children.Add(eclipse);
@@ -397,16 +388,16 @@ namespace JurassicRisk.ViewsModels
 
         private void Eclipse_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            //ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
-            //el.StaysOpen = false;
-            //el.IsOpen = false;
+            ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
+            el.StaysOpen = false;
+            el.IsOpen = false;
         }
 
         private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            //ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
-            //el.StaysOpen = true;
-            //el.IsOpen = true;
+            ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
+            el.StaysOpen = true;
+            el.IsOpen = true;
         }
 
 
@@ -445,7 +436,7 @@ namespace JurassicRisk.ViewsModels
 
         private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Canvas c = ((sender as Canvas));
+            Canvas c = (sender as Canvas);
             c.Width -= 35;
             c.Height -= 35;
             DropShadowEffect shadow = new DropShadowEffect();

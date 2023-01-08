@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
@@ -19,10 +17,12 @@ namespace JurassicRisk
     public class MyImage : Image
     {
         #region Attribues
-        private Int16 _mult;
+        private Int16 _pixelIncrement;
         private Bitmap _bitmap;
         private double _x;
         private double _y;
+        private double _xCenter;
+        private double _yCenter;
         private Size _size;
 
         #endregion
@@ -32,13 +32,15 @@ namespace JurassicRisk
         public Size Size { get { return _size; } }
         public double X { get => _x; set => _x = value; }
         public double Y { get => _y; set => _y = value; }
+        public double XCenter { get => _xCenter; set => _xCenter = value; }
+        public double YCenter { get => _yCenter; set => _yCenter = value; }
 
         #endregion
 
         public MyImage(BitmapSource source)
         {
             Source = source;
-            _mult = 1;
+            _pixelIncrement = 1;
             _x = 0;
             _y = 0;
 
@@ -50,8 +52,11 @@ namespace JurassicRisk
                 _bitmap = new System.Drawing.Bitmap(outStream);
                 _bitmap.MakeTransparent();
             };
-
+            Int32 hCenter = 0;
+            Int32 wCenter = 0;
             _size = GetSize(_bitmap);
+            wCenter = GetWidthCenter(_bitmap);
+            hCenter = GetHeightCenter(_bitmap);
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
@@ -69,7 +74,7 @@ namespace JurassicRisk
 
             return (pixels[3] < 1) ? null : new PointHitTestResult(this, hitTestParameters.HitPoint);
         }
-        
+
         /// <summary>
         /// GetSize based on bitmapSource with Alpha CHANNEL.
         /// </summary>
@@ -80,8 +85,8 @@ namespace JurassicRisk
         {
             Int32 h = 0;
             Int32 w = 0;
-            Bitmap bitmap1=new Bitmap(bitmap);
-            Bitmap bitmap2= new Bitmap(bitmap);
+            Bitmap bitmap1 = new Bitmap(bitmap);
+            Bitmap bitmap2 = new Bitmap(bitmap);
             Thread firstThread = new Thread(new ThreadStart(() => { h = GetHeight(bitmap1); }));
             Thread secondThread = new Thread(new ThreadStart(() => { w = GetWidth(bitmap2); }));
             firstThread.Start();
@@ -97,25 +102,25 @@ namespace JurassicRisk
             Int16 totalHeight = 0;
             Int16 heightTemp = 0;
             // Pour chaque colonne de l'image
-            for (Int16 x = 0; x < bitmap.Width; x+= _mult)
+            for (Int16 x = 0; x < bitmap.Width; x += _pixelIncrement)
             {
                 heightTemp = 0;
 
                 // Pour chaque pixel de la colonne
-                for (Int16 y = 0; y < bitmap.Height; y += _mult)
+                for (Int16 y = 0; y < bitmap.Height; y += _pixelIncrement)
                 {
                     // Si le pixel n'est pas transparent
                     if (bitmap.GetPixel(x, y).A != 0)
                     {
-                        heightTemp += _mult; // Incrémente la hauteur temporaire
+                        heightTemp += _pixelIncrement; // Incrémente la hauteur temporaire
                         if (heightTemp > totalHeight) // test si la hauteur temporaire est plus élever
                         {
-                            if (heightTemp == 1)
+                            if (heightTemp == _pixelIncrement)
                             {
                                 _x = x;
                                 _y = y;
                             }
-                           
+
                             totalHeight = heightTemp;
                         }
                     }
@@ -134,24 +139,19 @@ namespace JurassicRisk
             Int16 totalWidth = 0;
             Int16 widthTemp = 0;
             // Pour chaque ligne de l'image
-            for (Int16 y = 0; y < bitmap.Height; y += _mult)
+            for (Int16 y = 0; y < bitmap.Height; y += _pixelIncrement)
             {
                 widthTemp = 0;
 
                 // Pour chaque pixel de la ligne
-                for (Int16 x = 0; x < bitmap.Width; x+=  _mult)
+                for (Int16 x = 0; x < bitmap.Width; x += _pixelIncrement)
                 {
                     // Si le pixel n'est pas transparent
                     if (bitmap.GetPixel(x, y).A != 0)
                     {
-                        widthTemp += _mult; // Incrémenter la largeur temporaire
+                        widthTemp += _pixelIncrement; // Incrémenter la largeur temporaire
                         if (widthTemp > totalWidth) // Mettre à jour la largeur totale si nécessaire
                         {
-                            if (widthTemp == 1)
-                            {
-                                _x = x;
-                                _y = y;
-                            }
                             totalWidth = widthTemp;
                         }
                     }
@@ -163,6 +163,63 @@ namespace JurassicRisk
                 }
             }
             return totalWidth;
-        }      
+        }
+
+        private Int16 GetWidthCenter(Bitmap bitmap)
+        {
+
+            Int16 totalWidth = 0;
+            Int16 widthTemp = 0;
+            // Pour chaque pixel de la ligne
+            for (Int16 x = (short)_x; x < _x + _size.Width / 2; x += _pixelIncrement)
+            {
+                // Si le pixel n'est pas transparent
+                if (bitmap.GetPixel(x, (int)(_y + (_size.Height / 2))).A != 0)
+                {
+                    widthTemp += _pixelIncrement; // Incrémenter la largeur temporaire
+                    if (widthTemp > totalWidth) // Mettre à jour la largeur totale si nécessaire
+                    {
+                        totalWidth = widthTemp;
+                    }
+                }
+                else
+                {
+                    widthTemp = 0; // Réinitialiser la largeur temporaire
+                }
+            }
+
+
+            _xCenter = _x + totalWidth;
+
+            return totalWidth;
+        }
+
+        private Int16 GetHeightCenter(Bitmap bitmap)
+        {
+            Int16 totalHeight = 0;
+            Int16 HeightTemp = 0;
+            // Pour chaque pixel de la ligne
+            for (Int16 x = (short)_x; x < _x + _size.Height / 2; x += _pixelIncrement)
+            {
+                // Si le pixel n'est pas transparent
+                if (bitmap.GetPixel(x, (int)(_y + (_size.Width / 2))).A != 0)
+                {
+                    HeightTemp += _pixelIncrement; // Incrémenter la largeur temporaire
+                    if (HeightTemp > totalHeight) // Mettre à jour la largeur totale si nécessaire
+                    {
+                        totalHeight = HeightTemp;
+                    }
+                }
+                else
+                {
+                    HeightTemp = 0; // Réinitialiser la largeur temporaire
+                }
+            }
+
+
+            _yCenter = _y + totalHeight;
+
+            return totalHeight;
+        }
     }
 }
