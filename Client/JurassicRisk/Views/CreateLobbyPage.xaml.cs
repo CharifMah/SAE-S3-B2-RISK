@@ -1,10 +1,12 @@
 using JurassicRisk.Ressource;
 using JurassicRisk.ViewsModels;
-using Models.GameStatus;
 using System;
 using System.Threading.Tasks;
+using Models;
 using System.Windows;
 using System.Windows.Controls;
+using Models.Son;
+using Models.GameStatus;
 
 namespace JurassicRisk.Views
 {
@@ -28,7 +30,7 @@ namespace JurassicRisk.Views
 
                     if (connexion1.Contains("Lobby Created with name"))
                     {
-                        JoinLobby();
+                        JoinLobby(true);
                     }
                     else
                     {
@@ -49,7 +51,7 @@ namespace JurassicRisk.Views
             }
         }
 
-        private async void JoinLobby()
+        private async void JoinLobby(bool fromCreate = false)
         {
             try
             {
@@ -69,8 +71,16 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        Error.Text = Ressource.Strings.NoExistLobby;
-                        Error.Visibility = Visibility.Visible;
+                        if (!fromCreate)
+                        {
+                            Error.Text = Ressource.Strings.NoExistLobby;
+                            Error.Visibility = Visibility.Visible;
+                        }
+                        if (fromCreate)
+                        {
+                            Error.Text = "Loading...";
+                            Error.Visibility = Visibility.Visible;
+                        }
                     }
                     //Wait for 500 milliseconds
                     await Task.Delay(WaitTime);
