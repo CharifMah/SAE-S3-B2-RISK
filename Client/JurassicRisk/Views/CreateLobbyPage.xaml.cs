@@ -22,9 +22,6 @@ namespace JurassicRisk.Views
 
         private async void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            string connexion = "";
-            
-
             if (inputLobbyName.Text != "")
             {
                     if (inputPassword.Password == inputPassword2.Password)
@@ -33,7 +30,7 @@ namespace JurassicRisk.Views
 
                         if (connexion1.Contains("Lobby Created with name"))
                         {
-                            JoinLobby();
+                            JoinLobby(true);
                         }
                         else
                         {
@@ -54,7 +51,7 @@ namespace JurassicRisk.Views
                 }
         }
 
-        private async void JoinLobby()
+        private async void JoinLobby(bool fromCreate = false)
         {
             try
             {
@@ -74,8 +71,16 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        Error.Text = Ressource.Strings.NoExistLobby;
-                        Error.Visibility = Visibility.Visible;
+                        if (!fromCreate)
+                        {
+                            Error.Text = Ressource.Strings.NoExistLobby;
+                            Error.Visibility = Visibility.Visible;
+                        }
+                        if (fromCreate)
+                        {
+                            Error.Text = "Loading...";
+                            Error.Visibility = Visibility.Visible;
+                        }
                     }
                     //Wait for 500 milliseconds
                     await Task.Delay(WaitTime);
