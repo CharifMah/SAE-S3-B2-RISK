@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Carte = Models.Map.Carte;
 using Continent = Models.Map.Continent;
 using IUnit = Models.Units.IUnit;
@@ -107,8 +109,10 @@ namespace JurassicRisk.ViewsModels
             InitGraph();
 
 
-            Application.Current.Dispatcher.Invoke(() =>
-            { StartDrawRegion(); });
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, (ThreadStart)delegate () 
+            { 
+                StartDrawRegion();
+            });
 
         }
 
@@ -264,16 +268,21 @@ namespace JurassicRisk.ViewsModels
             MessageBox.Show("Time taken: " + timeTaken.ToString(@"m\:ss\.fff"));
         }
 
-        public void StartDrawRegion()
+        public async Task StartDrawRegion()
         {
             _timer = new Stopwatch();
             _timer.Start();
             drawing = true;
-            currentPosition = 0;
-            progress((double)currentPosition);
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                currentPosition = 0;
+                progress((double)currentPosition);
+            },DispatcherPriority.Render);
+
             foreach (TerritoireDecorator Territoire in Territoires)
             {
                 DrawRegion(Territoire);
+
             }
 
             _timer.Stop();
@@ -340,7 +349,9 @@ namespace JurassicRisk.ViewsModels
             Ellipse eclipse = new Ellipse();
             eclipse.Width = 30;
             eclipse.Height = 30;
-            eclipse.Fill = Brushes.White; eclipse.Stroke = Brushes.Blue; eclipse.StrokeThickness = 2;
+            eclipse.Fill = Brushes.White; 
+            eclipse.Stroke = Brushes.Blue;
+            eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
             Canvas.SetZIndex(eclipse, 10);
             Canvas.SetLeft(eclipse, myImageBrush.XCenter);
