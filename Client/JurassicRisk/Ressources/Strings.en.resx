@@ -175,7 +175,7 @@
     <value>You need to enter a pseudo</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>Settings</value>
   </data>
   <data name="PartieJoué" xml:space="preserve">
     <value>Game played</value>
