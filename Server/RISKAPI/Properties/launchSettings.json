@@ -12,7 +12,7 @@
     "RISKAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7215;https://localhost:5215",
       "environmentVariables": {
