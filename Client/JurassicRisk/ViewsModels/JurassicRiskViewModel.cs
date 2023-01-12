@@ -1,5 +1,7 @@
-﻿using Models;
+﻿using JurassicRisk.Views;
+using Models;
 using System.Windows;
+using System.Windows.Threading;
 using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.ViewsModels
@@ -8,6 +10,11 @@ namespace JurassicRisk.ViewsModels
     {
 
         #region Attributes
+        private bool _carteLoaded;
+        private double _progression;
+        private CarteViewModel? _carteVm;
+
+       
 
         private JoueurViewModel _joueurVm;
         private LobbyViewModel _lobbyVm;
@@ -15,7 +22,10 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Property
+        public CarteViewModel? CarteVm { get => _carteVm; }
 
+        public bool CarteLoaded { get => _carteLoaded; set => _carteLoaded = value; }
+        public double Progress { get => _progression; set => _progression = value; }
         public JoueurViewModel JoueurVm { get => _joueurVm; }
         public LobbyViewModel LobbyVm { get => _lobbyVm; set => _lobbyVm = value; }
 
@@ -42,20 +52,42 @@ namespace JurassicRisk.ViewsModels
             _joueurVm = new JoueurViewModel();
 
             _lobbyVm = new LobbyViewModel();
-  
+            _carteLoaded = false;
+            _progression = 0;
+            _carteVm = null;
         }
 
- 
+
 
         #endregion
 
+        private void DrawEnd()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _carteLoaded = true;
+                NotifyPropertyChanged("CarteLoaded");
+            }, DispatcherPriority.Render);
+        }
 
-      
+        private void Progression(double taux)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _progression = taux;
+                NotifyPropertyChanged("Progress");
+            }, DispatcherPriority.Render);
+        }
+
+        public void StartJeuPage()
+        {
+            _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
+        }
 
         public void DestroyVm()
         {
             _instance = null;
         }
-
     }
 }

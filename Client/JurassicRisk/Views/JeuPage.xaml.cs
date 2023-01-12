@@ -14,6 +14,12 @@ namespace JurassicRisk.Views
     public partial class JeuPage : Page
     {
         private Window mainwindow;
+        private static ScrollViewer _scrollviewer;
+
+        public static ScrollViewer ScrollViewer
+        {
+            get { return _scrollviewer; }
+        }
 
         /// <summary>
         /// Page du jeux
@@ -24,10 +30,26 @@ namespace JurassicRisk.Views
             mainwindow = (Window.GetWindow(App.Current.MainWindow) as MainWindow);
             mainwindow.SizeChanged += JeuPage_SizeChanged;
             mainwindow.PreviewKeyDown += Mainwindow_PreviewKeyDown;
+
+            _scrollviewer = ScrollViewerView;
             ViewboxCanvas.Width = mainwindow.ActualWidth;
             ViewboxCanvas.Height = mainwindow.ActualHeight;
 
+
             DataContext = JurassicRiskViewModel.Get;
+        }
+
+
+        /// <summary>
+        /// move the camera to point x,y
+        /// </summary>
+        /// <param name="x">axis x</param>
+        /// <param name="y">axis y</param>
+        /// <Author>Charif</Author>
+        public static void MoveCamera(double x, double y)
+        {
+            JeuPage.ScrollViewer.ScrollToVerticalOffset(y - Application.Current.MainWindow.ActualHeight / 2);
+            JeuPage.ScrollViewer.ScrollToHorizontalOffset(x - Application.Current.MainWindow.ActualWidth / 2);
         }
 
         #region Events

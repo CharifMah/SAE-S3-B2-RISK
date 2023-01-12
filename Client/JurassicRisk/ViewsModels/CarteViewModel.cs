@@ -323,7 +323,7 @@ namespace JurassicRisk.ViewsModels
                 l.Stroke = brush;
                 l.StrokeThickness = 5;
                 l.IsHitTestVisible = false;
-                Canvas.SetZIndex(l, 8);
+                Canvas.SetZIndex(l, 4);
                 territoire.Lines.Add(l);
                 
                 _carteCanvas.Children.Add(l);
