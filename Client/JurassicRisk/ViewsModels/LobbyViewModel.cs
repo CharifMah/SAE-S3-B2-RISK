@@ -13,7 +13,6 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -44,7 +43,7 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("Lobby");
             }
         }
- 
+
         public bool CarteLoaded { get => _carteLoaded; set => _carteLoaded = value; }
         public double Progress { get => _progression; set => _progression = value; }
 
@@ -62,7 +61,7 @@ namespace JurassicRisk.ViewsModels
             _carteLoaded = false;
             _progression = 0;
             _lobby = JurasicRiskGameClient.Get.Lobby;
-            
+
             _isConnectedToLobby = false;
             _connection = JurasicRiskGameClient.Get.Connection;
             _chatService = JurasicRiskGameClient.Get.ChatService;
@@ -89,7 +88,6 @@ namespace JurassicRisk.ViewsModels
             _chatService.LobbyReceived += _chatService_LobbyReceived;
             _chatService.LobbyJoined += _chatService_LobbyJoined;
         }
-
 
         /// <summary>
         /// Create a Lobby
@@ -151,6 +149,10 @@ namespace JurassicRisk.ViewsModels
             return true;
         }
 
+        /// <summary>
+        /// Check if player is ready
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> IsReady()
         {
 
@@ -173,11 +175,9 @@ namespace JurassicRisk.ViewsModels
 
         public async Task<bool> StartPartie(string lobbyName, string joueurName, string carteName)
         {
-            _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
             await _chatService.StartPartie(lobbyName, joueurName, carteName);
             return true;
         }
-
 
         #endregion
 
@@ -189,7 +189,7 @@ namespace JurassicRisk.ViewsModels
             {
                 _carteLoaded = true;
                 NotifyPropertyChanged("CarteLoaded");
-            });
+            }, DispatcherPriority.Render);
         }
 
         private void Progression(double taux)
@@ -198,15 +198,16 @@ namespace JurassicRisk.ViewsModels
             {
                 _progression = taux;
                 NotifyPropertyChanged("Progress");
-            });
+            }, DispatcherPriority.Render);
         }
 
         private void _chatService_PartieReceived()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
+                _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
-            });
+            }, DispatcherPriority.Render);
 
         }
 

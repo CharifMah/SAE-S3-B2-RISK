@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
+using Point = System.Windows.Point;
 using Size = System.Windows.Size;
 
 namespace JurassicRisk
@@ -21,9 +22,9 @@ namespace JurassicRisk
         private Bitmap _bitmap;
         private double _x;
         private double _y;
-        private double _xCenter;
-        private double _yCenter;
         private Size _size;
+        private Rect _rect;
+        private List<Point> _points;
 
         #endregion
 
@@ -32,17 +33,14 @@ namespace JurassicRisk
         public Size Size { get { return _size; } }
         public double X { get => _x; set => _x = value; }
         public double Y { get => _y; set => _y = value; }
-        public double XCenter { get => _xCenter; set => _xCenter = value; }
-        public double YCenter { get => _yCenter; set => _yCenter = value; }
+        public List<Point> Points { get => _points; set => _points = value; }
 
         #endregion
 
         public MyImage(BitmapSource source)
         {
             Source = source;
-            _pixelIncrement = 1;
-            _x = 0;
-            _y = 0;
+            _pixelIncrement = 10;
 
             using (MemoryStream outStream = new MemoryStream())
             {
@@ -52,11 +50,10 @@ namespace JurassicRisk
                 _bitmap = new System.Drawing.Bitmap(outStream);
                 _bitmap.MakeTransparent();
             };
-            Int32 hCenter = 0;
-            Int32 wCenter = 0;
+            _points = GetRect(_bitmap);
             _size = GetSize(_bitmap);
-            wCenter = GetWidthCenter(_bitmap);
-            hCenter = GetHeightCenter(_bitmap);
+            _x = _points[0].X;
+            _y = _points[0].Y;
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
@@ -83,143 +80,104 @@ namespace JurassicRisk
         /// <Author>Mahmoud Charif</Author>
         private Size GetSize(Bitmap bitmap)
         {
-            Int32 h = 0;
-            Int32 w = 0;
-            Bitmap bitmap1 = new Bitmap(bitmap);
-            Bitmap bitmap2 = new Bitmap(bitmap);
-            Thread firstThread = new Thread(new ThreadStart(() => { h = GetHeight(bitmap1); }));
-            Thread secondThread = new Thread(new ThreadStart(() => { w = GetWidth(bitmap2); }));
-            firstThread.Start();
-            secondThread.Start();
-            firstThread.Join();
-            secondThread.Join();
-
-            return new Size(w, h);
+            return new Size(_points[1].X - _points[0].X, _points[2].Y - _points[0].Y);
         }
 
-        private Int16 GetHeight(Bitmap bitmap)
+        private List<Point> GetRect(Bitmap bitmap)
         {
-            Int16 totalHeight = 0;
-            Int16 heightTemp = 0;
-            // Pour chaque colonne de l'image
+            Point topLeft = new Point();
+            Point topRight = new Point();
+            Point bottomLeft = new Point();
+            Point bottomRight = new Point();
+
+            //TopLeft
             for (Int16 x = 0; x < bitmap.Width; x += _pixelIncrement)
             {
-                heightTemp = 0;
-
-                // Pour chaque pixel de la colonne
-                for (Int16 y = 0; y < bitmap.Height; y += _pixelIncrement)
+                for (int y = 0; y < bitmap.Height; y++)
                 {
                     // Si le pixel n'est pas transparent
                     if (bitmap.GetPixel(x, y).A != 0)
                     {
-                        heightTemp += _pixelIncrement; // Incrémente la hauteur temporaire
-                        if (heightTemp > totalHeight) // test si la hauteur temporaire est plus élever
-                        {
-                            if (heightTemp == _pixelIncrement)
-                            {
-                                _x = x;
-                                _y = y;
-                            }
-
-                            totalHeight = heightTemp;
-                        }
+                        topLeft.X = x;
+                        topLeft.Y = y;
+                        x = (short)bitmap.Width;
+                        break;
                     }
-                    else
-                    {
-                        heightTemp = 0; // Réinitialise la hauteur temporaire
-                    }
+                }
+                if (topLeft.X != 0)
+                {
+                    break;
                 }
             }
 
-            return totalHeight;
-        }
-
-        private Int16 GetWidth(Bitmap bitmap)
-        {
-            Int16 totalWidth = 0;
-            Int16 widthTemp = 0;
-            // Pour chaque ligne de l'image
-            for (Int16 y = 0; y < bitmap.Height; y += _pixelIncrement)
+            //TopRight
+            for (int x = bitmap.Width - 1; x > 0; x -= _pixelIncrement)
             {
-                widthTemp = 0;
-
-                // Pour chaque pixel de la ligne
-                for (Int16 x = 0; x < bitmap.Width; x += _pixelIncrement)
+                for (int y = 0; y < bitmap.Height; y++)
                 {
                     // Si le pixel n'est pas transparent
                     if (bitmap.GetPixel(x, y).A != 0)
                     {
-                        widthTemp += _pixelIncrement; // Incrémenter la largeur temporaire
-                        if (widthTemp > totalWidth) // Mettre à jour la largeur totale si nécessaire
-                        {
-                            totalWidth = widthTemp;
-                        }
-                    }
-                    else
-                    {
-                        widthTemp = 0; // Réinitialiser la largeur temporaire
-
+                        topRight.X = x;
+                        topRight.Y = y;
+                        break;
                     }
                 }
+                if (topRight.X != 0)
+                {
+                    break;
+                }
             }
-            return totalWidth;
-        }
 
-        private Int16 GetWidthCenter(Bitmap bitmap)
-        {
-
-            Int16 totalWidth = 0;
-            Int16 widthTemp = 0;
-            // Pour chaque pixel de la ligne
-            for (Int16 x = (short)_x; x < _x + _size.Width / 2; x += _pixelIncrement)
+            //BottomRight
+            for (int x = bitmap.Width - 1; x > 0; x -= _pixelIncrement)
             {
-                // Si le pixel n'est pas transparent
-                if (bitmap.GetPixel(x, (int)(_y + (_size.Height / 2))).A != 0)
+                for (int y = bitmap.Height - 1; y > 0; y--)
                 {
-                    widthTemp += _pixelIncrement; // Incrémenter la largeur temporaire
-                    if (widthTemp > totalWidth) // Mettre à jour la largeur totale si nécessaire
+                    // Si le pixel n'est pas transparent
+                    if (bitmap.GetPixel(x, y).A != 0)
                     {
-                        totalWidth = widthTemp;
+                        bottomRight.X = x;
+                        bottomRight.Y = y;
+                        x = (short)bitmap.Width;
+                        break;
                     }
                 }
-                else
+                if (bottomRight.X != 0)
                 {
-                    widthTemp = 0; // Réinitialiser la largeur temporaire
+                    break;
                 }
             }
 
-
-            _xCenter = _x + totalWidth;
-
-            return totalWidth;
-        }
-
-        private Int16 GetHeightCenter(Bitmap bitmap)
-        {
-            Int16 totalHeight = 0;
-            Int16 HeightTemp = 0;
-            // Pour chaque pixel de la ligne
-            for (Int16 y = (short)_y; y < _y + _size.Height / 2; y += _pixelIncrement)
+            //BottomLeft
+            for (Int16 x = 0; x < bitmap.Width; x += _pixelIncrement)
             {
-                // Si le pixel n'est pas transparent
-                if (bitmap.GetPixel((int)(_x + (_size.Width / 2)), y).A != 0)
+                for (int y = bitmap.Height - 1; y > 0; y--)
                 {
-                    HeightTemp += _pixelIncrement; // Incrémenter la largeur temporaire
-                    if (HeightTemp > totalHeight) // Mettre à jour la largeur totale si nécessaire
+                    // Si le pixel n'est pas transparent
+                    if (bitmap.GetPixel(x, y).A != 0)
                     {
-                        totalHeight = HeightTemp;
+                        bottomLeft.X = x;
+                        bottomLeft.Y = y;
+                        x = (short)bitmap.Width;
+                        break;
                     }
                 }
-                else
+                if (bottomLeft.X != 0)
                 {
-                    HeightTemp = 0; // Réinitialiser la largeur temporaire
+                    break;
                 }
             }
-
-
-            _yCenter = _y + totalHeight;
-
-            return totalHeight;
+            var l = new List<Point>
+            {
+                topLeft,
+                topRight,
+                bottomLeft,
+                bottomRight
+            };
+            return l;
         }
+
+
     }
 }

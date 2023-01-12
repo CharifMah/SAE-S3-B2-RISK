@@ -7,19 +7,15 @@ using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Windows.Threading;
+using Brushes = System.Windows.Media.Brushes;
 using Carte = Models.Map.Carte;
 using Continent = Models.Map.Continent;
 using IUnit = Models.Units.IUnit;
@@ -109,22 +105,18 @@ namespace JurassicRisk.ViewsModels
             InitGraph();
 
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, (ThreadStart)delegate () 
-            { 
-                StartDrawRegion();
-            });
+
+            StartDrawRegion();
+
 
         }
 
         private void InitGraph()
         {
-            var timer = new Stopwatch();
-            timer.Start();
-
             _graph = new AdjacencySetGraph(Territoires);
 
             currentPosition = 1;
-            progress((double)currentPosition);
+            progress(currentPosition);
             #region Territoire 1
             _graph.AddEdge(Territoires[0], Territoires[1], 1);
             _graph.AddEdge(Territoires[0], Territoires[2], 1);
@@ -148,7 +140,7 @@ namespace JurassicRisk.ViewsModels
 
             #endregion
             currentPosition = 33;
-            progress((double)currentPosition);
+            progress(currentPosition);
             #region Territoire 2
 
             _graph.AddEdge(Territoires[7], Territoires[10], 1);
@@ -169,7 +161,7 @@ namespace JurassicRisk.ViewsModels
 
             #endregion
             currentPosition = 66;
-            progress((double)currentPosition);
+            progress(currentPosition);
             #region Territoire 3
 
             _graph.AddEdge(Territoires[14], Territoires[15], 1);
@@ -258,36 +250,22 @@ namespace JurassicRisk.ViewsModels
 
             #endregion
             currentPosition = 100;
-            progress((double)currentPosition);
-            drawing = false; // copy ended
-            toDoWhenFinished();
+            progress(currentPosition);
 
-            timer.Stop();
-
-            TimeSpan timeTaken = timer.Elapsed;
-            MessageBox.Show("Time taken: " + timeTaken.ToString(@"m\:ss\.fff"));
         }
 
-        public async Task StartDrawRegion()
+        public void StartDrawRegion()
         {
-            _timer = new Stopwatch();
-            _timer.Start();
             drawing = true;
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                currentPosition = 0;
-                progress((double)currentPosition);
-            },DispatcherPriority.Render);
-
+            currentPosition = 0;
+            progress(currentPosition);
+            int count = Territoires.Count;
             foreach (TerritoireDecorator Territoire in Territoires)
             {
                 DrawRegion(Territoire);
-
+                currentPosition += (100 / count);
+                progress(currentPosition);
             }
-
-            _timer.Stop();
-            TimeSpan timeTaken = _timer.Elapsed;
-            MessageBox.Show("Time taken: " + timeTaken.ToString(@"m\:ss\.fff"));
 
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
@@ -315,13 +293,10 @@ namespace JurassicRisk.ViewsModels
             //TerritoireDecorator
             Canvas myCanvas = new Canvas();
             MyImage myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
+
             DrawNode(myImageBrush, territoire);
 
             myCanvas.Children.Add(myImageBrush);
-
-            currentPosition += ((100 / 41) / 2);
-            progress((double)currentPosition);
-
 
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
@@ -330,12 +305,9 @@ namespace JurassicRisk.ViewsModels
             myCanvas.MouseLeave += (sender, e) => MyCanvas_MouseLeave(sender, e);
             myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
-            ToolTipService.SetInitialShowDelay(myCanvas, 0);
+            ToolTipService.SetInitialShowDelay(myCanvas, 1);
 
             _carteCanvas.Children.Add(myCanvas);
-
-            currentPosition += ((100 / 41) / 2);
-            progress((double)currentPosition);
         }
 
         /// <summary>
@@ -349,15 +321,15 @@ namespace JurassicRisk.ViewsModels
             Ellipse eclipse = new Ellipse();
             eclipse.Width = 30;
             eclipse.Height = 30;
-            eclipse.Fill = Brushes.White; 
+            eclipse.Fill = Brushes.White;
             eclipse.Stroke = Brushes.Blue;
             eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
-            Canvas.SetZIndex(eclipse, 10);
-            Canvas.SetLeft(eclipse, myImageBrush.XCenter);
-            Canvas.SetTop(eclipse, myImageBrush.YCenter);
+            Canvas.SetZIndex(eclipse, 3);
+            Canvas.SetLeft(eclipse, ((myImageBrush.Points[0].X + myImageBrush.Points[1].X) / 2) - 15);
+            Canvas.SetTop(eclipse, ((myImageBrush.Points[0].Y + myImageBrush.Points[2].Y) / 2) - 15);
 
-            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} Number Of Voisin {_graph.GetAdjacentVertices(territoire).Count()} {myImageBrush.XCenter},{myImageBrush.YCenter} : {myImageBrush.X},{myImageBrush.Y}" };
+            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} x: {myImageBrush.X} y: {myImageBrush.Y}" };
             eclipse.MouseEnter += Eclipse_MouseEnter;
             eclipse.MouseLeave += Eclipse_MouseLeave;
             _carteCanvas.Children.Add(eclipse);
