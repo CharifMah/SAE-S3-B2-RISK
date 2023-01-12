@@ -295,8 +295,8 @@ namespace JurassicRisk.ViewsModels
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
-            myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e);
-            myCanvas.MouseLeave += (sender, e) => MyCanvas_MouseLeave(sender, e);
+            myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e, territoire);
+            myCanvas.MouseLeave += (sender, e) => MyCanvas_MouseLeave(sender, e, territoire);
             myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
             ToolTipService.SetInitialShowDelay(myCanvas, 1);
@@ -436,7 +436,7 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
-            EraseLine(territoire);
+
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
             this._carte.SelectedTerritoire = null;
@@ -446,7 +446,7 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas? c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
-            DrawLines(territoire);
+
             shadow.Color = Brushes.Green.Color;
             c.Effect = shadow;
 
@@ -460,7 +460,7 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = (sender as Canvas);
             c.Width -= 35;
@@ -468,7 +468,7 @@ namespace JurassicRisk.ViewsModels
             DropShadowEffect shadow = new DropShadowEffect();
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
-
+            EraseLine(territoire);
             if (zi > 2)
             {
                 zi = 0;
@@ -479,14 +479,14 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = (sender as Canvas);
             Canvas.SetZIndex(c, zi);
             c.Width += 35;
             c.Height += 35;
             zi++;
-
+            DrawLines(territoire);
             SoundStore.Get("PassageMap.mp3").Play();
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
