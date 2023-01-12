@@ -1,6 +1,7 @@
 ﻿using JurassicRisk.Views;
 using Models;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using static JurassicRisk.ViewsModels.CarteViewModel;
 
@@ -13,9 +14,8 @@ namespace JurassicRisk.ViewsModels
         private bool _carteLoaded;
         private double _progression;
         private CarteViewModel? _carteVm;
-
-       
-
+        private double _zoom;
+        private static Point? lastPoint;
         private JoueurViewModel _joueurVm;
         private LobbyViewModel _lobbyVm;
 
@@ -27,6 +27,17 @@ namespace JurassicRisk.ViewsModels
         public double Progress { get => _progression; set => _progression = value; }
         public JoueurViewModel JoueurVm { get => _joueurVm; }
         public LobbyViewModel LobbyVm { get => _lobbyVm; set => _lobbyVm = value; }
+        public double Zoom 
+        { 
+            get => _zoom; 
+
+            set
+            {
+                if (0 < value && value < 5)
+                _zoom = value;
+                NotifyPropertyChanged();
+            } 
+        }
         #endregion
 
         #region Singleton
@@ -48,8 +59,24 @@ namespace JurassicRisk.ViewsModels
             _carteLoaded = false;
             _progression = 0;
             _carteVm = null;
+            _zoom = 1.0;
+            lastPoint = new Point(0,0);
         }
         #endregion
+
+        /// <summary>
+        /// move the camera to point x,y
+        /// </summary>
+        /// <param name="x">axis x</param>
+        /// <param name="y">axis y</param>
+        /// <Author>Charif</Author>
+        public static void MoveCamera(double x, double y)
+        {
+            JeuPage.ScrollViewer.ScrollToVerticalOffset(x);
+            JeuPage.ScrollViewer.ScrollToHorizontalOffset(y);
+
+
+        }
 
         private void DrawEnd()
         {

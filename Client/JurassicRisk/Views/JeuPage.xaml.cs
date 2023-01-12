@@ -39,19 +39,6 @@ namespace JurassicRisk.Views
             DataContext = JurassicRiskViewModel.Get;
         }
 
-
-        /// <summary>
-        /// move the camera to point x,y
-        /// </summary>
-        /// <param name="x">axis x</param>
-        /// <param name="y">axis y</param>
-        /// <Author>Charif</Author>
-        public static void MoveCamera(double x, double y)
-        {
-            JeuPage.ScrollViewer.ScrollToVerticalOffset(y - Application.Current.MainWindow.ActualHeight / 2);
-            JeuPage.ScrollViewer.ScrollToHorizontalOffset(x - Application.Current.MainWindow.ActualWidth / 2);
-        }
-
         #region Events
 
         #region Async
