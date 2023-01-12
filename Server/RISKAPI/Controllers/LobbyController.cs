@@ -38,7 +38,7 @@ namespace RISKAPI.Controllers
                 }
                 else
                 {
-                    reponse = new BadRequestResult();
+                    reponse = new JsonResult("This key Already Exist");
                 }
 
             }
