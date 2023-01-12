@@ -7,6 +7,7 @@ using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -14,11 +15,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Carte = Models.Map.Carte;
+using Color = System.Windows.Media.Color;
 using Continent = Models.Map.Continent;
 using IUnit = Models.Units.IUnit;
 using TerritoireDecorator = Models.Map.TerritoireDecorator;
@@ -308,14 +312,15 @@ namespace JurassicRisk.ViewsModels
         private void DrawLines(TerritoireDecorator territoire)
         {
             IEnumerable<ITerritoireBase> AdjacentT = _graph.GetAdjacentVertices(territoire);
+            Random rand = new Random();
+            Brush brush = new SolidColorBrush(Color.FromRgb((byte)rand.Next(0, 256), (byte)rand.Next(0, 256), (byte)rand.Next(0, 256)));
             foreach (TerritoireDecorator territoire1 in AdjacentT)
             {
                 Line l = new Line();
 
                 l.X1 = territoire.X; l.Y1 = territoire.Y;
                 l.X2 = territoire1.X; l.Y2 = territoire1.Y;
-                l.Fill = Brushes.White;
-                l.Stroke = Brushes.Blue;
+                l.Stroke = brush;
                 l.StrokeThickness = 5;
                 l.IsHitTestVisible = false;
                 Canvas.SetZIndex(l, 8);
