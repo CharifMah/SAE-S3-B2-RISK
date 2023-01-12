@@ -5,8 +5,10 @@ using Models.Map;
 using Models.Son;
 using Stockage;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -61,10 +63,9 @@ namespace JurassicRisk.ViewsModels
                 return _carte;
             }
         }
-
-        public List<ITerritoireBase> Territoires { get => _territoires; set => _territoires = value; }
         #endregion
 
+        #region Constructor
         /// <summary>
         /// Cree la carte et la dessine
         /// </summary>
@@ -76,13 +77,17 @@ namespace JurassicRisk.ViewsModels
             toDoWhenFinished = drawEnd;
             progress = progression;
 
-            //new SaveMap(null);
+            new SaveMap(null);
             InitCarte();
             f = new FabriqueUniteBase();
             _joueur = joueur;
 
         }
+        #endregion
 
+        /// <summary>
+        /// Initialize the map
+        /// </summary>
         private void InitCarte()
         {
             //Charge le fichier Cartee.json
@@ -90,7 +95,10 @@ namespace JurassicRisk.ViewsModels
             _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
 
-            Territoires = new List<ITerritoireBase>();
+            _territoires = new List<ITerritoireBase>();
+            drawing = true;
+            currentPosition = 0;
+            progress(currentPosition);
             int i = 0;
             foreach (Continent continent in _carte.DicoContinents.Values)
             {
@@ -98,186 +106,173 @@ namespace JurassicRisk.ViewsModels
                 {
                     Territoire.ID = i;
                     i++;
-                    Territoires.Add(Territoire);
+                    _territoires.Add(Territoire);
+                    DrawRegion(Territoire);
+                    currentPosition += (100 / continent.DicoTerritoires.Values.Count);
+                    progress(currentPosition);
                 }
             }
 
             InitGraph();
-
-
-
-            StartDrawRegion();
-
-
-        }
-
-        private void InitGraph()
-        {
-            _graph = new AdjacencySetGraph(Territoires);
-
-            currentPosition = 1;
-            progress(currentPosition);
-            #region Territoire 1
-            _graph.AddEdge(Territoires[0], Territoires[1], 1);
-            _graph.AddEdge(Territoires[0], Territoires[2], 1);
-            _graph.AddEdge(Territoires[0], Territoires[32], 1);
-
-            _graph.AddEdge(Territoires[1], Territoires[2], 1);
-            _graph.AddEdge(Territoires[1], Territoires[5], 1);
-
-            _graph.AddEdge(Territoires[2], Territoires[3], 1);
-            _graph.AddEdge(Territoires[2], Territoires[4], 1);
-
-            _graph.AddEdge(Territoires[3], Territoires[4], 1);
-            _graph.AddEdge(Territoires[3], Territoires[5], 1);
-
-            _graph.AddEdge(Territoires[4], Territoires[6], 1);
-            _graph.AddEdge(Territoires[4], Territoires[5], 1);
-
-            _graph.AddEdge(Territoires[5], Territoires[6], 1);
-
-            _graph.AddEdge(Territoires[6], Territoires[18], 1);
-
-            #endregion
-            currentPosition = 33;
-            progress(currentPosition);
-            #region Territoire 2
-
-            _graph.AddEdge(Territoires[7], Territoires[10], 1);
-            _graph.AddEdge(Territoires[7], Territoires[8], 1);
-
-            _graph.AddEdge(Territoires[8], Territoires[10], 1);
-            _graph.AddEdge(Territoires[8], Territoires[9], 1);
-
-            _graph.AddEdge(Territoires[9], Territoires[10], 1);
-            _graph.AddEdge(Territoires[9], Territoires[12], 1);
-
-            _graph.AddEdge(Territoires[10], Territoires[11], 1);
-
-            _graph.AddEdge(Territoires[11], Territoires[13], 1);
-            _graph.AddEdge(Territoires[11], Territoires[14], 1);
-
-            _graph.AddEdge(Territoires[12], Territoires[13], 1);
-
-            #endregion
-            currentPosition = 66;
-            progress(currentPosition);
-            #region Territoire 3
-
-            _graph.AddEdge(Territoires[14], Territoires[15], 1);
-            _graph.AddEdge(Territoires[14], Territoires[17], 1);
-
-            _graph.AddEdge(Territoires[15], Territoires[16], 1);
-            _graph.AddEdge(Territoires[15], Territoires[17], 1);
-
-            _graph.AddEdge(Territoires[16], Territoires[17], 1);
-            _graph.AddEdge(Territoires[16], Territoires[19], 1);
-            _graph.AddEdge(Territoires[16], Territoires[22], 1);
-
-            _graph.AddEdge(Territoires[17], Territoires[18], 1);
-            _graph.AddEdge(Territoires[17], Territoires[19], 1);
-
-            _graph.AddEdge(Territoires[18], Territoires[19], 1);
-            _graph.AddEdge(Territoires[18], Territoires[21], 1);
-
-            _graph.AddEdge(Territoires[19], Territoires[20], 1);
-            _graph.AddEdge(Territoires[19], Territoires[21], 1);
-            _graph.AddEdge(Territoires[19], Territoires[22], 1);
-
-
-            _graph.AddEdge(Territoires[20], Territoires[21], 1);
-            _graph.AddEdge(Territoires[20], Territoires[22], 1);
-            _graph.AddEdge(Territoires[20], Territoires[23], 1);
-
-            #region Region 4
-            _graph.AddEdge(Territoires[22], Territoires[23], 1);
-            _graph.AddEdge(Territoires[22], Territoires[25], 1);
-
-            _graph.AddEdge(Territoires[23], Territoires[24], 1);
-            _graph.AddEdge(Territoires[23], Territoires[25], 1);
-            _graph.AddEdge(Territoires[23], Territoires[28], 1);
-            _graph.AddEdge(Territoires[23], Territoires[29], 1);
-
-            _graph.AddEdge(Territoires[24], Territoires[25], 1);
-            _graph.AddEdge(Territoires[24], Territoires[28], 1);
-            _graph.AddEdge(Territoires[24], Territoires[36], 1);
-
-            _graph.AddEdge(Territoires[25], Territoires[26], 1);
-            _graph.AddEdge(Territoires[25], Territoires[27], 1);
-
-            _graph.AddEdge(Territoires[26], Territoires[27], 1);
-
-            _graph.AddEdge(Territoires[27], Territoires[28], 1);
-
-            _graph.AddEdge(Territoires[28], Territoires[39], 1);
-            #endregion
-
-            #region Region 5
-            _graph.AddEdge(Territoires[29], Territoires[30], 1);
-            _graph.AddEdge(Territoires[29], Territoires[31], 1);
-
-            _graph.AddEdge(Territoires[30], Territoires[31], 1);
-            _graph.AddEdge(Territoires[30], Territoires[33], 1);
-            _graph.AddEdge(Territoires[30], Territoires[34], 1);
-
-            _graph.AddEdge(Territoires[31], Territoires[32], 1);
-            _graph.AddEdge(Territoires[31], Territoires[33], 1);
-
-            _graph.AddEdge(Territoires[32], Territoires[33], 1);
-            _graph.AddEdge(Territoires[32], Territoires[34], 1);
-            _graph.AddEdge(Territoires[32], Territoires[35], 1);
-
-            _graph.AddEdge(Territoires[33], Territoires[34], 1);
-
-            _graph.AddEdge(Territoires[34], Territoires[35], 1);
-            _graph.AddEdge(Territoires[34], Territoires[36], 1);
-            _graph.AddEdge(Territoires[34], Territoires[37], 1);
-
-            _graph.AddEdge(Territoires[35], Territoires[37], 1);
-            _graph.AddEdge(Territoires[35], Territoires[38], 1);
-
-            _graph.AddEdge(Territoires[36], Territoires[37], 1);
-            _graph.AddEdge(Territoires[36], Territoires[39], 1);
-
-            _graph.AddEdge(Territoires[37], Territoires[38], 1);
-            _graph.AddEdge(Territoires[37], Territoires[39], 1);
-
-            _graph.AddEdge(Territoires[38], Territoires[39], 1);
-            _graph.AddEdge(Territoires[38], Territoires[40], 1);
-
-            _graph.AddEdge(Territoires[39], Territoires[40], 1);
-            #endregion
-
-            #endregion
-            currentPosition = 100;
-            progress(currentPosition);
-
-        }
-
-        public void StartDrawRegion()
-        {
-            drawing = true;
-            currentPosition = 0;
-            progress(currentPosition);
-            int count = Territoires.Count;
-            foreach (TerritoireDecorator Territoire in Territoires)
-            {
-                DrawRegion(Territoire);
-                currentPosition += (100 / count);
-                progress(currentPosition);
-            }
 
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
         }
 
         /// <summary>
-        /// Cancel the copy
+        /// Initialize the graph of the map
         /// </summary>
-        public void CancelDrawRegion()
+        private void InitGraph()
         {
-            drawing = false;
+            _graph = new AdjacencySetGraph(_territoires);
+
+            currentPosition = 1;
+            progress(currentPosition);
+            #region Territoire 1
+            _graph.AddEdge(_territoires[0], _territoires[1], 1);
+            _graph.AddEdge(_territoires[0], _territoires[2], 1);
+            _graph.AddEdge(_territoires[0], _territoires[32], 1);
+
+            _graph.AddEdge(_territoires[1], _territoires[2], 1);
+            _graph.AddEdge(_territoires[1], _territoires[5], 1);
+
+            _graph.AddEdge(_territoires[2], _territoires[3], 1);
+            _graph.AddEdge(_territoires[2], _territoires[4], 1);
+            _graph.AddEdge(_territoires[2], _territoires[5], 1);
+
+            _graph.AddEdge(_territoires[3], _territoires[4], 1);
+            _graph.AddEdge(_territoires[3], _territoires[5], 1);
+
+            _graph.AddEdge(_territoires[4], _territoires[6], 1);
+            _graph.AddEdge(_territoires[4], _territoires[5], 1);
+
+            _graph.AddEdge(_territoires[5], _territoires[6], 1);
+
+            _graph.AddEdge(_territoires[6], _territoires[18], 1);
+
+            #endregion
+            currentPosition = 33;
+            progress(currentPosition);
+            #region Territoire 2
+
+            _graph.AddEdge(_territoires[7], _territoires[10], 1);
+            _graph.AddEdge(_territoires[7], _territoires[8], 1);
+
+            _graph.AddEdge(_territoires[8], _territoires[10], 1);
+            _graph.AddEdge(_territoires[8], _territoires[9], 1);
+
+            _graph.AddEdge(_territoires[9], _territoires[10], 1);
+            _graph.AddEdge(_territoires[9], _territoires[12], 1);
+
+            _graph.AddEdge(_territoires[10], _territoires[11], 1);
+            _graph.AddEdge(_territoires[10], _territoires[12], 1);
+
+            _graph.AddEdge(_territoires[11], _territoires[12], 1);
+            _graph.AddEdge(_territoires[11], _territoires[13], 1);
+            _graph.AddEdge(_territoires[11], _territoires[14], 1);
+
+            _graph.AddEdge(_territoires[12], _territoires[13], 1);
+
+            #endregion
+            currentPosition = 66;
+            progress(currentPosition);
+            #region Territoire 3
+
+            _graph.AddEdge(_territoires[14], _territoires[15], 1);
+            _graph.AddEdge(_territoires[14], _territoires[17], 1);
+
+            _graph.AddEdge(_territoires[15], _territoires[16], 1);
+            _graph.AddEdge(_territoires[15], _territoires[17], 1);
+            _graph.AddEdge(_territoires[15], _territoires[26], 1);
+
+            _graph.AddEdge(_territoires[16], _territoires[17], 1);
+            _graph.AddEdge(_territoires[16], _territoires[19], 1);
+            _graph.AddEdge(_territoires[16], _territoires[22], 1);
+
+            _graph.AddEdge(_territoires[17], _territoires[18], 1);
+            _graph.AddEdge(_territoires[17], _territoires[19], 1);
+
+            _graph.AddEdge(_territoires[18], _territoires[19], 1);
+            _graph.AddEdge(_territoires[18], _territoires[21], 1);
+
+            _graph.AddEdge(_territoires[19], _territoires[20], 1);
+            _graph.AddEdge(_territoires[19], _territoires[21], 1);
+            _graph.AddEdge(_territoires[19], _territoires[22], 1);
+
+
+            _graph.AddEdge(_territoires[20], _territoires[21], 1);
+            _graph.AddEdge(_territoires[20], _territoires[22], 1);
+            _graph.AddEdge(_territoires[20], _territoires[23], 1);
+
+            #region Region 4
+            _graph.AddEdge(_territoires[22], _territoires[23], 1);
+            _graph.AddEdge(_territoires[22], _territoires[25], 1);
+
+            _graph.AddEdge(_territoires[23], _territoires[24], 1);
+            _graph.AddEdge(_territoires[23], _territoires[25], 1);
+            _graph.AddEdge(_territoires[23], _territoires[28], 1);
+            _graph.AddEdge(_territoires[23], _territoires[29], 1);
+
+            _graph.AddEdge(_territoires[24], _territoires[25], 1);
+            _graph.AddEdge(_territoires[24], _territoires[28], 1);
+            _graph.AddEdge(_territoires[24], _territoires[36], 1);
+
+            _graph.AddEdge(_territoires[25], _territoires[26], 1);
+            _graph.AddEdge(_territoires[25], _territoires[27], 1);
+            _graph.AddEdge(_territoires[25], _territoires[28], 1);
+
+            _graph.AddEdge(_territoires[26], _territoires[27], 1);
+
+            _graph.AddEdge(_territoires[27], _territoires[28], 1);
+
+            _graph.AddEdge(_territoires[28], _territoires[39], 1);
+            #endregion
+
+            #region Region 5
+            _graph.AddEdge(_territoires[29], _territoires[30], 1);
+            _graph.AddEdge(_territoires[29], _territoires[31], 1);
+
+            _graph.AddEdge(_territoires[30], _territoires[31], 1);
+            _graph.AddEdge(_territoires[30], _territoires[33], 1);
+            _graph.AddEdge(_territoires[30], _territoires[34], 1);
+
+            _graph.AddEdge(_territoires[31], _territoires[32], 1);
+            _graph.AddEdge(_territoires[31], _territoires[33], 1);
+
+            _graph.AddEdge(_territoires[32], _territoires[33], 1);
+            _graph.AddEdge(_territoires[32], _territoires[34], 1);
+            _graph.AddEdge(_territoires[32], _territoires[35], 1);
+
+            _graph.AddEdge(_territoires[33], _territoires[34], 1);
+
+            _graph.AddEdge(_territoires[34], _territoires[35], 1);
+            _graph.AddEdge(_territoires[34], _territoires[36], 1);
+            _graph.AddEdge(_territoires[34], _territoires[37], 1);
+
+            _graph.AddEdge(_territoires[35], _territoires[37], 1);
+            _graph.AddEdge(_territoires[35], _territoires[38], 1);
+
+            _graph.AddEdge(_territoires[36], _territoires[37], 1);
+            _graph.AddEdge(_territoires[36], _territoires[39], 1);
+
+            _graph.AddEdge(_territoires[37], _territoires[38], 1);
+            _graph.AddEdge(_territoires[37], _territoires[39], 1);
+
+            _graph.AddEdge(_territoires[38], _territoires[39], 1);
+            _graph.AddEdge(_territoires[38], _territoires[40], 1);
+
+            _graph.AddEdge(_territoires[39], _territoires[40], 1);
+            #endregion
+
+            #endregion
+            currentPosition = 100;
+            progress(currentPosition);
+
+
+            DrawGraph(_territoires);
         }
+
+        #region Drawing
 
         /// <summary>
         /// Dessine les regions et les ajoute a la carte
@@ -293,9 +288,8 @@ namespace JurassicRisk.ViewsModels
             //TerritoireDecorator
             Canvas myCanvas = new Canvas();
             MyImage myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
-
-            DrawNode(myImageBrush, territoire);
-
+            territoire.X = (int)((myImageBrush.Points[0].X + myImageBrush.Points[1].X) / 2);
+            territoire.Y = (int)((myImageBrush.Points[0].Y + myImageBrush.Points[2].Y) / 2);
             myCanvas.Children.Add(myImageBrush);
 
             //Add All ElementUI to Carte Canvas
@@ -310,12 +304,19 @@ namespace JurassicRisk.ViewsModels
             _carteCanvas.Children.Add(myCanvas);
         }
 
+        private void DrawGraph(List<ITerritoireBase> territoireDecorators)
+        {
+            foreach (TerritoireDecorator territoire in territoireDecorators)
+            {
+                DrawNode(territoire);
+            }
+        }
         /// <summary>
         /// Draw node (Ellipse on each territoire)
         /// </summary>
         /// <param name="CarteCanvas">carte canvas</param>
         /// <param name="territoire">territoire</param>
-        private void DrawNode(MyImage myImageBrush, ITerritoireBase territoire)
+        private void DrawNode(TerritoireDecorator territoire)
         {
             //Node Eclipse
             Ellipse eclipse = new Ellipse();
@@ -326,14 +327,56 @@ namespace JurassicRisk.ViewsModels
             eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
             Canvas.SetZIndex(eclipse, 3);
-            Canvas.SetLeft(eclipse, ((myImageBrush.Points[0].X + myImageBrush.Points[1].X) / 2) - 15);
-            Canvas.SetTop(eclipse, ((myImageBrush.Points[0].Y + myImageBrush.Points[2].Y) / 2) - 15);
 
-            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} x: {myImageBrush.X} y: {myImageBrush.Y}" };
+            Canvas.SetLeft(eclipse, territoire.X - 15);
+            Canvas.SetTop(eclipse, territoire.Y - 15);
+
+            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} x: {territoire.X} y: {territoire.Y}" };
             eclipse.MouseEnter += Eclipse_MouseEnter;
             eclipse.MouseLeave += Eclipse_MouseLeave;
             _carteCanvas.Children.Add(eclipse);
         }
+
+        /// <summary>
+        /// DrawLines Graph need to be initialized
+        /// </summary>
+        /// <param name="territoire"></param>
+        private void DrawLines(TerritoireDecorator territoire)
+        {
+            IEnumerable<ITerritoireBase> AdjacentT = _graph.GetAdjacentVertices(territoire);
+            foreach (TerritoireDecorator territoire1 in AdjacentT)
+            {
+                Line l = new Line();
+                
+                l.X1 = territoire.X; l.Y1 = territoire.Y;
+                l.X2 = territoire1.X; l.Y2 = territoire1.Y;
+                l.Fill = Brushes.White;
+                l.Stroke = Brushes.Blue;
+                l.StrokeThickness = 5;
+                l.IsHitTestVisible = true;
+                Canvas.SetZIndex(l, 8);
+                territoire.Lines.Add(l);
+                _carteCanvas.Children.Add(l);
+            }
+         
+        }
+
+        private void EraseLine(TerritoireDecorator territoire)
+        {
+            foreach (Line l in territoire.Lines)
+            {
+                _carteCanvas.Children.Remove(l);
+            }
+        }
+
+        /// <summary>
+        /// Cancel the drawing
+        /// </summary>
+        public void CancelDrawRegion()
+        {
+            drawing = false;
+        }
+        #endregion
 
         #region Request
 
@@ -393,7 +436,7 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
-
+            EraseLine(territoire);
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
             this._carte.SelectedTerritoire = null;
@@ -403,7 +446,7 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas? c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
-
+            DrawLines(territoire);
             shadow.Color = Brushes.Green.Color;
             c.Effect = shadow;
 
@@ -443,6 +486,7 @@ namespace JurassicRisk.ViewsModels
             c.Width += 35;
             c.Height += 35;
             zi++;
+
             SoundStore.Get("PassageMap.mp3").Play();
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
