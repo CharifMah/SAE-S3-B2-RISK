@@ -5,15 +5,15 @@ using Models.Map;
 using Models.Son;
 using Stockage;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -267,9 +267,6 @@ namespace JurassicRisk.ViewsModels
             #endregion
             currentPosition = 100;
             progress(currentPosition);
-
-
-            DrawGraph(_territoires);
         }
 
         #region Drawing
@@ -295,46 +292,13 @@ namespace JurassicRisk.ViewsModels
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
-            myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e, territoire);
-            myCanvas.MouseLeave += (sender, e) => MyCanvas_MouseLeave(sender, e, territoire);
+            myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e);
+            myCanvas.MouseLeave += (sender, e) => MyCanvas_MouseLeave(sender, e);
             myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
             ToolTipService.SetInitialShowDelay(myCanvas, 1);
 
             _carteCanvas.Children.Add(myCanvas);
-        }
-
-        private void DrawGraph(List<ITerritoireBase> territoireDecorators)
-        {
-            foreach (TerritoireDecorator territoire in territoireDecorators)
-            {
-                DrawNode(territoire);
-            }
-        }
-        /// <summary>
-        /// Draw node (Ellipse on each territoire)
-        /// </summary>
-        /// <param name="CarteCanvas">carte canvas</param>
-        /// <param name="territoire">territoire</param>
-        private void DrawNode(TerritoireDecorator territoire)
-        {
-            //Node Eclipse
-            Ellipse eclipse = new Ellipse();
-            eclipse.Width = 30;
-            eclipse.Height = 30;
-            eclipse.Fill = Brushes.White;
-            eclipse.Stroke = Brushes.Blue;
-            eclipse.StrokeThickness = 2;
-            eclipse.IsHitTestVisible = true;
-            Canvas.SetZIndex(eclipse, 3);
-
-            Canvas.SetLeft(eclipse, territoire.X - 15);
-            Canvas.SetTop(eclipse, territoire.Y - 15);
-
-            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} x: {territoire.X} y: {territoire.Y}" };
-            eclipse.MouseEnter += Eclipse_MouseEnter;
-            eclipse.MouseLeave += Eclipse_MouseLeave;
-            _carteCanvas.Children.Add(eclipse);
         }
 
         /// <summary>
@@ -347,18 +311,19 @@ namespace JurassicRisk.ViewsModels
             foreach (TerritoireDecorator territoire1 in AdjacentT)
             {
                 Line l = new Line();
-                
+
                 l.X1 = territoire.X; l.Y1 = territoire.Y;
                 l.X2 = territoire1.X; l.Y2 = territoire1.Y;
                 l.Fill = Brushes.White;
                 l.Stroke = Brushes.Blue;
                 l.StrokeThickness = 5;
-                l.IsHitTestVisible = true;
+                l.IsHitTestVisible = false;
                 Canvas.SetZIndex(l, 8);
                 territoire.Lines.Add(l);
+                
                 _carteCanvas.Children.Add(l);
             }
-         
+
         }
 
         private void EraseLine(TerritoireDecorator territoire)
@@ -411,22 +376,6 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Event
-
-        private void Eclipse_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
-            el.StaysOpen = false;
-            el.IsOpen = false;
-        }
-
-        private void Eclipse_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            ToolTip el = ((ToolTip)(sender as Ellipse).ToolTip);
-            el.StaysOpen = true;
-            el.IsOpen = true;
-        }
-
-
         private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
         {
             canvas.ToolTip = $"Units: {territoire.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
@@ -436,6 +385,11 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                DrawLines(territoire);
+            }
+
 
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
@@ -449,6 +403,10 @@ namespace JurassicRisk.ViewsModels
 
             shadow.Color = Brushes.Green.Color;
             c.Effect = shadow;
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                EraseLine(territoire);
+            }
 
 
             this._carte.SelectedTerritoire = territoire;
@@ -460,7 +418,7 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e, TerritoireDecorator territoire)
+        private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Canvas c = (sender as Canvas);
             c.Width -= 35;
@@ -468,7 +426,7 @@ namespace JurassicRisk.ViewsModels
             DropShadowEffect shadow = new DropShadowEffect();
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
-            EraseLine(territoire);
+
             if (zi > 2)
             {
                 zi = 0;
@@ -479,14 +437,14 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e, TerritoireDecorator territoire)
+        private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Canvas c = (sender as Canvas);
             Canvas.SetZIndex(c, zi);
             c.Width += 35;
             c.Height += 35;
             zi++;
-            DrawLines(territoire);
+
             SoundStore.Get("PassageMap.mp3").Play();
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
