@@ -7,6 +7,7 @@ using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -83,6 +84,9 @@ namespace JurassicRisk.ViewsModels
 
         }
 
+        /// <summary>
+        /// Initialize the map
+        /// </summary>
         private void InitCarte()
         {
             //Charge le fichier Cartee.json
@@ -104,13 +108,12 @@ namespace JurassicRisk.ViewsModels
 
             InitGraph();
 
-
-
             StartDrawRegion();
-
-
         }
 
+        /// <summary>
+        /// Initialize the graph of the map
+        /// </summary>
         private void InitGraph()
         {
             _graph = new AdjacencySetGraph(Territoires);
@@ -254,6 +257,9 @@ namespace JurassicRisk.ViewsModels
 
         }
 
+        /// <summary>
+        /// Start drawing regions
+        /// </summary>
         public void StartDrawRegion()
         {
             drawing = true;
@@ -272,12 +278,14 @@ namespace JurassicRisk.ViewsModels
         }
 
         /// <summary>
-        /// Cancel the copy
+        /// Cancel the drawing
         /// </summary>
         public void CancelDrawRegion()
         {
             drawing = false;
         }
+
+        #region Drawing
 
         /// <summary>
         /// Dessine les regions et les ajoute a la carte
@@ -294,7 +302,7 @@ namespace JurassicRisk.ViewsModels
             Canvas myCanvas = new Canvas();
             MyImage myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
 
-            DrawNode(myImageBrush, territoire);
+            DrawNode(myImageBrush.Points, territoire);
 
             myCanvas.Children.Add(myImageBrush);
 
@@ -315,7 +323,7 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="CarteCanvas">carte canvas</param>
         /// <param name="territoire">territoire</param>
-        private void DrawNode(MyImage myImageBrush, ITerritoireBase territoire)
+        private void DrawNode(List<System.Windows.Point> points, ITerritoireBase territoire)
         {
             //Node Eclipse
             Ellipse eclipse = new Ellipse();
@@ -326,14 +334,15 @@ namespace JurassicRisk.ViewsModels
             eclipse.StrokeThickness = 2;
             eclipse.IsHitTestVisible = true;
             Canvas.SetZIndex(eclipse, 3);
-            Canvas.SetLeft(eclipse, ((myImageBrush.Points[0].X + myImageBrush.Points[1].X) / 2) - 15);
-            Canvas.SetTop(eclipse, ((myImageBrush.Points[0].Y + myImageBrush.Points[2].Y) / 2) - 15);
+            Canvas.SetLeft(eclipse, ((points[0].X + points[1].X) / 2) - 15);
+            Canvas.SetTop(eclipse, ((points[0].Y + points[2].Y) / 2) - 15);
 
-            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} x: {myImageBrush.X} y: {myImageBrush.Y}" };
+            eclipse.ToolTip = new ToolTip() { Content = $"Name : {territoire.ID} x: {points[0].X} y: {points[0].Y}" };
             eclipse.MouseEnter += Eclipse_MouseEnter;
             eclipse.MouseLeave += Eclipse_MouseLeave;
             _carteCanvas.Children.Add(eclipse);
         }
+        #endregion
 
         #region Request
 
