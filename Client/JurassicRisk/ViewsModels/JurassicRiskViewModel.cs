@@ -23,15 +23,10 @@ namespace JurassicRisk.ViewsModels
 
         #region Property
         public CarteViewModel? CarteVm { get => _carteVm; }
-
         public bool CarteLoaded { get => _carteLoaded; set => _carteLoaded = value; }
         public double Progress { get => _progression; set => _progression = value; }
         public JoueurViewModel JoueurVm { get => _joueurVm; }
         public LobbyViewModel LobbyVm { get => _lobbyVm; set => _lobbyVm = value; }
-
-
-
-
         #endregion
 
         #region Singleton
@@ -46,19 +41,14 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
-
         private JurassicRiskViewModel()
         {
             _joueurVm = new JoueurViewModel();
-
             _lobbyVm = new LobbyViewModel();
             _carteLoaded = false;
             _progression = 0;
             _carteVm = null;
         }
-
-
-
         #endregion
 
         private void DrawEnd()
