@@ -1,3 +1,4 @@
+using JurassicRisk.Views;
 using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Graph;
@@ -7,7 +8,6 @@ using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -48,6 +48,8 @@ namespace JurassicRisk.ViewsModels
         private Progression progress;
         private long currentPosition;
         private bool drawing;
+
+        private Point previousPositionZoom;
         #endregion
 
         #region Property
@@ -57,6 +59,11 @@ namespace JurassicRisk.ViewsModels
             get
             {
                 return _carteCanvas;
+            }
+            set 
+            {
+                _carteCanvas = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -85,6 +92,7 @@ namespace JurassicRisk.ViewsModels
             InitCarte();
             f = new FabriqueUniteBase();
             _joueur = joueur;
+            previousPositionZoom = new Point();
 
         }
         #endregion
@@ -291,8 +299,10 @@ namespace JurassicRisk.ViewsModels
             MyImage myImageBrush = new MyImage(new BitmapImage(new Uri(territoire.UriSource)));
             territoire.X = (int)((myImageBrush.Points[0].X + myImageBrush.Points[1].X) / 2);
             territoire.Y = (int)((myImageBrush.Points[0].Y + myImageBrush.Points[2].Y) / 2);
+            territoire.Points = myImageBrush.Points;
+            territoire.Width = (int)myImageBrush.Size.Width;
+            territoire.Height = (int)myImageBrush.Size.Height;
             myCanvas.Children.Add(myImageBrush);
-
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
             myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
@@ -325,7 +335,7 @@ namespace JurassicRisk.ViewsModels
                 l.IsHitTestVisible = false;
                 Canvas.SetZIndex(l, 4);
                 territoire.Lines.Add(l);
-                
+
                 _carteCanvas.Children.Add(l);
             }
 
@@ -390,24 +400,25 @@ namespace JurassicRisk.ViewsModels
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
+
             if (e.ChangedButton == MouseButton.Right)
             {
-                //JurassicRiskViewModel.Get.Zoom -= 1;
                 this._carte.SelectedTerritoire = territoire;
                 DrawLines(territoire);
+                JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y);
             }
 
             if (e.ChangedButton == MouseButton.Left)
             {
                 EraseLine(territoire);
-                JurassicRiskViewModel.MoveCamera(territoire.X, territoire.Y);
-                //JurassicRiskViewModel.Get.Zoom += 1;
+                JeuPage.GetInstance().ZoomOut(territoire.X, territoire.Y);
             }
-
 
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
             this._carte.SelectedTerritoire = null;
+            NotifyPropertyChanged("Carte");
+            NotifyPropertyChanged("CarteCanvas");
         }
 
         private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)

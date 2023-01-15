@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Windows;
 using System.Windows.Shapes;
 
 namespace Models.Map
@@ -16,6 +17,7 @@ namespace Models.Map
         private int _height;
         protected string _uriSource;
         private List<Line> _lines;
+        private List<Point> _points;
         #endregion
 
         #region Property
@@ -42,6 +44,8 @@ namespace Models.Map
         public int Height { get => _height; set => _height = value; }
         [DataMember]
         public List<Line> Lines { get => _lines; set => _lines = value; }
+        [DataMember]
+        public List<Point> Points { get => _points; set => _points = value; }
 
 
         #endregion
@@ -56,6 +60,7 @@ namespace Models.Map
             this.Width = Width;
             this.Height = Height;
             _lines = new List<Line>();
+            Points = new List<Point>();
             if (TerritoireBase.Team != this.Team)
             {
                 TerritoireBase.Team = this.Team;
@@ -69,6 +74,7 @@ namespace Models.Map
             this._id = TerritoireBase.ID;
             this._uriSource = UriSource;
             _lines = new List<Line>();
+            Points = new List<Point>();
             if (TerritoireBase.Team != this.Team)
             {
                 TerritoireBase.Team = this.Team;

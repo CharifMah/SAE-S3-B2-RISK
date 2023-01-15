@@ -78,7 +78,7 @@
             <Button Content="{x:Static Ressources:Strings.Ready}" Style="{StaticResource CustomAnimationButton}" Width="400" Click="ReadyButton_Click"/>
             <Button Content="{x:Static Ressources:Strings.Play}" Style="{StaticResource CustomAnimationButton}" Width="400" Click="PlayButton_Click"/>
             <TextBlock x:Name="Error" FontSize="18" HorizontalAlignment="Center" Text="Error" Visibility="Hidden" Background="AntiqueWhite" Style="{StaticResource FruitDays}"></TextBlock>
-            <ProgressBar x:Name="progression" Grid.Column="1" Grid.Row="3" Margin="10" Value="{Binding Progress}" Maximum="100" Height="30"/>
+            <!--<ProgressBar x:Name="progression" Grid.Column="1" Grid.Row="3" Margin="10" Value="{Binding Progress}" Maximum="100" Height="30"/>-->
             
         </StackPanel >
 

@@ -64,19 +64,6 @@ namespace JurassicRisk.ViewsModels
         }
         #endregion
 
-        /// <summary>
-        /// move the camera to point x,y
-        /// </summary>
-        /// <param name="x">axis x</param>
-        /// <param name="y">axis y</param>
-        /// <Author>Charif</Author>
-        public static void MoveCamera(double x, double y)
-        {
-            JeuPage.ScrollViewer.ScrollToVerticalOffset(x);
-            JeuPage.ScrollViewer.ScrollToHorizontalOffset(y);
-
-
-        }
 
         private void DrawEnd()
         {

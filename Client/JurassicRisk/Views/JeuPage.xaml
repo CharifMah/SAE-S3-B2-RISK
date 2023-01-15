@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d"
       d:DesignHeight="1080" d:DesignWidth="1920"
       x:Name="_JeuPage"
@@ -24,18 +24,17 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif" Stretch="Fill" Grid.RowSpan="3" Grid.ColumnSpan="4"/>
+        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif"  Stretch="Fill" Grid.RowSpan="3" Grid.ColumnSpan="4"/>
+        
+        <Viewbox  Stretch="Fill" x:Name="ViewboxCanvas" Grid.ColumnSpan="4" Grid.RowSpan="3">
+            <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="0,0,0,30">
+                <Canvas.RenderTransform>
+                    <MatrixTransform x:Name="transform"/>
+                </Canvas.RenderTransform>
+                <ContentPresenter Panel.ZIndex="0" Content="{Binding CarteVm.CarteCanvas}" />
+            </Canvas>
+        </Viewbox>
 
-        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" x:Name="ScrollViewerView" Grid.RowSpan="3" Grid.ColumnSpan="4" >
-            <Viewbox  Stretch="Fill" x:Name="ViewboxCanvas"  Height="1080" Width="1920">
-                <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="0,0,0,30">
-                    <ContentPresenter Panel.ZIndex="0" Content="{Binding CarteVm.CarteCanvas}" />
-                </Canvas>
-                <Viewbox.LayoutTransform>
-                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"/>
-                </Viewbox.LayoutTransform>
-            </Viewbox>
-        </ScrollViewer>
 
         <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" ItemsSource="{Binding JoueurVm.Units}">
             <ListBox.ItemTemplate>
