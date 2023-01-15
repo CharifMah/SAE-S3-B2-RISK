@@ -125,12 +125,30 @@ namespace JurassicRisk.Views
         /// </summary>
         /// <param name="x">x</param>
         /// <param name="y">y</param>
-        public void ZoomIn(int x, int y)
+        public void ZoomIn(int x, int y, double scale = 1.1)
         {
-            double scale = 1.1;
-            var matrix = transform.Matrix;
-            matrix.ScaleAt(scale, scale, x, y);
-            transform.Matrix = matrix;
+            // set the center point for the zoom
+            transform.CenterX = x;
+            transform.CenterY = y;
+
+            if (transform.ScaleX != scale)
+            {
+                // Calculate the new offset, so that the point (x, y) is at the center of the viewport after the zoom
+                double newHorizontalOffset = x - ScrollViewerView.HorizontalOffset;
+                double newVerticalOffset = y - ScrollViewerView.VerticalOffset;
+
+                // Set the new offset
+                ScrollViewerView.ScrollToHorizontalOffset(newHorizontalOffset);
+                ScrollViewerView.ScrollToVerticalOffset(newVerticalOffset);
+            }
+
+
+            // set the new scale
+            transform.ScaleX = scale;
+            transform.ScaleY = scale;
+
+
+  
 
         }
 
@@ -139,12 +157,22 @@ namespace JurassicRisk.Views
         /// </summary>
         /// <param name="x">x</param>
         /// <param name="y">y</param>
-        public void ZoomOut(int x, int y)
+        public void ZoomOut(int x, int y, double scale = 1.1)
         {
-            double scale = 1 / 1.1;
-            var matrix = transform.Matrix;
-            matrix.ScaleAt(scale, scale, x, y);
-            transform.Matrix = matrix;
-        }      
+            double sc = 1 / scale;
+            transform.CenterX = x;
+            transform.CenterY = y;
+
+            transform.ScaleX = sc;
+            transform.ScaleY = sc;
+        }
+
+        public void ResetZoom()
+        {
+            transform.CenterX = 0.5;
+            transform.CenterY = 0.5;
+            transform.ScaleX = 1;
+            transform.ScaleY = 1;
+        }
     }
 }

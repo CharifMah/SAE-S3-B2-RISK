@@ -405,13 +405,18 @@ namespace JurassicRisk.ViewsModels
             {
                 this._carte.SelectedTerritoire = territoire;
                 DrawLines(territoire);
-                JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y);
+                JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y,2);
             }
 
             if (e.ChangedButton == MouseButton.Left)
             {
                 EraseLine(territoire);
-                JeuPage.GetInstance().ZoomOut(territoire.X, territoire.Y);
+                JeuPage.GetInstance().ZoomOut(territoire.X, territoire.Y,1);
+            }
+
+            if (e.ChangedButton == MouseButton.Middle)
+            {
+                JeuPage.GetInstance().ResetZoom();
             }
 
             shadow.Color = Brushes.Black.Color;
