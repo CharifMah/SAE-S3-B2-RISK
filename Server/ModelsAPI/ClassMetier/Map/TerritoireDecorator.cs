@@ -1,4 +1,6 @@
-﻿namespace ModelsAPI.ClassMetier.Map
+﻿using System.Drawing;
+
+namespace ModelsAPI.ClassMetier.Map
 {
     public class TerritoireDecorator : TerritoireBase
     {

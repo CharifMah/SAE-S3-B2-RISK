@@ -57,10 +57,10 @@ namespace Models.Map
             this._y = Y;
             this._id = TerritoireBase.ID;
             this._uriSource = UriSource;
-            this.Width = Width;
-            this.Height = Height;
+            this._width = Width;
+            this._height = Height;
             _lines = new List<Line>();
-            Points = new List<Point>();
+            _points = new List<Point>();
             if (TerritoireBase.Team != this.Team)
             {
                 TerritoireBase.Team = this.Team;
@@ -74,7 +74,7 @@ namespace Models.Map
             this._id = TerritoireBase.ID;
             this._uriSource = UriSource;
             _lines = new List<Line>();
-            Points = new List<Point>();
+            _points = new List<Point>();
             if (TerritoireBase.Team != this.Team)
             {
                 TerritoireBase.Team = this.Team;
@@ -83,7 +83,8 @@ namespace Models.Map
 
         public TerritoireDecorator()
         {
-
+            _lines = new List<Line>();
+            _points = new List<Point>();
         }
     }
 }

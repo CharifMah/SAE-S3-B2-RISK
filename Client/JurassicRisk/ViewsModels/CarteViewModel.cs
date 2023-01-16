@@ -94,8 +94,9 @@ namespace JurassicRisk.ViewsModels
             toDoWhenFinished = drawEnd;
             progress = progression;
 
-            new SaveMap(null);
+            new SaveMap(_carte);
             InitCarte();
+
             f = new FabriqueUniteBase();
             _joueur = joueur;
             previousPositionZoom = new Point();

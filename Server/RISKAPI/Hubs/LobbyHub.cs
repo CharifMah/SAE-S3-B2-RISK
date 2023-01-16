@@ -187,18 +187,16 @@ namespace RISKAPI.Hubs
         public async Task StartPartie(string partieName, string joueurName, string carteName)
         {
             string key = $"Lobbys:{partieName}";
-            string keyCarte = $"{carteName}";
 
 
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
                 RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
-                RedisResult resultCarte = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(keyCarte);
 
                 try
                 {
                     Lobby? lobby = JsonConvert.DeserializeObject<Lobby?>(result.ToString());
-                    Carte carte = JsonConvert.DeserializeObject<Carte?>(resultCarte.ToString());
+                    Carte carte = CreateCarte1();
 
                     if (lobby.Owner == joueurName)
                     {
@@ -220,6 +218,34 @@ namespace RISKAPI.Hubs
         }
 
         #region Private
+
+        private Carte CreateCarte1()
+        {
+            Dictionary<string, ITerritoireBase> territoires = new Dictionary<string, ITerritoireBase>();
+            for (int i = 0; i < 41; i++)
+            {
+                territoires.Add(i.ToString(), new TerritoireBase(i,null));
+            }
+            List<IContinent> _continents = new List<IContinent>
+            {
+                new Continent(territoires.Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(7).Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(14).Take(8).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(22).Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(29).Take(5).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(34).Take(7).ToDictionary(x => x.Key, y => y.Value))
+            };
+            Dictionary<string, IContinent> dic = new Dictionary<string, IContinent>();
+            for (int i = 0; i < _continents.Count; i++)
+            {
+                dic.Add(i.ToString(), _continents[i]);
+            }
+
+
+            return new Carte(dic, null);
+        }
+
+
         private async Task<Lobby> GetLobby(string lobbyName)
         {
             string key = $"Lobbys:{lobbyName}";
