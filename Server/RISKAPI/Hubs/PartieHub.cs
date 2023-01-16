@@ -5,6 +5,7 @@ using Redis.OM;
 using RISKAPI.Services;
 using ModelsAPI.ClassMetier.Player;
 using Microsoft.AspNet.SignalR.Hubs;
+using ModelsAPI.ClassMetier.Units;
 
 namespace RISKAPI.Hubs
 {
@@ -35,7 +36,7 @@ namespace RISKAPI.Hubs
             {
                 for (int i = 0; i < lobby.Joueurs.Count; i++)
                 {
-                    if (lobby.Joueurs[i].Profil.Pseudo == lobbyName)
+                    if (lobby.Joueurs[i].Profil.Pseudo == joueurName)
                     {
                         joueur = lobby.Joueurs[i];
                         joueurSuivant = lobby.Joueurs[i + 1 % (lobby.Joueurs.Count + 1)];
@@ -50,6 +51,11 @@ namespace RISKAPI.Hubs
                 }
                 await Clients.Client(joueur.Profil.ConnectionId).SendAsync("EndTurn");
             }
+        }
+
+        public async Task Action(List<IUnit> unitlist)
+        {
+
         }
     }
 }

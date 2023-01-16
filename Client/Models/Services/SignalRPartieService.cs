@@ -22,9 +22,6 @@ namespace Models.Services
             _connection = connection;
             _connection.On<string>("yourTurn", (turnType) => YourTurn?.Invoke(turnType));
             _connection.On("endTurn", () => EndTurn?.Invoke());
-
-
-
         }
 
         public async Task SendEndTurn(string lobbyName, string joueurName)

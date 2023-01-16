@@ -102,6 +102,7 @@ namespace JurassicRisk.ViewsModels
                 this._units.Remove(_selectedUnit);
                 if (_units.Count > 0)
                     _selectedUnit = _units[0];
+
             }
             else
             {

@@ -1,20 +1,21 @@
 ﻿using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
+using ModelsAPI.ClassMetier.Units;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
     public class Deploiment : Etat
     {
-        public void Action(Carte carte, Joueur joueur)
+        public void Action(Carte carte, Joueur joueur, List<IUnit> unitList)
         {
-            joueur.PlaceUnits(joueur.Units[0], carte.SelectedTerritoire);
+            joueur.PlaceUnits(unitList, carte.SelectedTerritoire);
         }
 
 
 
         public Etat TransitionTo()
         {
-            return new Deploiment();
+            return new Attaque();
         }
 
         public override string? ToString()

@@ -184,9 +184,9 @@ namespace RISKAPI.Hubs
             }
         }
 
-        public async Task StartPartie(string lobbyName, string joueurName, string carteName)
+        public async Task StartPartie(string partieName, string joueurName, string carteName)
         {
-            string key = $"Lobbys:{lobbyName}";
+            string key = $"Lobbys:{partieName}";
             string keyCarte = $"{carteName}";
 
 

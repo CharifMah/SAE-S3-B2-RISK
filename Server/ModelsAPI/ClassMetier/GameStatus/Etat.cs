@@ -1,5 +1,6 @@
 ﻿using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
+using ModelsAPI.ClassMetier.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace ModelsAPI.ClassMetier.GameStatus
     {
         public Etat TransitionTo();
 
-        public void Action(Carte carte, Joueur joueur);
+        public void Action(Carte carte, Joueur joueur, List<IUnit> unitList);
     }
 }

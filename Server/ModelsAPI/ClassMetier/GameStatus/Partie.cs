@@ -1,5 +1,6 @@
 ﻿using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
+using ModelsAPI.ClassMetier.Units;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -43,7 +44,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
             this._carte = carte;
             this._joueurs = joueurs;
             this._id = id;
-            this.etat = new Deploiment();
+            this.etat = null;
             _playerIndex = -1;
         }
 
@@ -57,9 +58,9 @@ namespace ModelsAPI.ClassMetier.GameStatus
             return _playerIndex;
         }
 
-        public void Action()
+        public void Action(List<IUnit> unitList)
         {
-            etat.Action(this._carte, this._joueurs[_playerIndex]);
+            etat.Action(this._carte, this._joueurs[_playerIndex],unitList);
         }
     }
 }
