@@ -7,7 +7,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
     public class Placement : Etat
     {
 
-        public void Action(Carte carte, Joueur joueur, List<IUnit> unitList)
+        public void Action(Carte carte, Joueur joueur, List<int> unitList)
         {
             throw new NotImplementedException();
         }

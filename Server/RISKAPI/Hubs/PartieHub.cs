@@ -6,6 +6,7 @@ using RISKAPI.Services;
 using ModelsAPI.ClassMetier.Player;
 using Microsoft.AspNet.SignalR.Hubs;
 using ModelsAPI.ClassMetier.Units;
+using ModelsAPI.ClassMetier.GameStatus;
 
 namespace RISKAPI.Hubs
 {
@@ -38,9 +39,10 @@ namespace RISKAPI.Hubs
             }
         }
 
-        public async Task Action(List<IUnit> unitlist)
+        public async Task Action(string lobbyName, List<int> unitlist)
         {
-
-        }
+            Partie p = JurasicRiskGameServer.Get.Lobbys.First(l => l.Id == lobbyName).Partie;
+            p.Action(unitlist);
+        }      
     }
 }

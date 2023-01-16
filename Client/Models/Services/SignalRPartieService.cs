@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Models.GameStatus;
 using Models.Player;
+using Models.Units;
 using Newtonsoft.Json;
 
 namespace Models.Services
@@ -27,6 +28,11 @@ namespace Models.Services
         public async Task SendEndTurn(string lobbyName, string joueurName)
         {
             await _connection.SendAsync("EndTurn", lobbyName, joueurName);
+        }
+
+        public async Task Action(string lobbyName, List<int> units)
+        {
+            await _connection.SendAsync("Action", lobbyName, units);
         }
     }
 }

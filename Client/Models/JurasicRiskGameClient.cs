@@ -87,13 +87,6 @@ namespace Models
             _lobby = null;
         }
 
-        private void StartPartie()
-        {
-
-        }
-
-        public void StopPartie() { }
-
         public async Task ConnectLobby()
         {
             await _connectionLobby.StartAsync().ContinueWith(task =>

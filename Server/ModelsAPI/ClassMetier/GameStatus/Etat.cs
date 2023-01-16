@@ -13,6 +13,6 @@ namespace ModelsAPI.ClassMetier.GameStatus
     {
         public Etat TransitionTo();
 
-        public void Action(Carte carte, Joueur joueur, List<IUnit> unitList);
+        public void Action(Carte carte, Joueur joueur, List<int> unitList);
     }
 }

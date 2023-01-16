@@ -59,7 +59,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
             return _playerIndex;
         }
 
-        public void Action(List<IUnit> unitList)
+        public void Action(List<int> unitList)
         {
             etat.Action(this._carte, this._joueurs[_playerIndex],unitList);
         }

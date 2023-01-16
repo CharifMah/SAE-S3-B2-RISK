@@ -6,12 +6,11 @@ namespace ModelsAPI.ClassMetier.GameStatus
 {
     public class Deploiment : Etat
     {
-        public void Action(Carte carte, Joueur joueur, List<IUnit> unitList)
+        public void Action(Carte carte, Joueur joueur, List<int> unitIndex)
         {
-            joueur.PlaceUnits(unitList, carte.SelectedTerritoire);
+            if (unitIndex.Count == 1)
+                joueur.PlaceUnits(joueur.Units[unitIndex[0]], carte.SelectedTerritoire);
         }
-
-
 
         public Etat TransitionTo()
         {

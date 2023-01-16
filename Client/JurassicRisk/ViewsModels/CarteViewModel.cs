@@ -9,6 +9,7 @@ using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -401,7 +402,7 @@ namespace JurassicRisk.ViewsModels
             canvas.ToolTip = $"Units: {territoire.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
         }
 
-        private void MyCanvas_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
+        private async void MyCanvas_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
@@ -409,7 +410,7 @@ namespace JurassicRisk.ViewsModels
             if (e.ChangedButton == MouseButton.Right)
             {
                 this._carte.SelectedTerritoire = territoire;
-           
+                await JurasicRiskGameClient.Get.PartieChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
                 JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y,2);
             }
 
