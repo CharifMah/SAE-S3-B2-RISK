@@ -78,7 +78,8 @@ namespace JurassicRisk.ViewsModels
 
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
-            _chatService.PartieReceived += _chatService_PartieReceived; ;
+            _chatService.PartieReceived += _chatService_PartieReceived;
+            _chatService.NotOwner += _chatService_NotOwner;
         }
 
 
@@ -210,6 +211,14 @@ namespace JurassicRisk.ViewsModels
             {
                 _isConnected = false;
             }
+        }
+
+        private void _chatService_NotOwner()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show(Ressource.Strings.NotOwner);
+            });
         }
 
         private void _chatService_Disconnected()

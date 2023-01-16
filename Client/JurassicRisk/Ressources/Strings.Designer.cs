@@ -11,6 +11,7 @@
 namespace JurassicRisk.Ressource
 {
     using System;
+    using System.Windows.Markup;
 
 
     /// <summary>
@@ -422,6 +423,14 @@ namespace JurassicRisk.Ressource
             get
             {
                 return ResourceManager.GetString("ErrorLobbyExist", resourceCulture);
+            }
+        }
+
+        public static string NotOwner
+        {
+            get
+            {
+                return ResourceManager.GetString("NotOwner", resourceCulture);
             }
         }
     }

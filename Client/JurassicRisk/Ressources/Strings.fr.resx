@@ -195,6 +195,9 @@
   <data name="NoPseudoEnter" xml:space="preserve">
     <value>Veuillez entrer votre pseudo</value>
   </data>
+  <data name="NotOwner" xml:space="preserve">
+    <value>Vous n'êtes pas le propriétaire du salon !</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
   </data>

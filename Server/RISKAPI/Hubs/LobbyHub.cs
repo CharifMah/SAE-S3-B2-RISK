@@ -234,6 +234,14 @@ namespace RISKAPI.Hubs
                         }
 
                     }
+                    else
+                    {
+                        JurasicRiskGameServer.Get.Lobby.Add(lobby);
+                        foreach (Joueur j in lobby.Joueurs)
+                        {
+                            await Clients.Client(j.Profil.ConnectionId).SendAsync("NotOwner");
+                        }
+                    }
                 }
                 catch (Exception e )
                 {
