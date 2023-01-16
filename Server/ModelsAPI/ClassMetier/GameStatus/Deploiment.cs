@@ -11,11 +11,15 @@ namespace ModelsAPI.ClassMetier.GameStatus
         }
 
 
+
         public Etat TransitionTo()
         {
             return new Deploiment();
         }
 
-
+        public override string? ToString()
+        {
+            return "Deploiment";
+        }
     }
 }

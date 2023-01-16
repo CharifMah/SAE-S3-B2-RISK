@@ -78,7 +78,7 @@ namespace JurassicRisk.ViewsModels
         {
             switch (turnType)
             {
-                case "placement":
+                case "Deploiment":
                     {
                         _carteVm.Tour = new TourPlacement();
                         break;

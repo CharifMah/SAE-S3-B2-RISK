@@ -44,15 +44,17 @@ namespace ModelsAPI.ClassMetier.GameStatus
             this._joueurs = joueurs;
             this._id = id;
             this.etat = new Deploiment();
-            _playerIndex = 0;
+            _playerIndex = -1;
         }
 
         #endregion
 
-        private void NextPlayer()
+        public int NextPlayer()
         {
             _playerIndex++;
             _playerIndex %= _joueurs.Count;
+
+            return _playerIndex;
         }
 
         public void Action()
