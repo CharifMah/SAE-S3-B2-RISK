@@ -36,6 +36,7 @@ namespace RISKAPI.Hubs
             {
                 joueur = lobby.Joueurs[lobby.Partie.NextPlayer()];
                 await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", lobby.Partie.Etat.ToString());
+                Console.WriteLine($"c'est au tour de {joueur.Profil.Pseudo}");
             }
         }
 
