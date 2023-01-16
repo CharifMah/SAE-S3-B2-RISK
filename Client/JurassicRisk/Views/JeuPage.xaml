@@ -5,9 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="1920"
       x:Name="_JeuPage"
       Title="JeuPage">
 
@@ -24,15 +24,24 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif" Stretch="Fill" Grid.RowSpan="3" Grid.ColumnSpan="4"/>
+        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif"  Stretch="Fill" Grid.RowSpan="3" Grid.ColumnSpan="4"/>
+       
+        <Viewbox  Stretch="Fill" x:Name="ViewboxCanvas" Grid.ColumnSpan="4" Grid.RowSpan="3">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Height="1080" Width="1920" x:Name="ScrollViewerView" Grid.RowSpan="3" Grid.ColumnSpan="4" >
+                <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="0,0,0,30">
 
-        <Viewbox Stretch="Fill" x:Name="ViewboxCanvas" Grid.RowSpan="3" Grid.ColumnSpan="4" Margin="0,35,0,0">
-            <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="-50,0,20,70">
+                <ContentPresenter Panel.ZIndex="0" Content="{Binding CarteVm.CarteCanvas}" />
 
-                <ContentPresenter Content="{Binding CarteVm.CarteCanvas}" />
+                    <Canvas.LayoutTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="transform"/>
+                        </TransformGroup>
 
-            </Canvas>
+                    </Canvas.LayoutTransform>
+                </Canvas>
+            </ScrollViewer>
         </Viewbox>
+
 
         <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" ItemsSource="{Binding JoueurVm.Units}">
             <ListBox.ItemTemplate>
@@ -62,12 +71,12 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0} {1}">
                     <Binding Source="{x:Static Ressources:Strings.NbTerritoireVide}"/>
-                    <Binding Path="CarteVm.Carte.GetNombreTerritoireOccupe"/>
+                    <Binding Path="LobbyVm.CarteVm.Carte.GetNombreTerritoireOccupe"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
 
-        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Top" HorizontalAlignment="Left" Height="306" Width="324" Grid.ColumnSpan="4" Margin="238,31,0,0" Grid.Row="1">
+        <GroupBox Visibility="Hidden" FontSize="40" x:Name="GroupBoxPause" VerticalAlignment="Center" HorizontalAlignment="Center" Height="306" Width="324" Grid.ColumnSpan="4" Grid.Row="1">
             <GroupBox.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"/>
             </GroupBox.Background>
@@ -83,7 +92,7 @@
 
         <Button HorizontalAlignment="Right" Width="50" Grid.Row="2" Grid.Column="3" Height="50" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click" Margin="0,20,20,-2"></Button>
 
-        <Button HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" Margin="34,20,0,18">Fin de Tour</Button>
+        <Button HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" >Fin de Tour</Button>
 
     </Grid>
 </Page>

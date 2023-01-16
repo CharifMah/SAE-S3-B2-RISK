@@ -20,7 +20,8 @@ namespace JurassicRisk.Ressources
                 {
                     if (dict.Key.ToString().Contains(PathContain))
                     {
-                        filesNames.Add((dict.Key as string).Remove(0, 14));
+                        string key = (dict.Key as string);
+                        filesNames.Add(key.Substring(key.Length - 8));
                     }
                 }
             }

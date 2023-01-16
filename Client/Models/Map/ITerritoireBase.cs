@@ -1,4 +1,5 @@
-﻿using Models.Units;
+﻿using Models.Player;
+using Models.Units;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 

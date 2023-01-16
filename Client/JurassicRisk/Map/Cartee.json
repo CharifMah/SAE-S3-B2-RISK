@@ -10,11 +10,14 @@
             "ID": 0,
             "Units": []
           },
-          "X": 94,
-          "Y": 51,
-          "UriSource": "pack://application:,,,/Sprites/Carte/1c1r.png",
-          "Width": 152,
-          "Height": 70
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/1c1r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 0,
+          "Units": []
         },
         "1": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -23,11 +26,14 @@
             "ID": 1,
             "Units": []
           },
-          "X": 114,
-          "Y": 149,
-          "UriSource": "pack://application:,,,/Sprites/Carte/1c2r.png",
-          "Width": 97,
-          "Height": 130
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/1c2r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 1,
+          "Units": []
         },
         "2": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -36,11 +42,14 @@
             "ID": 2,
             "Units": []
           },
-          "X": 148,
-          "Y": 1,
-          "UriSource": "pack://application:,,,/Sprites/Carte/1c3r.png",
-          "Width": 160,
-          "Height": 194
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/1c3r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 2,
+          "Units": []
         },
         "3": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -49,11 +58,14 @@
             "ID": 3,
             "Units": []
           },
-          "X": 268,
-          "Y": 32,
-          "UriSource": "pack://application:,,,/Sprites/Carte/1c4r.png",
-          "Width": 90,
-          "Height": 146
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/1c4r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 3,
+          "Units": []
         },
         "4": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -62,11 +74,14 @@
             "ID": 4,
             "Units": []
           },
-          "X": 332,
-          "Y": 38,
-          "UriSource": "pack://application:,,,/Sprites/Carte/1c5r.png",
-          "Width": 182,
-          "Height": 150
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/1c5r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 4,
+          "Units": []
         },
         "5": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -75,11 +90,14 @@
             "ID": 5,
             "Units": []
           },
-          "X": 222,
-          "Y": 114,
-          "UriSource": "pack://application:,,,/Sprites/Carte/1c6r.png",
-          "Width": 146,
-          "Height": 138
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/1c6r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 5,
+          "Units": []
         },
         "6": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -88,11 +106,14 @@
             "ID": 6,
             "Units": []
           },
-          "X": 290,
-          "Y": 157,
-          "UriSource": "pack://application:,,,/Sprites/Carte/1c7r.png",
-          "Width": 151,
-          "Height": 220
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/1c7r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 6,
+          "Units": []
         }
       }
     },
@@ -106,11 +127,14 @@
             "ID": 7,
             "Units": []
           },
-          "X": 112,
-          "Y": 580,
-          "UriSource": "pack://application:,,,/Sprites/Carte/2c1r.png",
-          "Width": 188,
-          "Height": 217
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/2c1r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 7,
+          "Units": []
         },
         "8": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -119,11 +143,14 @@
             "ID": 8,
             "Units": []
           },
-          "X": 107,
-          "Y": 735,
-          "UriSource": "pack://application:,,,/Sprites/Carte/2c2r.png",
-          "Width": 226,
-          "Height": 158
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/2c2r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 8,
+          "Units": []
         },
         "9": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -132,11 +159,14 @@
             "ID": 9,
             "Units": []
           },
-          "X": 163,
-          "Y": 807,
-          "UriSource": "pack://application:,,,/Sprites/Carte/2c3r.png",
-          "Width": 165,
-          "Height": 188
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/2c3r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 9,
+          "Units": []
         },
         "10": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -145,11 +175,14 @@
             "ID": 10,
             "Units": []
           },
-          "X": 249,
-          "Y": 637,
-          "UriSource": "pack://application:,,,/Sprites/Carte/2c4r.png",
-          "Width": 182,
-          "Height": 161
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/2c4r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 10,
+          "Units": []
         },
         "11": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -158,11 +191,14 @@
             "ID": 11,
             "Units": []
           },
-          "X": 388,
-          "Y": 620,
-          "UriSource": "pack://application:,,,/Sprites/Carte/2c5r.png",
-          "Width": 215,
-          "Height": 161
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/2c5r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 11,
+          "Units": []
         },
         "12": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -171,11 +207,14 @@
             "ID": 12,
             "Units": []
           },
-          "X": 296,
-          "Y": 735,
-          "UriSource": "pack://application:,,,/Sprites/Carte/2c6r.png",
-          "Width": 302,
-          "Height": 146
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/2c6r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 12,
+          "Units": []
         },
         "13": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -184,11 +223,14 @@
             "ID": 13,
             "Units": []
           },
-          "X": 400,
-          "Y": 751,
-          "UriSource": "pack://application:,,,/Sprites/Carte/2c7r.png",
-          "Width": 250,
-          "Height": 215
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/2c7r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 13,
+          "Units": []
         }
       }
     },
@@ -202,11 +244,14 @@
             "ID": 14,
             "Units": []
           },
-          "X": 510,
-          "Y": 424,
-          "UriSource": "pack://application:,,,/Sprites/Carte/3c1r.png",
-          "Width": 177,
-          "Height": 188
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/3c1r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 14,
+          "Units": []
         },
         "15": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -215,11 +260,14 @@
             "ID": 15,
             "Units": []
           },
-          "X": 641,
-          "Y": 484,
-          "UriSource": "pack://application:,,,/Sprites/Carte/3c2r.png",
-          "Width": 168,
-          "Height": 266
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/3c2r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 15,
+          "Units": []
         },
         "16": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -228,11 +276,14 @@
             "ID": 16,
             "Units": []
           },
-          "X": 745,
-          "Y": 332,
-          "UriSource": "pack://application:,,,/Sprites/Carte/3c3r.png",
-          "Width": 184,
-          "Height": 162
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/3c3r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 16,
+          "Units": []
         },
         "17": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -241,11 +292,14 @@
             "ID": 17,
             "Units": []
           },
-          "X": 635,
-          "Y": 302,
-          "UriSource": "pack://application:,,,/Sprites/Carte/3c4r.png",
-          "Width": 193,
-          "Height": 139
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/3c4r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 17,
+          "Units": []
         },
         "18": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -254,11 +308,14 @@
             "ID": 18,
             "Units": []
           },
-          "X": 617,
-          "Y": 127,
-          "UriSource": "pack://application:,,,/Sprites/Carte/3c5r.png",
-          "Width": 201,
-          "Height": 238
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/3c5r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 18,
+          "Units": []
         },
         "19": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -267,11 +324,14 @@
             "ID": 19,
             "Units": []
           },
-          "X": 728,
-          "Y": 184,
-          "UriSource": "pack://application:,,,/Sprites/Carte/3c6r.png",
-          "Width": 214,
-          "Height": 244
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/3c6r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 19,
+          "Units": []
         },
         "20": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -280,11 +340,14 @@
             "ID": 20,
             "Units": []
           },
-          "X": 921,
-          "Y": 202,
-          "UriSource": "pack://application:,,,/Sprites/Carte/3c7r.png",
-          "Width": 125,
-          "Height": 272
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/3c7r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 20,
+          "Units": []
         },
         "21": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -293,11 +356,14 @@
             "ID": 21,
             "Units": []
           },
-          "X": 837,
-          "Y": 120,
-          "UriSource": "pack://application:,,,/Sprites/Carte/3c8r.png",
-          "Width": 132,
-          "Height": 357
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/3c8r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 21,
+          "Units": []
         }
       }
     },
@@ -311,11 +377,14 @@
             "ID": 22,
             "Units": []
           },
-          "X": 895,
-          "Y": 321,
-          "UriSource": "pack://application:,,,/Sprites/Carte/4c1r.png",
-          "Width": 205,
-          "Height": 145
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/4c1r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 22,
+          "Units": []
         },
         "23": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -324,11 +393,14 @@
             "ID": 23,
             "Units": []
           },
-          "X": 998,
-          "Y": 287,
-          "UriSource": "pack://application:,,,/Sprites/Carte/4c2r.png",
-          "Width": 154,
-          "Height": 274
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/4c2r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 23,
+          "Units": []
         },
         "24": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -337,11 +409,14 @@
             "ID": 24,
             "Units": []
           },
-          "X": 1123,
-          "Y": 327,
-          "UriSource": "pack://application:,,,/Sprites/Carte/4c3r.png",
-          "Width": 245,
-          "Height": 199
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/4c3r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 24,
+          "Units": []
         },
         "25": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -350,11 +425,14 @@
             "ID": 25,
             "Units": []
           },
-          "X": 911,
-          "Y": 389,
-          "UriSource": "pack://application:,,,/Sprites/Carte/4c4r.png",
-          "Width": 201,
-          "Height": 244
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/4c4r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 25,
+          "Units": []
         },
         "26": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -363,11 +441,14 @@
             "ID": 26,
             "Units": []
           },
-          "X": 746,
-          "Y": 516,
-          "UriSource": "pack://application:,,,/Sprites/Carte/4c5r.png",
-          "Width": 142,
-          "Height": 212
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/4c5r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 26,
+          "Units": []
         },
         "27": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -376,11 +457,14 @@
             "ID": 27,
             "Units": []
           },
-          "X": 893,
-          "Y": 571,
-          "UriSource": "pack://application:,,,/Sprites/Carte/4c6r.png",
-          "Width": 231,
-          "Height": 232
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/4c6r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 27,
+          "Units": []
         },
         "28": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -389,11 +473,14 @@
             "ID": 28,
             "Units": []
           },
-          "X": 1049,
-          "Y": 502,
-          "UriSource": "pack://application:,,,/Sprites/Carte/4c7r.png",
-          "Width": 300,
-          "Height": 186
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/4c7r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 28,
+          "Units": []
         }
       }
     },
@@ -407,11 +494,14 @@
             "ID": 29,
             "Units": []
           },
-          "X": 1415,
-          "Y": 130,
-          "UriSource": "pack://application:,,,/Sprites/Carte/5c1r.png",
-          "Width": 149,
-          "Height": 134
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/5c1r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 29,
+          "Units": []
         },
         "30": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -420,11 +510,14 @@
             "ID": 30,
             "Units": []
           },
-          "X": 1440,
-          "Y": 194,
-          "UriSource": "pack://application:,,,/Sprites/Carte/5c2r.png",
-          "Width": 146,
-          "Height": 194
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/5c2r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 30,
+          "Units": []
         },
         "31": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -433,11 +526,14 @@
             "ID": 31,
             "Units": []
           },
-          "X": 1519,
-          "Y": 40,
-          "UriSource": "pack://application:,,,/Sprites/Carte/5c3r.png",
-          "Width": 170,
-          "Height": 267
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/5c3r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 31,
+          "Units": []
         },
         "32": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -446,11 +542,14 @@
             "ID": 32,
             "Units": []
           },
-          "X": 1709,
-          "Y": 49,
-          "UriSource": "pack://application:,,,/Sprites/Carte/5c4r.png",
-          "Width": 319,
-          "Height": 191
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/5c4r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 32,
+          "Units": []
         },
         "33": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -459,11 +558,14 @@
             "ID": 33,
             "Units": []
           },
-          "X": 1587,
-          "Y": 182,
-          "UriSource": "pack://application:,,,/Sprites/Carte/5c5r.png",
-          "Width": 146,
-          "Height": 182
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/5c5r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 33,
+          "Units": []
         }
       }
     },
@@ -477,11 +579,14 @@
             "ID": 34,
             "Units": []
           },
-          "X": 1549,
-          "Y": 296,
-          "UriSource": "pack://application:,,,/Sprites/Carte/6c1r.png",
-          "Width": 136,
-          "Height": 286
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/6c1r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 34,
+          "Units": []
         },
         "35": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -490,11 +595,14 @@
             "ID": 35,
             "Units": []
           },
-          "X": 1740,
-          "Y": 326,
-          "UriSource": "pack://application:,,,/Sprites/Carte/6c2r.png",
-          "Width": 225,
-          "Height": 148
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/6c2r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 35,
+          "Units": []
         },
         "36": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -503,11 +611,14 @@
             "ID": 36,
             "Units": []
           },
-          "X": 1416,
-          "Y": 349,
-          "UriSource": "pack://application:,,,/Sprites/Carte/6c3r.png",
-          "Width": 224,
-          "Height": 245
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/6c3r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 36,
+          "Units": []
         },
         "37": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -516,11 +627,14 @@
             "ID": 37,
             "Units": []
           },
-          "X": 1493,
-          "Y": 422,
-          "UriSource": "pack://application:,,,/Sprites/Carte/6c4r.png",
-          "Width": 191,
-          "Height": 309
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/6c4r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 37,
+          "Units": []
         },
         "38": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -529,11 +643,14 @@
             "ID": 38,
             "Units": []
           },
-          "X": 1592,
-          "Y": 523,
-          "UriSource": "pack://application:,,,/Sprites/Carte/6c5r.png",
-          "Width": 262,
-          "Height": 260
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/6c5r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 38,
+          "Units": []
         },
         "39": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -542,11 +659,14 @@
             "ID": 39,
             "Units": []
           },
-          "X": 1413,
-          "Y": 550,
-          "UriSource": "pack://application:,,,/Sprites/Carte/6c6r.png",
-          "Width": 212,
-          "Height": 194
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/6c6r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 39,
+          "Units": []
         },
         "40": {
           "$type": "Models.Map.TerritoireDecorator, Models",
@@ -555,11 +675,14 @@
             "ID": 40,
             "Units": []
           },
-          "X": 1475,
-          "Y": 668,
-          "UriSource": "pack://application:,,,/Sprites/Carte/6c7r.png",
-          "Width": 218,
-          "Height": 213
+          "X": 0,
+          "Y": 0,
+          "UriSource": "pack://application:,,,/Sprites/Carte2/6c7r.png",
+          "Width": 0,
+          "Height": 0,
+          "Team": 4,
+          "ID": 40,
+          "Units": []
         }
       }
     }

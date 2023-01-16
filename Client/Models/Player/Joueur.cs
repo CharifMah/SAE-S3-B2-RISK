@@ -79,7 +79,7 @@ namespace Models.Player
         #endregion
         public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
-            if (unites.Count > 0 && (this._team == territoire.Team || territoire.Team == Models.Teams.NEUTRE))
+            if (unites.Count > 0 && (this._team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
                 foreach (var unit in unites)
                 {
