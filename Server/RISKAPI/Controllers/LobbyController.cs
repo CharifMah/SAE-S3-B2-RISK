@@ -7,7 +7,7 @@ using RISKAPI.Services;
 
 namespace RISKAPI.Controllers
 {
-    [Route("Lobby")]
+    [Route("Lobbys")]
     [ApiController]
     public class LobbyController : Controller
     {
@@ -26,15 +26,15 @@ namespace RISKAPI.Controllers
             IActionResult reponse = null;
             try 
             {
-                bool res = RedisProvider.Instance.RedisDataBase.KeyExists($"Lobby:{lobby.Id}");
+                bool res = RedisProvider.Instance.RedisDataBase.KeyExists($"Lobbys:{lobby.Id}");
                 if (!res)
                 {
                     PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
                     lobby.Password = passwordHasher.HashPassword(lobby, lobby.Password);
                     await _lobby.InsertAsync(lobby);
-                    Console.WriteLine("Created Lobby");
+                    Console.WriteLine("Created Lobbys");
 
-                    reponse = new JsonResult($"Lobby With Name : {lobby.Id} created");
+                    reponse = new JsonResult($"Lobbys With Name : {lobby.Id} created");
                 }
                 else
                 {

@@ -10,7 +10,7 @@
 
         #region Property
 
-        public List<Lobby> Lobby { get => _lobby; set => _lobby = value; }
+        public List<Lobby> Lobbys { get => _lobby; set => _lobby = value; }
 
         #endregion
 
@@ -33,7 +33,7 @@
 
         private JurasicRiskGameServer()
         {
-            Lobby = new List<Lobby>();
+            Lobbys = new List<Lobby>();
         }
 
         #endregion

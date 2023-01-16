@@ -47,14 +47,14 @@ namespace RISKAPI.Hubs
         }
 
         /// <summary>
-        /// Send Lobby to Clients
+        /// Send Lobbys to Clients
         /// </summary>
         /// <param name="lobbyJson"></param>
         /// <returns></returns>
         public async Task SendLobby(string lobbyJson)
         {
             Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
-            Console.WriteLine($"Lobby try to send {lobby.Id}");
+            Console.WriteLine($"Lobbys try to send {lobby.Id}");
             foreach (Joueur j in lobby.Joueurs)
             {
                 await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
@@ -65,7 +65,7 @@ namespace RISKAPI.Hubs
         {
             Joueur? joueur = JsonConvert.DeserializeObject<Joueur>(joueurJson);
             Console.WriteLine($"{joueur.Profil.Pseudo} try to Join {lobbyName}");
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
                 RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
@@ -107,7 +107,7 @@ namespace RISKAPI.Hubs
 
         public async Task SetTeam(Teams teams, string joueurName, string lobbyName)
         {
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]";
 
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
@@ -134,7 +134,7 @@ namespace RISKAPI.Hubs
 
         public async Task IsReady(bool ready, string joueurName, string lobbyName)
         {
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]";
 
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
@@ -186,7 +186,7 @@ namespace RISKAPI.Hubs
 
         public async Task StartPartie(string lobbyName, string joueurName, string carteName)
         {
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             string keyCarte = $"{carteName}";
 
 
@@ -204,7 +204,7 @@ namespace RISKAPI.Hubs
                     {
                         Console.WriteLine($"{joueurName} try to Start the game");
                         lobby.Partie = new Partie(carte, lobby.Joueurs, lobby.Id);
-                        JurasicRiskGameServer.Get.Lobby.Add(lobby);
+                        JurasicRiskGameServer.Get.Lobbys.Add(lobby);
                         foreach (Joueur j in lobby.Joueurs)
                         {
                             await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
@@ -222,7 +222,7 @@ namespace RISKAPI.Hubs
         #region Private
         private async Task<Lobby> GetLobby(string lobbyName)
         {
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             Lobby? lobby = null;
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {

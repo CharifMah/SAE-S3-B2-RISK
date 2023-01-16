@@ -23,7 +23,7 @@ namespace RISKAPI.Hubs
             Lobby lobby = null;
             Joueur joueurSuivant = null;
             Joueur joueur = null;
-            foreach (Lobby l in JurasicRiskGameServer.Get.Lobby)
+            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
             {
                 if (l.Id == lobbyName)
                 {

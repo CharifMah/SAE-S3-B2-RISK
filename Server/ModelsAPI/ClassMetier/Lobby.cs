@@ -4,7 +4,7 @@ using Redis.OM.Modeling;
 
 namespace ModelsAPI.ClassMetier
 {
-    [Document(StorageType = StorageType.Json, Prefixes = new[] { "Lobby" })]
+    [Document(StorageType = StorageType.Json, Prefixes = new[] { "Lobbys" })]
     public class Lobby
     {
         #region Attributes
