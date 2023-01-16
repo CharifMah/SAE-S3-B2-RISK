@@ -22,7 +22,6 @@ namespace RISKAPI.Hubs
         public async Task EndTurn(string lobbyName, string joueurName)
         {
             Lobby lobby = null;
-            Joueur joueurSuivant = null;
             Joueur joueur = null;
             foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
             {
@@ -34,22 +33,8 @@ namespace RISKAPI.Hubs
             }
             if (lobby != null)
             {
-                for (int i = 0; i < lobby.Joueurs.Count; i++)
-                {
-                    if (lobby.Joueurs[i].Profil.Pseudo == joueurName)
-                    {
-                        joueur = lobby.Joueurs[i];
-                        joueurSuivant = lobby.Joueurs[i + 1 % (lobby.Joueurs.Count + 1)];
-                    }
-                }
-            }
-            if (joueurSuivant != null)
-            {
-                if (lobby.Partie.Etat.GetType().Name == "Placement")
-                {
-                    await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("yourTurn", "placement");
-                }
-                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("EndTurn");
+                joueur = lobby.Joueurs[lobby.Partie.NextPlayer()];
+                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", lobby.Partie.Etat.ToString());
             }
         }
 
