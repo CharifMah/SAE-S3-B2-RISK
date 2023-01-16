@@ -15,7 +15,7 @@ namespace ModelsAPI.ClassMetier.Map
 
         private Dictionary<string, IContinent> _dicoContinents;
 
-        private TerritoireDecorator? _selectedTerritoire;
+        private TerritoireBase? _selectedTerritoire;
 
         #endregion
 
@@ -35,12 +35,13 @@ namespace ModelsAPI.ClassMetier.Map
         /// Le Territoire Selectionne par le joueur
         /// </summary>
         [Indexed]
-        public TerritoireDecorator? SelectedTerritoire
+        public TerritoireBase? SelectedTerritoire
         {
             get => _selectedTerritoire;
             set => _selectedTerritoire = value;
         }
 
+      
         [Indexed]
         public int GetNombreTerritoireOccupe
         {
@@ -67,6 +68,21 @@ namespace ModelsAPI.ClassMetier.Map
         {
             this._dicoContinents = DicoContinents;
             this._selectedTerritoire = SelectedTerritoire;
+        }
+
+        public TerritoireBase GetTerritoire(int ID)
+        {
+            foreach (Continent continent in _dicoContinents.Values)
+            {
+                foreach (TerritoireBase territoire in continent.DicoTerritoires.Values)
+                {
+                    if (territoire.ID == ID)
+                    {
+                        return territoire;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

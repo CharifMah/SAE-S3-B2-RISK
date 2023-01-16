@@ -411,6 +411,7 @@ namespace JurassicRisk.ViewsModels
             if (e.ChangedButton == MouseButton.Right)
             {
                 this._carte.SelectedTerritoire = territoire;
+                await JurasicRiskGameClient.Get.PartieChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
                 await JurasicRiskGameClient.Get.PartieChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
                 JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y,2);
             }

@@ -7,6 +7,7 @@ using ModelsAPI.ClassMetier.Player;
 using Microsoft.AspNet.SignalR.Hubs;
 using ModelsAPI.ClassMetier.Units;
 using ModelsAPI.ClassMetier.GameStatus;
+using ModelsAPI.ClassMetier.Map;
 
 namespace RISKAPI.Hubs
 {
@@ -45,6 +46,12 @@ namespace RISKAPI.Hubs
         {
             Partie p = JurasicRiskGameServer.Get.Lobbys.First(l => l.Id == lobbyName).Partie;
             p.Action(unitlist);
-        }      
+        }
+
+        public async Task SetSelectedTerritoire(string lobbyName, int ID)
+        {
+            Partie p = JurasicRiskGameServer.Get.Lobbys.First(l => l.Id == lobbyName).Partie;
+            p.Carte.SelectedTerritoire = p.Carte.GetTerritoire(ID);
+        }
     }
 }
