@@ -58,7 +58,7 @@ namespace JurassicRisk.Views
             }
             else
             {
-                Error.Text = "this pseudo already exist";
+                Error.Text = Strings.ErrorPseudoExist;
                 Error.Visibility = Visibility.Visible;
             }
         }

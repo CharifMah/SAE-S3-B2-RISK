@@ -394,6 +394,36 @@ namespace JurassicRisk.Ressource
             {
                 return ResourceManager.GetString("NoExistLobby", resourceCulture);
             }
-        }      
+        }
+        public static string ErrorPseudoExist
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorPseudoExist", resourceCulture);
+            }
+        }
+        public static string ErrorPlayerNotReady
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorPlayerNotReady", resourceCulture);
+            }
+        }
+
+        public static string ErrorTeamsForReady
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorTeamsForReady", resourceCulture);
+            }
+        }
+        public static string ErrorLobbyExist
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorLobbyExist", resourceCulture);
+            }
+        }
     }
+    
 }

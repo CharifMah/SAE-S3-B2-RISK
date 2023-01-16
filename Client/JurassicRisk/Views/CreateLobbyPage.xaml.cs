@@ -74,7 +74,7 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        Error.Text = Ressource.Strings.NoExistLobby;
+                        Error.Text = Strings.NoExistLobby;
                         Error.Visibility = Visibility.Visible;
                     }
                     //Wait for 500 milliseconds

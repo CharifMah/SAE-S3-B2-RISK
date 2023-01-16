@@ -138,11 +138,23 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Log out</value>
   </data>
+  <data name="ErrorLobbyExist" xml:space="preserve">
+    <value>A lobby with the same name already exist</value>
+  </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>Error message</value>
   </data>
   <data name="ErrorNotUnit" xml:space="preserve">
     <value>You have no more troops available !</value>
+  </data>
+  <data name="ErrorPlayerNotReady" xml:space="preserve">
+    <value>Not all players are ready</value>
+  </data>
+  <data name="ErrorPseudoExist" xml:space="preserve">
+    <value>this pseudo already exist</value>
+  </data>
+  <data name="ErrorTeamsForReady" xml:space="preserve">
+    <value>Choose a team before you get ready</value>
   </data>
   <data name="ErrorTerritory" xml:space="preserve">
     <value>This territory does not belong to you ! </value>

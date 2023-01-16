@@ -138,11 +138,23 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Deconnexion</value>
   </data>
+  <data name="ErrorLobbyExist" xml:space="preserve">
+    <value>Un lobby avec le meme nom existe déja</value>
+  </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>Message d'erreur</value>
   </data>
   <data name="ErrorNotUnit" xml:space="preserve">
     <value>Vous n'avez plus de troupes disponible</value>
+  </data>
+  <data name="ErrorPlayerNotReady" xml:space="preserve">
+    <value>Tous les joueur ne sont pas pret</value>
+  </data>
+  <data name="ErrorPseudoExist" xml:space="preserve">
+    <value>Le pseudo existe déjà</value>
+  </data>
+  <data name="ErrorTeamsForReady" xml:space="preserve">
+    <value>choisissez une equipe avant de vous mettre pret</value>
   </data>
   <data name="ErrorTerritory" xml:space="preserve">
     <value>Ce territoire ne vous appartient pas !</value>

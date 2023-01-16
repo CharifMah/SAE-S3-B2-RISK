@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using JurassicRisk.observable;
+using JurassicRisk.Ressource;
 using JurassicRisk.Views;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
@@ -121,7 +122,7 @@ namespace JurassicRisk.ViewsModels
                 }
                 else
                 {
-                    res = "Un Lobby avec le meme nom existe déja";
+                    res = Strings.ErrorLobbyExist;
                 }
 
             }

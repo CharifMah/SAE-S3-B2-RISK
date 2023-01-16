@@ -1,4 +1,5 @@
-﻿using JurassicRisk.ViewsModels;
+﻿using JurassicRisk.Ressource;
+using JurassicRisk.ViewsModels;
 using Models;
 using Models.Player;
 using Models.Settings;
@@ -35,7 +36,7 @@ namespace JurassicRisk.Views
             }
             else
             {
-                Error.Text = "tous les joueur ne sont pas pret";
+                Error.Text = Strings.ErrorPlayerNotReady;
                 Error.Visibility = Visibility.Visible;
             }
         }
@@ -52,7 +53,7 @@ namespace JurassicRisk.Views
             }
             else
             {
-                Error.Text = " choisissez une equipe avant de vous mettre pret ";
+                Error.Text = Strings.ErrorTeamsForReady;
                 Error.Visibility = Visibility.Visible;
             }
         }
@@ -73,9 +74,9 @@ namespace JurassicRisk.Views
             {
                 case "Rbutton":
 
-                    if (b.Content == Ressource.Strings.Red)
+                    if (b.Content == Strings.Red)
                     {
-                        b.Content = Ressource.Strings.Red + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
+                        b.Content = Strings.Red + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
                         Gbutton.IsEnabled = false;
                         Bbutton.IsEnabled = false;
                         Ybutton.IsEnabled = false;
@@ -83,7 +84,7 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        b.Content = Ressource.Strings.Red;
+                        b.Content = Strings.Red;
                         Gbutton.IsEnabled = true;
                         Bbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
@@ -92,7 +93,7 @@ namespace JurassicRisk.Views
 
                     break;
                 case "Gbutton":
-                    if (b.Content == Ressource.Strings.Green)
+                    if (b.Content == Strings.Green)
                     {
                         b.Content = Ressource.Strings.Green + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
                         Rbutton.IsEnabled = false;
@@ -102,7 +103,7 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        b.Content = Ressource.Strings.Green;
+                        b.Content = Strings.Green;
                         Rbutton.IsEnabled = true;
                         Bbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
@@ -110,7 +111,7 @@ namespace JurassicRisk.Views
                     }
                     break;
                 case "Bbutton":
-                    if (b.Content == Ressource.Strings.Blue)
+                    if (b.Content == Strings.Blue)
                     {
                         b.Content = Ressource.Strings.Blue + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
                         Rbutton.IsEnabled = false;
@@ -120,7 +121,7 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        b.Content = Ressource.Strings.Blue;
+                        b.Content = Strings.Blue;
                         Rbutton.IsEnabled = true;
                         Gbutton.IsEnabled = true;
                         Ybutton.IsEnabled = true;
@@ -128,7 +129,7 @@ namespace JurassicRisk.Views
                     }
                     break;
                 case "Ybutton":
-                    if (b.Content == Ressource.Strings.Yellow)
+                    if (b.Content == Strings.Yellow)
                     {
                         b.Content = Ressource.Strings.Yellow + '\n' + JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo;
                         Rbutton.IsEnabled = false;
@@ -138,7 +139,7 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        b.Content = Ressource.Strings.Yellow;
+                        b.Content = Strings.Yellow;
                         Rbutton.IsEnabled = true;
                         Gbutton.IsEnabled = true;
                         Bbutton.IsEnabled = true;
