@@ -6,7 +6,7 @@ using Stockage.Converters;
 
 namespace Models.Player
 {
-    public class Joueur : IGestionTroupe
+    public class Joueur
     {
         #region Attribute
         private bool _isReady;
@@ -77,20 +77,35 @@ namespace Models.Player
         }
 
         #endregion
+
         public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
-            if (unites.Count > 0 && (this._team == territoire.Team || territoire.Team == Teams.NEUTRE))
+            if (unites.Count > 0 && (_team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
                 foreach (var unit in unites)
                 {
-                    if (_units.Find(u => u.Name == unit.Name) != null)
+                    if (_units.Contains(unit))
                     {
                         _units.Remove(unit);
 
-
+                        territoire.AddUnit(unit);
+                        territoire.Team = _team;
                     }
+                }
+            }
+        }
+
+        public void AddUnits(IUnit unit, ITerritoireBase territoire)
+        {
+            if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
+            {
+                if (_units.Contains(unit))
+                {
+                    _units.Remove(unit);
+
                     territoire.AddUnit(unit);
-                    territoire.Team = this._team;
+                    territoire.Team = _team;
+
                 }
             }
         }

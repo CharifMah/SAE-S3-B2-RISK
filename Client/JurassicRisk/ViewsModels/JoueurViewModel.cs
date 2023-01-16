@@ -111,5 +111,28 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("NombreTrp");
             NotifyPropertyChanged("Units");
         }
+
+        /// <summary>
+        /// Ajoute des Unites a un territoire
+        /// </summary>
+        /// <param name="UniteBases">Les unite a ajouter</param>
+        /// <param name="territoire">le territoire</param>
+        public void AddUnits(IUnit UniteBases, ITerritoireBase territoire)
+        {
+            if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+            {
+                _joueur.AddUnits(UniteBases, territoire);
+                this._units.Remove(_selectedUnit);
+                if (_units.Count > 0)
+                    _selectedUnit = _units[0];
+
+            }
+            else
+            {
+                MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
+            }
+            NotifyPropertyChanged("NombreTrp");
+            NotifyPropertyChanged("Units");
+        }
     }
 }
