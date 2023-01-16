@@ -94,7 +94,7 @@ namespace JurassicRisk.ViewsModels
             toDoWhenFinished = drawEnd;
             progress = progression;
 
-            new SaveMap(_carte);
+            //new SaveMap(_carte);
             InitCarte();
 
             f = new FabriqueUniteBase();
