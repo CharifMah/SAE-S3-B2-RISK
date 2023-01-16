@@ -22,39 +22,36 @@ namespace JurassicRisk.Views
 
         private async void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            string connexion = "";
-            
-
             if (inputLobbyName.Text != "")
             {
-                    if (inputPassword.Password == inputPassword2.Password)
-                    {
-                        string connexion1 = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
+                if (inputPassword.Password == inputPassword2.Password)
+                {
+                    string connexion1 = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
 
-                        if (connexion1.Contains("Lobby Created with name"))
-                        {
-                            JoinLobby();
-                        }
-                        else
-                        {
-                            Error.Text = connexion1;
-                            Error.Visibility = Visibility.Visible;
-                        }
+                    if (connexion1.Contains("Lobby Created with name"))
+                    {
+                        JoinLobby(true);
                     }
                     else
                     {
-                        Error.Text = Strings.PasswordNotMatch;
+                        Error.Text = connexion1;
                         Error.Visibility = Visibility.Visible;
                     }
-            }
+                }
                 else
                 {
-                    Error.Text = Strings.NoPseudoEnter;
+                    Error.Text = Strings.PasswordNotMatch;
                     Error.Visibility = Visibility.Visible;
                 }
+            }
+            else
+            {
+                Error.Text = Strings.NoPseudoEnter;
+                Error.Visibility = Visibility.Visible;
+            }
         }
 
-        private async void JoinLobby()
+        private async void JoinLobby(bool fromCreate = false)
         {
             try
             {
@@ -74,8 +71,16 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        Error.Text = Ressource.Strings.NoExistLobby;
-                        Error.Visibility = Visibility.Visible;
+                        if (!fromCreate)
+                        {
+                            Error.Text = Ressource.Strings.NoExistLobby;
+                            Error.Visibility = Visibility.Visible;
+                        }
+                        if (fromCreate)
+                        {
+                            Error.Text = "Loading...";
+                            Error.Visibility = Visibility.Visible;
+                        }
                     }
                     //Wait for 500 milliseconds
                     await Task.Delay(WaitTime);
@@ -92,7 +97,7 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
     }

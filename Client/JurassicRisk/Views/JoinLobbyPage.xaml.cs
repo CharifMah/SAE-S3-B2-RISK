@@ -39,8 +39,18 @@ namespace JurassicRisk.Views
                     else
                     {
                         await JurassicRiskViewModel.Get.LobbyVm.Connect();
-                        Error.Text = Ressource.Strings.NoExistLobby;
-                        Error.Visibility = Visibility.Visible;
+
+                        if (i >= 2)
+                        {
+                            Error.Text = Ressource.Strings.NoExistLobby;
+                            Error.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            Error.Text = "Loading...";
+                            Error.Visibility = Visibility.Visible;
+                        }
+
                     }
                     //Wait for 500 milliseconds
                     await Task.Delay(WaitTime);
@@ -54,10 +64,9 @@ namespace JurassicRisk.Views
             }
         }
 
-        private async void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {          
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Runtime.Serialization;
+using System.Windows;
+using System.Windows.Shapes;
 
 namespace Models.Map
 {
@@ -11,9 +13,11 @@ namespace Models.Map
         private TerritoireBase _territoire;
         protected int _x;
         protected int _y;
-        private int width;
-        private int height;
-        protected string uriSource;
+        private int _width;
+        private int _height;
+        protected string _uriSource;
+        private List<Line> _lines;
+        private List<Point> _points;
         #endregion
 
         #region Property
@@ -33,11 +37,16 @@ namespace Models.Map
         }
 
         [DataMember]
-        public string UriSource { get => this.uriSource; set => this.uriSource = value; }
+        public string UriSource { get => this._uriSource; set => this._uriSource = value; }
         [DataMember]
-        public int Width { get => width; set => width = value; }
+        public int Width { get => _width; set => _width = value; }
         [DataMember]
-        public int Height { get => height; set => height = value; }
+        public int Height { get => _height; set => _height = value; }
+        [DataMember]
+        public List<Line> Lines { get => _lines; set => _lines = value; }
+        [DataMember]
+        public List<Point> Points { get => _points; set => _points = value; }
+
 
         #endregion
 
@@ -46,14 +55,30 @@ namespace Models.Map
             this._territoire = TerritoireBase;
             this._x = X;
             this._y = Y;
-            this.uriSource = UriSource;
+            this._id = TerritoireBase.ID;
+            this._uriSource = UriSource;
             this.Width = Width;
             this.Height = Height;
+            _lines = new List<Line>();
+            Points = new List<Point>();
             if (TerritoireBase.Team != this.Team)
             {
                 TerritoireBase.Team = this.Team;
             }
 
+        }
+
+        public TerritoireDecorator(TerritoireBase TerritoireBase, string UriSource)
+        {
+            this._territoire = TerritoireBase;         
+            this._id = TerritoireBase.ID;
+            this._uriSource = UriSource;
+            _lines = new List<Line>();
+            Points = new List<Point>();
+            if (TerritoireBase.Team != this.Team)
+            {
+                TerritoireBase.Team = this.Team;
+            }
         }
 
         public TerritoireDecorator()

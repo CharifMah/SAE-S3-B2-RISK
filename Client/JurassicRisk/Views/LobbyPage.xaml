@@ -12,7 +12,7 @@
     <Page.Resources>
         <converter:IsReadyConverter x:Key="IsReadyConverter"/>
     </Page.Resources>
-    
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -22,16 +22,17 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="3*" />
 
         </Grid.ColumnDefinitions>
-        
+
         <Grid.Background >
             <ImageBrush ImageSource="/Sprites/Background/Background3.jpg"/>
         </Grid.Background>
 
-        <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalAlignment="Top">
+        <TextBlock Style="{StaticResource Bloody}" FontSize="45" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Top">
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0} : {1}">
                     <Binding Source="{x:Static Ressources:Strings.Lobby}"/>
@@ -42,7 +43,7 @@
 
         <Button Style="{StaticResource CustomAnimationButton}" Content="{x:Static Ressources:Strings.Deconnexion}" Click="LogOutButton_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300" ></Button>
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20">
+        <StackPanel Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20">
 
             <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=Lobby.Owner, Mode=OneWay , StringFormat={}Owner: {0}}"/>
 
@@ -68,17 +69,18 @@
             <Button x:Name="Gbutton" Content="{x:Static Ressources:Strings.Green}" Style="{StaticResource CustomAnimationButton}" BorderBrush="Green" Width="200" Height="200" Click="SelectTeamButton_Click"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="Bbutton" Content="{x:Static Ressources:Strings.Blue}" Style="{StaticResource CustomAnimationButton}" BorderBrush="Blue" Width="200" Height="200" Click="SelectTeamButton_Click"/>
             <Button x:Name="Ybutton" Content="{x:Static Ressources:Strings.Yellow}" Style="{StaticResource CustomAnimationButton}" BorderBrush="Yellow" Width="200" Height="200" Click="SelectTeamButton_Click"/>
         </StackPanel>
-        
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Content="{x:Static Ressources:Strings.Ready}" Style="{StaticResource CustomAnimationButton}" Width="400" Click="ReadyButton_Click"/>
             <Button Content="{x:Static Ressources:Strings.Play}" Style="{StaticResource CustomAnimationButton}" Width="400" Click="PlayButton_Click"/>
             <TextBlock x:Name="Error" FontSize="18" HorizontalAlignment="Center" Text="Error" Visibility="Hidden" Background="AntiqueWhite" Style="{StaticResource FruitDays}"></TextBlock>
-
+            <!--<ProgressBar x:Name="progression" Grid.Column="1" Grid.Row="3" Margin="10" Value="{Binding Progress}" Maximum="100" Height="30"/>-->
+            
         </StackPanel >
-       
+
     </Grid>
 </Page>

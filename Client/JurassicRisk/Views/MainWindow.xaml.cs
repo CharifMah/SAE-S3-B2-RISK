@@ -1,4 +1,3 @@
-using GalaSoft.MvvmLight.Threading;
 using Models;
 using Models.Settings;
 using Models.Son;
@@ -20,7 +19,6 @@ namespace JurassicRisk.Views
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            DispatcherHelper.Initialize();
             this.Closed += async (sender, e) => await FentrePrincipal_Closed(sender, e);
 
             StartupSettings();

@@ -1,5 +1,4 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models;
 using Models.Son;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +12,9 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class JeuPage : Page
     {
-        private Window mainwindow;
+        private Window _mainwindow;
+        private static JeuPage _instance;
+        public static JeuPage GetInstance() { return _instance; }
 
         /// <summary>
         /// Page du jeux
@@ -21,24 +22,20 @@ namespace JurassicRisk.Views
         public JeuPage()
         {
             InitializeComponent();
-            mainwindow = (Window.GetWindow(App.Current.MainWindow) as MainWindow);
-            mainwindow.SizeChanged += JeuPage_SizeChanged;
-            mainwindow.PreviewKeyDown += Mainwindow_PreviewKeyDown;
-            ViewboxCanvas.Width = mainwindow.ActualWidth;
-            ViewboxCanvas.Height = mainwindow.ActualHeight;
-
+            _mainwindow = (Window.GetWindow(App.Current.MainWindow) as MainWindow);
+            _mainwindow.SizeChanged += JeuPage_SizeChanged;
+            _mainwindow.PreviewKeyDown += Mainwindow_PreviewKeyDown;
             DataContext = JurassicRiskViewModel.Get;
+            _instance = this;
         }
 
         #region Events
 
         #region Async
 
-        private async void OptionButton_Click(object sender, RoutedEventArgs e)
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new OptionsPage(this));
-            await JurassicRiskViewModel.Get.CarteVm.SetCarte(JurassicRiskViewModel.Get.CarteVm.Carte);
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new OptionsPage(this));
         }
 
         #endregion
@@ -65,19 +62,19 @@ namespace JurassicRisk.Views
 
         private void JeuPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ViewboxCanvas.Width = mainwindow.ActualWidth;
-            ViewboxCanvas.Height = mainwindow.ActualHeight;
+            ViewboxCanvas.Width = _mainwindow.ActualWidth;
+            ViewboxCanvas.Height = _mainwindow.ActualHeight;
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             Resume();
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             bool Pressed = false;
             //Pause
             if (GroupBoxPause.Visibility == Visibility.Hidden && !Pressed)
@@ -95,10 +92,11 @@ namespace JurassicRisk.Views
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             SoundStore.Get("MusicGameJurr.mp3").Stop();
             SoundStore.Get("HubJurr.mp3").Play(true);
-            await JurasicRiskGameClient.Get.Disconnect();
+            await JurassicRiskViewModel.Get.LobbyVm.ExitLobby();
+            JurassicRiskViewModel.Get.DestroyVm();
 
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
@@ -128,5 +126,59 @@ namespace JurassicRisk.Views
 
         #endregion
 
+        /// <summary>
+        /// ZoomIn Canvas from x and y position on canvas
+        /// </summary>
+        /// <param name="x">x</param>
+        /// <param name="y">y</param>
+        public void ZoomIn(int x, int y, double scale = 1.1)
+        {
+            // set the center point for the zoom
+            transform.CenterX = x;
+            transform.CenterY = y;
+
+            if (transform.ScaleX != scale)
+            {
+                // Calculate the new offset, so that the point (x, y) is at the center of the viewport after the zoom
+                double newHorizontalOffset = x - ScrollViewerView.HorizontalOffset;
+                double newVerticalOffset = y - ScrollViewerView.VerticalOffset;
+
+                // Set the new offset
+                ScrollViewerView.ScrollToHorizontalOffset(newHorizontalOffset);
+                ScrollViewerView.ScrollToVerticalOffset(newVerticalOffset);
+            }
+
+
+            // set the new scale
+            transform.ScaleX = scale;
+            transform.ScaleY = scale;
+
+
+  
+
+        }
+
+        /// <summary>
+        /// ZoomOut Canvas from x and y position on canvas
+        /// </summary>
+        /// <param name="x">x</param>
+        /// <param name="y">y</param>
+        public void ZoomOut(int x, int y, double scale = 1.1)
+        {
+            double sc = 1 / scale;
+            transform.CenterX = x;
+            transform.CenterY = y;
+
+            transform.ScaleX = sc;
+            transform.ScaleY = sc;
+        }
+
+        public void ResetZoom()
+        {
+            transform.CenterX = 0.5;
+            transform.CenterY = 0.5;
+            transform.ScaleX = 1;
+            transform.ScaleY = 1;
+        }
     }
 }

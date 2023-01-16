@@ -35,9 +35,9 @@ namespace Models
             get { return _ip; }
         }
 
-        public SignalRLobbyService ChatService { get => _chatService; set => _chatService = value; }
+        public SignalRLobbyService? ChatService { get => _chatService; set => _chatService = value; }
 
-        public HubConnection Connection { get => _connection; set => _connection = value; }
+        public HubConnection? Connection { get => _connection; set => _connection = value; }
 
         public bool IsConnected
         {
@@ -76,7 +76,7 @@ namespace Models
             _client = new HttpClient();
             _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk").Build();
 
-            _chatService = new SignalRLobbyService(Connection);
+            _chatService = new SignalRLobbyService(_connection);
             _isConnected = false;
             _lobby = null;
         }
@@ -90,7 +90,7 @@ namespace Models
 
         public async Task Connect()
         {
-            await _connection.StartAsync().ContinueWith(async task =>
+            await _connection.StartAsync().ContinueWith(task =>
             {
                 if (task.Exception != null)
                 {

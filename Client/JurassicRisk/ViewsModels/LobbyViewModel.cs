@@ -1,6 +1,4 @@
-﻿using GalaSoft.MvvmLight.Threading;
-using JurassicRisk.observable;
-using JurassicRisk.Views;
+﻿using JurassicRisk.observable;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
 using Models.GameStatus;
@@ -21,19 +19,16 @@ namespace JurassicRisk.ViewsModels
     public class LobbyViewModel : Observable
     {
         #region Attributes
+        private string _lobbyNameTmp;
         private HubConnection _connection;
         private bool _isConnectedToLobby;
         private SignalRLobbyService _chatService;
-        readonly Dispatcher _dispatcher;
-        private Lobby _lobby;
+        private Lobby? _lobby;
         private bool _isConnected;
-
-        private string _errorMessage = string.Empty;
         #endregion
 
         #region Property
-
-        public Lobby Lobby
+        public Lobby? Lobby
         {
             get { return _lobby; }
             set
@@ -42,34 +37,14 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("Lobby");
             }
         }
-
-        public string ErrorMessage
-        {
-            get
-            {
-                return _errorMessage;
-            }
-            set
-            {
-                _errorMessage = value;
-                NotifyPropertyChanged(nameof(ErrorMessage));
-                NotifyPropertyChanged(nameof(HasErrorMessage));
-            }
-        }
-
-        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
-
-
-
         public bool IsConnectedToLobby { get => _isConnectedToLobby; set => _isConnectedToLobby = value; }
-
         #endregion
 
         #region Constructor
-
         public LobbyViewModel()
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
+            _lobby = null;
+            _lobbyNameTmp = "";
             _lobby = JurasicRiskGameClient.Get.Lobby;
 
             _isConnectedToLobby = false;
@@ -78,12 +53,9 @@ namespace JurassicRisk.ViewsModels
 
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
-            _chatService.PartieReceived += _chatService_PartieReceived; ;
+            _chatService.PartieReceived += _chatService_PartieReceived;
+
         }
-
-
-
-
         #endregion
 
         #region Requests
@@ -100,7 +72,6 @@ namespace JurassicRisk.ViewsModels
             _chatService.LobbyReceived += _chatService_LobbyReceived;
             _chatService.LobbyJoined += _chatService_LobbyJoined;
         }
-
 
         /// <summary>
         /// Create a Lobby
@@ -144,7 +115,7 @@ namespace JurassicRisk.ViewsModels
             {
                 await Connect();
             }
-
+            _lobbyNameTmp = lobbyName;
             Joueur joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, Teams.NEUTRE);
             await _chatService.JoinLobby(joueur, lobbyName, password);
 
@@ -162,6 +133,10 @@ namespace JurassicRisk.ViewsModels
             return true;
         }
 
+        /// <summary>
+        /// Check if player is ready
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> IsReady()
         {
 
@@ -177,13 +152,14 @@ namespace JurassicRisk.ViewsModels
         /// <returns></returns>
         public async Task<bool> SetTeam(Teams team)
         {
-            await _chatService.SetTeam(team, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
+            await _chatService.SetTeam(team, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, _lobby.Id);
+
             return true;
         }
 
         public async Task<bool> StartPartie(string lobbyName, string joueurName, string carteName)
         {
-            await _chatService.StartPartie(lobbyName,joueurName, carteName);
+            await _chatService.StartPartie(lobbyName, joueurName, carteName);
             return true;
         }
 
@@ -191,12 +167,15 @@ namespace JurassicRisk.ViewsModels
 
         #region Events
 
+
+
         private void _chatService_PartieReceived()
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new JeuPage());
-            });
+                JurassicRiskViewModel.Get.StartJeuPage();
+            }, DispatcherPriority.Render);
+
         }
 
         private void _chatService_Connected(string connectionId)
@@ -231,7 +210,7 @@ namespace JurassicRisk.ViewsModels
 
         private void _chatService_LobbyReceived(string lobbyJson)
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
@@ -241,7 +220,7 @@ namespace JurassicRisk.ViewsModels
 
         private void _chatService_LobbyJoined(string lobbyJson)
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 if (lobbyJson != "false")
                 {
