@@ -119,9 +119,9 @@ namespace JurassicRisk.Views
         }
 
         
-        private void FinTourButton_Click(object sender, RoutedEventArgs e)
+        private async void FinTourButton_Click(object sender, RoutedEventArgs e)
         {
-            JurassicRiskViewModel.Get.SendEndTurn();
+            await JurassicRiskViewModel.Get.SendEndTurn();
         }
 
         #endregion

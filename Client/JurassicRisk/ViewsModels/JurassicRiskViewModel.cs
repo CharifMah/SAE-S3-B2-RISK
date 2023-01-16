@@ -11,6 +11,7 @@ namespace JurassicRisk.ViewsModels
     public class JurassicRiskViewModel : observable.Observable
     {
         #region Attributes
+
         private bool _carteLoaded;
         private double _progression;
         private CarteViewModel? _carteVm;
@@ -24,6 +25,7 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Property
+
         public CarteViewModel? CarteVm { get => _carteVm; }
         public bool CarteLoaded { get => _carteLoaded; set => _carteLoaded = value; }
         public double Progress { get => _progression; set => _progression = value; }
@@ -40,6 +42,7 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged();
             }
         }
+
         #endregion
 
         #region Singleton
@@ -75,7 +78,7 @@ namespace JurassicRisk.ViewsModels
             {
                 case "placement":
                     {
-                        CarteVm.Tour = new TourPlacement();
+                        _carteVm.Tour = new TourPlacement();
                         break;
                     }
             }
