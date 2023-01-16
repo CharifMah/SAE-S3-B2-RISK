@@ -79,7 +79,11 @@ namespace JurassicRisk.ViewsModels
 
         private void _partieChatService_Deploiment(int idUnit, int idTerritoire)
         {
-            this._joueurVm.AddUnits(_joueurVm.Joueur.Units[idUnit], this._carteVm.Carte.GetTerritoire((idTerritoire)));
+            if (_joueurVm.Joueur.Units.Count > 0)
+            {
+                this._joueurVm.AddUnits(_joueurVm.Joueur.Units[idUnit], this._carteVm.Carte.GetTerritoire((idTerritoire)));
+            }
+           
         }
 
         private void _partieChatService_Disconnected()

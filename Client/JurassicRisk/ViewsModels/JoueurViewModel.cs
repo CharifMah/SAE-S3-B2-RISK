@@ -96,20 +96,24 @@ namespace JurassicRisk.ViewsModels
         /// <param name="territoire">le territoire</param>
         public void AddUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
         {
-            if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _joueur.AddUnits(UniteBases, territoire);
-                this._units.Remove(_selectedUnit);
-                if (_units.Count > 0)
-                    _selectedUnit = _units[0];
+                if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+                {
+                    _joueur.AddUnits(UniteBases, territoire);
+                    this._units.Remove(_selectedUnit);
+                    if (_units.Count > 0)
+                        _selectedUnit = _units[0];
 
-            }
-            else
-            {
-                MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
-            }
-            NotifyPropertyChanged("NombreTrp");
-            NotifyPropertyChanged("Units");
+                }
+                else
+                {
+                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
+                }
+                NotifyPropertyChanged("NombreTrp");
+                NotifyPropertyChanged("Units");
+            });
+
         }
 
         /// <summary>
@@ -119,20 +123,24 @@ namespace JurassicRisk.ViewsModels
         /// <param name="territoire">le territoire</param>
         public void AddUnits(IUnit UniteBases, ITerritoireBase territoire)
         {
-            if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _joueur.AddUnits(UniteBases, territoire);
-                this._units.Remove(_selectedUnit);
-                if (_units.Count > 0)
-                    _selectedUnit = _units[0];
 
-            }
-            else
-            {
-                MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
-            }
-            NotifyPropertyChanged("NombreTrp");
-            NotifyPropertyChanged("Units");
+                if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+                {
+                    _joueur.AddUnits(UniteBases, territoire);
+                    this._units.Remove(_selectedUnit);
+                    if (_units.Count > 0)
+                        _selectedUnit = _units[0];
+
+                }
+                else
+                {
+                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
+                }
+                NotifyPropertyChanged("NombreTrp");
+                NotifyPropertyChanged("Units");
+            });
         }
     }
 }

@@ -1,46 +1,44 @@
 ﻿using Models.Map;
+using Models.Player;
 
 namespace Models.GameStatus
 {
     public class Partie
     {
         #region Attributes
-        private Etat etat = null;
+        private int _playerIndex;
+
+        private List<Joueur> _joueurs;
 
         private Carte _carte;
 
+        private string _id;
         #endregion
 
         #region Property
         public Carte Carte { get => _carte; set => _carte = value; }
 
+        public List<Joueur> Joueurs
+        {
+            get { return _joueurs; }
+        }
+
+        public string Id { get => _id; set => _id = value; }
+        public int PlayerIndex { get => _playerIndex; }
         #endregion
 
         #region Constructor
 
-        public Partie(Etat etat, Carte carte)
+        public Partie(Carte carte, List<Joueur> joueurs, string id)
         {
-            TransitionTo(etat);
-            this.Carte = carte;
+            _carte = carte;
+            _joueurs = joueurs;
+            _id = id;
+
+            _playerIndex = -1;
         }
 
         #endregion
-
-        public void TransitionTo(Etat etat)
-        {
-            Console.WriteLine($"Context: Transition to {etat.GetType().Name}.");
-            this.etat = etat;
-            etat.SetContext(this);
-        }
-
-        public void PositionnerTroupe()
-        {
-            etat.PositionnerTroupe();
-        }
-
-        public void FinDeTour()
-        {
-            etat.FinDeTour();
-        }
+      
     }
 }
