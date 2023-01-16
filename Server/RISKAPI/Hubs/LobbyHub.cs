@@ -65,7 +65,7 @@ namespace RISKAPI.Hubs
         {
             Joueur? joueur = JsonConvert.DeserializeObject<Joueur>(joueurJson);
             Console.WriteLine($"{joueur.Profil.Pseudo} try to Join {lobbyName}");
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
                 RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
@@ -202,7 +202,12 @@ namespace RISKAPI.Hubs
                     {
                         Console.WriteLine($"{joueurName} try to Start the game");
                         lobby.Partie = new Partie(carte, lobby.Joueurs, lobby.Id);
-                        JurasicRiskGameServer.Get.Lobbys.Add(lobby);
+                        List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
+                        if (lobbyList.Find(l => l.Id == lobby.Id) == null)
+                        {
+                            lobbyList.Add(lobby);
+                        }
+            
                         foreach (Joueur j in lobby.Joueurs)
                         {
                             await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");

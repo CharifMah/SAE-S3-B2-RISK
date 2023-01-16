@@ -7,7 +7,7 @@ using RISKAPI.Services;
 
 namespace RISKAPI.Controllers
 {
-    [Route("Lobbys")]
+    [Route("Lobby")]
     [ApiController]
     public class LobbyController : Controller
     {

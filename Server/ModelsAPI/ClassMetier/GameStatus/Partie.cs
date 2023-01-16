@@ -66,7 +66,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         public void Transition()
         {
-            this.etat = etat.TransitionTo(Joueurs);
+            this.etat = etat.TransitionTo(this._joueurs, this._carte);
         }
     }
 }
