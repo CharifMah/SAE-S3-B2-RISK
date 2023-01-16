@@ -12,6 +12,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
     public class Partie
     {
         #region Attributes
+        private int _playerIndex;
 
         private Etat etat = null;
 
@@ -43,13 +44,20 @@ namespace ModelsAPI.ClassMetier.GameStatus
             this._joueurs = joueurs;
             this._id = id;
             this.etat = new Deploiment();
+            _playerIndex = 0;
         }
 
         #endregion
 
+        private void NextPlayer()
+        {
+            _playerIndex++;
+            _playerIndex %= _joueurs.Count;
+        }
+
         public void Action()
         {
-            etat.Action(this._carte,this._joueurs);
+            etat.Action(this._carte, this._joueurs[_playerIndex]);
         }
     }
 }

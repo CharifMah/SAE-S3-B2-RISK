@@ -25,13 +25,7 @@ namespace Models.GameStatus
         {
             // PlaceUnits();
         }
-        public void PlaceUnits(List<IUnit> unitToPlace, Joueur _joueur)
-        {
-            if (_joueur.Units.Count > 0)
-            {
-                _joueur.AddUnits(unitToPlace, JurasicRiskGameClient.Get.Lobby.Partie.Carte.SelectedTerritoire);
-            }
-        }
+       
 
         public void SetContext(Partie partie)
         {

@@ -8,7 +8,7 @@ using Stockage.Converters;
 namespace ModelsAPI.ClassMetier.Player
 {
     [Document(StorageType = StorageType.Json, Prefixes = new[] { "Joueur" })]
-    public class Joueur : IGestionTroupe
+    public class Joueur
     {
         #region Attribute
         private bool _isReady;
@@ -80,7 +80,7 @@ namespace ModelsAPI.ClassMetier.Player
 
         #endregion
 
-        public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
+        private void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
             if (unites.Count > 0 && (_team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
@@ -97,9 +97,27 @@ namespace ModelsAPI.ClassMetier.Player
             }
         }
 
-        public void AddUnit(IUnit unit)
+        public void AddUnits(IUnit unit, ITerritoireBase territoire)
         {
             _units.Add(unit);
+            territoire.AddUnit(unit);
+            territoire.Team = _team;
+        }
+
+        public void PlaceUnits(List<IUnit> unitToPlace, ITerritoireBase territoire)
+        {
+            if (this._units.Count > 0)
+            {
+                this.AddUnits(unitToPlace, territoire);
+            }
+        }
+
+        public void PlaceUnits(IUnit unitToPlace, ITerritoireBase territoire)
+        {
+            if (this._units.Count > 0)
+            {
+                this.AddUnits(unitToPlace, territoire);
+            }
         }
 
         public void RemoveUnit(IUnit unit)
