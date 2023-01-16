@@ -74,6 +74,12 @@ namespace JurassicRisk.ViewsModels
             _partieChatService.EndTurn += _chatService_EndTurn;
             _partieChatService.Connected += _partieChatService_Connected; ;
             _partieChatService.Disconnected += _partieChatService_Disconnected; ;
+            _partieChatService.Deploiment += _partieChatService_Deploiment;
+        }
+
+        private void _partieChatService_Deploiment(int idUnit, int idTerritoire)
+        {
+            this._joueurVm.AddUnits(_joueurVm.Joueur.Units[idUnit], this._carteVm.Carte.GetTerritoire((idTerritoire)));
         }
 
         private void _partieChatService_Disconnected()
@@ -129,7 +135,6 @@ namespace JurassicRisk.ViewsModels
             await _partieChatService.ExitPartie();
             return true;
         }
-
         private void DrawEnd()
         {
             Application.Current.Dispatcher.Invoke(() =>

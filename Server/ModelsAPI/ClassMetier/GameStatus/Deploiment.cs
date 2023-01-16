@@ -6,10 +6,20 @@ namespace ModelsAPI.ClassMetier.GameStatus
 {
     public class Deploiment : Etat
     {
+        private int idTerritoireUpdate;
+        private int idUniteRemove;
+
+        public int IdTerritoireUpdate { get => idTerritoireUpdate; set => idTerritoireUpdate = value; }
+        public int IdUniteRemove { get => idUniteRemove; set => idUniteRemove = value; }
+
         public void Action(Carte carte, Joueur joueur, List<int> unitIndex)
         {
-            if (unitIndex.Count == 1)
+            if (unitIndex.Count == 1 && carte.SelectedTerritoire.Team == Teams.NEUTRE)
+            {
                 joueur.PlaceUnits(joueur.Units[unitIndex[0]], carte.SelectedTerritoire);
+                this.idTerritoireUpdate = carte.SelectedTerritoire.ID;
+                this.idUniteRemove = unitIndex[0];
+            }
         }
 
         public Etat TransitionTo(List<Joueur> joueurs, Carte carte)

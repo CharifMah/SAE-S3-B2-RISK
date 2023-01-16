@@ -52,7 +52,13 @@ namespace RISKAPI.Hubs
         {
             Partie p = JurasicRiskGameServer.Get.Lobbys.First(l => l.Id == lobbyName).Partie;
             p.Action(unitlist);
-
+            switch (p.Etat.ToString())
+            {
+                case "Deploiment":
+                    Deploiment d = (p.Etat as Deploiment);
+                    await Clients.Client(Context.ConnectionId).SendAsync("deploiment",d.IdUniteRemove, d.IdTerritoireUpdate);
+                    break;
+            }
         }
 
         public async Task SetSelectedTerritoire(string lobbyName, int ID)
