@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
@@ -65,7 +64,9 @@ namespace RISKAPI.Hubs
         {
             Joueur? joueur = JsonConvert.DeserializeObject<Joueur>(joueurJson);
             Console.WriteLine($"{joueur.Profil.Pseudo} try to Join {lobbyName}");
+
             string key = $"Lobbys:{lobbyName}";
+
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
                 RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
@@ -81,8 +82,16 @@ namespace RISKAPI.Hubs
                             lobby.JoinLobby(joueur);
                             await _lobby.UpdateAsync(lobby);
                             await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
-                            Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
-
+                            List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
+                            if (lobbyList.Find(l => l.Id == lobby.Id) == null)
+                            {
+                                lobbyList.Add(lobby);
+                            }
+                            else
+                            {
+                                Lobby l = lobbyList.Find(l => l.Id == lobby.Id);
+                                l = lobby;
+                            }
                             await RefreshLobbyToClients(lobbyName);
                         }
                         else
@@ -159,26 +168,44 @@ namespace RISKAPI.Hubs
             }
         }
 
-        public async Task ExitLobby()
+        public async Task ExitLobby(string joueurName,string lobbyName)
         {
-
-
-            object[]? l = (Context.Items.First(x => x.Key == Context.ConnectionId).Value as object[]);
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            Console.ForegroundColor = ConsoleColor.White;
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyName);
             try
             {
-                Lobby? lobby = await GetLobby((l[0] as Lobby).Id);
+                Lobby lobby = null;
+                Joueur joueur = null;
+                foreach (Lobby p in JurasicRiskGameServer.Get.Lobbys)
+                {
+                    if (p.Id == lobbyName)
+                    {
+                        lobby = p;
+                        break;
+                    }
+                }
                 if (lobby != null)
                 {
-                    lobby.ExitLobby((l[1] as Joueur));
+                    Joueur j = lobby.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
+                    if (j != null)
+                    {
+                        lobby.Joueurs.Remove(j);
+                        await _lobby.UpdateAsync(lobby);
+                        await RefreshLobbyToClients(lobbyName);
+                        Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"there is {lobby.Joueurs.Count} in the lobby {lobby.Id}");
+                    }
+                    
                 }
-                await SendLobby(JsonConvert.SerializeObject(lobby));
-                await _lobby.UpdateAsync(lobby);
-                Context.Items.Remove(Context.ConnectionId);
-                Console.WriteLine($"the player {(l[1] as Joueur).Profil.Pseudo} as succeffuluy leave the lobby {(l[0] as Lobby).Id}");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine($"Failed to leave the lobby '{(l[0] as Lobby).Id}'");
+                Console.WriteLine($"Failed to leave the lobby {e.Message}");
             }
         }
 
@@ -199,19 +226,24 @@ namespace RISKAPI.Hubs
                     if (lobby.Owner == joueurName)
                     {
                         Console.WriteLine($"{joueurName} try to Start the game");
-                        lobby.Partie = new Partie(carte, lobby.Joueurs, lobby.Id);
-                        List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
-                        if (lobbyList.Find(l => l.Id == lobby.Id) == null)
+
+                        //Create Partie For the Server
+                        Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
+
+                        List<Partie> partieList = JurasicRiskGameServer.Get.Parties;
+                        if (partieList.Find(partie => partie.Id == p.Id) == null)
                         {
-                            lobbyList.Add(lobby);
+                            partieList.Add(p);
                         }
-            
+
+
+
                         foreach (Joueur j in lobby.Joueurs)
                         {
                             await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
                         }
-                        await Clients.Client(lobby.Joueurs[lobby.Partie.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn",lobby.Partie.Etat.ToString());
-                        await ExitLobby();
+                        await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
+                        await ExitLobby(joueurName,partieName);
                     }
                 }
                 catch (Exception e)
@@ -228,7 +260,7 @@ namespace RISKAPI.Hubs
             Dictionary<string, ITerritoireBase> territoires = new Dictionary<string, ITerritoireBase>();
             for (int i = 0; i < 41; i++)
             {
-                territoires.Add(i.ToString(), new TerritoireBase(i,null));
+                territoires.Add(i.ToString(), new TerritoireBase(i, null));
             }
             List<IContinent> _continents = new List<IContinent>
             {
@@ -275,7 +307,7 @@ namespace RISKAPI.Hubs
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            await ExitLobby();
+
             await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");

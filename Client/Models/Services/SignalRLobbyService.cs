@@ -65,16 +65,9 @@ namespace Models.Services
             await _connection.SendAsync("JoinLobby", joueurJson, lobbyName, password);
         }
 
-        public async Task ExitLobby()
+        public async Task ExitLobby(string joueurName,string id)
         {
-            try
-            {
-                await _connection.SendAsync("ExitLobby");
-            }
-            catch (InvalidOperationException e)
-            {
-                MessageBox.Show("Disconnected From The Server\n" + e.Message);
-            }
+            await _connection.SendAsync("ExitLobby", joueurName, id); 
         }
 
         public async Task SetTeam(Teams teams, string pseudo, string lobbyId)

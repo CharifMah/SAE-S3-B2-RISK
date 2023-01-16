@@ -20,7 +20,6 @@ namespace JurassicRisk.ViewsModels
     public class LobbyViewModel : Observable
     {
         #region Attributes
-        private string _lobbyNameTmp;
         private HubConnection _connection;
         private bool _isConnectedToLobby;
         private SignalRLobbyService _chatService;
@@ -45,7 +44,6 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _lobby = null;
-            _lobbyNameTmp = "";
             _lobby = JurasicRiskGameClient.Get.Lobby;
 
             _isConnectedToLobby = false;
@@ -116,7 +114,6 @@ namespace JurassicRisk.ViewsModels
             {
                 await Connect();
             }
-            _lobbyNameTmp = lobbyName;
             Joueur joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, Teams.NEUTRE);
             await _chatService.JoinLobby(joueur, lobbyName, password);
 
@@ -129,7 +126,22 @@ namespace JurassicRisk.ViewsModels
         /// <returns></returns>
         public async Task<bool> ExitLobby()
         {
-            await _chatService.ExitLobby();
+            try
+            {
+                if (_lobby != null)
+                {
+                    await _chatService.ExitLobby(JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo,_lobby.Id);
+                }
+                else
+                {
+                    MessageBox.Show("Disconnected From The Server\n");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Disconnected From The Server\n" + e.Message);
+            }
+
             return true;
         }
 

@@ -82,7 +82,7 @@ namespace ModelsAPI.ClassMetier.Player
 
         private void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
-            if (unites.Count > 0 && (_team == territoire.Team || territoire.Team == Teams.NEUTRE))
+            if ((_team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
                 foreach (var unit in unites)
                 {
@@ -97,7 +97,7 @@ namespace ModelsAPI.ClassMetier.Player
             }
         }
 
-        public void AddUnits(IUnit unit, ITerritoireBase territoire)
+        private void AddUnits(IUnit unit, ITerritoireBase territoire)
         {
             if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
             {

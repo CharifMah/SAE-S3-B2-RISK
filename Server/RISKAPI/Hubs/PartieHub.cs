@@ -17,83 +17,87 @@ namespace RISKAPI.Hubs
             _provider = provider;
         }
 
-        public async Task EndTurn(string lobbyName, string joueurName)
+        public async Task EndTurn(string partieName, string joueurName)
         {
-            Lobby lobby = null;
-            Joueur joueur = null;
-            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+            Partie partie = null;
+            foreach (Partie l in JurasicRiskGameServer.Get.Parties)
             {
-                if (l.Id == lobbyName)
+                if (l.Id == partieName)
                 {
-                    lobby = l;
+                    partie = l;
                     break;
                 }
             }
-            if (lobby != null && lobby.Partie.Joueurs[lobby.Partie.PlayerIndex].Profil.Pseudo == joueurName)
+            if (partie != null && partie.Joueurs[partie.PlayerIndex].Profil.Pseudo == joueurName)
             {
-                joueur = lobby.Partie.Joueurs[lobby.Partie.NextPlayer()];
-                lobby.Partie.Transition();
-                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", lobby.Partie.Etat.ToString());
+                Joueur joueur = partie.Joueurs[partie.NextPlayer()];
+                partie.Transition();
+                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", partie.Etat.ToString());
                 Console.WriteLine($"c'est au tour de {joueur.Profil.Pseudo}");
             }
             else
             {
-                Console.WriteLine($"{joueurName} essaye de finir le tour alors que c'est au tour de {lobby.Partie.Joueurs[lobby.Partie.PlayerIndex].Profil.Pseudo}");
+                Console.WriteLine($"{joueurName} essaye de finir le tour alors que c'est au tour de {partie.Joueurs[partie.PlayerIndex].Profil.Pseudo}");
             }
         }
 
-        public async Task Action(string lobbyName, List<int> unitlist)
+        public async Task Action(string partieName, List<int> unitlist)
         {
-            Partie p = JurasicRiskGameServer.Get.Lobbys.First(l => l.Id == lobbyName).Partie;
+            Partie p = JurasicRiskGameServer.Get.Parties.First(l => l.Id == partieName);
             p.Action(unitlist);
+
             switch (p.Etat.ToString())
             {
                 case "Deploiment":
                     Deploiment d = (p.Etat as Deploiment);
+                    if (d.IdUniteRemove != null && d.IdTerritoireUpdate != null && p.PlayerIndex != -1)
+                    {                     
+                        await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
 
-                    await Clients.Group(lobbyName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
-
-                    Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
+                        Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
+                    }
+                   
                     break;
             }
         }
 
-        public async Task SetSelectedTerritoire(string lobbyName, int ID)
+        public async Task SetSelectedTerritoire(string partieName, int ID)
         {
-            Partie p = JurasicRiskGameServer.Get.Lobbys.First(l => l.Id == lobbyName).Partie;
+            Partie p = JurasicRiskGameServer.Get.Parties.First(partie => partie.Id == partieName);
             p.Carte.SelectedTerritoire = p.Carte.GetTerritoire(ID);
+            Console.WriteLine("Selected Territoire set to " + ID);
         }
 
-        public async Task ConnectedPartie(string lobbyName, string joueurName)
+        public async Task ConnectedPartie(string partieName, string joueurName)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, lobbyName);           
+            await Groups.AddToGroupAsync(Context.ConnectionId, partieName);           
         }
 
-        public async Task ExitPartie(string lobbyName)
+        public async Task ExitPartie(string partieName)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyName);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, partieName);
             try
             {
-                Lobby lobby = null;
-                Joueur joueur = null;
-                foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+                Partie partie = null;
+
+                foreach (Partie p in JurasicRiskGameServer.Get.Parties)
                 {
-                    if (l.Id == lobbyName)
+                    if (p.Id == partieName)
                     {
-                        lobby = l;
+                        partie = p;
                         break;
                     }
                 }
-                Joueur j = lobby.Partie.Joueurs.Find(j => j.Profil.ConnectionId == Context.ConnectionId);
-                if (lobby != null)
+                if (partie != null)
                 {
-                    lobby.Partie.Joueurs.Remove(j);
-                }
-                Context.Items.Remove(Context.ConnectionId);
-                Console.WriteLine($"the player ??? as succeffuluy leave the party ???");
+                    Joueur j = partie.Joueurs.Find(j => j.Profil.ConnectionId == Context.ConnectionId);
+                    partie.ExitPartie(j);
+                    Context.Items.Remove(Context.ConnectionId);
+                    Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");
+                }         
             }
             catch (Exception)
             {

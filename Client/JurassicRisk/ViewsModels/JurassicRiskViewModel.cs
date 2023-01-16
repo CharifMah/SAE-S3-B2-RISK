@@ -1,5 +1,6 @@
 using JurassicRisk.Views;
 using Models;
+using Models.GameStatus;
 using Models.Services;
 using Models.Tours;
 using System;
@@ -12,6 +13,7 @@ namespace JurassicRisk.ViewsModels
     public class JurassicRiskViewModel : observable.Observable
     {
         #region Attributes
+        private Partie? _partie;
         private bool _isConnected;
         private bool _carteLoaded;
         private double _progression;
@@ -44,6 +46,7 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged();
             }
         }
+        public Partie? Partie { get => _partie; set => _partie = value; }
 
         #endregion
 
@@ -74,42 +77,54 @@ namespace JurassicRisk.ViewsModels
             _partieChatService.EndTurn += _chatService_EndTurn;
             _partieChatService.Connected += _partieChatService_Connected; ;
             _partieChatService.Disconnected += _partieChatService_Disconnected; ;
-            _partieChatService.Deploiment += _partieChatService_Deploiment;
+
         }
 
 
         #endregion
 
-        private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
-        {
-            if (_lobbyVm.Lobby.Joueurs[playerIndex].Units.Count > 0)
-            {
-                _lobbyVm.Lobby.Joueurs[playerIndex].AddUnits(_lobbyVm.Lobby.Joueurs[playerIndex].Units[idUnit], this._carteVm.Carte.GetTerritoire((idTerritoire)));
+        #region Request
 
-            }
+        public async Task SendEndTurn()
+        {
+            await _partieChatService.SendEndTurn(this._lobbyVm.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
         }
 
-        private void _partieChatService_Disconnected()
+        /// <summary>
+        /// Exit actual Lobby
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> ExitPartie()
         {
-            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null)
-                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = String.Empty;
-
-            _isConnected = false;
+            await _partieChatService.ExitPartie();
+            return true;
         }
 
-        private async void _partieChatService_Connected(string connectionId)
+        #endregion
+
+        #region Delegate
+
+        private void Progression(double taux)
         {
-            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionId != String.Empty)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
-                _isConnected = true;
-            }
-            else
-            {
-                _isConnected = false;
-            }
-            await _partieChatService.ConnectedPartie(this._lobbyVm.Lobby.Id, this._joueurVm.Joueur.Profil.Pseudo);
+                _progression = taux;
+                NotifyPropertyChanged("Progress");
+            }, DispatcherPriority.Render);
         }
+
+        private void DrawEnd()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _carteLoaded = true;
+                NotifyPropertyChanged("CarteLoaded");
+            }, DispatcherPriority.Render);
+        }
+
+        #endregion<
+
+        #region Events
 
         public void _chatService_YourTurn(string turnType)
         {
@@ -128,41 +143,38 @@ namespace JurassicRisk.ViewsModels
             //new tourAttente
         }
 
-        public async Task SendEndTurn()
+        private async void _partieChatService_Connected(string connectionId)
         {
-            await _partieChatService.SendEndTurn(this._lobbyVm.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
+            await this._lobbyVm.ExitLobby();
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionId != String.Empty)
+            {
+                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
+                _isConnected = true;
+            }
+            else
+            {
+                _isConnected = false;
+            }
+            await _partieChatService.ConnectedPartie(this._lobbyVm.Lobby.Id, this._joueurVm.Joueur.Profil.Pseudo);
         }
 
-        /// <summary>
-        /// Exit actual Lobby
-        /// </summary>
-        /// <returns></returns>
-        public async Task<bool> ExitPartie()
+      
+
+        private void _partieChatService_Disconnected()
         {
-            await _partieChatService.ExitPartie();
-            return true;
-        }
-        private void DrawEnd()
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                _carteLoaded = true;
-                NotifyPropertyChanged("CarteLoaded");
-            }, DispatcherPriority.Render);
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null)
+                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = String.Empty;
+
+            _isConnected = false;
         }
 
-        private void Progression(double taux)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                _progression = taux;
-                NotifyPropertyChanged("Progress");
-            }, DispatcherPriority.Render);
-        }
+        #endregion
 
         public void StartJeuPage()
         {
             _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
+            Lobby l = JurasicRiskGameClient.Get.Lobby;
+            _partie = new Partie(_carteVm.Carte, l.Joueurs, l.Id);
             (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
         }
 

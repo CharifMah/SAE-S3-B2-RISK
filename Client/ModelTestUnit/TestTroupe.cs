@@ -62,15 +62,6 @@ namespace ModelTestUnit
 
             Carte carte = new Carte(map,t1);
             
-            Partie p = new Partie(new Placement(),carte);
-            
-            Lobby l = new Lobby();
-            l.Partie= p;
-
-            JurasicRiskGameClient.Get.Lobby = l;
-            
-            JurasicRiskGameClient.Get.Lobby.Partie.Carte = carte;
-
             t1.Team = Teams.VERT;
             Joueur j1 = new Joueur(new Profil("test", "qsd"), Teams.NEUTRE);
             j1.Team = Teams.VERT;

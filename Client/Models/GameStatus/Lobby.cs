@@ -5,9 +5,6 @@ namespace Models.GameStatus
     public class Lobby
     {
         #region Attributes
-
-        private Partie? _partie;
-
         private string _id;
         private string? _password;
         private List<Joueur> _joueurs;
@@ -50,8 +47,6 @@ namespace Models.GameStatus
         {
             get { return _joueurs; }
         }
-
-        public Partie? Partie { get => _partie; set => _partie = value; }
 
         public string? Owner
         {

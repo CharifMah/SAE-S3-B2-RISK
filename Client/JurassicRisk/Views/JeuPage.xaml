@@ -43,6 +43,26 @@
         </Viewbox>
 
 
+        <StackPanel Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20">
+
+            <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=Lobby.Owner, Mode=OneWay , StringFormat={}Owner: {0}}"/>
+
+            <ListBox x:Name="ListPlayer" ItemsSource="{Binding Partie.Joueurs}" Grid.Column="3" Style="{StaticResource CustomListBox}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource FruitDays}" FontSize="20" >
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{} {0} : {1} {2}">
+                                    <Binding Path="Profil.Pseudo" Mode="OneWay"/>
+                                    <Binding Path="Team" Mode="OneWay" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
         <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" ItemsSource="{Binding JoueurVm.Units}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

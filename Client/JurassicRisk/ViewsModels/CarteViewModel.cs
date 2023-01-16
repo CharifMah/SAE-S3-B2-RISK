@@ -76,6 +76,11 @@ namespace JurassicRisk.ViewsModels
             {
                 return _carte;
             }
+            set
+            {
+                _carte = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public ITour Tour { get => tour; set => tour = value; }

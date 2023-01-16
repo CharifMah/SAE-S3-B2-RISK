@@ -1,8 +1,12 @@
-﻿using Models.Exceptions;
+﻿using Models;
+using Models.Exceptions;
+using Models.GameStatus;
 using Models.Map;
 using Models.Player;
+using Models.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using IUnit = Models.Units.IUnit;
@@ -12,6 +16,7 @@ namespace JurassicRisk.ViewsModels
     public class JoueurViewModel : observable.Observable
     {
         #region Attributes
+        private SignalRPartieService _partieChatService;
         private string _isReady;
         private Joueur _joueur;
         private ObservableCollection<IUnit> _units;
@@ -85,9 +90,12 @@ namespace JurassicRisk.ViewsModels
             _joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, teams);
             _units = new ObservableCollection<IUnit>(_joueur.Units);
             _selectedUnit = _units[0];
-
+            _partieChatService = JurasicRiskGameClient.Get.PartieChatService;
+            _partieChatService.Deploiment += _partieChatService_Deploiment;
             NotifyPropertyChanged("Units");
         }
+
+
 
         /// <summary>
         /// Ajoute des Unites a un territoire
@@ -100,11 +108,10 @@ namespace JurassicRisk.ViewsModels
             {
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
-                    _joueur.AddUnits(UniteBases, territoire);
+                    _joueur.PlaceUnits(UniteBases, territoire);
                     this._units.Remove(_selectedUnit);
                     if (_units.Count > 0)
                         _selectedUnit = _units[0];
-
                 }
                 else
                 {
@@ -113,7 +120,6 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("NombreTrp");
                 NotifyPropertyChanged("Units");
             });
-
         }
 
         /// <summary>
@@ -121,18 +127,16 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="UniteBases">Les unite a ajouter</param>
         /// <param name="territoire">le territoire</param>
-        public void AddUnits(IUnit UniteBases, ITerritoireBase territoire)
+        public void AddUnits(IUnit Unit, ITerritoireBase territoire)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
-                    _joueur.AddUnits(UniteBases, territoire);
+                    _joueur.PlaceUnits(Unit, territoire);
                     this._units.Remove(_selectedUnit);
                     if (_units.Count > 0)
                         _selectedUnit = _units[0];
-
                 }
                 else
                 {
@@ -141,6 +145,27 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("NombreTrp");
                 NotifyPropertyChanged("Units");
             });
+
         }
+
+
+
+
+        #region Events
+        private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
+        {
+            Partie partie = JurassicRiskViewModel.Get.Partie;
+            Carte carte = JurassicRiskViewModel.Get.CarteVm.Carte;
+            if (partie.Joueurs[playerIndex].Profil.Pseudo != _joueur.Profil.Pseudo)
+            {
+                partie.Joueurs[playerIndex].PlaceUnits(partie.Joueurs[playerIndex].Units[idUnit], carte.GetTerritoire(idTerritoire));
+            }
+            else
+            {
+                AddUnits(_selectedUnit, carte.GetTerritoire(idTerritoire));
+            }
+        }
+        #endregion
+
     }
 }

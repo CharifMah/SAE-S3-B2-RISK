@@ -78,9 +78,9 @@ namespace Models.Player
 
         #endregion
 
-        public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
+        private void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
-            if (unites.Count > 0 && (_team == territoire.Team || territoire.Team == Teams.NEUTRE))
+            if ((_team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
                 foreach (var unit in unites)
                 {
@@ -95,7 +95,7 @@ namespace Models.Player
             }
         }
 
-        public void AddUnits(IUnit unit, ITerritoireBase territoire)
+        private void AddUnits(IUnit unit, ITerritoireBase territoire)
         {
             if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
             {
@@ -107,6 +107,22 @@ namespace Models.Player
                     territoire.Team = _team;
 
                 }
+            }
+        }
+
+        public void PlaceUnits(List<IUnit> unitToPlace, ITerritoireBase territoire)
+        {
+            if (this._units.Count > 0)
+            {
+                this.AddUnits(unitToPlace, territoire);
+            }
+        }
+
+        public void PlaceUnits(IUnit unitToPlace, ITerritoireBase territoire)
+        {
+            if (this._units.Count > 0)
+            {
+                this.AddUnits(unitToPlace, territoire);
             }
         }
 

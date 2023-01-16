@@ -8,7 +8,9 @@ namespace Models
     public class JurasicRiskGameClient
     {
         #region Attributes
+
         private Lobby? _lobby;
+        private Partie? _partie;
         private HttpClient _client;
         private string _ip;
         private HubConnection _connectionLobby;
@@ -73,7 +75,7 @@ namespace Models
             }
         }
 
-
+        public Partie? Partie { get => _partie; set => _partie = value; }
 
         private JurasicRiskGameClient()
         {
