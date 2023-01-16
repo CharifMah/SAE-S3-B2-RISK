@@ -96,6 +96,8 @@ namespace JurassicRisk.ViewsModels
             await _partieChatService.SendEndTurn(this._lobbyVm.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
         }
 
+
+
         private void DrawEnd()
         {
             Application.Current.Dispatcher.Invoke(() =>

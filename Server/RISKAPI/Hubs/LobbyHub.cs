@@ -65,7 +65,7 @@ namespace RISKAPI.Hubs
         {
             Joueur? joueur = JsonConvert.DeserializeObject<Joueur>(joueurJson);
             Console.WriteLine($"{joueur.Profil.Pseudo} try to Join {lobbyName}");
-            string key = $"Lobbys:{lobbyName}";
+            string key = $"Lobby:{lobbyName}";
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
                 RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);

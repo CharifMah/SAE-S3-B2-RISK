@@ -44,7 +44,8 @@ namespace ModelsAPI.ClassMetier.GameStatus
             this._carte = carte;
             this._joueurs = joueurs;
             this._id = id;
-            this.etat = null;
+            this.etat = new Deploiment();
+
             _playerIndex = -1;
         }
 
