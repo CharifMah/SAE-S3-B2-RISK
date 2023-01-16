@@ -2,6 +2,7 @@ using JurassicRisk.Views;
 using Models;
 using Models.Services;
 using Models.Tours;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -11,7 +12,7 @@ namespace JurassicRisk.ViewsModels
     public class JurassicRiskViewModel : observable.Observable
     {
         #region Attributes
-
+        private bool _isConnected;
         private bool _carteLoaded;
         private double _progression;
         private CarteViewModel? _carteVm;
@@ -71,6 +72,29 @@ namespace JurassicRisk.ViewsModels
             _partieChatService = JurasicRiskGameClient.Get.PartieChatService;
             _partieChatService.YourTurn += _chatService_YourTurn;
             _partieChatService.EndTurn += _chatService_EndTurn;
+            _partieChatService.Connected += _partieChatService_Connected; ;
+            _partieChatService.Disconnected += _partieChatService_Disconnected; ;
+        }
+
+        private void _partieChatService_Disconnected()
+        {
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null)
+                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = String.Empty;
+
+            _isConnected = false;
+        }
+
+        private void _partieChatService_Connected(string connectionId)
+        {
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionId != String.Empty)
+            {
+                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
+                _isConnected = true;
+            }
+            else
+            {
+                _isConnected = false;
+            }
         }
         #endregion
 

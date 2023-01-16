@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
-using Models.GameStatus;
-using Models.Player;
-using Models.Units;
-using Newtonsoft.Json;
 
 namespace Models.Services
 {
@@ -13,6 +9,8 @@ namespace Models.Services
 
         public event Action<string> YourTurn;
         public event Action EndTurn;
+        public event Action<string> Connected;
+        public event Action Disconnected;
 
         /// <summary>
         /// SignalRPartieService
@@ -23,6 +21,9 @@ namespace Models.Services
             _connection = connection;
             _connection.On<string>("yourTurn", (turnType) => YourTurn?.Invoke(turnType));
             _connection.On("endTurn", () => EndTurn?.Invoke());
+            _connection.On<string>("connected", (connexionId) => Connected?.Invoke(connexionId));
+            _connection.On("disconnected", () => Disconnected?.Invoke());
+
         }
 
         public async Task SendEndTurn(string lobbyName, string joueurName)

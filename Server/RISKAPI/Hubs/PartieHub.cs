@@ -33,12 +33,16 @@ namespace RISKAPI.Hubs
                     break;
                 }
             }
-            if (lobby != null)
+            if (lobby != null && lobby.Partie.Joueurs[lobby.Partie.PlayerIndex].Profil.Pseudo == joueurName)
             {
                 joueur = lobby.Partie.Joueurs[lobby.Partie.NextPlayer()];
                 lobby.Partie.Transition();
                 await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", lobby.Partie.Etat.ToString());
                 Console.WriteLine($"c'est au tour de {joueur.Profil.Pseudo}");
+            }
+            else
+            {
+                Console.WriteLine($"{joueurName} essaye de finir le tour alors que c'est au tour de {lobby.Partie.Joueurs[lobby.Partie.PlayerIndex].Profil.Pseudo}");
             }
         }
 
@@ -52,6 +56,23 @@ namespace RISKAPI.Hubs
         {
             Partie p = JurasicRiskGameServer.Get.Lobbys.First(l => l.Id == lobbyName).Partie;
             p.Carte.SelectedTerritoire = p.Carte.GetTerritoire(ID);
+            Console.WriteLine($"Territoire selectionée {p.Carte.SelectedTerritoire.ID} par {p.Joueurs.Find(j => j.Profil.ConnectionId == Context.ConnectionId).Profil.Pseudo}");
         }
+
+        #region Override
+        public override async Task OnConnectedAsync()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
+            await base.OnDisconnectedAsync(exception);
+        }
+        #endregion
     }
 }

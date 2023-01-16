@@ -23,16 +23,24 @@ namespace Stockage
         /// <Author>Charif</Author>
         public void Sauver<T>(T data, string FileName)
         {
-            if (Directory.Exists(_path))
+            try
+            {
+                if (Directory.Exists(_path))
+                {
+
+                    if (File.Exists(Path.Combine(_path, $"{FileName}.json")))
+                    {
+                        File.Delete(Path.Combine(_path, $"{FileName}.json"));
+                    }
+
+                    var jsonString = JsonConvert.SerializeObject(data, _options);
+                    File.WriteAllText(Path.Combine(_path, $"{FileName}.json"), jsonString);
+                }
+            }
+            catch (Exception)
             {
 
-                if (File.Exists(Path.Combine(_path, $"{FileName}.json")))
-                {
-                    File.Delete(Path.Combine(_path, $"{FileName}.json"));
-                }
-
-                var jsonString = JsonConvert.SerializeObject(data, _options);
-                File.WriteAllText(Path.Combine(_path, $"{FileName}.json"), jsonString);
+                
             }
         }
     }

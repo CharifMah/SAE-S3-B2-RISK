@@ -35,6 +35,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public Etat Etat { get { return etat; } }
 
         public string Id { get => _id; set => _id = value; }
+        public int PlayerIndex { get => _playerIndex;}
         #endregion
 
         #region Constructor
