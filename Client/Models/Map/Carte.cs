@@ -85,5 +85,20 @@ namespace Models.Map
             }
             return res;
         }
+
+        public ITerritoireBase GetTerritoire(int ID)
+        {
+            foreach (Continent continent in _dicoContinents.Values)
+            {
+                foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                {
+                    if (territoire.ID == ID)
+                    {
+                        return territoire;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }
