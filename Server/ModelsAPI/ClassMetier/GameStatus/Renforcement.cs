@@ -4,25 +4,32 @@ using ModelsAPI.ClassMetier.Units;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
-    public class Deploiment : Etat
+    public class Renforcement : Etat
     {
-        public void Action(Carte carte, Joueur joueur, List<int> unitIndex)
+
+        public void Action(Carte carte, Joueur joueur, List<int> unitList)
         {
-            if (unitIndex.Count == 1)
-                joueur.PlaceUnits(joueur.Units[unitIndex[0]], carte.SelectedTerritoire);
+            throw new NotImplementedException();
         }
 
         public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
         {
+            int nbTroupe = 0;
             Etat etatSuivant;
-            if (carte.GetNombreTerritoireOccupe <= 0)
+            foreach(Joueur j in joueurs)
             {
-                etatSuivant = new Renforcement();
+                if (j.Units.Count <= 0)
+                {
+                    nbTroupe++;
+                }
+            }
+            if (nbTroupe <= 0)
+            {
+                etatSuivant = new Attaque();
             }
             else
             {
-                etatSuivant = new Deploiment();
-
+                etatSuivant = new Renforcement();
             }
             Console.WriteLine($"nouveau tour de {etatSuivant}");
             return etatSuivant;
@@ -30,7 +37,8 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         public override string? ToString()
         {
-            return "Deploiment";
+            return "Renforcement";
         }
+
     }
 }

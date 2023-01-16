@@ -16,7 +16,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
             throw new NotImplementedException();
         }
 
-        public Etat TransitionTo(List<Joueur> joueurs)
+        public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
         {
             throw new NotImplementedException();
         }
