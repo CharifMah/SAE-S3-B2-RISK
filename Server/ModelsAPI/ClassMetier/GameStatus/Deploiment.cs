@@ -12,9 +12,26 @@ namespace ModelsAPI.ClassMetier.GameStatus
                 joueur.PlaceUnits(joueur.Units[unitIndex[0]], carte.SelectedTerritoire);
         }
 
-        public Etat TransitionTo()
+        public Etat TransitionTo(List<Joueur> joueurs)
         {
-            return new Attaque();
+            int nbTroupe = 0;
+            Etat etatSuivant = null;
+            foreach(Joueur j in joueurs)
+            {
+                nbTroupe += j.Units.Count;
+            }
+
+            if (nbTroupe <= 0)
+            {
+                etatSuivant = new Attaque();
+            }
+            else
+            {
+                etatSuivant = new Deploiment();
+
+            }
+            Console.WriteLine($"nouveau tour de {etatSuivant.ToString()}");
+            return etatSuivant;
         }
 
         public override string? ToString()
