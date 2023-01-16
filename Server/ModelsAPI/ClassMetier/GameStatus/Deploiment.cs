@@ -15,7 +15,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
         {
             Etat etatSuivant;
-            if (carte.GetNombreTerritoireOccupe <= 0)
+            if (carte.GetNbTerritoireLibre <= 0)
             {
                 etatSuivant = new Renforcement();
             }

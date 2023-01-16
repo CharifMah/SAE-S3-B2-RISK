@@ -43,7 +43,7 @@ namespace ModelsAPI.ClassMetier.Map
 
       
         [Indexed]
-        public int GetNombreTerritoireOccupe
+        public int GetNbTerritoireLibre
         {
             get
             {
