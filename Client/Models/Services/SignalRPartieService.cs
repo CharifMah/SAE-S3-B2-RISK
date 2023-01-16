@@ -11,7 +11,8 @@ namespace Models.Services
         public event Action EndTurn;
         public event Action<string> Connected;
         public event Action Disconnected;
-        public event Action<int, int> Deploiment; 
+        public event Action<int, int,int> Deploiment;
+
         /// <summary>
         /// SignalRPartieService
         /// </summary>
@@ -23,7 +24,8 @@ namespace Models.Services
             _connection.On("endTurn", () => EndTurn?.Invoke());
             _connection.On<string>("connected", (connexionId) => Connected?.Invoke(connexionId));
             _connection.On("disconnected", () => Disconnected?.Invoke());
-            _connection.On<int, int>("deploiment", (idUnit, idTerritoire) => Deploiment?.Invoke(idUnit, idTerritoire));
+            _connection.On<int, int, int>("deploiment", (idUnit, idTerritoire, playerIndex) => Deploiment?.Invoke(idUnit, idTerritoire, playerIndex));
+
         }
 
         public async Task SendEndTurn(string lobbyName, string joueurName)

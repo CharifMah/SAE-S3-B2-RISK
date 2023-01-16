@@ -56,7 +56,10 @@ namespace RISKAPI.Hubs
             {
                 case "Deploiment":
                     Deploiment d = (p.Etat as Deploiment);
-                    await Clients.Client(Context.ConnectionId).SendAsync("deploiment",d.IdUniteRemove, d.IdTerritoireUpdate);
+                    foreach (Joueur joueur in p.Joueurs)
+                    {
+                        await Clients.Client(joueur.Profil.ConnectionId).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
+                    }
                     break;
             }
         }
