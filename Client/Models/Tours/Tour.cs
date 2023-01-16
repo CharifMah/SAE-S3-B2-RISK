@@ -9,7 +9,7 @@ using System;
 
 namespace Models.Tours
 {
-    public class Tour : ITour
+    public class Tour
     {
         private Joueur _joueur;
         private bool _tourEnd;

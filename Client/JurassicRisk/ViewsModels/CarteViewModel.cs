@@ -2,6 +2,7 @@ using Models;
 using Models.Fabriques.FabriqueUnite;
 using Models.Player;
 using Models.Son;
+using Models.Tours;
 using Stockage;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace JurassicRisk.ViewsModels
         private FabriqueUniteBase f;
         private int zi = 0;
         private JoueurViewModel _joueur;
+        private ITour tour = new TourAttente();
         #endregion
 
         #region Property
@@ -50,6 +52,8 @@ namespace JurassicRisk.ViewsModels
                 return _carte;
             }
         }
+
+        public ITour Tour { get => tour; set => tour = value; }
 
         #endregion
 
@@ -167,12 +171,11 @@ namespace JurassicRisk.ViewsModels
             shadow.Color = Brushes.Green.Color;
             c.Effect = shadow;
 
-
-            this._carte.SelectedTerritoire = territoire;
-            /*
-            if (_joueur.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
+            switch (Tour.GetType().Name)
             {
-                _joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire);
+                case "TourPlacement":
+                    this.tour.PlaceUnits(_joueur.SelectedUnit,_joueur.Joueur);
+                    break;
             }
             */
             await SetCarte(_carte);

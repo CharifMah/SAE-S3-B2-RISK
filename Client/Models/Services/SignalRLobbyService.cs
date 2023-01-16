@@ -50,7 +50,10 @@ namespace Models.Services
             string lobbyJson = JsonConvert.SerializeObject(lobby);
             await _connection.SendAsync("SendLobby", lobbyJson);
         }
-
+        public async Task SendEndTurn(string lobbyName, string joueurName)
+        {
+            await _connection.SendAsync("EndTurn", lobbyName, joueurName);
+        }
         /// <summary>
         /// Join a Lobby
         /// </summary>

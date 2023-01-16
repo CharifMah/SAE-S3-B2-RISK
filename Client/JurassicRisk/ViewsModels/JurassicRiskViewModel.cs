@@ -1,6 +1,10 @@
 ﻿using Models;
+using Models.GameStatus;
 using Models.Services;
 using Models.Tours;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace JurassicRisk.ViewsModels
@@ -44,7 +48,6 @@ namespace JurassicRisk.ViewsModels
             _chatService = JurasicRiskGameClient.Get.ChatService;
             _chatService.YourTurn += _chatService_YourTurn;
             _chatService.EndTurn += _chatService_EndTurn;
-
         }
         #endregion
 
@@ -54,7 +57,7 @@ namespace JurassicRisk.ViewsModels
             {
                 case "placement":
                     {
-                        new TourPlacement();
+                        CarteVm.Tour = new TourPlacement();
                         break;
                     }
             }
@@ -65,5 +68,11 @@ namespace JurassicRisk.ViewsModels
             //new tourAttente
         }
 
+        public async Task SendEndTurn()
+        {
+            {
+                _chatService.SendEndTurn(JurasicRiskGameClient.Get.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
+            }
+        }
     }
 }
