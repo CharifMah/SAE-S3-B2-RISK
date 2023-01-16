@@ -227,7 +227,7 @@ namespace RISKAPI.Hubs
                     if (lobby.Owner == joueurName)
                     {
                         Console.WriteLine($"{joueurName} try to Start the game");
-                        lobby.Partie = new Partie(new Placement(), carte, lobby.Joueurs);
+                        lobby.Partie = new Partie(carte, lobby.Joueurs,lobby.Id);
                         JurasicRiskGameServer.Get.Lobby.Add(lobby);
                         foreach (Joueur j in lobby.Joueurs)
                         {

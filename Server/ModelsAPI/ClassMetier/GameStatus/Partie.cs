@@ -19,6 +19,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         private Carte _carte;
 
+        private string _id;
         #endregion
 
         #region Property
@@ -30,34 +31,25 @@ namespace ModelsAPI.ClassMetier.GameStatus
         }
 
         public Etat Etat { get { return etat; } }
+
+        public string Id { get => _id; set => _id = value; }
         #endregion
 
         #region Constructor
 
-        public Partie(Etat etat, Carte carte, List<Joueur> joueur)
+        public Partie(Carte carte, List<Joueur> joueurs, string id)
         {
-            TransitionTo(etat);
             this._carte = carte;
-            this._joueurs = joueur;
+            this._joueurs = joueurs;
+            this._id = id;
+            this.etat = new Deploiment();
         }
 
         #endregion
 
-        public void TransitionTo(Etat etat)
+        public void Action()
         {
-            Console.WriteLine($"Context: Transition to {etat.GetType().Name}.");
-            this.etat = etat;
-            etat.SetContext(this);
-        }
-
-        public void PositionnerTroupe()
-        {
-            etat.PositionnerTroupe();
-        }
-
-        public void FinDeTour()
-        {
-            etat.FinDeTour();
+            etat.Action(this._carte,this._joueurs);
         }
     }
 }

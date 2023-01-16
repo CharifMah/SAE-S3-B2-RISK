@@ -8,16 +8,22 @@ using System.Threading.Tasks;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
-    public class Attaque : Etat
+    public class Deploiment : Etat
     {
         public void Action(Carte carte, List<Joueur> joueur)
         {
-            throw new NotImplementedException();
+            if (carte.SelectedTerritoire.Team == Teams.NEUTRE)
+            {
+
+            }
+            
         }
 
         public Etat TransitionTo()
         {
-            throw new NotImplementedException();
+            return new Deploiment();
         }
+
+
     }
 }

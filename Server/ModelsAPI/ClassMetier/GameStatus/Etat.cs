@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModelsAPI.ClassMetier.Map;
+using ModelsAPI.ClassMetier.Player;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +10,8 @@ namespace ModelsAPI.ClassMetier.GameStatus
 {
     public interface Etat
     {
-        public void SetContext(Partie partie);
+        public Etat TransitionTo();
 
-        public void PositionnerTroupe();
-
-        public void Attaquer();
-
-        public void FinDeTour();
+        public void Action(Carte carte, List<Joueur> joueur);
     }
 }
