@@ -1,17 +1,10 @@
-using Models;
-using Models.GameStatus;
-using Models.Services;
-using Models.Tours;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
 using JurassicRisk.Views;
 using Models;
+using Models.Services;
+using Models.Tours;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
-using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -36,16 +29,16 @@ namespace JurassicRisk.ViewsModels
         public double Progress { get => _progression; set => _progression = value; }
         public JoueurViewModel JoueurVm { get => _joueurVm; }
         public LobbyViewModel LobbyVm { get => _lobbyVm; set => _lobbyVm = value; }
-        public double Zoom 
-        { 
-            get => _zoom; 
+        public double Zoom
+        {
+            get => _zoom;
 
             set
             {
                 if (0 < value && value < 5)
-                _zoom = value;
+                    _zoom = value;
                 NotifyPropertyChanged();
-            } 
+            }
         }
         #endregion
 
@@ -95,10 +88,7 @@ namespace JurassicRisk.ViewsModels
 
         public async Task SendEndTurn()
         {
-            
-                _chatService.SendEndTurn(JurasicRiskGameClient.Get.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
-            
-
+            await _chatService.SendEndTurn(JurasicRiskGameClient.Get.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
         }
 
         private void DrawEnd()
