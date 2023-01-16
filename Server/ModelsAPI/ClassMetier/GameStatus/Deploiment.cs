@@ -15,7 +15,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public Etat TransitionTo(List<Joueur> joueurs)
         {
             int nbTroupe = 0;
-            Etat etatSuivant = null;
+            Etat etatSuivant;
             foreach(Joueur j in joueurs)
             {
                 nbTroupe += j.Units.Count;
@@ -30,7 +30,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
                 etatSuivant = new Deploiment();
 
             }
-            Console.WriteLine($"nouveau tour de {etatSuivant.ToString()}");
+            Console.WriteLine($"nouveau tour de {etatSuivant}");
             return etatSuivant;
         }
 
