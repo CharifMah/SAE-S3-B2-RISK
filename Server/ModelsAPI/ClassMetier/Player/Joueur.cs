@@ -107,6 +107,7 @@ namespace ModelsAPI.ClassMetier.Player
 
                     territoire.AddUnit(unit);
                     territoire.Team = _team;
+
                 }
             }
         }

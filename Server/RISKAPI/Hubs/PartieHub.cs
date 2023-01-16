@@ -52,6 +52,7 @@ namespace RISKAPI.Hubs
         {
             Partie p = JurasicRiskGameServer.Get.Lobbys.First(l => l.Id == lobbyName).Partie;
             p.Action(unitlist);
+
         }
 
         public async Task SetSelectedTerritoire(string lobbyName, int ID)
