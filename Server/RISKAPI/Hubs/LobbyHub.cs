@@ -16,29 +16,19 @@ namespace RISKAPI.Hubs
 {
     public class LobbyHub : Hub
     {
+        #region Injection
         private readonly RedisCollection<Lobby> _lobby;
         private readonly RedisConnectionProvider _provider;
+        #endregion
 
+        #region Constructor
         public LobbyHub(RedisConnectionProvider provider)
         {
             _provider = provider;
             _lobby = (RedisCollection<Lobby>)provider.RedisCollection<Lobby>();
             RedisProvider.Instance.ManageSubscriber(RefreshLobbyToClients);
-
         }
-
-        private async Task<Lobby> GetLobby(string lobbyName)
-        {
-            string key = $"Lobby:{lobbyName}";
-            Lobby? lobby = null;
-            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
-            {
-                RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
-                lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
-            }
-
-            return lobby;
-        }
+        #endregion
 
         public async Task RefreshLobbyToClients(string lobbyName)
         {
@@ -51,7 +41,6 @@ namespace RISKAPI.Hubs
                 {
                     await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
                 }
-
             }
         }
 
@@ -168,21 +157,6 @@ namespace RISKAPI.Hubs
             }
         }
 
-        public override async Task OnConnectedAsync()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
-            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        public override async Task OnDisconnectedAsync(Exception? exception)
-        {
-            await ExitLobby();
-            await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
-            await base.OnDisconnectedAsync(exception);
-        }
-
         public async Task ExitLobby()
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -208,7 +182,7 @@ namespace RISKAPI.Hubs
             }
         }
 
-        public async Task StartPartie(string lobbyName, string joueurName,string carteName)
+        public async Task StartPartie(string lobbyName, string joueurName, string carteName)
         {
             string key = $"Lobby:{lobbyName}";
             string keyCarte = $"{carteName}";
@@ -227,7 +201,7 @@ namespace RISKAPI.Hubs
                     if (lobby.Owner == joueurName)
                     {
                         Console.WriteLine($"{joueurName} try to Start the game");
-                        lobby.Partie = new Partie(carte, lobby.Joueurs,lobby.Id);
+                        lobby.Partie = new Partie(carte, lobby.Joueurs, lobby.Id);
                         JurasicRiskGameServer.Get.Lobby.Add(lobby);
                         foreach (Joueur j in lobby.Joueurs)
                         {
@@ -236,44 +210,43 @@ namespace RISKAPI.Hubs
 
                     }
                 }
-                catch (Exception e )
+                catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
             }
         }
 
-        public async Task EndTurn(string lobbyName, string joueurName)
+        #region Private
+        private async Task<Lobby> GetLobby(string lobbyName)
         {
-            Lobby lobby = null;
-            Joueur joueurSuivant = null;
-            Joueur joueur = null;
-            foreach (Lobby l in JurasicRiskGameServer.Get.Lobby)
+            string key = $"Lobby:{lobbyName}";
+            Lobby? lobby = null;
+            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
-                if (l.Id == lobbyName)
-                {
-                    lobby = l;
-                }
+                RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
+                lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
             }
-            if (lobby != null)
-            {
-                for (int i = 0; i < lobby.Joueurs.Count; i++)
-                {
-                    if (lobby.Joueurs[i].Profil.Pseudo == lobbyName)
-                    {
-                        joueur = lobby.Joueurs[i];
-                        joueurSuivant = lobby.Joueurs[i + 1 % (lobby.Joueurs.Count + 1)];
-                    }
-                }
-            }
-            if (joueurSuivant != null)
-            {
-                if (lobby.Partie.Etat.GetType().Name == "Placement" )
-                {
-                    await Clients.Client(joueurSuivant.Profil.ConnectionId).SendAsync("yourTurn", "placement");
-                }
-                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("EndTurn");
-            }
+
+            return lobby;
         }
+        #endregion
+
+        #region Override
+        public override async Task OnConnectedAsync()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            await ExitLobby();
+            await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
+            await base.OnDisconnectedAsync(exception);
+        }
+        #endregion
     }
 }
