@@ -99,9 +99,12 @@ namespace ModelsAPI.ClassMetier.Player
 
         public void AddUnits(IUnit unit, ITerritoireBase territoire)
         {
-            _units.Add(unit);
-            territoire.AddUnit(unit);
-            territoire.Team = _team;
+            if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
+            {
+                _units.Add(unit);
+                territoire.AddUnit(unit);
+                territoire.Team = _team;
+            }
         }
 
         public void PlaceUnits(List<IUnit> unitToPlace, ITerritoireBase territoire)
