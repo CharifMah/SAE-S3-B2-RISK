@@ -101,9 +101,13 @@ namespace ModelsAPI.ClassMetier.Player
         {
             if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
             {
-                _units.Add(unit);
-                territoire.AddUnit(unit);
-                territoire.Team = _team;
+                if (_units.Contains(unit))
+                {
+                    _units.Remove(unit);
+
+                    territoire.AddUnit(unit);
+                    territoire.Team = _team;
+                }
             }
         }
 
