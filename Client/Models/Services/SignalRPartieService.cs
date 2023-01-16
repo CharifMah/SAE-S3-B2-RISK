@@ -34,5 +34,10 @@ namespace Models.Services
         {
             await _connection.SendAsync("Action", lobbyName, units);
         }
+
+        public async Task SetSelectedTerritoire(string lobbyName, int ID)
+        {
+            await _connection.SendAsync("SetSelectedTerritoire", lobbyName, ID);
+        }
     }
 }
