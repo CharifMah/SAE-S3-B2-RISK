@@ -23,7 +23,6 @@ namespace JurassicRisk
         private double _x;
         private double _y;
         private Size _size;
-        private Rect _rect;
         private List<Point> _points;
 
         #endregion
