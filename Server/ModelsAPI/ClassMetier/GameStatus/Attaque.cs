@@ -22,7 +22,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         }
         public override string? ToString()
         {
-            return "Deploiment";
+            return "Attaque";
         }
 
     }
