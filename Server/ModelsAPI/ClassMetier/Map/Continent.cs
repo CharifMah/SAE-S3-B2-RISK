@@ -9,13 +9,12 @@ namespace ModelsAPI.ClassMetier.Map
     public class Continent : IContinent
     {
         #region Attributes
-        private Dictionary<string, TerritoireDecorator> _dicoTerritoires;
+        private Dictionary<string, ITerritoireBase> _dicoTerritoires;
         #endregion
 
         #region Property
 
-        [JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, ITerritoireBase>, TerritoireDecorator, string, ITerritoireBase>))]
-        public Dictionary<string, TerritoireDecorator> DicoTerritoires
+        public Dictionary<string, ITerritoireBase> DicoTerritoires
         {
             get { return _dicoTerritoires; }
             set { _dicoTerritoires = value; }
@@ -24,7 +23,7 @@ namespace ModelsAPI.ClassMetier.Map
         #endregion
 
         #region Constructor
-        public Continent(Dictionary<string, TerritoireDecorator> DicoTerritoires)
+        public Continent(Dictionary<string, ITerritoireBase> DicoTerritoires)
         {
             this._dicoTerritoires = DicoTerritoires;
         }
