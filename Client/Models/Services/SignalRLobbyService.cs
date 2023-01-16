@@ -2,6 +2,7 @@
 using Models.GameStatus;
 using Models.Player;
 using Newtonsoft.Json;
+using System.Windows;
 
 namespace Models.Services
 {
@@ -72,7 +73,7 @@ namespace Models.Services
             }
             catch (InvalidOperationException e)
             {
-                throw e;
+                MessageBox.Show("Disconnected From The Server\n" + e.Message);
             }
         }
 

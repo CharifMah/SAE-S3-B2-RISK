@@ -1,15 +1,9 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
-using Redis.OM.Searching;
-using Redis.OM;
-using RISKAPI.Services;
-using ModelsAPI.ClassMetier.Player;
-using Microsoft.AspNet.SignalR.Hubs;
-using ModelsAPI.ClassMetier.Units;
 using ModelsAPI.ClassMetier.GameStatus;
-using ModelsAPI.ClassMetier.Map;
-using Newtonsoft.Json;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using ModelsAPI.ClassMetier.Player;
+using Redis.OM;
 
 namespace RISKAPI.Hubs
 {
@@ -56,10 +50,10 @@ namespace RISKAPI.Hubs
             {
                 case "Deploiment":
                     Deploiment d = (p.Etat as Deploiment);
-                    foreach (Joueur joueur in p.Joueurs)
-                    {
-                        await Clients.Client(joueur.Profil.ConnectionId).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
-                    }
+
+                    await Clients.Group(lobbyName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
+
+                    Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
                     break;
             }
         }
@@ -70,28 +64,9 @@ namespace RISKAPI.Hubs
             p.Carte.SelectedTerritoire = p.Carte.GetTerritoire(ID);
         }
 
-        public async Task ConnectedPartie(string lobbyName, string joueurName,string connectionID)
+        public async Task ConnectedPartie(string lobbyName, string joueurName)
         {
-            Lobby lobby = null;
-            Joueur joueur = null;
-            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
-            {
-                if (l.Id == lobbyName)
-                {
-                    lobby = l;
-                    break;
-                }
-            }
-            Joueur j = lobby.Partie.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
-            if (lobby != null && j.Profil.ConnectionId != connectionID)
-            {
-                j.Profil.ConnectionId = connectionID;
-                if (connectionID != Context.ConnectionId)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine("Error of sync of connection ID");
-                }
-            }
+            await Groups.AddToGroupAsync(Context.ConnectionId, lobbyName);           
         }
 
         public async Task ExitPartie(string lobbyName)
@@ -99,7 +74,7 @@ namespace RISKAPI.Hubs
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;
-         
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyName);
             try
             {
                 Lobby lobby = null;
@@ -137,7 +112,15 @@ namespace RISKAPI.Hubs
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            Console.ForegroundColor = ConsoleColor.White;
             await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
+            if (exception != null)
+            {
+                Console.WriteLine(exception.Message);
+            }
+
             await base.OnDisconnectedAsync(exception);
         }
         #endregion

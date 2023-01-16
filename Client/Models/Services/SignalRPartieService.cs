@@ -43,9 +43,9 @@ namespace Models.Services
             await _connection.SendAsync("SetSelectedTerritoire", lobbyName, ID);
         }
 
-        public async Task ConnectedPartie(string lobbyName, string joueurName,string connectionID)
+        public async Task ConnectedPartie(string lobbyName, string joueurName)
         {
-            await _connection.SendAsync("ConnectedPartie", lobbyName, joueurName, connectionID);
+            await _connection.SendAsync("ConnectedPartie", lobbyName, joueurName);
         }
 
         public async Task ExitPartie()
@@ -56,7 +56,7 @@ namespace Models.Services
             }
             catch (InvalidOperationException e)
             {
-                throw e;
+
             }
         }
     }

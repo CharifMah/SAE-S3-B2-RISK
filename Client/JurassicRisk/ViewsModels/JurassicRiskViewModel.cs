@@ -78,13 +78,11 @@ namespace JurassicRisk.ViewsModels
         }
 
 
+        #endregion
+
         private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
         {
-            if (_joueurVm.Joueur.Units.Count > 0)
-            {
-                _lobbyVm.Lobby.Joueurs[playerIndex].AddUnits(_lobbyVm.Lobby.Joueurs[playerIndex].Units[idUnit], this._carteVm.Carte.GetTerritoire((idTerritoire)));
-            }
-           
+            _lobbyVm.Lobby.Joueurs[playerIndex].AddUnits(_lobbyVm.Lobby.Joueurs[playerIndex].Units[idUnit], this._carteVm.Carte.GetTerritoire((idTerritoire)));
         }
 
         private void _partieChatService_Disconnected()
@@ -95,7 +93,7 @@ namespace JurassicRisk.ViewsModels
             _isConnected = false;
         }
 
-        private void _partieChatService_Connected(string connectionId)
+        private async void _partieChatService_Connected(string connectionId)
         {
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionId != String.Empty)
             {
@@ -106,8 +104,8 @@ namespace JurassicRisk.ViewsModels
             {
                 _isConnected = false;
             }
+            await _partieChatService.ConnectedPartie(this._lobbyVm.Lobby.Id, this._joueurVm.Joueur.Profil.Pseudo);
         }
-        #endregion
 
         public void _chatService_YourTurn(string turnType)
         {

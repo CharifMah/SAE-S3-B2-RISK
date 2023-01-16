@@ -161,9 +161,7 @@ namespace RISKAPI.Hubs
 
         public async Task ExitLobby()
         {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
-            Console.ForegroundColor = ConsoleColor.White;
+
 
             object[]? l = (Context.Items.First(x => x.Key == Context.ConnectionId).Value as object[]);
             try
@@ -279,7 +277,16 @@ namespace RISKAPI.Hubs
         {
             await ExitLobby();
             await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            Console.ForegroundColor = ConsoleColor.White;
+            if (exception != null)
+            {
+                Console.WriteLine(exception.Message);
+            }
             await base.OnDisconnectedAsync(exception);
+
+
         }
         #endregion
     }

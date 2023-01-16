@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.observable;
+using JurassicRisk.Views;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
 using Models.GameStatus;
@@ -151,7 +152,16 @@ namespace JurassicRisk.ViewsModels
         /// <returns></returns>
         public async Task<bool> SetTeam(Teams team)
         {
-            await _chatService.SetTeam(team, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, _lobby.Id);
+            if (_lobby != null)
+            {
+                await _chatService.SetTeam(team, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, _lobby.Id);
+            }
+            else
+            {
+                await ExitLobby();
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
+            }
+           
 
             return true;
         }
