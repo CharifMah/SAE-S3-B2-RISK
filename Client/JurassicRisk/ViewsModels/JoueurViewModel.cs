@@ -107,7 +107,7 @@ namespace JurassicRisk.ViewsModels
                 
 
             }
-            if(_selectedUnit !=null)
+            if(_joueur.Team != territoire.Team)
             {
                 SoundStore.Get("errorsound.mp3").Play();
                 MessageBox.Show(new NotYourTerritoryException(Strings.ErrorTerritory).Message, Strings.ErrorMessage);
