@@ -208,6 +208,7 @@ namespace RISKAPI.Hubs
                             await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
                         }
                         await Clients.Client(lobby.Joueurs[lobby.Partie.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn",lobby.Partie.Etat.ToString());
+                        await ExitLobby();
                     }
                 }
                 catch (Exception e)
