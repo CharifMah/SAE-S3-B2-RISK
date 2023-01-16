@@ -65,7 +65,11 @@ namespace JurassicRisk.ViewsModels
         {
             _joueurVm = new JoueurViewModel();
             _lobbyVm = new LobbyViewModel();
-
+            _carteLoaded = false;
+            _progression = 0;
+            _carteVm = null;
+            _zoom = 1.0;
+            lastPoint = new Point(0, 0);
             _chatService = JurasicRiskGameClient.Get.ChatService;
             _chatService.YourTurn += _chatService_YourTurn;
             _chatService.EndTurn += _chatService_EndTurn;
@@ -91,17 +95,11 @@ namespace JurassicRisk.ViewsModels
 
         public async Task SendEndTurn()
         {
-            {
+            
                 _chatService.SendEndTurn(JurasicRiskGameClient.Get.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
-            }
-            _carteLoaded = false;
-            _progression = 0;
-            _carteVm = null;
-            _zoom = 1.0;
-            lastPoint = new Point(0,0);
-        }
-        #endregion
+            
 
+        }
 
         private void DrawEnd()
         {

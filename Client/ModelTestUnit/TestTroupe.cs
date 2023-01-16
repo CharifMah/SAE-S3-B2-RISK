@@ -63,7 +63,9 @@ namespace ModelTestUnit
             Carte carte = new Carte(map,t1);
             
             Partie p = new Partie(new Placement(),carte);
-            Lobby l = new Lobby(p);
+            
+            Lobby l = new Lobby();
+            l.Partie= p;
 
             JurasicRiskGameClient.Get.Lobby = l;
             

@@ -51,7 +51,7 @@ namespace Models.GameStatus
             get { return _joueurs; }
         }
 
-        public Partie? Partie { get => _partie; }
+        public Partie? Partie { get => _partie; set => _partie = value; }
 
         public string? Owner
         {
@@ -81,10 +81,9 @@ namespace Models.GameStatus
             _password = Password;
         }
 
-        public Lobby(Partie partie = null)
+        public Lobby()
         {
             _joueurs = new List<Joueur>();
-            _partie = partie;
         }
 
         #endregion
