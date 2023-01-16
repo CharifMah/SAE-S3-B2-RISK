@@ -4,9 +4,11 @@ using Redis.OM.Searching;
 using Redis.OM;
 using RISKAPI.Services;
 using ModelsAPI.ClassMetier.Player;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace RISKAPI.Hubs
 {
+    [HubName("PartieHub")]
     public class PartieHub : Hub
     {
         private readonly RedisConnectionProvider _provider;
@@ -26,6 +28,7 @@ namespace RISKAPI.Hubs
                 if (l.Id == lobbyName)
                 {
                     lobby = l;
+                    break;
                 }
             }
             if (lobby != null)

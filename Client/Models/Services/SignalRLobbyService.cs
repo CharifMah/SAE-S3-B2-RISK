@@ -8,6 +8,7 @@ namespace Models.Services
     ///<Author>Mahmoud Charif</Author>
     public class SignalRLobbyService
     {
+
         private readonly HubConnection _connection;
         public event Action PartieReceived;
         public event Action<string> LobbyReceived;
@@ -15,8 +16,7 @@ namespace Models.Services
         public event Action<string> Connected;
         public event Action Disconnected;
         public event Action<string> ConnectedToLobby;
-        public event Action<string> YourTurn;
-        public event Action EndTurn;
+
 
         /// <summary>
         /// SignalRLobbyService
@@ -25,18 +25,19 @@ namespace Models.Services
         public SignalRLobbyService(HubConnection connection)
         {
             _connection = connection;
+
             _connection.On("ReceivePartie", () => PartieReceived?.Invoke());
             _connection.On<string>("ReceiveLobby", (lobbyJson) => LobbyReceived?.Invoke(lobbyJson));
             _connection.On<string>("JoinLobby", (lobbyJson) => LobbyJoined?.Invoke(lobbyJson));
             _connection.On<string>("connectedToLobby", (connected) => ConnectedToLobby?.Invoke(connected));
             _connection.On<string>("connected", (connexionId) => Connected?.Invoke(connexionId));
             _connection.On("disconnected", () => Disconnected?.Invoke());
-            _connection.On<string>("yourTurn", (turnType) => YourTurn?.Invoke(turnType));
-            _connection.On("endTurn", () => EndTurn?.Invoke());
         }
 
         public async Task StartPartie(string lobbyName, string joueurName, string carteName)
         {
+            await JurasicRiskGameClient.Get.ConnectPartie();
+
             await _connection.SendAsync("StartPartie", lobbyName, joueurName, carteName);
         }
 
@@ -50,10 +51,7 @@ namespace Models.Services
             string lobbyJson = JsonConvert.SerializeObject(lobby);
             await _connection.SendAsync("SendLobby", lobbyJson);
         }
-        public async Task SendEndTurn(string lobbyName, string joueurName)
-        {
-            await _connection.SendAsync("EndTurn", lobbyName, joueurName);
-        }
+     
         /// <summary>
         /// Join a Lobby
         /// </summary>
@@ -87,11 +85,5 @@ namespace Models.Services
         {
             await _connection.SendAsync("IsReady", ready, pseudo, lobbyId);
         }
-
-
-
-
-
-
     }
 }

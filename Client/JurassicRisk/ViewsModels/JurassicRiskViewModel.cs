@@ -20,7 +20,8 @@ namespace JurassicRisk.ViewsModels
         private JoueurViewModel _joueurVm;
         private LobbyViewModel _lobbyVm;
         private TaskCompletionSource<bool> _clickWaitTask;
-        private SignalRLobbyService _chatService;
+        private SignalRLobbyService _lobbyChatService;
+        private SignalRPartieService _partieChatService;
 
         #endregion
 
@@ -66,9 +67,10 @@ namespace JurassicRisk.ViewsModels
             _carteVm = null;
             _zoom = 1.0;
             lastPoint = new Point(0, 0);
-            _chatService = JurasicRiskGameClient.Get.ChatService;
-            _chatService.YourTurn += _chatService_YourTurn;
-            _chatService.EndTurn += _chatService_EndTurn;
+            _lobbyChatService = JurasicRiskGameClient.Get.LobbyChatService;
+            _partieChatService = JurasicRiskGameClient.Get.PartieChatService;
+            _partieChatService.YourTurn += _chatService_YourTurn;
+            _partieChatService.EndTurn += _chatService_EndTurn;
         }
         #endregion
 
@@ -91,7 +93,7 @@ namespace JurassicRisk.ViewsModels
 
         public async Task SendEndTurn()
         {
-            await _chatService.SendEndTurn(JurasicRiskGameClient.Get.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
+            await _partieChatService.SendEndTurn(this._lobbyVm.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
         }
 
         private void DrawEnd()

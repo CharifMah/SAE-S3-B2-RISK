@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+﻿using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
@@ -14,6 +15,7 @@ using StackExchange.Redis;
 
 namespace RISKAPI.Hubs
 {
+    [HubName("LobbyHub")]
     public class LobbyHub : Hub
     {
         #region Injection

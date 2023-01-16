@@ -11,10 +11,13 @@ namespace Models
         private Lobby? _lobby;
         private HttpClient _client;
         private string _ip;
-        private HubConnection _connection;
-        private bool _isConnected;
+        private HubConnection _connectionLobby;
+        private HubConnection _connectionPartie;
 
-        private SignalRLobbyService _chatService;
+        private bool _isConnected;
+        private SignalRPartieService _partieChatService;
+
+        private SignalRLobbyService _lobbyChatService;
         #endregion
 
         #region Property
@@ -35,9 +38,11 @@ namespace Models
             get { return _ip; }
         }
 
-        public SignalRLobbyService? ChatService { get => _chatService; set => _chatService = value; }
+        public SignalRLobbyService? LobbyChatService { get => _lobbyChatService; set => _lobbyChatService = value; }
 
-        public HubConnection? Connection { get => _connection; set => _connection = value; }
+        public SignalRPartieService? PartieChatService { get => _partieChatService; set => _partieChatService = value; }
+
+        public HubConnection? Connection { get => _connectionLobby; set => _connectionLobby = value; }
 
         public bool IsConnected
         {
@@ -74,9 +79,10 @@ namespace Models
         {
             _ip = "localhost:7215";
             _client = new HttpClient();
-            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk").Build();
-
-            _chatService = new SignalRLobbyService(_connection);
+            _connectionLobby = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/LobbyHub").Build();
+            _connectionPartie = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
+            _partieChatService = new SignalRPartieService(_connectionPartie);
+            _lobbyChatService = new SignalRLobbyService(_connectionLobby);
             _isConnected = false;
             _lobby = null;
         }
@@ -88,9 +94,9 @@ namespace Models
 
         public void StopPartie() { }
 
-        public async Task Connect()
+        public async Task ConnectLobby()
         {
-            await _connection.StartAsync().ContinueWith(task =>
+            await _connectionLobby.StartAsync().ContinueWith(task =>
             {
                 if (task.Exception != null)
                 {
@@ -102,6 +108,18 @@ namespace Models
 
         }
 
+        public async Task ConnectPartie()
+        {
+            await _connectionPartie.StartAsync().ContinueWith(task =>
+            {
+                if (task.Exception != null)
+                {
+                    //this._errorMessage = "Unable to connect to Lobby chat hub";
+                }
+
+            });
+        }
+
 
         /// <summary>
         /// Disconnect the connection
@@ -109,9 +127,9 @@ namespace Models
         /// <returns></returns>
         public async Task Disconnect()
         {
-            if (_connection != null)
+            if (_connectionLobby != null)
             {
-                await _connection.DisposeAsync();
+                await _connectionLobby.DisposeAsync();
             }
             _isConnected = false;
         }

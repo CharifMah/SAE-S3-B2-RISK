@@ -49,7 +49,7 @@ namespace JurassicRisk.ViewsModels
 
             _isConnectedToLobby = false;
             _connection = JurasicRiskGameClient.Get.Connection;
-            _chatService = JurasicRiskGameClient.Get.ChatService;
+            _chatService = JurasicRiskGameClient.Get.LobbyChatService;
 
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
@@ -66,7 +66,7 @@ namespace JurassicRisk.ViewsModels
         /// <returns>Task</returns>
         public async Task Connect()
         {
-            await JurasicRiskGameClient.Get.Connect();
+            await JurasicRiskGameClient.Get.ConnectLobby();
 
             _chatService.ConnectedToLobby += _chatService_ConnectedToLobby;
             _chatService.LobbyReceived += _chatService_LobbyReceived;
