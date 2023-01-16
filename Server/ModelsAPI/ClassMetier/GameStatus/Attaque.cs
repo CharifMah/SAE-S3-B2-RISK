@@ -20,5 +20,10 @@ namespace ModelsAPI.ClassMetier.GameStatus
         {
             throw new NotImplementedException();
         }
+        public override string? ToString()
+        {
+            return "Deploiment";
+        }
+
     }
 }
