@@ -1,6 +1,8 @@
-﻿using Models.Exceptions;
+﻿using JurassicRisk.Ressource;
+using Models.Exceptions;
 using Models.Map;
 using Models.Player;
+using Models.Son;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace JurassicRisk.ViewsModels
         private string _isReady;
         private Joueur _joueur;
         private ObservableCollection<IUnit> _units;
-        private IUnit _selectedUnit;
+        private IUnit? _selectedUnit;
         #endregion
 
         #region Property
@@ -102,10 +104,13 @@ namespace JurassicRisk.ViewsModels
                 this._units.Remove(_selectedUnit);
                 if (_units.Count > 0)
                     _selectedUnit = _units[0];
+                
+
             }
-            else
+            if(_selectedUnit !=null)
             {
-                MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
+                SoundStore.Get("errorsound.mp3").Play();
+                MessageBox.Show(new NotYourTerritoryException(Strings.ErrorTerritory).Message, Strings.ErrorMessage);
             }
             NotifyPropertyChanged("NombreTrp");
             NotifyPropertyChanged("Units");

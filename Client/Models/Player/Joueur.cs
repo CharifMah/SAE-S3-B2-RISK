@@ -1,8 +1,10 @@
 ﻿using Models.Fabriques.FabriqueUnite;
 using Models.Map;
+using Models.Son;
 using Models.Units;
 using Newtonsoft.Json;
 using Stockage.Converters;
+using System.Windows;
 
 namespace Models.Player
 {
@@ -14,6 +16,8 @@ namespace Models.Player
         private Teams _team;
         private List<IUnit> _units;
         private Profil _profil;
+        private string messageerr;
+        private string title;
         #endregion
 
         #region Property
@@ -89,11 +93,15 @@ namespace Models.Player
 
 
                     }
+                    SoundStore.Get("Slidersound.mp3").Play();
                     territoire.AddUnit(unit);
                     territoire.Team = this._team;
+                    
                 }
             }
+            
         }
+       
 
         public void AddUnit(IUnit unit)
         {

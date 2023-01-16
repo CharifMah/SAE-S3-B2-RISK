@@ -349,6 +349,29 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("Yellow", resourceCulture);
             }
         }
+        public static string ErrorNotUnit
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorNotUnit", resourceCulture);
+            }
+        }
+        public static string ErrorMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorMessage", resourceCulture);
+            }
+        }
+        public static string ErrorTerritory
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorTerritory", resourceCulture);
+            }
+                                        
+        }
+        
 
         public static string CreateLobby
         {

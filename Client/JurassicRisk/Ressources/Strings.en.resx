@@ -138,6 +138,15 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Log out</value>
   </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Error message</value>
+  </data>
+  <data name="ErrorNotUnit" xml:space="preserve">
+    <value>You have no more troops available !</value>
+  </data>
+  <data name="ErrorTerritory" xml:space="preserve">
+    <value>This territory does not belong to you ! </value>
+  </data>
   <data name="FullScreen" xml:space="preserve">
     <value>FullScreen :</value>
   </data>

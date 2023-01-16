@@ -1,5 +1,7 @@
 
+using JurassicRisk.Ressource;
 using Models;
+using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
 using Models.Player;
 using Models.Son;
@@ -10,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -173,6 +176,11 @@ namespace JurassicRisk.ViewsModels
             if (_joueur.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
             {
                 _joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire);
+            }
+            if (_joueur.Joueur.Units.Count <= 0)
+            {
+                SoundStore.Get("errorsound.mp3").Play();
+                MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
             }
 
             await SetCarte(_carte);

@@ -1,5 +1,6 @@
 ﻿using Models.Player;
 using Models.Units;
+using System.Windows;
 
 namespace Models.Tours
 {
@@ -19,6 +20,10 @@ namespace Models.Tours
             if (_joueur.Units.Count > 0)
             {
                 _joueur.AddUnits(new List<IUnit>() { unitToPlace }, JurasicRiskGameClient.Get.Lobby.Partie.Carte.SelectedTerritoire);
+            }
+            else
+            {
+                MessageBox.Show("teste");
             }
         }
 
