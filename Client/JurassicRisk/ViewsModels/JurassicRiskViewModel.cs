@@ -120,7 +120,15 @@ namespace JurassicRisk.ViewsModels
             await _partieChatService.SendEndTurn(this._lobbyVm.Lobby.Id, JoueurVm.Joueur.Profil.Pseudo);
         }
 
-
+        /// <summary>
+        /// Exit actual Lobby
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> ExitPartie()
+        {
+            await _partieChatService.ExitPartie();
+            return true;
+        }
 
         private void DrawEnd()
         {

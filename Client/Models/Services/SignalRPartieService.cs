@@ -40,5 +40,22 @@ namespace Models.Services
         {
             await _connection.SendAsync("SetSelectedTerritoire", lobbyName, ID);
         }
+
+        public async Task ConnectedPartie(string lobbyName, string joueurName,string connectionID)
+        {
+            await _connection.SendAsync("ConnectedPartie", lobbyName, joueurName, connectionID);
+        }
+
+        public async Task ExitPartie()
+        {
+            try
+            {
+                await _connection.SendAsync("ExitPartie",JurasicRiskGameClient.Get.Lobby.Id);
+            }
+            catch (InvalidOperationException e)
+            {
+                throw e;
+            }
+        }
     }
 }

@@ -129,7 +129,6 @@ namespace JurassicRisk.ViewsModels
         public async Task<bool> ExitLobby()
         {
             await _chatService.ExitLobby();
-            JurassicRiskViewModel.Get.LobbyVm = new LobbyViewModel();
             return true;
         }
 
@@ -214,6 +213,7 @@ namespace JurassicRisk.ViewsModels
             {
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
+                JurasicRiskGameClient.Get.Lobby = lobby;
                 NotifyPropertyChanged("Lobby");
             });
         }
@@ -226,6 +226,7 @@ namespace JurassicRisk.ViewsModels
                 {
                     Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                     this._lobby = lobby;
+                    JurasicRiskGameClient.Get.Lobby = lobby;
                     _isConnected = true;
                 }
                 else
