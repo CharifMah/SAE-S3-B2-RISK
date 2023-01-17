@@ -16,6 +16,7 @@ namespace JurassicRisk.ViewsModels
         #region Attributes
         private SignalRPartieService _partieChatService;
         private Partie? _partie;
+
         #endregion
 
         #region Property
@@ -31,6 +32,7 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
+        
         #endregion
 
         #region Constructor
@@ -41,7 +43,7 @@ namespace JurassicRisk.ViewsModels
             _partieChatService = JurasicRiskGameClient.Get.PartieChatService;
             _partieChatService.YourTurn += _chatService_YourTurn;
             _partieChatService.EndTurn += _chatService_EndTurn;
-            _partieChatService.Connected += _partieChatService_Connected; ;
+            _partieChatService.Connected += async (connectionId) => await _partieChatService_Connected(connectionId);
             _partieChatService.Disconnected += _partieChatService_Disconnected;
             _partieChatService.Deploiment += _partieChatService_Deploiment ;
 
@@ -69,27 +71,28 @@ namespace JurassicRisk.ViewsModels
         /// <returns></returns>
         public async Task<bool> ExitPartie()
         {
-            await _partieChatService.ExitPartie(JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+            await _partieChatService.ExitPartie(JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo,_partie.Id);
             return true;
         }
         #endregion
 
         #region Event
-        private async void _partieChatService_Connected(string connectionId)
+        private async Task _partieChatService_Connected(string connectionId)
         {
             JurassicRiskViewModel vm = JurassicRiskViewModel.Get;
             if (vm.JoueurVm.Joueur != null && connectionId != String.Empty)
             {
                 vm.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
-                vm.PartieVm.Partie.Joueurs.Find(j => j.Profil.Pseudo == vm.JoueurVm.Joueur.Profil.Pseudo).Profil.ConnectionId = connectionId;
+                _partie.Joueurs.Find(j => j.Profil.Pseudo == vm.JoueurVm.Joueur.Profil.Pseudo).Profil.ConnectionId = connectionId;
                 JurasicRiskGameClient.Get.IsConnectedToLobby = true;
+                await _partieChatService.ConnectedPartie(_partie.Id, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+
             }
             else
             {
                 JurasicRiskGameClient.Get.IsConnectedToLobby = false;
             }
-            await JurassicRiskViewModel.Get.LobbyVm.ExitLobby();
-            await _partieChatService.ConnectedPartie(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+            NotifyPropertyChanged("Partie");
         }
 
         private void _chatService_YourTurn(string turnType)
@@ -116,7 +119,7 @@ namespace JurassicRisk.ViewsModels
             {
                 vm.JoueurVm.Joueur.Profil.ConnectionId = String.Empty;
                 vm.PartieVm.Partie.Joueurs.Find(j => j.Profil.Pseudo == vm.JoueurVm.Joueur.Profil.Pseudo).Profil.ConnectionId = String.Empty;
-            }
+            } 
                 
             JurasicRiskGameClient.Get.IsConnectedToLobby = false;
         }

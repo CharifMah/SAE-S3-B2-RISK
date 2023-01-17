@@ -28,6 +28,7 @@ namespace RISKAPI.Hubs
             _provider = provider;
             _lobby = (RedisCollection<Lobby>)provider.RedisCollection<Lobby>();
             RedisProvider.Instance.ManageSubscriber(RefreshLobbyToClients);
+
         }
         #endregion
 
@@ -194,6 +195,7 @@ namespace RISKAPI.Hubs
 
         public async Task ExitLobby(string joueurName, string lobbyName)
         {
+
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected from methode ExitLobby {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;
@@ -217,6 +219,7 @@ namespace RISKAPI.Hubs
                     {
                         await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
                         lobby.Joueurs.Remove(j);
+                        
                         Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
                     }
                     else if (lobby.Joueurs.Count > 1)
@@ -247,11 +250,6 @@ namespace RISKAPI.Hubs
             {
                 Console.WriteLine($"Failed to leave the lobby {e.Message}");
             }
-        }
-
-        public async Task ForceExitLobby(string joueurName)
-        {
-            await OnDisconnectedAsync(null, joueurName);
         }
 
         public async Task StartPartie(string partieName, string joueurName, string carteName)
@@ -305,19 +303,14 @@ namespace RISKAPI.Hubs
                 }
                 if (lobby.Joueurs.Count > 0)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     foreach (Joueur j in lobby.Joueurs)
                     {
                         await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
-                    }
-                    await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    foreach (var j in lobby.Joueurs)
-                    {
                         Console.WriteLine($"Disconnected {j.Profil.Pseudo} from lobby by Owner {lobby.Owner} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
                     }
                     Console.ForegroundColor = ConsoleColor.White;
-
-
+                    await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());                  
                 }
                 else
                 {
@@ -373,26 +366,8 @@ namespace RISKAPI.Hubs
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public async Task OnDisconnectedAsync(Exception? exception, string joueurName)
-        {
-            bool find = false;
-            foreach (Lobby lobby in JurasicRiskGameServer.Get.Lobbys)
-            {
-                foreach (Joueur joueur in lobby.Joueurs)
-                {
-                    if (joueur.Profil.Pseudo == joueurName)
-                    {
-                        await ExitLobby(joueur.Profil.Pseudo, lobby.Id);
-                        find = true;
-                        break;
-                    }
-                }
-                if (find)
-                {
-                    break;
-                }
-            }
-
+        public async Task OnDisconnectedAsync(Exception? exception)
+        {          
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected from OnDisconnectAsync ExitLobby {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;
@@ -401,8 +376,6 @@ namespace RISKAPI.Hubs
                 Console.WriteLine(exception.Message);
             }
             await base.OnDisconnectedAsync(exception);
-
-
         }
         #endregion
     }

@@ -33,6 +33,8 @@ namespace JurassicRisk.Views
 
             if (_lobbyVm.Lobby.PlayersReady && _lobbyVm.Lobby.Owner == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo)
             {
+                await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
+
                 //Retry Pattern Async
                 var RetryTimes = 3;
 

@@ -10,9 +10,6 @@ namespace Models
     public class JurasicRiskGameClient
     {
         #region Attributes
-
-        private Lobby? _lobby;
-        private Partie? _partie;
         private HttpClient _client;
         private string _ip;
         private HubConnection _connectionLobby;
@@ -26,12 +23,6 @@ namespace Models
         #endregion
 
         #region Property
-
-        public Lobby? Lobby
-        {
-            get { return _lobby; }
-            set { _lobby = value; }
-        }
 
         public HttpClient Client
         {
@@ -52,7 +43,6 @@ namespace Models
         public bool IsConnectedToLobby { get => _isConnectedToLobby; set => _isConnectedToLobby = value; }
         public bool IsConnectedToPartie { get => _isConnectedToPartie; set => _isConnectedToPartie = value; }
 
-        public Partie? Partie { get => _partie; set => _partie = value; }
         public HubConnection ConnectionPartie { get => _connectionPartie; set => _connectionPartie = value; }
 
         #endregion
@@ -77,15 +67,22 @@ namespace Models
             _ip = "localhost:7215";
             _client = new HttpClient();
 
-            _connectionLobby = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/LobbyHub").Build();
-            _lobbyChatService = new SignalRLobbyService(_connectionLobby);
-
-            _connectionPartie = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
-            _partieChatService = new SignalRPartieService(_connectionPartie);
-
-            _lobby = null;
+            ConnectHubLobby();
+            ConnectHubPartie();
         }
 
+
+        private void ConnectHubLobby()
+        {
+            _connectionLobby = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/LobbyHub").Build();
+            _lobbyChatService = new SignalRLobbyService(_connectionLobby);
+        }
+
+        private void ConnectHubPartie() 
+        {
+            _connectionPartie = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
+            _partieChatService = new SignalRPartieService(_connectionPartie);
+        }
         #endregion
 
         public async Task ConnectLobby()
@@ -97,6 +94,7 @@ namespace Models
                 {
                     MessageBox.Show("Connect Lobby : " + task.Exception.Message);
                     _isConnectedToLobby = false;
+                    ConnectHubLobby();
                     return;
 
                 }
@@ -110,6 +108,7 @@ namespace Models
             {
                 if (task.Exception != null)
                 {
+                    ConnectHubPartie();
                     MessageBox.Show("Connect Partie : " + task.Exception.Message);
                     _isConnectedToPartie = false;
                 }

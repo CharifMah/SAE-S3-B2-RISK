@@ -94,22 +94,25 @@ namespace JurassicRisk.ViewsModels
 
         public async Task StartJeuPage()
         {
-            if (_connection == null || _connection.ConnectionId == null)
-            {
-                await JurasicRiskGameClient.Get.ConnectPartie();
-            }
+
 
             _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
-            Lobby l = JurassicRiskViewModel.Get.LobbyVm.Lobby;
-
-            _partieVm = new PartieViewModel(_carteVm.Carte, l.Joueurs, l.Id);
-
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
 
             if (JurasicRiskGameClient.Get.IsConnectedToPartie && JurasicRiskGameClient.Get.IsConnectedToLobby)
             {
                 await JurasicRiskGameClient.Get.DisconnectLobby();
             }
+
+            if (_connection == null || _connection.ConnectionId == null)
+            {
+                await JurasicRiskGameClient.Get.ConnectPartie();
+            }
+
+            _partieVm = new PartieViewModel(_carteVm.Carte, _lobbyVm.Lobby.Joueurs, _lobbyVm.Lobby.Id);
+
+            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
+
+           
         }
 
         public void DestroyVm()

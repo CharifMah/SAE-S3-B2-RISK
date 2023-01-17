@@ -23,6 +23,7 @@ namespace Models.GameStatus
         public List<Joueur> Joueurs
         {
             get { return _joueurs; }
+            set { _joueurs = value;}
         }
 
         public string Id { get => _id; set => _id = value; }

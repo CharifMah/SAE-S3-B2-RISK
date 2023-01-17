@@ -1,4 +1,5 @@
-﻿using Models.Player;
+﻿using Models.Map;
+using Models.Player;
 using Models.Units;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,15 @@ namespace Models.Tours
             _tourEnd = false;
         }
 
-        public void PlaceUnits(IUnit unitToPlace, Joueur _joueur)
-        {
-        }
 
         public void TerminerTour()
         {
             _tourEnd = true;
+        }
+
+        public void PlaceUnits(IUnit unitToPlace, Joueur _joueur, ITerritoireBase territoireBase)
+        {
+            throw new NotImplementedException();
         }
     }
 }

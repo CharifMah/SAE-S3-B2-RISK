@@ -45,7 +45,6 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _lobby = null;
-            _lobby = JurasicRiskGameClient.Get.Lobby;
 
             _isConnectedToLobby = false;
             _connection = JurasicRiskGameClient.Get.Connection;
@@ -230,7 +229,6 @@ namespace JurassicRisk.ViewsModels
             {
                 Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                 this._lobby = lobby;
-                JurasicRiskGameClient.Get.Lobby = lobby;
                 NotifyPropertyChanged("Lobby");
             });
         }
@@ -243,7 +241,6 @@ namespace JurassicRisk.ViewsModels
                 {
                     Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                     this._lobby = lobby;
-                    JurasicRiskGameClient.Get.Lobby = lobby;
                     _isConnectedToLobby = true;
                 }
                 else
