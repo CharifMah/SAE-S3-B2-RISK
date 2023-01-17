@@ -238,8 +238,6 @@ namespace RISKAPI.Hubs
                                 break;
                             }
                         }
-
-
                     }
                     else
                     {

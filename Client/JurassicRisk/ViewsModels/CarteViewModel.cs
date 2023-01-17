@@ -449,12 +449,6 @@ namespace JurassicRisk.ViewsModels
             shadow.Color = Brushes.Green.Color;
             c.Effect = shadow;
 
-            this._carte.SelectedTerritoire = territoire;
-            if (_joueur.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
-            {
-                _joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire);
-            }
-
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
         }

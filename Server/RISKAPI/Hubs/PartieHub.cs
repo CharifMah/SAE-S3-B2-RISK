@@ -59,12 +59,10 @@ namespace RISKAPI.Hubs
             {
                 case "Deploiment":
                     Deploiment d = (p.Etat as Deploiment);
-                    if (d.IdUniteRemove != null && d.IdTerritoireUpdate != null && p.PlayerIndex != -1)
+                    if (p.PlayerIndex != -1)
                     {
-                        foreach (Joueur j in p.Joueurs)
-                        {
-                            await Clients.Client(j.Profil.ConnectionId).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
-                        }
+  
+                        await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
 
                         Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
                     }
@@ -193,6 +191,17 @@ namespace RISKAPI.Hubs
                     partie.ExitPartie(j);
                     Groups.RemoveFromGroupAsync(Context.ConnectionId, partieName);
                     Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");
+                    if (partie.Joueurs.Count <= 0)
+                    {
+                        foreach (Partie p in JurasicRiskGameServer.Get.Parties)
+                        {
+                            if (p.Id == partie.Id)
+                            {
+                                JurasicRiskGameServer.Get.Parties.Remove(p);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception)
