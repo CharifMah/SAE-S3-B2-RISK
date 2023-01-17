@@ -16,7 +16,6 @@ namespace JurassicRisk.ViewsModels
         #region Attributes
         private SignalRPartieService _partieChatService;
         private Partie? _partie;
-        private bool _isConnected;
         #endregion
 
         #region Property
@@ -32,9 +31,6 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
-        public bool IsConnected { get => _isConnected; set => _isConnected = value; }
-
-
         #endregion
 
         #region Constructor
@@ -47,10 +43,12 @@ namespace JurassicRisk.ViewsModels
             _partieChatService.EndTurn += _chatService_EndTurn;
             _partieChatService.Connected += _partieChatService_Connected; ;
             _partieChatService.Disconnected += _partieChatService_Disconnected;
-            _partieChatService.Deploiment += _partieChatService_Deploiment;
+            _partieChatService.Deploiment += _partieChatService_Deploiment ;
 
             NotifyPropertyChanged("Partie");
         }
+
+       
         #endregion
 
         #region Request
@@ -77,12 +75,13 @@ namespace JurassicRisk.ViewsModels
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionId != String.Empty)
             {
                 JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
-                _isConnected = true;
+                JurasicRiskGameClient.Get.IsConnectedToLobby = true;
             }
             else
             {
-                _isConnected = false;
+                JurasicRiskGameClient.Get.IsConnectedToLobby = false;
             }
+            await JurassicRiskViewModel.Get.LobbyVm.ExitLobby();
             await _partieChatService.ConnectedPartie(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
         }
 
@@ -108,7 +107,7 @@ namespace JurassicRisk.ViewsModels
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null)
                 JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = String.Empty;
 
-            _isConnected = false;
+            JurasicRiskGameClient.Get.IsConnectedToLobby = false;
         }
 
         private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)

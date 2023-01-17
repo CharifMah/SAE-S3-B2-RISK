@@ -447,6 +447,7 @@ namespace JurassicRisk.ViewsModels
 
             shadow.Color = Brushes.Green.Color;
             c.Effect = shadow;
+
             this._carte.SelectedTerritoire = territoire;
             if (_joueur.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
             {

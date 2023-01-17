@@ -55,8 +55,6 @@ namespace JurassicRisk.Views
         {
             try
             {
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
-
                 //Retry Pattern Async
                 var RetryTimes = 3;
 
@@ -64,23 +62,29 @@ namespace JurassicRisk.Views
 
                 for (int i = 0; i < RetryTimes; i++)
                 {
-                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                    if (!JurasicRiskGameClient.Get.IsConnectedToPartie && JurasicRiskGameClient.Get.IsConnectedToLobby)
                     {
+                        Error.Visibility = Visibility.Hidden;
+                        await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
                         (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                        i = RetryTimes;
                         break;
                     }
                     else
                     {
-                        if (!fromCreate)
+                        await JurasicRiskGameClient.Get.ConnectPartie();
+
+                        if (i >= 2)
                         {
-                            Error.Text = Ressource.Strings.NoExistLobby;
+                            Error.Text = "is not connected";
                             Error.Visibility = Visibility.Visible;
                         }
-                        if (fromCreate)
+                        else
                         {
                             Error.Text = "Loading...";
                             Error.Visibility = Visibility.Visible;
                         }
+
                     }
                     //Wait for 500 milliseconds
                     await Task.Delay(WaitTime);

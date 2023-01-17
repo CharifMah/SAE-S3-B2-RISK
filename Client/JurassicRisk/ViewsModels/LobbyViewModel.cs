@@ -37,7 +37,7 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged("Lobby");
             }
         }
-        public bool IsConnectedToLobby { get => _isConnectedToLobby; set => _isConnectedToLobby = value; }
+
         public bool IsConnected { get => _isConnected; set => _isConnected = value; }
         #endregion
 

@@ -95,23 +95,22 @@ namespace RISKAPI.Hubs
                         PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
                         if (lobby.Password == "" || passwordHasher.VerifyHashedPassword(lobby, lobby.Password, password) != 0)
                         {
-                            j.Profil.ConnectionId = Context.ConnectionId;
                             if (lobby.Joueurs.Count < 4)
                             {
+                                j.Profil.ConnectionId = Context.ConnectionId;
+                                await Groups.AddToGroupAsync(Context.ConnectionId, lobbyName);
+
                                 lobby.JoinLobby(j);
 
-                                await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
                                 List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
                                 if (lobbyList.Find(l => l.Id == lobby.Id) == null)
                                 {
                                     lobbyList.Add(lobby);
-
                                 }
-                                
-                                await Groups.AddToGroupAsync(Context.ConnectionId, lobbyName);
+                               
                                 await _lobby.UpdateAsync(lobby);
                                 await RefreshLobbyToClients(lobbyName);
-
+                                await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
                             }
                             else
                             {
@@ -216,8 +215,8 @@ namespace RISKAPI.Hubs
                     Joueur j = lobby.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
                     if (j != null)
                     {
+                        await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
                         lobby.Joueurs.Remove(j);
-
                         Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
                     }
                     else if (lobby.Joueurs.Count > 1)
@@ -297,10 +296,13 @@ namespace RISKAPI.Hubs
                         await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
                     }
                     await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
+                    Console.ForegroundColor = ConsoleColor.Red;
                     foreach (var j in lobby.Joueurs)
                     {
                         Console.WriteLine($"Disconnected {j.Profil.Pseudo} from lobby by Owner {lobby.Owner} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
                     }
+                    Console.ForegroundColor = ConsoleColor.White;
+
 
                 }
                 else
@@ -351,7 +353,6 @@ namespace RISKAPI.Hubs
         #region Override
         public override async Task OnConnectedAsync()
         {
-
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
@@ -378,7 +379,6 @@ namespace RISKAPI.Hubs
                 }
             }
 
-            await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected from OnDisconnectAsync ExitLobby {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;

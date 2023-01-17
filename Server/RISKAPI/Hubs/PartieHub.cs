@@ -4,6 +4,7 @@ using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.GameStatus;
 using ModelsAPI.ClassMetier.Player;
 using Redis.OM;
+using System;
 
 namespace RISKAPI.Hubs
 {
@@ -15,6 +16,7 @@ namespace RISKAPI.Hubs
         public PartieHub(RedisConnectionProvider provider)
         {
             _provider = provider;
+            
         }
 
         public async Task EndTurn(string partieName, string joueurName)
@@ -57,8 +59,11 @@ namespace RISKAPI.Hubs
                 case "Deploiment":
                     Deploiment d = (p.Etat as Deploiment);
                     if (d.IdUniteRemove != null && d.IdTerritoireUpdate != null && p.PlayerIndex != -1)
-                    {                     
-                        await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
+                    {
+                        foreach (Joueur j in p.Joueurs)
+                        {
+                            await Clients.Client(j.Profil.ConnectionId).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
+                        }
 
                         Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
                     }
@@ -77,7 +82,24 @@ namespace RISKAPI.Hubs
         public async Task ConnectedPartie(string partieName, string joueurName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, partieName);
+            Partie partie = null;
+
+            foreach (Partie p in JurasicRiskGameServer.Get.Parties)
+            {
+                if (p.Id == partieName)
+                {
+                    partie = p;
+                    break;
+                }
+            }
+            if (partie != null)
+            {
+                Joueur j = partie.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
+               j.Profil.ConnectionId = Context.ConnectionId;
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{joueurName} connected to {partieName}");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public async Task ExitPartie(string partieName, string joueurName)
@@ -102,7 +124,7 @@ namespace RISKAPI.Hubs
                 {
                     Joueur j = partie.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
                     partie.ExitPartie(j);
-                    Context.Items.Remove(Context.ConnectionId);
+                    Groups.RemoveFromGroupAsync(Context.ConnectionId, partieName);
                     Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");
                 }         
             }
@@ -115,10 +137,11 @@ namespace RISKAPI.Hubs
         #region Override
         public override async Task OnConnectedAsync()
         {
+            await Clients.Client(Context.ConnectionId).SendAsync("ConnectedPartie", Context.ConnectionId);
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"Connected to the game {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
-            await Clients.Client(Context.ConnectionId).SendAsync("ConnectedPartie", Context.ConnectionId);
             Console.ForegroundColor = ConsoleColor.White;
+            await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)

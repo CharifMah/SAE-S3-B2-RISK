@@ -31,8 +31,6 @@ namespace JurassicRisk.Views
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
             if (_lobbyVm.Lobby.PlayersReady && _lobbyVm.Lobby.Owner == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo)
             {
-
-
                 //Retry Pattern Async
                 var RetryTimes = 3;
 
@@ -40,7 +38,7 @@ namespace JurassicRisk.Views
 
                 for (int i = 0; i < RetryTimes; i++)
                 {
-                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnected)
+                    if (JurasicRiskGameClient.Get.IsConnectedToPartie && !JurasicRiskGameClient.Get.IsConnectedToLobby)
                     {
                         Error.Visibility = Visibility.Hidden;
                         await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");

@@ -18,7 +18,8 @@ namespace Models
         private HubConnection _connectionLobby;
         private HubConnection _connectionPartie;
 
-        private bool _isConnected;
+        private bool _isConnectedToLobby;
+        private bool _isConnectedToPartie;
         private SignalRPartieService _partieChatService;
 
         private SignalRLobbyService _lobbyChatService;
@@ -48,17 +49,11 @@ namespace Models
 
         public HubConnection? Connection { get => _connectionLobby; set => _connectionLobby = value; }
 
-        public bool IsConnected
-        {
-            get
-            {
-                return _isConnected;
-            }
-            set
-            {
-                _isConnected = value;
-            }
-        }
+        public bool IsConnectedToLobby { get => _isConnectedToLobby; set => _isConnectedToLobby = value; }
+        public bool IsConnectedToPartie { get => _isConnectedToPartie; set => _isConnectedToPartie = value; }
+
+        public Partie? Partie { get => _partie; set => _partie = value; }
+        public HubConnection ConnectionPartie { get => _connectionPartie; set => _connectionPartie = value; }
 
         #endregion
 
@@ -77,9 +72,6 @@ namespace Models
             }
         }
 
-        public Partie? Partie { get => _partie; set => _partie = value; }
-        public HubConnection ConnectionPartie { get => _connectionPartie; set => _connectionPartie = value; }
-
         private JurasicRiskGameClient()
         {
             _ip = "localhost:7215";
@@ -91,20 +83,23 @@ namespace Models
             _connectionPartie = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
             _partieChatService = new SignalRPartieService(_connectionPartie);
 
-            _isConnected = false;
             _lobby = null;
         }
 
+        #endregion
+
         public async Task ConnectLobby()
         {
-           
+
             await _connectionLobby.StartAsync().ContinueWith(task =>
             {
                 if (task.Exception != null)
                 {
                     Trace.Write("Connect Lobby : " + task.Exception.Message);
+                    _isConnectedToLobby = false;
+
                 }
-                _isConnected = true;
+                _isConnectedToLobby = true;
             });
         }
 
@@ -115,8 +110,9 @@ namespace Models
                 if (task.Exception != null)
                 {
                     Trace.Write("Connect Partie : " + task.Exception.Message);
+                    _isConnectedToPartie = false;
                 }
-
+                _isConnectedToPartie = true;
             });
         }
 
@@ -130,15 +126,14 @@ namespace Models
             {
                 await _connectionLobby.DisposeAsync();
             }
-            _isConnected = false;
+            _isConnectedToPartie = false;
         }
 
 
         public void DestroyClient()
         {
-            _instance= null;
+            _instance = null;
         }
-        #endregion
 
     }
 }

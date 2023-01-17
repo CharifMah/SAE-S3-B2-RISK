@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models;
 using Models.Son;
 using System;
 using System.Threading.Tasks;
@@ -19,11 +20,8 @@ namespace JurassicRisk.Views
 
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
-            
             try
             {
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
-
                 //Retry Pattern Async
                 var RetryTimes = 3;
 
@@ -31,18 +29,21 @@ namespace JurassicRisk.Views
 
                 for (int i = 0; i < RetryTimes; i++)
                 {
-                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                    if (!JurasicRiskGameClient.Get.IsConnectedToPartie && JurasicRiskGameClient.Get.IsConnectedToLobby)
                     {
+                        Error.Visibility = Visibility.Hidden;
+                        await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
                         (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                        i = RetryTimes;
                         break;
                     }
                     else
                     {
-                        await JurassicRiskViewModel.Get.LobbyVm.Connect();
+                        await JurasicRiskGameClient.Get.ConnectPartie();
 
                         if (i >= 2)
                         {
-                            Error.Text = Ressource.Strings.NoExistLobby;
+                            Error.Text = "is not connected";
                             Error.Visibility = Visibility.Visible;
                         }
                         else
