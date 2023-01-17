@@ -13,6 +13,8 @@ namespace Models.GameStatus
         private Carte _carte;
 
         private string _id;
+
+        private string _owner;
         #endregion
 
         #region Property
@@ -25,6 +27,7 @@ namespace Models.GameStatus
 
         public string Id { get => _id; set => _id = value; }
         public int PlayerIndex { get => _playerIndex; }
+        public string Owner { get => _owner; set => _owner = value; }
         #endregion
 
         #region Constructor

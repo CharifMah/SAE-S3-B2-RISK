@@ -11,6 +11,7 @@
       Title="Lobby">
     <Page.Resources>
         <converter:IsReadyConverter x:Key="IsReadyConverter"/>
+        <converter:OwnerConverter x:Key="OwnerConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -50,7 +51,7 @@
             <ListBox x:Name="ListPlayer" ItemsSource="{Binding Lobby.Joueurs}" Style="{StaticResource CustomListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Style="{StaticResource FruitDays}" FontSize="20" >
+                        <TextBlock Style="{StaticResource FruitDays}" Foreground="{Binding Path=Profil.Pseudo, Converter={StaticResource OwnerConverter}}" FontSize="20" >
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{} {0} : {1} {2}">
                                     <Binding Path="Profil.Pseudo" Mode="OneWay"/>

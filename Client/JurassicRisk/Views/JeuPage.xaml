@@ -5,12 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewsmodels="clr-namespace:JurassicRisk.ViewsModels" d:DataContext="{d:DesignInstance Type=viewsmodels:JurassicRiskViewModel}"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewsmodels="clr-namespace:JurassicRisk.ViewsModels" xmlns:converter="clr-namespace:JurassicRisk.Converter" d:DataContext="{d:DesignInstance Type=viewsmodels:JurassicRiskViewModel}"
       mc:Ignorable="d"
       d:DesignHeight="1080" d:DesignWidth="1920"
       x:Name="_JeuPage"
       Title="JeuPage">
-
+    <Page.Resources>
+        <converter:OwnerConverter x:Key="OwnerConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="267*"/>
@@ -47,7 +49,7 @@
 
             <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=LobbyVm.Lobby.Owner, Mode=OneWay , StringFormat={}Owner: {0}}"/>
 
-            <ListBox x:Name="ListPlayer" ItemsSource="{Binding PartieVm.Partie.Joueurs}" Style="{StaticResource CustomListBox}">
+            <ListBox x:Name="ListPlayer" ItemsSource="{Binding PartieVm.Partie.Joueurs}"  Foreground="{Binding Path=JoueurVm.Joueur.Profil.Pseudo, Converter={StaticResource OwnerConverter}}" Style="{StaticResource CustomListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Style="{StaticResource FruitDays}"  FontSize="20" >

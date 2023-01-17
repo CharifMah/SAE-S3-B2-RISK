@@ -31,7 +31,9 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged();
             }
         }
+
         public bool IsConnected { get => _isConnected; set => _isConnected = value; }
+
 
         #endregion
 
@@ -39,7 +41,7 @@ namespace JurassicRisk.ViewsModels
         public PartieViewModel(Carte carte, List<Joueur> joueurs,string id)
         {
             _partie = new Partie(carte, joueurs, id);
-
+            _partie.Owner = JurassicRiskViewModel.Get.LobbyVm.Lobby.Owner;
             _partieChatService = JurasicRiskGameClient.Get.PartieChatService;
             _partieChatService.YourTurn += _chatService_YourTurn;
             _partieChatService.EndTurn += _chatService_EndTurn;

@@ -93,8 +93,6 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("Units");
         }
 
-
-
         /// <summary>
         /// Ajoute des Unites a un territoire
         /// </summary>
