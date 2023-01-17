@@ -20,6 +20,12 @@ namespace RISKAPI.Hubs
 
         }
 
+        /// <summary>
+        /// Termine le tour
+        /// </summary>
+        /// <param name="partieName">nom de la partie</param>
+        /// <param name="joueurName">nom du joueur</param>
+        /// <returns></returns>
         public async Task EndTurn(string partieName, string joueurName)
         {
             Partie partie = null;
@@ -71,6 +77,12 @@ namespace RISKAPI.Hubs
             }
         }
 
+        /// <summary>
+        /// Actualise le territoire selectionnée par l'utilisateur pour toute la partie
+        /// </summary>
+        /// <param name="partieName"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public async Task SetSelectedTerritoire(string partieName, int ID)
         {
             Partie p = JurasicRiskGameServer.Get.Parties.First(partie => partie.Id == partieName);
@@ -78,6 +90,12 @@ namespace RISKAPI.Hubs
             Console.WriteLine("Selected Territoire set to " + ID);
         }
 
+        /// <summary>
+        /// Ajoute l'utilisateur au groupe et a la partie
+        /// </summary>
+        /// <param name="partieName">nom de la partie</param>
+        /// <param name="joueurName">nom du joueur</param>
+        /// <returns>Task</returns>
         public async Task ConnectedPartie(string partieName, string joueurName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, partieName);
@@ -101,6 +119,13 @@ namespace RISKAPI.Hubs
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        /// <summary>
+        /// Lance la partie si c'est l'owner du lobby qui fait l'action play
+        /// </summary>
+        /// <param name="partieName">nom de la partie</param>
+        /// <param name="joueurName">nom du joueur qui fait l'action</param>
+        /// <param name="carteName">nom de la Carte</param>
+        /// <returns>Task</returns>
         public async Task StartPartie(string partieName, string joueurName, string carteName)
         {
             bool find = false;
@@ -127,6 +152,7 @@ namespace RISKAPI.Hubs
                 }
             }
 
+            //Lance la partie si c'est le Owner qui fait l'action Play
             if (lobby.Owner == joueurName)
             {
                 Console.WriteLine($"{joueurName} try to Start the game");
@@ -134,20 +160,17 @@ namespace RISKAPI.Hubs
                 Carte carte = CreateCarte1();
                 Console.WriteLine("Carte Created");
 
-                //Create Partie For the Server
-                Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
-                Console.WriteLine("Partie Created");
-
                 List<Partie> partieList = JurasicRiskGameServer.Get.Parties;
-                if (partieList.FirstOrDefault(partie => partie.Id == p.Id) == null)
+
+                //Ajoute la partie if don't exist
+                if (partieList.FirstOrDefault(partie => partie.Id == lobby.Id) == null)
                 {
+                    //Create Partie For the Server
+                    Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
+                    Console.WriteLine("Partie Created");
                     partieList.Add(p);
                 }
-                else
-                {
-                    Partie OldPartie = partieList.FirstOrDefault(partie => partie.Id == p.Id);
-                    OldPartie = p;
-                }
+
                 if (lobby.Joueurs.Count > 0)
                 {
                     string joueursJson = JsonConvert.SerializeObject(p.Joueurs);
@@ -167,6 +190,12 @@ namespace RISKAPI.Hubs
             }
         }
 
+        /// <summary>
+        /// Quitte la Partie
+        /// </summary>
+        /// <param name="partieName">nom de la partie</param>
+        /// <param name="joueurName">nom du joueur qui veut quittée</param>
+        /// <returns>Task</returns>
         public async Task ExitPartie(string partieName, string joueurName)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
