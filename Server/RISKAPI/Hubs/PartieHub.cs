@@ -126,7 +126,19 @@ namespace RISKAPI.Hubs
                     partie.ExitPartie(j);
                     Groups.RemoveFromGroupAsync(Context.ConnectionId, partieName);
                     Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");
-                }         
+                    if (partie.Joueurs.Count <= 0)
+                    {
+                        foreach (Partie p in JurasicRiskGameServer.Get.Parties)
+                        {
+                            if (p.Id == partie.Id)
+                            {
+                                JurasicRiskGameServer.Get.Parties.Remove(p);
+                                break;
+                            }
+                        }
+                    }
+
+                }
             }
             catch (Exception)
             {
