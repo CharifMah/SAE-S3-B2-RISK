@@ -29,6 +29,8 @@ namespace JurassicRisk.Views
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
+
+
             if (_lobbyVm.Lobby.PlayersReady && _lobbyVm.Lobby.Owner == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo)
             {
                 //Retry Pattern Async

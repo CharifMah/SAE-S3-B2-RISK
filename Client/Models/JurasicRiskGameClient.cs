@@ -117,12 +117,25 @@ namespace Models
         }
 
         /// <summary>
-        /// Disconnect the connection
+        /// DisconnectLobby the connection
         /// </summary>
         /// <returns></returns>
-        public async Task Disconnect()
+        public async Task DisconnectLobby()
         {
             if (_connectionLobby != null)
+            {
+                await _connectionLobby.DisposeAsync();
+            }
+            _isConnectedToLobby = false;
+        }
+
+        /// <summary>
+        /// DisconnectLobby the connection
+        /// </summary>
+        /// <returns></returns>
+        public async Task DisconnectPartie()
+        {
+            if (_connectionPartie != null)
             {
                 await _connectionLobby.DisposeAsync();
             }
