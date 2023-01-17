@@ -59,15 +59,19 @@ namespace Models.Services
         /// <param name="joueur">player qui rejoint</param>
         /// <param name="lobbyName">Lobby to join</param>
         /// <returns>Task</returns>
-        public async Task JoinLobby(Joueur joueur, string lobbyName, string password)
+        public async Task JoinLobby(string profilJson, string lobbyName, string password)
         {
-            string joueurJson = JsonConvert.SerializeObject(joueur);
-            await _connection.SendAsync("JoinLobby", joueurJson, lobbyName, password);
+            await _connection.SendAsync("JoinLobby", profilJson, lobbyName, password);
         }
 
         public async Task ExitLobby(string joueurName,string id)
         {
             await _connection.SendAsync("ExitLobby", joueurName, id); 
+        }
+
+        public async Task ForceExitLobby(string joueurName)
+        {
+            await _connection.SendAsync("ForceExitLobby", joueurName);
         }
 
         public async Task SetTeam(Teams teams, string pseudo, string lobbyId)

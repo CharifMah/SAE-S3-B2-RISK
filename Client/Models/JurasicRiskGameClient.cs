@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Models.GameStatus;
 using Models.Services;
+using System.Diagnostics;
 using System.Net.Http;
+using System.Windows;
 
 namespace Models
 {
@@ -76,31 +78,34 @@ namespace Models
         }
 
         public Partie? Partie { get => _partie; set => _partie = value; }
+        public HubConnection ConnectionPartie { get => _connectionPartie; set => _connectionPartie = value; }
 
         private JurasicRiskGameClient()
         {
             _ip = "localhost:7215";
             _client = new HttpClient();
+
             _connectionLobby = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/LobbyHub").Build();
+            _lobbyChatService = new SignalRLobbyService(_connectionLobby);
+
             _connectionPartie = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
             _partieChatService = new SignalRPartieService(_connectionPartie);
-            _lobbyChatService = new SignalRLobbyService(_connectionLobby);
+
             _isConnected = false;
             _lobby = null;
         }
 
         public async Task ConnectLobby()
         {
+           
             await _connectionLobby.StartAsync().ContinueWith(task =>
             {
                 if (task.Exception != null)
                 {
-                    //this._errorMessage = "Unable to connect to Lobby chat hub";
+                    Trace.Write("Connect Lobby : " + task.Exception.Message);
                 }
                 _isConnected = true;
             });
-
-
         }
 
         public async Task ConnectPartie()
@@ -109,12 +114,11 @@ namespace Models
             {
                 if (task.Exception != null)
                 {
-                    //this._errorMessage = "Unable to connect to Lobby chat hub";
+                    Trace.Write("Connect Partie : " + task.Exception.Message);
                 }
 
             });
         }
-
 
         /// <summary>
         /// Disconnect the connection
@@ -130,9 +134,10 @@ namespace Models
         }
 
 
-
-
-
+        public void DestroyClient()
+        {
+            _instance= null;
+        }
         #endregion
 
     }

@@ -28,6 +28,7 @@ namespace JurassicRisk.Views
             
             ProfilViewModel.Get.SelectedProfil = null;
             JurassicRiskViewModel.Get.DestroyVm();
+            JurasicRiskGameClient.Get.DestroyClient();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new HomePage());
         }
 

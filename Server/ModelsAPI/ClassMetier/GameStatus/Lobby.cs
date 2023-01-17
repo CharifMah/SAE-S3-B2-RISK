@@ -105,6 +105,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
                 if (_joueurs.Count < 4 && j.Count() == 0)
                 {
                     _joueurs.Add(joueur);
+
                     res = true;
                 }
                 if (_owner == null)

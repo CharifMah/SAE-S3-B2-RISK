@@ -70,10 +70,11 @@ namespace RISKAPI.Hubs
 
         public async Task ConnectedPartie(string partieName, string joueurName)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, partieName);           
+            await Groups.AddToGroupAsync(Context.ConnectionId, partieName);
+            Console.WriteLine($"{joueurName} connected to {partieName}");
         }
 
-        public async Task ExitPartie(string partieName)
+        public async Task ExitPartie(string partieName, string joueurName)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
@@ -93,7 +94,7 @@ namespace RISKAPI.Hubs
                 }
                 if (partie != null)
                 {
-                    Joueur j = partie.Joueurs.Find(j => j.Profil.ConnectionId == Context.ConnectionId);
+                    Joueur j = partie.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
                     partie.ExitPartie(j);
                     Context.Items.Remove(Context.ConnectionId);
                     Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");

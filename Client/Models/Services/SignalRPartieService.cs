@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using System.Windows;
 
 namespace Models.Services
 {
@@ -48,15 +49,15 @@ namespace Models.Services
             await _connection.SendAsync("ConnectedPartie", lobbyName, joueurName);
         }
 
-        public async Task ExitPartie()
+        public async Task ExitPartie(string joueurName)
         {
             try
             {
-                await _connection.SendAsync("ExitPartie",JurasicRiskGameClient.Get.Lobby.Id);
+                await _connection.SendAsync("ExitPartie",JurasicRiskGameClient.Get.Lobby.Id,joueurName);
             }
-            catch (InvalidOperationException e)
+            catch (Exception e)
             {
-
+                MessageBox.Show("Failed To ExitPartie" + e.Message);
             }
         }
     }

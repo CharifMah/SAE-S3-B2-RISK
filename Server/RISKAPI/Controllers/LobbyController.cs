@@ -33,11 +33,7 @@ namespace RISKAPI.Controllers
                     PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
                     lobby.Password = passwordHasher.HashPassword(lobby, lobby.Password);
                     await _lobby.InsertAsync(lobby);
-                    List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
-                    if (lobbyList.Find(l => l.Id == lobby.Id) == null)
-                    {
-                        lobbyList.Add(lobby);
-                    }
+                    
                     Console.WriteLine("Created Lobbys");
 
                     reponse = new JsonResult($"Lobbys With Name : {lobby.Id} created");
@@ -45,6 +41,12 @@ namespace RISKAPI.Controllers
                 else
                 {
                     reponse = new JsonResult("This key Already Exist");
+                }
+
+                List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
+                if (lobbyList.Find(l => l.Id == lobby.Id) == null)
+                {
+                    lobbyList.Add(lobby);
                 }
 
             }

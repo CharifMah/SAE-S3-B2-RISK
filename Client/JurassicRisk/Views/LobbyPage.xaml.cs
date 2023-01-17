@@ -3,6 +3,7 @@ using Models;
 using Models.Player;
 using Models.Settings;
 using Models.Son;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -28,10 +29,43 @@ namespace JurassicRisk.Views
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
-            if (_lobbyVm.Lobby.PlayersReady)
+            if (_lobbyVm.Lobby.PlayersReady && _lobbyVm.Lobby.Owner == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo)
             {
-                Error.Visibility = Visibility.Hidden;
-                await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id,ProfilViewModel.Get.SelectedProfil.Pseudo,"carte") ;
+
+
+                //Retry Pattern Async
+                var RetryTimes = 3;
+
+                var WaitTime = 500;
+
+                for (int i = 0; i < RetryTimes; i++)
+                {
+                    if (JurassicRiskViewModel.Get.IsConnected)
+                    {
+                        Error.Visibility = Visibility.Hidden;
+                        await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
+
+                        break;
+                    }
+                    else
+                    {
+                        await JurasicRiskGameClient.Get.ConnectPartie();
+
+                        if (i >= 2)
+                        {
+                            Error.Text = "is not connected";
+                            Error.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            Error.Text = "Loading...";
+                            Error.Visibility = Visibility.Visible;
+                        }
+
+                    }
+                    //Wait for 500 milliseconds
+                    await Task.Delay(WaitTime);
+                }
             }
             else
             {

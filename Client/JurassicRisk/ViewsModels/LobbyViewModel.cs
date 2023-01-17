@@ -53,7 +53,9 @@ namespace JurassicRisk.ViewsModels
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
             _chatService.PartieReceived += _chatService_PartieReceived;
-
+            _chatService.ConnectedToLobby += _chatService_ConnectedToLobby;
+            _chatService.LobbyReceived += _chatService_LobbyReceived;
+            _chatService.LobbyJoined += _chatService_LobbyJoined;
         }
         #endregion
 
@@ -66,10 +68,6 @@ namespace JurassicRisk.ViewsModels
         public async Task Connect()
         {
             await JurasicRiskGameClient.Get.ConnectLobby();
-
-            _chatService.ConnectedToLobby += _chatService_ConnectedToLobby;
-            _chatService.LobbyReceived += _chatService_LobbyReceived;
-            _chatService.LobbyJoined += _chatService_LobbyJoined;
         }
 
         /// <summary>
@@ -114,8 +112,9 @@ namespace JurassicRisk.ViewsModels
             {
                 await Connect();
             }
-            Joueur joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, Teams.NEUTRE);
-            await _chatService.JoinLobby(joueur, lobbyName, password);
+
+            string profilJson = JsonConvert.SerializeObject(ProfilViewModel.Get.SelectedProfil);
+            await _chatService.JoinLobby(profilJson, lobbyName, password);
 
             return true;
         }
@@ -134,6 +133,7 @@ namespace JurassicRisk.ViewsModels
                 }
                 else
                 {
+                    await _chatService.ForceExitLobby(JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
                     MessageBox.Show("Disconnected From The Server\n");
                 }
             }
@@ -168,12 +168,6 @@ namespace JurassicRisk.ViewsModels
             {
                 await _chatService.SetTeam(team, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo, _lobby.Id);
             }
-            else
-            {
-                await ExitLobby();
-                (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
-            }
-           
 
             return true;
         }

@@ -1,9 +1,11 @@
 using JurassicRisk.Views;
+using Microsoft.AspNetCore.SignalR.Client;
 using Models;
 using Models.GameStatus;
 using Models.Services;
 using Models.Tours;
 using System;
+using System.Data.Common;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -13,6 +15,7 @@ namespace JurassicRisk.ViewsModels
     public class JurassicRiskViewModel : observable.Observable
     {
         #region Attributes
+        private HubConnection _connection;
         private Partie? _partie;
         private bool _isConnected;
         private bool _carteLoaded;
@@ -62,6 +65,8 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
+        public bool IsConnected { get => _isConnected; set => _isConnected = value; }
+
         private JurassicRiskViewModel()
         {
             _joueurVm = new JoueurViewModel();
@@ -96,7 +101,7 @@ namespace JurassicRisk.ViewsModels
         /// <returns></returns>
         public async Task<bool> ExitPartie()
         {
-            await _partieChatService.ExitPartie();
+            await _partieChatService.ExitPartie(_joueurVm.Joueur.Profil.Pseudo);
             return true;
         }
 
@@ -145,7 +150,6 @@ namespace JurassicRisk.ViewsModels
 
         private async void _partieChatService_Connected(string connectionId)
         {
-            await this._lobbyVm.ExitLobby();
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionId != String.Empty)
             {
                 JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
@@ -170,10 +174,15 @@ namespace JurassicRisk.ViewsModels
 
         #endregion
 
-        public void StartJeuPage()
+        public async void StartJeuPage()
         {
+            if (_connection == null || _connection.ConnectionId == null)
+            {
+                await JurasicRiskGameClient.Get.ConnectPartie();
+            }
+
             _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
-            Lobby l = JurasicRiskGameClient.Get.Lobby;
+            Lobby l = JurassicRiskViewModel.Get.LobbyVm.Lobby;
             _partie = new Partie(_carteVm.Carte, l.Joueurs, l.Id);
             (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
         }
