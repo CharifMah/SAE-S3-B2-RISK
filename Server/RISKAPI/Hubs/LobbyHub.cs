@@ -224,9 +224,25 @@ namespace RISKAPI.Hubs
                         Console.WriteLine($"there is {lobby.Joueurs.Count} in the lobby {lobby.Id} that mean player is null");
                         lobby.Joueurs.Clear();
                     }
+                    if (lobby.Joueurs.Count <= 0)
+                    {
+                        await _lobby.DeleteAsync(lobby);
+                        foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+                        {
+                            if (l.Id == lobbyName)
+                            {
+                                JurasicRiskGameServer.Get.Lobbys.Remove(l);
+                                break;
+                            }
+                        }
 
-                    await _lobby.UpdateAsync(lobby);
-                    await RefreshLobbyToClients(lobbyName);
+
+                    }
+                    else
+                    {
+                        await _lobby.UpdateAsync(lobby);
+                        await RefreshLobbyToClients(lobbyName);
+                    }
                 }
             }
             catch (Exception e)

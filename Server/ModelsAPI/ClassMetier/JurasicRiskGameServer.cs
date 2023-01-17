@@ -38,12 +38,6 @@ namespace ModelsAPI.ClassMetier
         {
             _lobby = new List<Lobby>();
             _partie = new List<Partie>();
-
-        }
-
-        private void TtlLobby()
-        {
-            
         }
         #endregion
     }
