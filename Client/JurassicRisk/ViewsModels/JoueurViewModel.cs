@@ -16,7 +16,6 @@ namespace JurassicRisk.ViewsModels
     public class JoueurViewModel : observable.Observable
     {
         #region Attributes
-        private SignalRPartieService _partieChatService;
         private string _isReady;
         private Joueur _joueur;
         private ObservableCollection<IUnit> _units;
@@ -90,8 +89,7 @@ namespace JurassicRisk.ViewsModels
             _joueur = new Joueur(ProfilViewModel.Get.SelectedProfil, teams);
             _units = new ObservableCollection<IUnit>(_joueur.Units);
             _selectedUnit = _units[0];
-            _partieChatService = JurasicRiskGameClient.Get.PartieChatService;
-            _partieChatService.Deploiment += _partieChatService_Deploiment;
+
             NotifyPropertyChanged("Units");
         }
 
@@ -147,25 +145,5 @@ namespace JurassicRisk.ViewsModels
             });
 
         }
-
-
-
-
-        #region Events
-        private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
-        {
-            Partie partie = JurassicRiskViewModel.Get.Partie;
-            Carte carte = JurassicRiskViewModel.Get.CarteVm.Carte;
-            if (partie.Joueurs[playerIndex].Profil.Pseudo != _joueur.Profil.Pseudo)
-            {
-                partie.Joueurs[playerIndex].PlaceUnits(partie.Joueurs[playerIndex].Units[idUnit], carte.GetTerritoire(idTerritoire));
-            }
-            else
-            {
-                AddUnits(_selectedUnit, carte.GetTerritoire(idTerritoire));
-            }
-        }
-        #endregion
-
     }
 }

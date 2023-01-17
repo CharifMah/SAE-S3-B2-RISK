@@ -40,7 +40,7 @@ namespace JurassicRisk.Views
 
                 for (int i = 0; i < RetryTimes; i++)
                 {
-                    if (JurassicRiskViewModel.Get.IsConnected)
+                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnected)
                     {
                         Error.Visibility = Visibility.Hidden;
                         await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");

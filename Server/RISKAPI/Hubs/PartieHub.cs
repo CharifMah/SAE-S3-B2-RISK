@@ -41,6 +41,12 @@ namespace RISKAPI.Hubs
             }
         }
 
+        /// <summary>
+        /// Call Action de la partie correspondant a l'état du joueur actuel 
+        /// </summary>
+        /// <param name="partieName">nom de la partie</param>
+        /// <param name="unitlist">list index d'unité</param>
+        /// <returns>Task</returns>
         public async Task Action(string partieName, List<int> unitlist)
         {
             Partie p = JurasicRiskGameServer.Get.Parties.First(l => l.Id == partieName);
@@ -111,7 +117,7 @@ namespace RISKAPI.Hubs
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"Connected to the game {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
-            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
+            await Clients.Client(Context.ConnectionId).SendAsync("ConnectedPartie", Context.ConnectionId);
             Console.ForegroundColor = ConsoleColor.White;
         }
 

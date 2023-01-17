@@ -95,7 +95,7 @@ namespace JurassicRisk.Views
 
             SoundStore.Get("MusicGameJurr.mp3").Stop();
             SoundStore.Get("HubJurr.mp3").Play(true);
-            await JurassicRiskViewModel.Get.ExitPartie();
+            await JurassicRiskViewModel.Get.PartieVm.ExitPartie();
             JurassicRiskViewModel.Get.DestroyVm();
 
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
@@ -121,7 +121,7 @@ namespace JurassicRisk.Views
         
         private async void FinTourButton_Click(object sender, RoutedEventArgs e)
         {
-            await JurassicRiskViewModel.Get.SendEndTurn();
+            await JurassicRiskViewModel.Get.PartieVm.SendEndTurn();
         }
 
         #endregion

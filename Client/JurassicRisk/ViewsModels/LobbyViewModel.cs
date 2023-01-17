@@ -38,6 +38,7 @@ namespace JurassicRisk.ViewsModels
             }
         }
         public bool IsConnectedToLobby { get => _isConnectedToLobby; set => _isConnectedToLobby = value; }
+        public bool IsConnected { get => _isConnected; set => _isConnected = value; }
         #endregion
 
         #region Constructor
@@ -186,9 +187,9 @@ namespace JurassicRisk.ViewsModels
 
         private void _chatService_PartieReceived()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(async () =>
             {
-                JurassicRiskViewModel.Get.StartJeuPage();
+               await JurassicRiskViewModel.Get.StartJeuPage();
             }, DispatcherPriority.Render);
 
         }

@@ -23,7 +23,7 @@ namespace Models.Services
             _connection = connection;
             _connection.On<string>("yourTurn", (turnType) => YourTurn?.Invoke(turnType));
             _connection.On("endTurn", () => EndTurn?.Invoke());
-            _connection.On<string>("connected", (connexionId) => Connected?.Invoke(connexionId));
+            _connection.On<string>("ConnectedPartie", (connexionId) => Connected?.Invoke(connexionId));
             _connection.On("disconnected", () => Disconnected?.Invoke());
             _connection.On<int, int, int>("deploiment", (idUnit, idTerritoire, playerIndex) => Deploiment?.Invoke(idUnit, idTerritoire, playerIndex));
 

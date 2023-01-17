@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewsmodels="clr-namespace:JurassicRisk.ViewsModels" d:DataContext="{d:DesignInstance Type=viewsmodels:JurassicRiskViewModel}"
       mc:Ignorable="d"
       d:DesignHeight="1080" d:DesignWidth="1920"
       x:Name="_JeuPage"
@@ -43,16 +43,16 @@
         </Viewbox>
 
 
-        <StackPanel Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20">
+        <StackPanel Grid.Column="0" Grid.Row="3"  Background="Wheat" VerticalAlignment="Center" HorizontalAlignment="Left">
 
-            <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=Lobby.Owner, Mode=OneWay , StringFormat={}Owner: {0}}"/>
+            <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=LobbyVm.Lobby.Owner, Mode=OneWay , StringFormat={}Owner: {0}}"/>
 
-            <ListBox x:Name="ListPlayer" ItemsSource="{Binding Partie.Joueurs}" Grid.Column="3" Style="{StaticResource CustomListBox}">
+            <ListBox x:Name="ListPlayer" ItemsSource="{Binding PartieVm.Partie.Joueurs}" Style="{StaticResource CustomListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Style="{StaticResource FruitDays}" FontSize="20" >
+                        <TextBlock Style="{StaticResource FruitDays}"  FontSize="20" >
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{} {0} : {1} {2}">
+                                <MultiBinding StringFormat="{} {0} : {1}">
                                     <Binding Path="Profil.Pseudo" Mode="OneWay"/>
                                     <Binding Path="Team" Mode="OneWay" />
                                 </MultiBinding>
@@ -91,7 +91,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0} {1}">
                     <Binding Source="{x:Static Ressources:Strings.NbTerritoireVide}"/>
-                    <Binding Path="LobbyVm.CarteVm.Carte.GetNombreTerritoireOccupe"/>
+                    <Binding Path="CarteVm.Carte.GetNombreTerritoireOccupe"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
