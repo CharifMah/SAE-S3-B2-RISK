@@ -227,11 +227,6 @@ namespace RISKAPI.Hubs
                         
                         Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
                     }
-                    else if (lobby.Joueurs.Count > 1)
-                    {
-                        Console.WriteLine($"there is {lobby.Joueurs.Count} in the lobby {lobby.Id} that mean player is null");
-                        lobby.Joueurs.Clear();
-                    }
                     if (lobby.Joueurs.Count <= 0)
                     {
                         await _lobby.DeleteAsync(lobby);
@@ -246,9 +241,15 @@ namespace RISKAPI.Hubs
                     }
                     else
                     {
-                        await _lobby.UpdateAsync(lobby);
-                        await RefreshLobbyToClients(lobbyName);
+                        if (lobby.Joueurs.Count == 1)
+                        {
+                            lobby.Joueurs.Clear();
+                        }
+                        Console.WriteLine($"there is {lobby.Joueurs.Count} in the lobby {lobby.Id} that mean player is null");
                     }
+
+                    await _lobby.UpdateAsync(lobby);
+                    await RefreshLobbyToClients(lobbyName);
                 }
             }
             catch (Exception e)

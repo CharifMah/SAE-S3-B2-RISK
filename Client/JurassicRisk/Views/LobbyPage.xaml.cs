@@ -25,8 +25,7 @@ namespace JurassicRisk.Views
         }
 
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {   
             SoundStore.Get("HubJurr.mp3").Stop();
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
@@ -109,8 +108,7 @@ namespace JurassicRisk.Views
         }
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {            
             await _lobbyVm.StopConnection();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }

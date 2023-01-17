@@ -14,7 +14,12 @@ namespace ModelsAPI.ClassMetier
 
         public List<Lobby> Lobbys { get => _lobby; set => _lobby = value; }
 
-        public List<Partie?> Parties { get => _partie; set => _partie = value; }
+        public List<Partie?> Parties 
+        { 
+            get => _partie; 
+
+            set => _partie = value; 
+        }
 
         #endregion
 

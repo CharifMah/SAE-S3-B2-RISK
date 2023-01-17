@@ -110,6 +110,7 @@ namespace JurassicRisk.ViewsModels
             }
 
             NotifyPropertyChanged("Joueur");
+            NotifyPropertyChanged("OtherPlayers");
         }
 
         public async Task<bool> StartPartie(string lobbyName, string joueurName, string carteName)

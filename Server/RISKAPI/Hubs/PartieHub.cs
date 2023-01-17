@@ -37,7 +37,7 @@ namespace RISKAPI.Hubs
                     break;
                 }
             }
-            if (partie != null && partie.Joueurs[partie.PlayerIndex].Profil.Pseudo == joueurName)
+            if (partie != null && partie.Joueurs.Count > 0 && partie.Joueurs[partie.PlayerIndex].Profil.Pseudo == joueurName)
             {
                 Joueur joueur = partie.Joueurs[partie.NextPlayer()];
                 partie.Transition();

@@ -165,6 +165,7 @@ namespace JurassicRisk.ViewsModels
         {
             try
             {
+                await _chatService.ExitLobby(ProfilViewModel.Get.SelectedProfil.Pseudo, _lobby.Id);
                 await _connection.StopAsync();
             }
             catch (Exception e)
