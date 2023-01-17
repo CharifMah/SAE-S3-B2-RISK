@@ -95,8 +95,9 @@ namespace Models
             {
                 if (task.Exception != null)
                 {
-                    Trace.Write("Connect Lobby : " + task.Exception.Message);
+                    MessageBox.Show("Connect Lobby : " + task.Exception.Message);
                     _isConnectedToLobby = false;
+                    return;
 
                 }
                 _isConnectedToLobby = true;
@@ -109,7 +110,7 @@ namespace Models
             {
                 if (task.Exception != null)
                 {
-                    Trace.Write("Connect Partie : " + task.Exception.Message);
+                    MessageBox.Show("Connect Partie : " + task.Exception.Message);
                     _isConnectedToPartie = false;
                 }
                 _isConnectedToPartie = true;

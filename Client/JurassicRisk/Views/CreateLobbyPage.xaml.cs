@@ -72,7 +72,7 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        if (JurasicRiskGameClient.Get.IsConnectedToPartie)
+                        if (JurasicRiskGameClient.Get.IsConnectedToPartie && JurasicRiskGameClient.Get.IsConnectedToLobby)
                         {
                             await JurasicRiskGameClient.Get.DisconnectPartie();
                         }
