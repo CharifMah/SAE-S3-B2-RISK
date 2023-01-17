@@ -189,7 +189,7 @@ namespace RISKAPI.Hubs
                 {
                     Joueur j = partie.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
                     partie.ExitPartie(j);
-                    Groups.RemoveFromGroupAsync(Context.ConnectionId, partieName);
+
                     Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");
                     if (partie.Joueurs.Count <= 0)
                     {

@@ -68,7 +68,7 @@ namespace JurassicRisk.Views
         /// <Author>Charif</Author>
         private async Task FentrePrincipal_Closed(object sender, System.EventArgs e)
         {
-            await JurassicRiskViewModel.Get.LobbyVm.DisconnectLobby();
+            await JurassicRiskViewModel.Get.LobbyVm.DisposeConnection();
             Environment.Exit(0);
         }
     }

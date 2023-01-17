@@ -30,8 +30,6 @@ namespace JurassicRisk.Views
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
 
-            await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
-
             if (_lobbyVm.Lobby.PlayersReady)
             {
                 await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
@@ -77,9 +75,10 @@ namespace JurassicRisk.Views
             }
         }
 
-        private void ReadyButton_Click(object sender, RoutedEventArgs e)
+        private async void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
+
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur.Team != Teams.NEUTRE)
             {
                 if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
@@ -97,7 +96,7 @@ namespace JurassicRisk.Views
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             
-            await _lobbyVm.ExitLobby();
+            await _lobbyVm.StopConnection();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 

@@ -9,7 +9,6 @@ using Stockage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -26,7 +25,6 @@ using Brushes = System.Windows.Media.Brushes;
 using Carte = Models.Map.Carte;
 using Color = System.Windows.Media.Color;
 using Continent = Models.Map.Continent;
-using IUnit = Models.Units.IUnit;
 using TerritoireDecorator = Models.Map.TerritoireDecorator;
 
 namespace JurassicRisk.ViewsModels
@@ -63,7 +61,7 @@ namespace JurassicRisk.ViewsModels
             {
                 return _carteCanvas;
             }
-            set 
+            set
             {
                 _carteCanvas = value;
                 NotifyPropertyChanged();
@@ -419,13 +417,13 @@ namespace JurassicRisk.ViewsModels
                 this._carte.SelectedTerritoire = territoire;
                 await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
                 await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
-                JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y,2);
+                JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y, 2);
             }
 
             if (e.ChangedButton == MouseButton.Left)
             {
                 DrawLines(territoire);
-                JeuPage.GetInstance().ZoomOut(territoire.X, territoire.Y,1);
+                JeuPage.GetInstance().ZoomOut(territoire.X, territoire.Y, 1);
             }
 
             if (e.ChangedButton == MouseButton.Middle)

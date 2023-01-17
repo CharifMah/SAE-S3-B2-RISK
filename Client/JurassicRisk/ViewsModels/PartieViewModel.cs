@@ -1,6 +1,5 @@
 ﻿using JurassicRisk.Views;
 using Microsoft.AspNetCore.SignalR.Client;
-using Models;
 using Models.GameStatus;
 using Models.Player;
 using Models.Services;
@@ -8,11 +7,10 @@ using Models.Tours;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Threading;
-using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -34,7 +32,7 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Property
-
+        private Joueur? _joueur;
         public double Progress { get => _progression; set => _progression = value; }
         public bool CarteLoaded { get => _carteLoaded; set => _carteLoaded = value; }
         public bool IsConnectedToPartie { get => _isConnectedToPartie; set => _isConnectedToPartie = value; }
@@ -54,6 +52,26 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
+        public Joueur Joueur
+        {
+            get
+            {
+                return _joueur;
+            }
+            set
+            {
+                _joueur = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public List<Joueur> OtherPlayers
+        {
+            get
+            {
+                return _partie.Joueurs.Where(j => j != _joueur).ToList();
+            }          
+        }
         #endregion
 
         #region Constructor
@@ -112,7 +130,7 @@ namespace JurassicRisk.ViewsModels
         }
 
         /// <summary>
-        /// DisconnectLobby the connection
+        /// DisposeConnection the connection
         /// </summary>
         /// <returns></returns>
         public async Task DisconnectPartie()
@@ -194,14 +212,12 @@ namespace JurassicRisk.ViewsModels
             {
                 _partie.Joueurs[playerIndex].PlaceUnits(_partie.Joueurs[playerIndex].Units[idUnit], _carteVm.Carte.GetTerritoire(idTerritoire));
             }
-            else
-            {
-                _joueurVm.Joueur.PlaceUnits(_joueurVm.Joueur.Units[0], _carteVm.Carte.GetTerritoire(idTerritoire));
-            }
+
+            NotifyPropertyChanged("Joueur");
         }
 
 
-        private void _chatService_PartieReceived(string joueursJson,string partieName)
+        private void _chatService_PartieReceived(string joueursJson, string partieName)
         {
             Application.Current.Dispatcher.Invoke(async () =>
             {
@@ -209,7 +225,7 @@ namespace JurassicRisk.ViewsModels
 
                 if (_isConnectedToPartie && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
                 {
-                    await JurassicRiskViewModel.Get.LobbyVm.DisconnectLobby();
+                    await _lobbyVm.StopConnection();
                 }
 
                 if (_connection == null || _connection.ConnectionId == null)
@@ -217,7 +233,9 @@ namespace JurassicRisk.ViewsModels
                     await ConnectPartie();
                 }
                 List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
-                _partie = new Partie(await _carteVm.InitCarte(),l, partieName);
+
+                _partie = new Partie(await _carteVm.InitCarte(), l, partieName);
+                _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
                 await _carteVm.InitCarte();
 
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());

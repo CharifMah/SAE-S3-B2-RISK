@@ -111,30 +111,30 @@ namespace RISKAPI.Hubs
                                
                                 await _lobby.UpdateAsync(lobby);
                                 await RefreshLobbyToClients(lobbyName);
-                                await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
+                                await Clients.Client(Context.ConnectionId).SendAsync("connected", "true");
                             }
                             else
                             {
-                                await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
+                                await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId, "false");
                                 Console.WriteLine($"Plus de place dans le lobby pour que {j.Profil.Pseudo} rejoingne");
                             }
                         }
                         else
                         {
-                            await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
+                            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId, "false");
                             Console.WriteLine("mauvais mot de passe");
                         }
                     }
                 }
                 else
                 {
-                    await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
+                    await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId,"false");
                     Console.WriteLine("Le lobby n'existe pas");
                 }
             }
             else
             {
-                await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
+                await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId, "false");
                 Console.WriteLine("Le profil envoyer est null");
             }
 
@@ -203,7 +203,6 @@ namespace RISKAPI.Hubs
             try
             {
                 Lobby lobby = null;
-                Joueur joueur = null;
                 foreach (Lobby p in JurasicRiskGameServer.Get.Lobbys)
                 {
                     if (p.Id == lobbyName)
@@ -257,7 +256,6 @@ namespace RISKAPI.Hubs
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
-            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
             Console.ForegroundColor = ConsoleColor.White;
         }
 

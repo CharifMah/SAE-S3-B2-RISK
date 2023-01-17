@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewsmodels="clr-namespace:JurassicRisk.ViewsModels" xmlns:converter="clr-namespace:JurassicRisk.Converter" d:DataContext="{d:DesignInstance Type=viewsmodels:CarteViewModel}"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewsmodels="clr-namespace:JurassicRisk.ViewsModels" xmlns:converter="clr-namespace:JurassicRisk.Converter" d:DataContext="{d:DesignInstance Type=viewsmodels:JurassicRiskViewModel}"
       mc:Ignorable="d"
       d:DesignHeight="1080" d:DesignWidth="1920"
       x:Name="_JeuPage"
@@ -48,8 +48,15 @@
         <StackPanel Grid.Column="0" Grid.Row="3"  Background="Wheat" VerticalAlignment="Center" HorizontalAlignment="Left">
 
             <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=LobbyVm.Lobby.Owner, Mode=OneWay , StringFormat={}Owner: {0}}"/>
+            
+            <TextBlock  Style="{StaticResource FruitDays}" Foreground="Green" FontSize="20">
+              <Run Text="{Binding PartieVm.Joueur.Profil.Pseudo}" Foreground="Green"/>
+              <Run Text="{Binding PartieVm.Joueur.Team}" Foreground="Black"/>
+              <Run Text="{Binding PartieVm.Joueur.Units.Count,Mode=OneWay}" Foreground="Black"/>
+              <Run Text="{Binding PartieVm.Joueur.Profil.ConnectionId}" Foreground="Green"/>
+            </TextBlock>
 
-            <ListBox x:Name="ListPlayer" ItemsSource="{Binding PartieVm.Partie.Joueurs}"  Foreground="{Binding Path=JoueurVm.Joueur.Profil.Pseudo, Converter={StaticResource OwnerConverter}}" Style="{StaticResource CustomListBox}">
+            <ListBox x:Name="ListPlayer" ItemsSource="{Binding PartieVm.OtherPlayers}"  Foreground="{Binding Path=JoueurVm.Joueur.Profil.Pseudo, Converter={StaticResource OwnerConverter}}" Style="{StaticResource CustomListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Style="{StaticResource FruitDays}"  FontSize="20" >
@@ -86,7 +93,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0}: {1}">
                     <Binding Source="{x:Static Ressources:Strings.TrpNombre}"/>
-                    <Binding Path="JoueurVm.NombreTrp"/>
+                    <Binding Path="PartieVm.Joueur.Units.Count"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
@@ -95,7 +102,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0} {1}">
                     <Binding Source="{x:Static Ressources:Strings.NbTerritoireVide}"/>
-                    <Binding Path="CarteVm.Carte.GetNombreTerritoireOccupe"/>
+                    <Binding Path="PartieVm.CarteVm.Carte.GetNombreTerritoireOccupe"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

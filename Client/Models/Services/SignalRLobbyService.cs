@@ -14,9 +14,8 @@ namespace Models.Services
 
         public event Action<string> LobbyReceived;
         public event Action<string> LobbyJoined;
-        public event Action<string> Connected;
+        public event Action<string,string> Connected;
         public event Action Disconnected;
-        public event Action<string> ConnectedToLobby;
 
 
         /// <summary>
@@ -29,8 +28,7 @@ namespace Models.Services
 
             _connection.On<string>("ReceiveLobby", (lobbyJson) => LobbyReceived?.Invoke(lobbyJson));
             _connection.On<string>("JoinLobby", (lobbyJson) => LobbyJoined?.Invoke(lobbyJson));
-            _connection.On<string>("connectedToLobby", (connected) => ConnectedToLobby?.Invoke(connected));
-            _connection.On<string>("connected", (connexionId) => Connected?.Invoke(connexionId));
+            _connection.On<string,string>("connected", (connexionId, connected) => Connected?.Invoke(connexionId, connected));
             _connection.On("disconnected", () => Disconnected?.Invoke());
         }
 
