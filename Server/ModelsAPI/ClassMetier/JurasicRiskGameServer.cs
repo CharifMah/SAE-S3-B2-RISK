@@ -34,7 +34,6 @@ namespace ModelsAPI.ClassMetier
             }
         }
 
-
         private JurasicRiskGameServer()
         {
             _lobby = new List<Lobby>();
@@ -42,6 +41,10 @@ namespace ModelsAPI.ClassMetier
 
         }
 
+        private void TtlLobby()
+        {
+            
+        }
         #endregion
     }
 }

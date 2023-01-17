@@ -5,6 +5,7 @@ using ModelsAPI.ClassMetier.GameStatus;
 using Redis.OM;
 using Redis.OM.Searching;
 using RISKAPI.Services;
+using StackExchange.Redis;
 
 namespace RISKAPI.Controllers
 {
@@ -33,7 +34,11 @@ namespace RISKAPI.Controllers
                     PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
                     lobby.Password = passwordHasher.HashPassword(lobby, lobby.Password);
                     await _lobby.InsertAsync(lobby);
-                    
+                    string key = $"Lobbys:{lobby.Id}";
+                    string param = "900";
+
+                    RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("EXPIRE", key, param);
+                    Console.WriteLine(result.ToString());
                     Console.WriteLine("Created Lobbys");
 
                     reponse = new JsonResult($"Lobbys With Name : {lobby.Id} created");
