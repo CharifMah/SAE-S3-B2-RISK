@@ -105,6 +105,11 @@ namespace JurassicRisk.ViewsModels
             _partieVm = new PartieViewModel(_carteVm.Carte, l.Joueurs, l.Id);
 
             (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
+
+            if (JurasicRiskGameClient.Get.IsConnectedToPartie && JurasicRiskGameClient.Get.IsConnectedToLobby)
+            {
+                await JurasicRiskGameClient.Get.DisconnectLobby();
+            }
         }
 
         public void DestroyVm()

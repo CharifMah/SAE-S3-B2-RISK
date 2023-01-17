@@ -143,11 +143,9 @@ namespace Models
             _isConnectedToPartie = false;
         }
 
-
         public void DestroyClient()
         {
             _instance = null;
         }
-
     }
 }

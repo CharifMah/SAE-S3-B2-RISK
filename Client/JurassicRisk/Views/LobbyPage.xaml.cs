@@ -99,8 +99,7 @@ namespace JurassicRisk.Views
         }
 
         private async void SelectTeamButton_Click(object sender, RoutedEventArgs e)
-        {
-            
+        { 
             Teams team = Teams.NEUTRE;
             Button b = (sender as Button);
             switch (b.Name)

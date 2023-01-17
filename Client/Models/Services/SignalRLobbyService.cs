@@ -37,12 +37,7 @@ namespace Models.Services
 
         public async Task StartPartie(string lobbyName, string joueurName, string carteName)
         {
-            await _connection.SendAsync("StartPartie", lobbyName, joueurName, carteName);
-
-            if (JurasicRiskGameClient.Get.IsConnectedToPartie && JurasicRiskGameClient.Get.IsConnectedToLobby)
-            {
-                await JurasicRiskGameClient.Get.DisconnectLobby();
-            }
+            await _connection.SendAsync("StartPartie", lobbyName, joueurName, carteName);           
         }
 
         /// <summary>

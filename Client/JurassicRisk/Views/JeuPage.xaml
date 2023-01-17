@@ -54,9 +54,11 @@
                     <DataTemplate>
                         <TextBlock Style="{StaticResource FruitDays}"  FontSize="20" >
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{} {0} : {1}">
+                                <MultiBinding StringFormat="{} {0} : {1} {2} {3}">
                                     <Binding Path="Profil.Pseudo" Mode="OneWay"/>
                                     <Binding Path="Team" Mode="OneWay" />
+                                    <Binding Path="Units.Count" Mode="OneWay" />
+                                    <Binding Path="Profil.ConnectionId" Mode="OneWay" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>

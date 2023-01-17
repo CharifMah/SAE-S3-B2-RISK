@@ -46,6 +46,11 @@ namespace JurassicRisk.ViewsModels
             _partieChatService.Deploiment += _partieChatService_Deploiment ;
 
             NotifyPropertyChanged("Partie");
+           Joueur j = joueurs.Find(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+            if (j != null)
+            {
+                j = JurassicRiskViewModel.Get.JoueurVm.Joueur;
+            }
         }
 
        
@@ -72,9 +77,11 @@ namespace JurassicRisk.ViewsModels
         #region Event
         private async void _partieChatService_Connected(string connectionId)
         {
-            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionId != String.Empty)
+            JurassicRiskViewModel vm = JurassicRiskViewModel.Get;
+            if (vm.JoueurVm.Joueur != null && connectionId != String.Empty)
             {
-                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
+                vm.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
+                vm.PartieVm.Partie.Joueurs.Find(j => j.Profil.Pseudo == vm.JoueurVm.Joueur.Profil.Pseudo).Profil.ConnectionId = connectionId;
                 JurasicRiskGameClient.Get.IsConnectedToLobby = true;
             }
             else
@@ -104,9 +111,13 @@ namespace JurassicRisk.ViewsModels
 
         private void _partieChatService_Disconnected()
         {
+            JurassicRiskViewModel vm = JurassicRiskViewModel.Get;
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null)
-                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = String.Empty;
-
+            {
+                vm.JoueurVm.Joueur.Profil.ConnectionId = String.Empty;
+                vm.PartieVm.Partie.Joueurs.Find(j => j.Profil.Pseudo == vm.JoueurVm.Joueur.Profil.Pseudo).Profil.ConnectionId = String.Empty;
+            }
+                
             JurasicRiskGameClient.Get.IsConnectedToLobby = false;
         }
 

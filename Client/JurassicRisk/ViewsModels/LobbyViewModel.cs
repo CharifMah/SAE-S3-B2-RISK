@@ -244,11 +244,11 @@ namespace JurassicRisk.ViewsModels
                     Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
                     this._lobby = lobby;
                     JurasicRiskGameClient.Get.Lobby = lobby;
-                    _isConnected = true;
+                    _isConnectedToLobby = true;
                 }
                 else
                 {
-                    _isConnected = false;
+                    _isConnectedToLobby = false;
                 }
                 NotifyPropertyChanged("Lobby");
             });
