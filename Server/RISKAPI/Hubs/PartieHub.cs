@@ -131,6 +131,7 @@ namespace RISKAPI.Hubs
             bool find = false;
             Lobby lobby = null;
             Joueur joueur = null;
+            string joueursJson = "";
             foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
             {
                 if (l.Id == partieName)
@@ -167,22 +168,32 @@ namespace RISKAPI.Hubs
                 {
                     //Create Partie For the Server
                     Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
+
                     Console.WriteLine("Partie Created");
+
                     partieList.Add(p);
-                }
+                    if (lobby.Joueurs.Count > 0)
+                    {
+                        joueursJson = JsonConvert.SerializeObject(p.Joueurs);
 
-                if (lobby.Joueurs.Count > 0)
-                {
-                    string joueursJson = JsonConvert.SerializeObject(p.Joueurs);
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName);
 
-                    await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson,partieName);
-
-                    await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
+                        await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
+                    }
+                    else
+                    {
+                        Console.WriteLine("Errorrr 0 Players in lobby");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Errorrr 0 Players in lobby");
+                    if (joueursJson != "")
+                    {
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName);
+                    }
+
                 }
+            
             }
             else
             {

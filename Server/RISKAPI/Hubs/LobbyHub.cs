@@ -49,6 +49,12 @@ namespace RISKAPI.Hubs
                 {
                     await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
                 }
+
+ 
+            }
+            else
+            {
+                Console.WriteLine("Lobby is null");
             }
         }
 
@@ -249,6 +255,27 @@ namespace RISKAPI.Hubs
             {
                 Console.WriteLine($"Failed to leave the lobby {e.Message}");
             }
+        }
+
+        public async Task StartGameOtherPlayer(string lobbyName)
+        {
+            Lobby lobby = null;
+            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+            {
+                if (l.Id == lobbyName)
+                {
+                    lobby = l;
+                    break;
+                }
+            }
+            if (lobby != null)
+                foreach (Joueur j in lobby.Joueurs)
+                {
+                    if (j.Profil.Pseudo !=  lobby.Owner)
+                    {
+                        await Clients.Client(j.Profil.ConnectionId).SendAsync("startgame");
+                    }
+                }
         }
 
         #region Override

@@ -16,6 +16,7 @@ namespace Models.Services
         public event Action<string> LobbyJoined;
         public event Action<string,string> Connected;
         public event Action Disconnected;
+        public event Action StartGame;
 
 
         /// <summary>
@@ -28,6 +29,7 @@ namespace Models.Services
 
             _connection.On<string>("ReceiveLobby", (lobbyJson) => LobbyReceived?.Invoke(lobbyJson));
             _connection.On<string>("JoinLobby", (lobbyJson) => LobbyJoined?.Invoke(lobbyJson));
+            _connection.On("startgame", () => StartGame?.Invoke());
             _connection.On<string,string>("connected", (connexionId, connected) => Connected?.Invoke(connexionId, connected));
             _connection.On("disconnected", () => Disconnected?.Invoke());
         }
@@ -63,6 +65,11 @@ namespace Models.Services
         public async Task ForceExitLobby(string joueurName)
         {
             await _connection.SendAsync("ForceExitLobby", joueurName);
+        }
+
+        public async Task StartGameOtherPlayer(string lobbyName)
+        {
+            await _connection.SendAsync("StartGameOtherPlayer", lobbyName);
         }
 
         public async Task SetTeam(Teams teams, string pseudo, string lobbyId)

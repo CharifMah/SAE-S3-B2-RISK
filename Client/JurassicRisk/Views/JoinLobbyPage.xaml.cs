@@ -1,6 +1,4 @@
 ﻿using JurassicRisk.ViewsModels;
-using Models;
-using Models.Son;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +18,7 @@ namespace JurassicRisk.Views
 
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
                 //Retry Pattern Async
@@ -27,13 +26,16 @@ namespace JurassicRisk.Views
 
                 var WaitTime = 500;
 
+                Error.Visibility = Visibility.Hidden;
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
+
                 for (int i = 0; i < RetryTimes; i++)
                 {
+
                     if (!JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
                     {
-                        Error.Visibility = Visibility.Hidden;
-                        await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
-                        (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                        if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
+                            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
                         i = RetryTimes;
                         break;
                     }
@@ -44,12 +46,12 @@ namespace JurassicRisk.Views
                             await JurassicRiskViewModel.Get.PartieVm.DisconnectPartie();
                         }
 
-                        await JurassicRiskViewModel.Get.LobbyVm.ConnectLobby();
-
                         if (i >= 2)
                         {
                             Error.Text = "is not connected";
                             Error.Visibility = Visibility.Visible;
+                            if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
+                                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
                         }
                         else
                         {
@@ -72,7 +74,7 @@ namespace JurassicRisk.Views
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
-        {          
+        {
             (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
         }
     }

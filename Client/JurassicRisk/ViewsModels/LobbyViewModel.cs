@@ -57,25 +57,31 @@ namespace JurassicRisk.ViewsModels
         }
         #endregion
 
+        /// <summary>
+        /// Connecte le lobby a la connection
+        /// </summary>
+        /// <returns></returns>
         public async Task ConnectLobby()
         {
-            await _connection.StartAsync().ContinueWith(task =>
+            if (_connection.State == HubConnectionState.Connected)
             {
-                if (task.Exception != null)
-                {
-                    _isConnectedToLobby = false;
-                    if (_connection.State != HubConnectionState.Connected)
-                    {
-                        //Reset lobby and connection
-                        JurassicRiskViewModel.Get.LobbyVm = new LobbyViewModel();
-                    }
-                }
-                else
-                {
                     _isConnectedToLobby = true;
+            }
+            else
+            {
+                await _connection.StartAsync().ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                    {
+                        _isConnectedToLobby = false;
+                    }
+                    else
+                    {
+                        _isConnectedToLobby = true;
 
-                }
-            });
+                    }
+                });
+            }        
         }
 
         /// <summary>
@@ -132,13 +138,21 @@ namespace JurassicRisk.ViewsModels
         /// <returns>bool</returns>
         public async Task<bool> JoinLobby(string lobbyName, string password)
         {
-            if (_connection != null || _connection.ConnectionId == null)
-            {
-                await ConnectLobby();
-            }
-
             string profilJson = JsonConvert.SerializeObject(ProfilViewModel.Get.SelectedProfil);
-            await _chatService.JoinLobby(profilJson, lobbyName, password);
+            if (!String.IsNullOrEmpty(profilJson))
+            {
+                if ((_connection != null || _connection.ConnectionId == null))
+                {
+                    await ConnectLobby();
+                }
+
+                await _chatService.JoinLobby(profilJson, lobbyName, password);
+            }
+            else
+            {
+                MessageBox.Show("profil is null");
+            }
+           
 
             return true;
         }
@@ -167,9 +181,13 @@ namespace JurassicRisk.ViewsModels
         /// <returns></returns>
         public async Task<bool> IsReady()
         {
+            if (_lobby != null)
+            {
 
-            Joueur j = JurassicRiskViewModel.Get.JoueurVm.Joueur;
-            await _chatService.IsReady(j.IsReady, j.Profil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
+                Joueur j = JurassicRiskViewModel.Get.JoueurVm.Joueur;
+                await _chatService.IsReady(j.IsReady, j.Profil.Pseudo, JurassicRiskViewModel.Get.LobbyVm.Lobby.Id);
+            }
+
             return true;
         }
 
@@ -188,7 +206,10 @@ namespace JurassicRisk.ViewsModels
             return true;
         }
 
-
+        public async Task StartGameOwnerOnly()
+        {
+            await _chatService.StartGameOtherPlayer(_lobby.Id);
+        }
 
         #endregion
 

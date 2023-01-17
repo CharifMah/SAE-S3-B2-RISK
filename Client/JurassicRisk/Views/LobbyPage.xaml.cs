@@ -14,12 +14,14 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class LobbyPage : Page
     {
+        private int _partieConnect;
         private LobbyViewModel _lobbyVm;
         public LobbyPage()
         {
             InitializeComponent();
             _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
             DataContext = _lobbyVm;
+            _partieConnect = -1;
         }
 
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -33,7 +35,7 @@ namespace JurassicRisk.Views
             if (_lobbyVm.Lobby.PlayersReady)
             {
                 await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
-
+                await JurassicRiskViewModel.Get.LobbyVm.StartGameOwnerOnly();
                 //Retry Pattern Async
                 var RetryTimes = 3;
 
@@ -77,19 +79,32 @@ namespace JurassicRisk.Views
 
         private async void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
-            await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
 
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur.Team != Teams.NEUTRE)
             {
                 if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
+                {
                     JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
+                    Error.Visibility = Visibility.Visible;
+                    Error.Text = "vous etes pret";
+
+                    if (_partieConnect == -1)
+                    {
+                        await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
+                    }
+
+                }
                 else
+                {
+                    Error.Visibility = Visibility.Hidden;
                     JurassicRiskViewModel.Get.JoueurVm.IsReady = "❌";
+                }
+
             }
             else
             {
-                Error.Text = " choisissez une equipe avant de vous mettre pret ";
                 Error.Visibility = Visibility.Visible;
+                Error.Text = " choisissez une equipe avant de vous mettre pret ";
             }
         }
 

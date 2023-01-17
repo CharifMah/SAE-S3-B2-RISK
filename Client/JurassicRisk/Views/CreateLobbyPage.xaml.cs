@@ -1,12 +1,10 @@
 using JurassicRisk.Ressource;
 using JurassicRisk.ViewsModels;
+using Models.GameStatus;
 using System;
 using System.Threading.Tasks;
-using Models;
 using System.Windows;
 using System.Windows.Controls;
-using Models.Son;
-using Models.GameStatus;
 
 namespace JurassicRisk.Views
 {
@@ -60,13 +58,16 @@ namespace JurassicRisk.Views
 
                 var WaitTime = 500;
 
+                Error.Visibility = Visibility.Hidden;
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
+
                 for (int i = 0; i < RetryTimes; i++)
                 {
+
                     if (!JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
                     {
-                        Error.Visibility = Visibility.Hidden;
-                        await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
-                        (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                        if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
+                            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
                         i = RetryTimes;
                         break;
                     }
@@ -76,8 +77,6 @@ namespace JurassicRisk.Views
                         {
                             await JurassicRiskViewModel.Get.PartieVm.DisconnectPartie();
                         }
-
-                        await JurassicRiskViewModel.Get.LobbyVm.ConnectLobby();
 
                         if (i >= 2)
                         {

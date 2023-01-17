@@ -320,12 +320,20 @@ namespace JurassicRisk.ViewsModels
             myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e);
             myCanvas.MouseLeave += (sender, e) => MyCanvas_MouseLeave(sender, e);
             myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender, e, territoire);
+            myCanvas.PreviewMouseWheel += (sender, e) => MyCanvas_PreviewMouseWheel(sender, e, territoire);
             myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
             ToolTipService.SetInitialShowDelay(myCanvas, 1);
 
             _carteCanvas.Children.Add(myCanvas);
         }
+        private void MyCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e,TerritoireDecorator territoire)
+        {
+            if (e.Delta > 0)
+                JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y, 2);
 
+            else if (e.Delta < 0)
+                JeuPage.GetInstance().ZoomOut(territoire.X, territoire.Y, 1);
+        }
         /// <summary>
         /// DrawLines Graph need to be initialized
         /// </summary>
@@ -417,13 +425,13 @@ namespace JurassicRisk.ViewsModels
                 this._carte.SelectedTerritoire = territoire;
                 await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
                 await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
-                JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y, 2);
+
             }
 
             if (e.ChangedButton == MouseButton.Left)
             {
                 DrawLines(territoire);
-                JeuPage.GetInstance().ZoomOut(territoire.X, territoire.Y, 1);
+
             }
 
             if (e.ChangedButton == MouseButton.Middle)
@@ -483,7 +491,5 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
         #endregion
-
-
     }
 }

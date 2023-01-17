@@ -60,6 +60,7 @@ namespace JurassicRisk.ViewsModels
             }
             set
             {
+                _joueur.Profil.ConnectionId = _connection.ConnectionId;
                 _joueur = value;
                 NotifyPropertyChanged();
             }
@@ -70,7 +71,7 @@ namespace JurassicRisk.ViewsModels
             get
             {
                 return _partie.Joueurs.Where(j => j != _joueur).ToList();
-            }          
+            }
         }
         #endregion
 
@@ -97,11 +98,33 @@ namespace JurassicRisk.ViewsModels
         }
 
 
+
         #endregion
+
+
+        private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
+        {
+            if (_partie.Joueurs[playerIndex] != null && _partie.Joueurs[playerIndex].Units.Count > 0)
+            {
+                _partie.Joueurs[playerIndex].PlaceUnits(_partie.Joueurs[playerIndex].Units[idUnit], _carteVm.Carte.GetTerritoire(idTerritoire));
+            }
+
+            NotifyPropertyChanged("Joueur");
+        }
 
         public async Task<bool> StartPartie(string lobbyName, string joueurName, string carteName)
         {
-            await _partieChatService.StartPartie(lobbyName, joueurName, carteName);
+            await _connection.StartAsync().ContinueWith(async task =>
+            {
+                if (task.Exception != null)
+                {
+                    if (task.IsCompleted)
+                        await _partieChatService.StartPartie(lobbyName, joueurName, carteName);
+                    else
+                        MessageBox.Show(task.Exception.InnerException.Message);
+
+                }
+            });
             return true;
         }
 
@@ -205,16 +228,7 @@ namespace JurassicRisk.ViewsModels
             _isConnectedToPartie = false;
         }
 
-        private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
-        {
 
-            if (_partie.Joueurs[playerIndex].Profil.Pseudo != JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo)
-            {
-                _partie.Joueurs[playerIndex].PlaceUnits(_partie.Joueurs[playerIndex].Units[idUnit], _carteVm.Carte.GetTerritoire(idTerritoire));
-            }
-
-            NotifyPropertyChanged("Joueur");
-        }
 
 
         private void _chatService_PartieReceived(string joueursJson, string partieName)
