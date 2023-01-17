@@ -1,4 +1,5 @@
-﻿using Models.Player;
+﻿using Models.Map;
+using Models.Player;
 using Models.Units;
 
 namespace Models.Tours
@@ -14,11 +15,11 @@ namespace Models.Tours
             _tourEnd = false;
         }
 
-        public void PlaceUnits(IUnit unitToPlace, Joueur _joueur)
+        public void PlaceUnits(IUnit unitToPlace, Joueur _joueur,ITerritoireBase territoireBase)
         {
             if (_joueur.Units.Count > 0)
             {
-                _joueur.PlaceUnits(new List<IUnit>() { unitToPlace }, JurasicRiskGameClient.Get.Partie.Carte.SelectedTerritoire);
+                _joueur.PlaceUnits(new List<IUnit>() { unitToPlace }, territoireBase);
             }
         }
 

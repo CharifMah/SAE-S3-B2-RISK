@@ -23,7 +23,7 @@ namespace Models.Services
             _connection = connection;
             _connection.On<string>("yourTurn", (turnType) => YourTurn?.Invoke(turnType));
             _connection.On("endTurn", () => EndTurn?.Invoke());
-            _connection.On<string>("ConnectedGame", (connexionId) => Connected?.Invoke(connexionId));
+            _connection.On<string>("connectedgame", (connexionId) => Connected?.Invoke(connexionId));
             _connection.On("disconnected", () => Disconnected?.Invoke());
             _connection.On<int, int, int>("deploiment", (idUnit, idTerritoire, playerIndex) => Deploiment?.Invoke(idUnit, idTerritoire, playerIndex));
 
@@ -49,11 +49,11 @@ namespace Models.Services
             await _connection.SendAsync("ConnectedPartie", lobbyName, joueurName);
         }
 
-        public async Task ExitPartie(string joueurName)
+        public async Task ExitPartie(string joueurName,string lobbyName)
         {
             try
             {
-                await _connection.SendAsync("ExitPartie",JurasicRiskGameClient.Get.Lobby.Id,joueurName);
+                await _connection.SendAsync("ExitPartie", lobbyName, joueurName);
             }
             catch (Exception e)
             {

@@ -26,7 +26,6 @@ namespace Models.Tours
             _joueur = joueur;
             _phaseEnd = false;
             _tourEnd = false;
-            carte = JurasicRiskGameClient.Get.Partie.Carte;
         }
 
         /// <summary>

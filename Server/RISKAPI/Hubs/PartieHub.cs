@@ -137,7 +137,7 @@ namespace RISKAPI.Hubs
         #region Override
         public override async Task OnConnectedAsync()
         {
-            await Clients.Client(Context.ConnectionId).SendAsync("ConnectedGame", Context.ConnectionId);
+            await Clients.Client(Context.ConnectionId).SendAsync("connectedgame", Context.ConnectionId);
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"Connected to the game {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;
