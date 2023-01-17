@@ -147,7 +147,7 @@ namespace RISKAPI.Hubs
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            Console.WriteLine($"Disconnected to the game {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;
             await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
             if (exception != null)

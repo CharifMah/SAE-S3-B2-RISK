@@ -48,6 +48,7 @@ namespace RISKAPI.Controllers
                 {
                     lobbyList.Add(lobby);
                 }
+                
 
             }
             catch (Exception e)

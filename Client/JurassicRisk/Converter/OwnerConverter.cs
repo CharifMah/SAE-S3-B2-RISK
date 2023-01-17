@@ -18,6 +18,10 @@ namespace JurassicRisk.Converter
             {
                 color = Color.FromRgb(0, 150, 150);
             }
+            if (value.ToString() == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo)
+            {
+                color = Color.FromRgb(0, 0, 150);
+            }
 
 
             return new SolidColorBrush(color);
