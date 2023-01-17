@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewsmodels="clr-namespace:JurassicRisk.ViewsModels" xmlns:converter="clr-namespace:JurassicRisk.Converter" d:DataContext="{d:DesignInstance Type=viewsmodels:JurassicRiskViewModel}"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewsmodels="clr-namespace:JurassicRisk.ViewsModels" xmlns:converter="clr-namespace:JurassicRisk.Converter" d:DataContext="{d:DesignInstance Type=viewsmodels:CarteViewModel}"
       mc:Ignorable="d"
       d:DesignHeight="1080" d:DesignWidth="1920"
       x:Name="_JeuPage"
@@ -32,7 +32,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Height="1080" Width="1920" x:Name="ScrollViewerView" Grid.RowSpan="3" Grid.ColumnSpan="4" >
                 <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="0,0,0,30">
 
-                <ContentPresenter Panel.ZIndex="0" Content="{Binding CarteVm.CarteCanvas}" />
+                <ContentPresenter Panel.ZIndex="0" Content="{Binding PartieVm.CarteVm.CarteCanvas}" />
 
                     <Canvas.LayoutTransform>
                         <TransformGroup>

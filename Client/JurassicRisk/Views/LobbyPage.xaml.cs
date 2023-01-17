@@ -30,10 +30,11 @@ namespace JurassicRisk.Views
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
 
+            await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
 
-            if (_lobbyVm.Lobby.PlayersReady && _lobbyVm.Lobby.Owner == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo)
+            if (_lobbyVm.Lobby.PlayersReady)
             {
-                await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
+                await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
 
                 //Retry Pattern Async
                 var RetryTimes = 3;
@@ -42,16 +43,16 @@ namespace JurassicRisk.Views
 
                 for (int i = 0; i < RetryTimes; i++)
                 {
-                    if (JurasicRiskGameClient.Get.IsConnectedToPartie)
+                    if (JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
                     {
                         Error.Visibility = Visibility.Hidden;
-                        await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
+                        await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
 
                         break;
                     }
                     else
                     {
-                        await JurasicRiskGameClient.Get.ConnectPartie();
+                        await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
 
                         if (i >= 2)
                         {

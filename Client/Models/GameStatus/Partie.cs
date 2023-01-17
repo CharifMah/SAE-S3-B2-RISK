@@ -1,5 +1,6 @@
 ﻿using Models.Map;
 using Models.Player;
+using ModelsAPI.ClassMetier.GameStatus;
 
 namespace Models.GameStatus
 {
@@ -9,6 +10,8 @@ namespace Models.GameStatus
         private int _playerIndex;
 
         private List<Joueur> _joueurs;
+
+        private Etat etat = null;
 
         private Carte _carte;
 
@@ -29,16 +32,18 @@ namespace Models.GameStatus
         public string Id { get => _id; set => _id = value; }
         public int PlayerIndex { get => _playerIndex; }
         public string Owner { get => _owner; set => _owner = value; }
+
+
+        public Etat Etat { get { return etat; } }
         #endregion
 
         #region Constructor
 
         public Partie(Carte carte, List<Joueur> joueurs, string id)
         {
-            _carte = carte;
-            _joueurs = joueurs;
-            _id = id;
-
+            this._carte = carte;
+            this._joueurs = joueurs;
+            this._id = id;
             _playerIndex = -1;
         }
 

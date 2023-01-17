@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.GameStatus;
+using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
+using Newtonsoft.Json;
 using Redis.OM;
-using System;
 
 namespace RISKAPI.Hubs
 {
@@ -16,7 +17,7 @@ namespace RISKAPI.Hubs
         public PartieHub(RedisConnectionProvider provider)
         {
             _provider = provider;
-            
+
         }
 
         public async Task EndTurn(string partieName, string joueurName)
@@ -67,7 +68,7 @@ namespace RISKAPI.Hubs
 
                         Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
                     }
-                   
+
                     break;
             }
         }
@@ -94,12 +95,78 @@ namespace RISKAPI.Hubs
             }
             if (partie != null)
             {
-                Joueur j = partie.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
-               j.Profil.ConnectionId = Context.ConnectionId;
+                Joueur j = partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
+                j.Profil.ConnectionId = Context.ConnectionId;
             }
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{joueurName} connected to {partieName}");
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public async Task StartPartie(string partieName, string joueurName, string carteName)
+        {
+            bool find = false;
+            Lobby lobby = null;
+            Joueur joueur = null;
+            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+            {
+                if (l.Id == partieName)
+                {
+                    foreach (Joueur j in l.Joueurs)
+                    {
+                        if (j.Profil.Pseudo == joueurName)
+                        {
+                            joueur = j;
+                            break;
+                        }
+                    }
+                    lobby = l;
+                }
+
+                if (find)
+                {
+                    break;
+                }
+            }
+
+            if (lobby.Owner == joueurName)
+            {
+                Console.WriteLine($"{joueurName} try to Start the game");
+
+                Carte carte = CreateCarte1();
+                Console.WriteLine("Carte Created");
+
+                //Create Partie For the Server
+                Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
+                Console.WriteLine("Partie Created");
+
+                List<Partie> partieList = JurasicRiskGameServer.Get.Parties;
+                if (partieList.FirstOrDefault(partie => partie.Id == p.Id) == null)
+                {
+                    partieList.Add(p);
+                }
+                else
+                {
+                    Partie OldPartie = partieList.FirstOrDefault(partie => partie.Id == p.Id);
+                    OldPartie = p;
+                }
+                if (lobby.Joueurs.Count > 0)
+                {
+                    string joueursJson = JsonConvert.SerializeObject(p.Joueurs);
+
+                    await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson,partieName);
+
+                    await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("Errorrr 0 Players in lobby");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{joueurName} is not the owner to start a game");
+            }
         }
 
         public async Task ExitPartie(string partieName, string joueurName)
@@ -126,7 +193,7 @@ namespace RISKAPI.Hubs
                     partie.ExitPartie(j);
                     Groups.RemoveFromGroupAsync(Context.ConnectionId, partieName);
                     Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");
-                }         
+                }
             }
             catch (Exception)
             {
@@ -157,6 +224,36 @@ namespace RISKAPI.Hubs
 
             await base.OnDisconnectedAsync(exception);
         }
+        #endregion
+
+        #region Private
+
+        private Carte CreateCarte1()
+        {
+            Dictionary<string, ITerritoireBase> territoires = new Dictionary<string, ITerritoireBase>();
+            for (int i = 0; i < 41; i++)
+            {
+                territoires.Add(i.ToString(), new TerritoireBase(i, null));
+            }
+            List<IContinent> _continents = new List<IContinent>
+            {
+                new Continent(territoires.Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(7).Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(14).Take(8).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(22).Take(7).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(29).Take(5).ToDictionary(x => x.Key, y => y.Value)),
+                new Continent(territoires.Skip(34).Take(7).ToDictionary(x => x.Key, y => y.Value))
+            };
+            Dictionary<string, IContinent> dic = new Dictionary<string, IContinent>();
+            for (int i = 0; i < _continents.Count; i++)
+            {
+                dic.Add(i.ToString(), _continents[i]);
+            }
+
+
+            return new Carte(dic, null);
+        }
+
         #endregion
     }
 }

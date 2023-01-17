@@ -1,3 +1,4 @@
+using JurassicRisk.ViewsModels;
 using Models;
 using Models.Settings;
 using Models.Son;
@@ -67,7 +68,7 @@ namespace JurassicRisk.Views
         /// <Author>Charif</Author>
         private async Task FentrePrincipal_Closed(object sender, System.EventArgs e)
         {
-            await JurasicRiskGameClient.Get.DisconnectLobby();
+            await JurassicRiskViewModel.Get.LobbyVm.DisconnectLobby();
             Environment.Exit(0);
         }
     }

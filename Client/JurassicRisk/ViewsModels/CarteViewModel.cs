@@ -100,7 +100,6 @@ namespace JurassicRisk.ViewsModels
             progress = progression;
 
             //new SaveMap(_carte);
-            InitCarte();
 
             f = new FabriqueUniteBase();
             _joueur = joueur;
@@ -112,7 +111,7 @@ namespace JurassicRisk.ViewsModels
         /// <summary>
         /// Initialize the map
         /// </summary>
-        private void InitCarte()
+        public async Task<Carte> InitCarte()
         {
             //Charge le fichier Cartee.json
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
@@ -139,8 +138,10 @@ namespace JurassicRisk.ViewsModels
 
             InitGraph();
 
+            await Task.CompletedTask;
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
+            return _carte;
         }
 
         /// <summary>
@@ -416,8 +417,8 @@ namespace JurassicRisk.ViewsModels
             if (e.ChangedButton == MouseButton.Right)
             {
                 this._carte.SelectedTerritoire = territoire;
-                await JurasicRiskGameClient.Get.PartieChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
-                await JurasicRiskGameClient.Get.PartieChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
+                await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
+                await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
                 JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y,2);
             }
 

@@ -11,10 +11,7 @@ namespace JurassicRisk.ViewsModels
     public class JurassicRiskViewModel : observable.Observable
     {
         #region Attributes
-        private HubConnection _connection;
-        private bool _carteLoaded;
-        private double _progression;
-        private CarteViewModel? _carteVm;
+
         private double _zoom;
         private JoueurViewModel _joueurVm;
         private LobbyViewModel _lobbyVm;
@@ -35,10 +32,8 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged();
             }
         }
-        public bool CarteLoaded { get => _carteLoaded; set => _carteLoaded = value; }
-        public double Progress { get => _progression; set => _progression = value; }
 
-        public CarteViewModel? CarteVm { get => _carteVm; }
+
         public JoueurViewModel JoueurVm { get => _joueurVm; }
         public LobbyViewModel LobbyVm { get => _lobbyVm; set => _lobbyVm = value; }
         public PartieViewModel PartieVm { get => _partieVm; set => _partieVm = value; }
@@ -56,65 +51,17 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
-
-
         private JurassicRiskViewModel()
         {
             _joueurVm = new JoueurViewModel();
-            _lobbyVm = new LobbyViewModel();
-            _carteLoaded = false;
-            _progression = 0;
-            _carteVm = null;
+            _lobbyVm = new LobbyViewModel();        
+            _partieVm = new PartieViewModel(this);
             _zoom = 1.0;
         }
 
         #endregion
 
-        #region Delegate
-
-        private void Progression(double taux)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                _progression = taux;
-                NotifyPropertyChanged("Progress");
-            }, DispatcherPriority.Render);
-        }
-
-        private void DrawEnd()
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                _carteLoaded = true;
-                NotifyPropertyChanged("CarteLoaded");
-            }, DispatcherPriority.Render);
-        }
-
-        #endregion<
-
-        public async Task StartJeuPage()
-        {
-
-
-            _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
-
-            if (JurasicRiskGameClient.Get.IsConnectedToPartie && JurasicRiskGameClient.Get.IsConnectedToLobby)
-            {
-                await JurasicRiskGameClient.Get.DisconnectLobby();
-            }
-
-            if (_connection == null || _connection.ConnectionId == null)
-            {
-                await JurasicRiskGameClient.Get.ConnectPartie();
-            }
-
-            _partieVm = new PartieViewModel(_carteVm.Carte, _lobbyVm.Lobby.Joueurs, _lobbyVm.Lobby.Id);
-
-            (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
-
-           
-        }
-
+      
         public void DestroyVm()
         {
             _instance = null;

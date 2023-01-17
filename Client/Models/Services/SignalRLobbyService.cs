@@ -11,7 +11,7 @@ namespace Models.Services
     {
 
         private readonly HubConnection _connection;
-        public event Action PartieReceived;
+
         public event Action<string> LobbyReceived;
         public event Action<string> LobbyJoined;
         public event Action<string> Connected;
@@ -27,7 +27,6 @@ namespace Models.Services
         {
             _connection = connection;
 
-            _connection.On("ReceivePartie", () => PartieReceived?.Invoke());
             _connection.On<string>("ReceiveLobby", (lobbyJson) => LobbyReceived?.Invoke(lobbyJson));
             _connection.On<string>("JoinLobby", (lobbyJson) => LobbyJoined?.Invoke(lobbyJson));
             _connection.On<string>("connectedToLobby", (connected) => ConnectedToLobby?.Invoke(connected));
@@ -35,11 +34,7 @@ namespace Models.Services
             _connection.On("disconnected", () => Disconnected?.Invoke());
         }
 
-        public async Task StartPartie(string lobbyName, string joueurName, string carteName)
-        {
-            await _connection.SendAsync("StartPartie", lobbyName, joueurName, carteName);           
-        }
-
+       
         /// <summary>
         /// Send Lobby to server
         /// </summary>

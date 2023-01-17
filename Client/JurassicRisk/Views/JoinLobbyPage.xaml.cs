@@ -29,7 +29,7 @@ namespace JurassicRisk.Views
 
                 for (int i = 0; i < RetryTimes; i++)
                 {
-                    if (!JurasicRiskGameClient.Get.IsConnectedToPartie && JurasicRiskGameClient.Get.IsConnectedToLobby)
+                    if (!JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
                     {
                         Error.Visibility = Visibility.Hidden;
                         await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
@@ -39,12 +39,12 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        if (JurasicRiskGameClient.Get.IsConnectedToPartie && !JurasicRiskGameClient.Get.IsConnectedToLobby)
+                        if (JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && !JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
                         {
-                            await JurasicRiskGameClient.Get.DisconnectPartie();
+                            await JurassicRiskViewModel.Get.PartieVm.DisconnectPartie();
                         }
-                        await JurasicRiskGameClient.Get.ConnectLobby();
 
+                        await JurassicRiskViewModel.Get.LobbyVm.ConnectLobby();
 
                         if (i >= 2)
                         {
@@ -68,6 +68,7 @@ namespace JurassicRisk.Views
                 Error.Text = ex.Message;
                 Error.Visibility = Visibility.Visible;
             }
+
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
