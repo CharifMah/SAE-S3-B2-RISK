@@ -281,7 +281,6 @@ namespace RISKAPI.Hubs
                         {
                             p.JoinPartie(j);
 
-                            await Clients.Client(j.Profil.ConnectionId).SendAsync("startgame");
                             Console.WriteLine($"Game Start For {j.Profil.Pseudo}");
                         }
                         else

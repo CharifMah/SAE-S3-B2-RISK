@@ -31,10 +31,12 @@ namespace JurassicRisk.Views
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
-
-            try
+            if (_partieConnect == -1)
             {
-               
+                await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
+            }
+            try
+            {             
                 await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
                 if (ProfilViewModel.Get.SelectedProfil.Pseudo == _lobbyVm.Lobby.Owner)
                 {
@@ -59,10 +61,6 @@ namespace JurassicRisk.Views
                     JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
                     Error.Visibility = Visibility.Visible;
                     Error.Text = "vous etes pret";
-                    if (_partieConnect == -1)
-                    {
-                        await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
-                    }
 
                 }
                 else
