@@ -1,7 +1,4 @@
-﻿using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
-
-namespace ModelsAPI.ClassMetier.Units
+﻿namespace ModelsAPI.ClassMetier.Units
 {
     public class UniteBase : IUnit
     {
@@ -16,15 +13,14 @@ namespace ModelsAPI.ClassMetier.Units
         public string Name { get => name; set => name = value; }
         public string Description { get => description; set => description = value; }
         public int Id { get => id; set => id = value; }
-
         public Elements Element { get => element; set => element = value; }
         #endregion
 
 
 
-        public UniteBase(int Id, Elements Element = Elements.EAU)
+        public UniteBase(int Id, Elements element = Elements.EAU)
         {
-            this.element = Element;
+            this.element = element;
             this.id = Id;
             name = "ExempleUnite";
             description = "Description d'une unite";

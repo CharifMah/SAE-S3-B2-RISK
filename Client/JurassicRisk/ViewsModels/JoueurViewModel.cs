@@ -121,15 +121,16 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="UniteBases">Les unite a ajouter</param>
         /// <param name="territoire">le territoire</param>
-        public void PlaceUnit(IUnit Unit, ITerritoireBase territoire)
+        public void PlaceUnit(int indexUnit, ITerritoireBase territoire)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
-                    _joueur.PlaceUnit(Unit, territoire);
-                    if (_units.Count > 0)
-                        _selectedUnit = _units[0];
+                    if (_joueur.PlaceUnit(indexUnit, territoire))
+                    {
+                        _units.RemoveAt(indexUnit);
+                    }
                 }
                 else
                 {

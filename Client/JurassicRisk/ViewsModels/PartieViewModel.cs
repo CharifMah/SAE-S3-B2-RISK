@@ -248,12 +248,14 @@ namespace JurassicRisk.ViewsModels
         {
             if (_partie.Joueurs[playerIndex] != null && _partie.Joueurs[playerIndex].Units.Count > 0)
             {
-                _partie.Joueurs[playerIndex].PlaceUnit(_partie.Joueurs[playerIndex].Units[idUnit], _carteVm.Carte.GetTerritoire(idTerritoire));
+                _partie.Joueurs[playerIndex].PlaceUnit(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
+                JurassicRiskViewModel.Get.JoueurVm.PlaceUnit(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
                 if (_joueurVm.Joueur.Units.Count <= 0)
                 {
                     SoundStore.Get("errorsound.mp3").Play();
                     MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
                 }
+
             }
 
             NotifyPropertyChanged("Joueur");

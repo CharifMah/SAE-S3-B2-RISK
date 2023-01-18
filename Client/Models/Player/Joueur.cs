@@ -104,19 +104,18 @@ namespace Models.Player
         }
 
 
-        private void AddUnits(IUnit unit, ITerritoireBase territoire)
+        private bool AddUnit(int indexUnit, ITerritoireBase territoire)
         {
+            bool res = false;
             if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
             {
-                if (_units.Contains(unit))
-                {
-                    _units.Remove(unit);
+                _units.RemoveAt(indexUnit);
 
-                    territoire.AddUnit(unit);
-                    territoire.Team = _team;
-
-                }
+                territoire.AddUnit(_units[indexUnit]);
+                territoire.Team = _team;
+                res = true;
             }
+            return res;
         }
 
         public void PlaceUnits(List<IUnit> unitToPlace, ITerritoireBase territoire)
@@ -127,12 +126,14 @@ namespace Models.Player
             }
         }
 
-        public void PlaceUnit(IUnit unitToPlace, ITerritoireBase territoire)
+        public bool PlaceUnit(int indexUnit, ITerritoireBase territoire)
         {
+            bool res = false;
             if (this._units.Count > 0)
             {
-                this.AddUnits(unitToPlace, territoire);
+                res = this.AddUnit(indexUnit, territoire);
             }
+            return res;
         }
 
         public void AddUnit(IUnit unit)

@@ -72,7 +72,6 @@ namespace ModelTestUnit
                 t1.Units.Add(new UniteBase());
             }
             
-            Tour t = new Tour(j1);
             t.Strengthen(10);
             
             Assert.Equal(20,t1.Units.Count);

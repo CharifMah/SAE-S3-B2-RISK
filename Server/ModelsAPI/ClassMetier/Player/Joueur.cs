@@ -60,16 +60,16 @@ namespace ModelsAPI.ClassMetier.Player
                 switch (random.Next(4))
                 {
                     case 0:
-                        _units.Add(new UniteDecorator(f.Create("Rex")));
+                        _units.Add(f.Create("Rex"));
                         break;
                     case 1:
-                        _units.Add(new UniteDecorator(f.Create("Brachiosaurus")));
+                        _units.Add(f.Create("Brachiosaurus"));
                         break;
                     case 2:
-                        _units.Add(new UniteDecorator(f.Create("Baryonyx")));
+                        _units.Add(f.Create("Baryonyx"));
                         break;
                     case 3:
-                        _units.Add(new UniteDecorator(f.Create("Pterosaure")));
+                        _units.Add(f.Create("Pterosaure"));
                         break;
                 }
             }
