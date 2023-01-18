@@ -36,9 +36,9 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         #region Constructor
 
-        public Partie(Carte carte, List<Joueur> joueurs, string id)
+        public Partie(Carte carte = null, List<Joueur> joueurs = null, string id = "")
         {
-            this._carte = carte;
+            this._carte = null;
             this._joueurs = joueurs;
             this._id = id;
             this.etat = new Deploiment();
@@ -139,7 +139,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public bool JoinPartie(Joueur joueur)
         {
             bool res = false;
-            IEnumerable<Joueur?> j = _joueurs.Where(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
+            List<Joueur?> j = _joueurs.Where(x => x.Profil.Pseudo == joueur.Profil.Pseudo).ToList();
             if (_joueurs != null)
             {
                 if (_joueurs.Count == 4 && j.Count() == 1)

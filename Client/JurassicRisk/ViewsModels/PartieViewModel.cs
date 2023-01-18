@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Models.GameStatus;
 using Models.Player;
 using Models.Services;
-using Models.Tours;
 using Newtonsoft.Json;
-using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +28,7 @@ namespace JurassicRisk.ViewsModels
         private JoueurViewModel _joueurVm;
         private CarteViewModel? _carteVm;
         private Partie? _partie;
-        
+
 
         #endregion
 
@@ -42,8 +40,6 @@ namespace JurassicRisk.ViewsModels
 
         public HubConnection Connection { get => _connection; set => _connection = value; }
         public SignalRPartieService ChatService { get => _partieChatService; set => _partieChatService = value; }
-
-        
 
         public CarteViewModel? CarteVm { get => _carteVm; }
         public Partie? Partie
@@ -97,16 +93,15 @@ namespace JurassicRisk.ViewsModels
             _progression = 0;
             //_actualPlayer = Partie.Joueurs[Partie.PlayerIndex].Profil.Pseudo;
 
-            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").WithAutomaticReconnect().Build();
+            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
             _partieChatService = new SignalRPartieService(_connection);
 
             _partieChatService.YourTurn += _chatService_YourTurn;
             _partieChatService.EndTurn += _chatService_EndTurn;
-            _partieChatService.Connected += async (connectionId) => await _partieChatService_Connected(connectionId);
             _partieChatService.Disconnected += _partieChatService_Disconnected;
             _partieChatService.Deploiment += _partieChatService_Deploiment;
             _partieChatService.PartieReceived += _chatService_PartieReceived;
-            
+
             NotifyPropertyChanged("Partie");
 
         }
@@ -114,39 +109,30 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
 
-        private void _chatService_PartieReceived(string joueursJson, string partieName, string etatJson,int playerindex)
+        private void _chatService_PartieReceived(string joueursJson, string partieName, string etatJson, int playerindex)
         {
             Application.Current.Dispatcher.Invoke(async () =>
             {
                 _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
 
-                if (_isConnectedToPartie && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
-                {
-                    await _lobbyVm.StopConnection();
-                }
+                List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
 
-                if (_connection == null || _connection.ConnectionId == null)
-                {
-                    await ConnectPartie();
-                }
-                else
-                {
-                    List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
+                Deploiment etat = JsonConvert.DeserializeObject<Deploiment>(etatJson);
 
-                    Deploiment etat = JsonConvert.DeserializeObject<Deploiment>(etatJson);
+                _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat, playerindex);
+                _partie.PlayerIndex = playerindex;
+                _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+                JurassicRiskViewModel.Get.JoueurVm.Joueur = _joueur;
+                _joueur.Profil.ConnectionId = _connection.ConnectionId;
+                _isConnectedToPartie = true;
 
-                    _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat, playerindex);
-                    _partie.PlayerIndex = playerindex;
-                    _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
-                    JurassicRiskViewModel.Get.JoueurVm.Joueur = _joueur;
-                    await _carteVm.InitCarte();
+                await _carteVm.InitCarte();
 
-                    (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
-                }
-
+                (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
 
             }, DispatcherPriority.Render);
-
+            NotifyPropertyChanged("Joueur");
+            NotifyPropertyChanged("Partie");
         }
 
         private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
@@ -168,26 +154,26 @@ namespace JurassicRisk.ViewsModels
 
         public async Task ConnectPartie()
         {
-            await _connection.StartAsync().ContinueWith(task =>
+            if (_connection.State == HubConnectionState.Connected)
             {
-                if (task.Exception != null)
+                _isConnectedToPartie = true;
+            }
+            else
+            {
+                await _connection.StartAsync().ContinueWith(async task =>
                 {
-                    _isConnectedToPartie = false;
-                    if (_connection.State == HubConnectionState.Disconnected)
-                    {
-                        _connection.StartAsync();
-                    }
-                    else
+                    if (task.Exception != null)
                     {
                         _isConnectedToPartie = false;
                     }
+                    else
+                    {
+                        _isConnectedToPartie = true;
+                        await _partieChatService.ConnectedPartie(_lobbyVm.Lobby.Id, _joueurVm.Joueur.Profil.Pseudo);
 
-                }
-                else
-                {
-                    _isConnectedToPartie = true;
-                }
-            });
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -214,7 +200,9 @@ namespace JurassicRisk.ViewsModels
             {
                 if (_connection.State == HubConnectionState.Connected)
                 {
+                    await _partieChatService.ExitPartie(ProfilViewModel.Get.SelectedProfil.Pseudo, _lobbyVm.Lobby.Id);
                     await _connection.StopAsync();
+                    await _lobbyVm.ConnectLobby();
                 }
 
                 _isConnectedToPartie = false;
@@ -232,37 +220,11 @@ namespace JurassicRisk.ViewsModels
         {
             await _partieChatService.SendEndTurn(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
         }
-
-        /// <summary>
-        /// Exit actual Lobby
-        /// </summary>
-        /// <returns></returns>
-        public async Task<bool> ExitPartie()
-        {
-            await StopConnection();
-            await _partieChatService.ExitPartie(_joueurVm.Joueur.Profil.Pseudo, _partie.Id);
-            await _lobbyVm.ConnectLobby();
-            return true;
-        }
         #endregion
 
         #region Event
-        private async Task _partieChatService_Connected(string connectionId)
-        {
-            if (_joueurVm.Joueur != null && connectionId != String.Empty)
-            {
-                _joueurVm.Joueur.Profil.ConnectionId = connectionId;
-                _isConnectedToPartie = true;
-                await _partieChatService.ConnectedPartie(_lobbyVm.Lobby.Id, _joueurVm.Joueur.Profil.Pseudo);
-            }
-            else
-            {
-                _isConnectedToPartie = false;
-            }
-            NotifyPropertyChanged("Partie");
-        }
 
-        private void _chatService_YourTurn(string etatJson,string name)
+        private void _chatService_YourTurn(string etatJson, string name)
         {
 
             switch (name)
@@ -289,11 +251,11 @@ namespace JurassicRisk.ViewsModels
                 _joueurVm.Joueur.Profil.ConnectionId = String.Empty;
                 _partie.Joueurs.Find(j => j.Profil.Pseudo == _joueurVm.Joueur.Profil.Pseudo).Profil.ConnectionId = String.Empty;
             }
-
+              (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
             _isConnectedToPartie = false;
         }
 
-       
+
 
         #region Delegate
 

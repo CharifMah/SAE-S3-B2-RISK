@@ -15,7 +15,7 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class LobbyPage : Page
     {
-        private int _partieConnect;
+        private int _partieConnect = -1;
         private LobbyViewModel _lobbyVm;
         public LobbyPage()
         {
@@ -37,6 +37,7 @@ namespace JurassicRisk.Views
             {
                 await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
                 await Task.Delay(1000);
+                _partieConnect = 0;
             }
 
             try
@@ -47,7 +48,7 @@ namespace JurassicRisk.Views
                 {
                     await _lobbyVm.StartGameOwnerOnly();
 
-                    _partieConnect = 0;
+                    _partieConnect = 1;
                 }
 
                 //Retry Pattern Async
@@ -70,10 +71,10 @@ namespace JurassicRisk.Views
                     Error.Visibility = Visibility.Visible;
                     Error.Text = "vous etes pret";
 
-                    if (_partieConnect == -1 && ProfilViewModel.Get.SelectedProfil.Pseudo != _lobbyVm.Lobby.Owner)
+                    if (_partieConnect != 0  && ProfilViewModel.Get.SelectedProfil.Pseudo != _lobbyVm.Lobby.Owner)
                     {
                         await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
-                        _partieConnect = 0;
+                        _partieConnect = 1;
                     }
 
                 }

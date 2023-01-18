@@ -10,7 +10,6 @@ namespace Models.Services
         public event Action<string,string, string,int> PartieReceived;
         public event Action<string,string> YourTurn;
         public event Action EndTurn;
-        public event Action<string> Connected;
         public event Action Disconnected;
         public event Action<int, int,int> Deploiment;
 
@@ -24,7 +23,6 @@ namespace Models.Services
             _connection.On<string,string,string, int>("ReceivePartie", (joueursJson,id,etatJson, playerindex)  => PartieReceived?.Invoke(joueursJson,id,etatJson, playerindex));
             _connection.On<string, string>("yourTurn", (etatJson, name) => YourTurn?.Invoke(etatJson,name));
             _connection.On("endTurn", () => EndTurn?.Invoke());
-            _connection.On<string>("connectedgame", (connexionId) => Connected?.Invoke(connexionId));
             _connection.On("disconnected", () => Disconnected?.Invoke());
             _connection.On<int, int, int>("deploiment", (idUnit, idTerritoire, playerIndex) => Deploiment?.Invoke(idUnit, idTerritoire, playerIndex));
 

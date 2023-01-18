@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNetCore.SignalR;
-using ModelsAPI.ClassMetier;
+using ModelsAPI;
 using ModelsAPI.ClassMetier.GameStatus;
 using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
@@ -12,11 +12,8 @@ namespace RISKAPI.Hubs
     [HubName("PartieHub")]
     public class PartieHub : Hub
     {
-        private readonly RedisConnectionProvider _provider;
-
-        public PartieHub(RedisConnectionProvider provider)
+        public PartieHub()
         {
-            _provider = provider;
 
         }
 
@@ -103,38 +100,25 @@ namespace RISKAPI.Hubs
         /// <returns>Task</returns>
         public async Task ConnectedPartie(string partieName, string joueurName)
         {
+            Console.WriteLine(joueurName + " start connect ");
+            Joueur? joueur = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == partieName).Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
             await Groups.AddToGroupAsync(Context.ConnectionId, partieName);
-            Partie partie = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == partieName);         
-            Task.Delay(1000).Wait();
-            if (partie != null && partie.Joueurs.Count > 0)
+            if (joueur != null)
             {
-                Joueur j = partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
-                if (j == null)
-                {
-                    Lobby lobby = null;
-                    foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
-                    {
-                        if (l.Id == partieName)
-                        {
-                            lobby = l;
-                            break;
-                        }
-                    }
-                    if (lobby != null)
-                        partie.JoinPartie(lobby.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName)); 
-                }
-                else
-                    j.Profil.ConnectionId = Context.ConnectionId;
-
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"{joueurName} connected to {partieName}");
+                Console.ForegroundColor = ConsoleColor.White;
             }
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{joueurName} connected to {partieName}");
-            Console.ForegroundColor = ConsoleColor.White;
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Not Connected");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
         /// <summary>
-        /// Lance la partie si c'est l'owner du lobby qui fait l'action play
+        /// Lance la partie pour tout les joueurs
         /// </summary>
         /// <param name="partieName">nom de la partie</param>
         /// <param name="joueurName">nom du joueur qui fait l'action</param>
@@ -142,52 +126,34 @@ namespace RISKAPI.Hubs
         /// <returns>Task</returns>
         public async Task StartPartie(string partieName, string joueurName, string carteName)
         {
-            Lobby lobby = null;
-            Partie partie = null;
+            Partie partie = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == partieName);
             string joueursJson = "";
             string etatJson = "";
-            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+            if (partie.Owner == null)
             {
-                if (l.Id == partieName)
-                {
-                    lobby = l;
-                    break;
-                }
+                partie.Owner = joueurName;
             }
-
+            await Groups.AddToGroupAsync(Context.ConnectionId, partieName);
             //Lance la partie si c'est le Owner qui fait l'action Play
-            if (lobby != null && lobby.Owner == joueurName)
+            if (partie != null && partie.Owner == joueurName)
             {
                 Console.WriteLine($"{joueurName} try to Start the game");
 
                 Carte carte = CreateCarte1();
+                partie.Carte = carte;
                 Console.WriteLine("Carte Created");
 
-                //Create Partie For the Server
-                Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
-
-                //Ajoute la partie
-                if (lobby.Joueurs.Count > 0)
+                //Envoie de la partie Lancement pour tout les joueurs
+                if (partie.Joueurs.Count > 0)
                 {
+                    Console.WriteLine("Serialize Object");
 
-                    if (p.Joueurs != null && p.Joueurs.Count > 0)
-                    {
-                        JurasicRiskGameServer.Get.Parties.Add(p);
-                        Console.WriteLine("Serialize Object");
-
-                        joueursJson = JsonConvert.SerializeObject(p.Joueurs);
-                        etatJson = JsonConvert.SerializeObject(p.Etat);
-
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, p.NextPlayer());
-                        Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
-
-                        await Clients.Group(partieName).SendAsync("YourTurn", etatJson, p.Etat.ToString());
-                        Console.WriteLine($"Partie avec {p.Joueurs.Count} players Crée");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Errorrr 0 Players in lobby");
-                    }
+                    joueursJson = JsonConvert.SerializeObject(partie.Joueurs);
+                    etatJson = JsonConvert.SerializeObject(partie.Etat);
+                    await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, partie.NextPlayer());
+                    Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
+                    await Clients.Group(partieName).SendAsync("YourTurn", etatJson, partie.Etat.ToString());
+                    Console.WriteLine($"Partie avec {partie.Joueurs.Count} players Crée");
                 }
             }
             else
@@ -226,18 +192,19 @@ namespace RISKAPI.Hubs
                     Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
                     Console.ForegroundColor = ConsoleColor.White;
 
-
                     //Supprime les partie vide
-                    if (partie.Joueurs.Count <= 0)
+                    foreach (Partie p in JurasicRiskGameServer.Get.Parties)
                     {
-                        foreach (Partie p in JurasicRiskGameServer.Get.Parties)
+                        if (partie.Joueurs.Count <= 0)
                         {
-                            if (p.Id == partie.Id)
-                            {
-                                JurasicRiskGameServer.Get.Parties.Remove(p);
-                            }
+                            List<Partie> l = JurasicRiskGameServer.Get.Parties;
+                            Console.WriteLine($"Removed empty partie {p.Id}");
+                            l.Remove(p);
+
+
                         }
                     }
+
                 }
             }
             catch (Exception)
@@ -249,7 +216,6 @@ namespace RISKAPI.Hubs
         #region Override
         public override async Task OnConnectedAsync()
         {
-            await Clients.Client(Context.ConnectionId).SendAsync("connectedgame", Context.ConnectionId);
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"Connected to the game {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;

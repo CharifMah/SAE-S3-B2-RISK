@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using ModelsAPI.ClassMetier;
+using ModelsAPI;
 using ModelsAPI.ClassMetier.GameStatus;
 using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
@@ -43,10 +43,10 @@ namespace RISKAPI.Hubs
             if (lobby != null)
             {
                 string? lobbyJson = JsonConvert.SerializeObject(lobby);
-                foreach (Joueur j in lobby.Joueurs)
-                {
-                    await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
-                }
+
+                 await Clients.Group(lobbyName).SendAsync("ReceiveLobby", lobbyJson);
+                
+
             }
             else
             {
@@ -105,6 +105,7 @@ namespace RISKAPI.Hubs
 
                                 lobby.JoinLobby(j);
 
+                             
                                 List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
                                 if (lobbyList.Find(l => l.Id == lobby.Id) == null)
                                 {
@@ -261,39 +262,7 @@ namespace RISKAPI.Hubs
         public async Task StartGameOtherPlayer(string lobbyName)
         {
             Lobby lobby = null;
-            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
-            {
-                if (l.Id == lobbyName)
-                {
-                    lobby = l;
-                    break;
-                }
-            }
-            if (lobby != null)
-            {
-                Partie p = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == lobbyName);
-
-                foreach (Joueur j in lobby.Joueurs)
-                {
-                    if (p != null)
-                    {
-                        if (j.Profil.Pseudo != lobby.Owner)
-                        {
-                            p.JoinPartie(j);
-
-                            Console.WriteLine($"Game Start For {j.Profil.Pseudo}");
-                        }
-                        else
-                        {
-                            p.JoinPartie(j);
-                        }
-                    }
-
-
-                }
-            }
-
-
+            await Groups.AddToGroupAsync(Context.ConnectionId, lobbyName);
         }
 
         #region Override

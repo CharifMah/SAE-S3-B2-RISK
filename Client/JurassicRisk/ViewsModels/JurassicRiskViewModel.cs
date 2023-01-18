@@ -40,7 +40,7 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Singleton
-        private static JurassicRiskViewModel _instance;
+        private static JurassicRiskViewModel? _instance;
         public static JurassicRiskViewModel Get
         {
             get

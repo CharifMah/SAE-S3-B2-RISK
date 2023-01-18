@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ModelsAPI.ClassMetier;
+using ModelsAPI;
 using ModelsAPI.ClassMetier.GameStatus;
 using Newtonsoft.Json;
 using NReJSON;
@@ -37,6 +37,12 @@ namespace RISKAPI.Controllers
                     PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
                     lobby.Password = passwordHasher.HashPassword(lobby, lobby.Password);
                     await _lobby.InsertAsync(lobby);
+
+                    //Create Partie For the Server
+                    Partie p = new Partie(null, lobby.Joueurs, lobby.Id);
+                    p.Owner = lobby.Owner;
+                    JurasicRiskGameServer.Get.Parties.Add(p);
+                    Console.WriteLine("new Partie created : " + p.Id);
 
                     Console.WriteLine("Created Lobbys");
 

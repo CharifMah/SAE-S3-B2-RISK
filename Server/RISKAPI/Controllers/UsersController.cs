@@ -15,14 +15,13 @@ namespace RISKAPI.Controllers
     [Route("Users")]
     public class UsersController : ControllerBase
     {
-        private readonly IDistributedCache _cache;
+
         private readonly RedisCollection<Profil> _people;
         private readonly RedisConnectionProvider _provider;
-        public UsersController(RedisConnectionProvider provider, IDistributedCache cache)
+        public UsersController(RedisConnectionProvider provider)
         {
             _provider = provider;
             _people = (RedisCollection<Profil>)provider.RedisCollection<Profil>();
-            _cache = cache;
         }
 
         /// <summary>
