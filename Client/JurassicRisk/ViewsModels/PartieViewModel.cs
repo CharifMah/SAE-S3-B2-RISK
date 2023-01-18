@@ -228,13 +228,14 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("Partie");
         }
 
-        private void _chatService_YourTurn(string turnType)
+        private void _chatService_YourTurn(string etatJson)
         {
-            switch (turnType)
+            Etat etat = JsonConvert.DeserializeObject<Etat>(etatJson);
+            switch (etat.ToString())
             {
                 case "Deploiment":
                     {
-                        _carteVm.Tour = new TourPlacement();
+                        _partie.Etat = etat;
                         break;
                     }
             }

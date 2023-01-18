@@ -42,7 +42,7 @@ namespace RISKAPI.Hubs
             {
                 Joueur joueur = partie.Joueurs[partie.NextPlayer()];
                 partie.Transition();
-                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", partie.Etat.ToString());
+                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", JsonConvert.SerializeObject(partie.Etat));
                 Console.WriteLine($"c'est au tour de {joueur.Profil.Pseudo}");
             }
             else
@@ -216,7 +216,8 @@ namespace RISKAPI.Hubs
                         }
                         await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName,p.Etat);
 
-                        await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
+                        
+                        await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", JsonConvert.SerializeObject(p.Etat));
                     }
                     else
                     {

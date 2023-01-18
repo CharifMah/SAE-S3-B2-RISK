@@ -22,7 +22,7 @@ namespace Models.Services
         {
             _connection = connection;
             _connection.On<string,string,string>("ReceivePartie", (joueursJson,id,etatJson)  => PartieReceived?.Invoke(joueursJson,id,etatJson));
-            _connection.On<string>("yourTurn", (turnType) => YourTurn?.Invoke(turnType));
+            _connection.On<string>("yourTurn", (etatJson) => YourTurn?.Invoke(etatJson));
             _connection.On("endTurn", () => EndTurn?.Invoke());
             _connection.On<string>("connectedgame", (connexionId) => Connected?.Invoke(connexionId));
             _connection.On("disconnected", () => Disconnected?.Invoke());
