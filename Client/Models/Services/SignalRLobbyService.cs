@@ -72,7 +72,10 @@ namespace Models.Services
 
         public async Task StartGameOtherPlayer(string lobbyName)
         {
-            await _connection.SendAsync("StartGameOtherPlayer", lobbyName);
+            if (_connection.State == HubConnectionState.Connected)
+            {
+                await _connection.SendAsync("StartGameOtherPlayer", lobbyName);
+            }
         }
 
         public async Task SetTeam(Teams teams, string pseudo, string lobbyId)

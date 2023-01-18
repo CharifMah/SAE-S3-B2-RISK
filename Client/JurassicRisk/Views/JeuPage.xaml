@@ -12,6 +12,7 @@
       Title="JeuPage">
     <Page.Resources>
         <converter:OwnerConverter x:Key="OwnerConverter"/>
+        
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

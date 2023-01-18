@@ -167,8 +167,13 @@ namespace JurassicRisk.ViewsModels
         {
             try
             {
-                await _chatService.ExitLobby(ProfilViewModel.Get.SelectedProfil.Pseudo, _lobby.Id);
-                await _connection.StopAsync();
+                if (_connection.State == HubConnectionState.Connected)
+                {
+                    await _chatService.ExitLobby(ProfilViewModel.Get.SelectedProfil.Pseudo, _lobby.Id);
+                    await _connection.StopAsync();
+                }
+
+                JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby = false;
             }
             catch (Exception e)
             {

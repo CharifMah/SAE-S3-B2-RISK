@@ -194,16 +194,11 @@ namespace RISKAPI.Hubs
                 }
                 else if (lobby.Joueurs.Count > 0)
                 {
-                    //Create Partie For the Server
-                    Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
-                    joueursJson = JsonConvert.SerializeObject(p.Joueurs);
-
                     Partie serverPartie = partieList.FirstOrDefault(partie => partie.Id == lobby.Id);
                     serverPartie = p;
-
-                    if (joueursJson != "")
+                    if (p.Joueurs != null)
                     {
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName,p.Etat);
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", JsonConvert.SerializeObject(p.Joueurs), partieName, JsonConvert.SerializeObject(p.Etat));
                     }
 
                 }

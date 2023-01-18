@@ -83,6 +83,14 @@ namespace JurassicRisk.ViewsModels
             _carteLoaded = false;
             _progression = 0;
 
+            InitCon();
+
+            NotifyPropertyChanged("Partie");
+
+        }
+
+        private void InitCon()
+        {
             _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").WithAutomaticReconnect().Build();
             _partieChatService = new SignalRPartieService(_connection);
 
@@ -92,12 +100,7 @@ namespace JurassicRisk.ViewsModels
             _partieChatService.Disconnected += _partieChatService_Disconnected;
             _partieChatService.Deploiment += _partieChatService_Deploiment;
             _partieChatService.PartieReceived += _chatService_PartieReceived;
-
-            NotifyPropertyChanged("Partie");
-
         }
-
-
 
         #endregion
 
@@ -119,11 +122,16 @@ namespace JurassicRisk.ViewsModels
             {
                 if (task.Exception != null)
                 {
-                    if (task.IsCompleted)
-                        await _partieChatService.StartPartie(lobbyName, joueurName, carteName);
-                    else
+                    if (task.Exception.InnerException.Message.StartsWith("The HubConnection cannot"))
+                    {
+                        InitCon();
                         MessageBox.Show(task.Exception.InnerException.Message);
+                    }
 
+                }
+                else
+                {
+                    await _partieChatService.StartPartie(lobbyName, joueurName, carteName);
                 }
             });
             return true;
@@ -245,7 +253,7 @@ namespace JurassicRisk.ViewsModels
                     await ConnectPartie();
                 }
                 List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
-                Etat etat = JsonConvert.DeserializeObject<Etat>(etatJson);
+                Deploiment etat = JsonConvert.DeserializeObject<Deploiment>(etatJson);
 
                 _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat);
                 _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
