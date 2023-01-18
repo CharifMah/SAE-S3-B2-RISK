@@ -218,10 +218,10 @@ namespace RISKAPI.Hubs
                             Console.WriteLine("JsonJoueursssss VIDE");
                         }
                         Console.WriteLine("will SendPartie to groupe " + partieName);
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson);
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, p.NextPlayer());
                         Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
 
-                        await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", etatJson, p.Etat.ToString());
+                        await Clients.Client(lobby.Joueurs[p.PlayerIndex].Profil.ConnectionId).SendAsync("YourTurn", etatJson, p.Etat.ToString());
                     }
                     else
                     {
@@ -235,7 +235,7 @@ namespace RISKAPI.Hubs
                     {
                         etatJson = JsonConvert.SerializeObject(p.Etat);
                         joueursJson = JsonConvert.SerializeObject(p.Joueurs);
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson);
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, p.PlayerIndex);
                     }
 
                 }

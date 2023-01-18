@@ -7,7 +7,7 @@ namespace Models.Services
     public class SignalRPartieService
     {
         private readonly HubConnection _connection;
-        public event Action<string,string, string> PartieReceived;
+        public event Action<string,string, string,int> PartieReceived;
         public event Action<string,string> YourTurn;
         public event Action EndTurn;
         public event Action<string> Connected;
@@ -21,7 +21,7 @@ namespace Models.Services
         public SignalRPartieService(HubConnection connection)
         {
             _connection = connection;
-            _connection.On<string,string,string>("ReceivePartie", (joueursJson,id,etatJson)  => PartieReceived?.Invoke(joueursJson,id,etatJson));
+            _connection.On<string,string,string, int>("ReceivePartie", (joueursJson,id,etatJson, playerindex)  => PartieReceived?.Invoke(joueursJson,id,etatJson, playerindex));
             _connection.On<string, string>("yourTurn", (etatJson, name) => YourTurn?.Invoke(etatJson,name));
             _connection.On("endTurn", () => EndTurn?.Invoke());
             _connection.On<string>("connectedgame", (connexionId) => Connected?.Invoke(connexionId));

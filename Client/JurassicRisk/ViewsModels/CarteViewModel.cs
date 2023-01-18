@@ -427,9 +427,12 @@ namespace JurassicRisk.ViewsModels
             if (e.ChangedButton == MouseButton.Right)
             {
                 this._carte.SelectedTerritoire = territoire;
-                await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
-                await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
-
+                if (JurassicRiskViewModel.Get.PartieVm.Partie.Joueurs[JurassicRiskViewModel.Get.PartieVm.Partie.PlayerIndex].Profil.Pseudo == JurassicRiskViewModel.Get.PartieVm.Joueur.Profil.Pseudo)
+                {
+                    await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
+                    await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
+                }
+              
             }
 
             if (e.ChangedButton == MouseButton.Left)

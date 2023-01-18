@@ -29,7 +29,7 @@ namespace Models.GameStatus
         }
 
         public string Id { get => _id; set => _id = value; }
-        public int PlayerIndex { get => _playerIndex; }
+        public int PlayerIndex { get => _playerIndex;  set { _playerIndex = value; } }
         public string Owner { get => _owner; set => _owner = value; }
 
 
@@ -38,12 +38,12 @@ namespace Models.GameStatus
 
         #region Constructor
 
-        public Partie(Carte carte, List<Joueur> joueurs, string id, Etat etat)
+        public Partie(Carte carte, List<Joueur> joueurs, string id, Etat etat,int playerindex)
         {
             this._carte = carte;
             this._joueurs = joueurs;
             this._id = id;
-            _playerIndex = -1;
+            _playerIndex = playerindex;
             this._etat = etat;
         }
 

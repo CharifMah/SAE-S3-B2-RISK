@@ -27,7 +27,6 @@ namespace RISKAPI.Hubs
             _provider = provider;
             _lobby = (RedisCollection<Lobby>)provider.RedisCollection<Lobby>();
             RedisProvider.Instance.ManageSubscriber(RefreshLobbyToClients);
-
         }
         #endregion
 
@@ -48,8 +47,6 @@ namespace RISKAPI.Hubs
                 {
                     await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
                 }
-
-
             }
             else
             {
