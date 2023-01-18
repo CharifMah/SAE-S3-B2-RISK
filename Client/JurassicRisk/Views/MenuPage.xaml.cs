@@ -15,6 +15,7 @@ namespace JurassicRisk.Views
         public MenuPage()
         {
             InitializeComponent();
+            DataContext = ProfilViewModel.Get;
         }
 
         private void ProfilButton_Click(object sender, RoutedEventArgs e)
