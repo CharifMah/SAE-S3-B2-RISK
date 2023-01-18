@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.GameStatus;
@@ -118,8 +119,9 @@ namespace RISKAPI.Hubs
             if (partie != null && partie.Joueurs.Count > 0)
             {
                 Joueur j = partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
-                j.Profil.ConnectionId = Context.ConnectionId;
+                j.Profil.ConnectionId = Context.ConnectionId;              
             }
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{joueurName} connected to {partieName}");
             Console.ForegroundColor = ConsoleColor.White;
@@ -137,6 +139,7 @@ namespace RISKAPI.Hubs
             bool find = false;
             Lobby lobby = null;
             Joueur joueur = null;
+            Partie partie = null;
             string joueursJson = "";
             foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
             {
@@ -159,6 +162,17 @@ namespace RISKAPI.Hubs
                 }
             }
 
+
+
+            foreach (Partie p in JurasicRiskGameServer.Get.Parties)
+            {
+                if (p.Id == partieName)
+                {
+                    partie = p;
+                    break;
+                }
+            }
+
             //Lance la partie si c'est le Owner qui fait l'action Play
             if (lobby != null && lobby.Owner == joueurName)
             {
@@ -167,22 +181,23 @@ namespace RISKAPI.Hubs
                 Carte carte = CreateCarte1();
                 Console.WriteLine("Carte Created");
 
-                List<Partie> partieList = JurasicRiskGameServer.Get.Parties;
-
                 //Create Partie For the Server
                 Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
 
                 //Ajoute la partie if don't exist
-                if (partieList.FirstOrDefault(partie => partie.Id == lobby.Id) == null)
+                if (partie == null)
                 {
                     Console.WriteLine("Partie Created");
 
                     if (lobby.Joueurs.Count > 0)
                     {
 
-                        partieList.Add(p);
+                        JurasicRiskGameServer.Get.Parties.Add(p);
                         joueursJson = JsonConvert.SerializeObject(p.Joueurs);
-
+                        if (joueursJson == "")
+                        {
+                            Console.WriteLine("JsonJoueursssss VIDE");
+                        }
                         await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName,p.Etat);
 
                         await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
@@ -194,8 +209,7 @@ namespace RISKAPI.Hubs
                 }
                 else if (lobby.Joueurs.Count > 0)
                 {
-                    Partie serverPartie = partieList.FirstOrDefault(partie => partie.Id == lobby.Id);
-                    serverPartie = p;
+                    partie = p;
                     if (p.Joueurs != null)
                     {
                         await Clients.Group(partieName).SendAsync("ReceivePartie", JsonConvert.SerializeObject(p.Joueurs), partieName, JsonConvert.SerializeObject(p.Etat));
@@ -218,10 +232,6 @@ namespace RISKAPI.Hubs
         /// <returns>Task</returns>
         public async Task ExitPartie(string partieName, string joueurName)
         {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
-            Console.ForegroundColor = ConsoleColor.White;
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, partieName);
             try
             {
                 Partie partie = null;
@@ -236,9 +246,14 @@ namespace RISKAPI.Hubs
                 }
                 if (partie != null)
                 {
-                    Joueur j = partie.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
+                    Joueur j = partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
                     partie.ExitPartie(j);
+                    await Groups.RemoveFromGroupAsync(Context.ConnectionId, partieName);
                     Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+                    Console.ForegroundColor = ConsoleColor.White;
+  
 
                     //Supprime les partie vide
                     if (partie.Joueurs.Count <= 0)

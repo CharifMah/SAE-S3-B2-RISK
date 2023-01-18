@@ -271,14 +271,37 @@ namespace RISKAPI.Hubs
                 }
             }
             if (lobby != null)
+            {
+                Partie p = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == lobbyName);
+
                 foreach (Joueur j in lobby.Joueurs)
                 {
-                    if (j.Profil.Pseudo !=  lobby.Owner)
+                    if (p != null)
                     {
-                        await Clients.Client(j.Profil.ConnectionId).SendAsync("startgame");
-                        Console.WriteLine($"Game Start For {j.Profil.Pseudo}");
+                        if (j.Profil.Pseudo != lobby.Owner)
+                        {
+
+                            if (p.Joueurs.FirstOrDefault(jo => jo.Profil.Pseudo == j.Profil.Pseudo) == null)
+                            {
+                                p.JoinPartie(j);
+                            }
+                            await Clients.Client(j.Profil.ConnectionId).SendAsync("startgame");
+                            Console.WriteLine($"Game Start For {j.Profil.Pseudo}");
+                        }
+                        else
+                        {
+                            if (p.Joueurs.FirstOrDefault(jo => jo.Profil.Pseudo == j.Profil.Pseudo) == null)
+                            {
+                                p.JoinPartie(j);
+                            }
+                        }
                     }
+                    
+                    
                 }
+            }
+
+                
         }
 
         #region Override

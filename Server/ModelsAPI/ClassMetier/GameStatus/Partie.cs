@@ -31,6 +31,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public List<Joueur> Joueurs
         {
             get { return _joueurs; }
+            set { _joueurs = value; }
         }
 
         public Etat Etat { get { return etat; } }

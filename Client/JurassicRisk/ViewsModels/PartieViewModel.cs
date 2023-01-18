@@ -75,7 +75,12 @@ namespace JurassicRisk.ViewsModels
         {
             get
             {
-                return _partie.Joueurs.Where(j => j != _joueur).ToList();
+                if (_partie != null)
+                {
+                    return _partie.Joueurs.Where(j => j != _joueur).ToList();
+                }
+
+                return new List<Joueur>();
             }
         }
 
