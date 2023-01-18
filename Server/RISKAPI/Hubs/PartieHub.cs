@@ -160,7 +160,7 @@ namespace RISKAPI.Hubs
             }
 
             //Lance la partie si c'est le Owner qui fait l'action Play
-            if (lobby.Owner == joueurName)
+            if (lobby != null && lobby.Owner == joueurName)
             {
                 Console.WriteLine($"{joueurName} try to Start the game");
 
@@ -169,18 +169,18 @@ namespace RISKAPI.Hubs
 
                 List<Partie> partieList = JurasicRiskGameServer.Get.Parties;
 
+
                 //Ajoute la partie if don't exist
                 if (partieList.FirstOrDefault(partie => partie.Id == lobby.Id) == null)
                 {
+                    Console.WriteLine("Partie Created");
                     //Create Partie For the Server
                     Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
-
-                    Console.WriteLine("Partie Created");
+                    joueursJson = JsonConvert.SerializeObject(p.Joueurs);
 
                     partieList.Add(p);
                     if (lobby.Joueurs.Count > 0)
                     {
-                        joueursJson = JsonConvert.SerializeObject(p.Joueurs);
 
                         await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName);
 
@@ -193,6 +193,13 @@ namespace RISKAPI.Hubs
                 }
                 else
                 {
+                    //Create Partie For the Server
+                    Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
+                    joueursJson = JsonConvert.SerializeObject(p.Joueurs);
+
+                    Partie serverPartie = partieList.FirstOrDefault(partie => partie.Id == lobby.Id);
+                    serverPartie = p;
+
                     if (joueursJson != "")
                     {
                         await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName);
