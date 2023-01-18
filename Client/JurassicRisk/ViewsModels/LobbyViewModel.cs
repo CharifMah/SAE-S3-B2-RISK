@@ -173,7 +173,7 @@ namespace JurassicRisk.ViewsModels
                     await _connection.StopAsync();
                 }
 
-                JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby = false;
+                _isConnectedToLobby = false;
             }
             catch (Exception e)
             {

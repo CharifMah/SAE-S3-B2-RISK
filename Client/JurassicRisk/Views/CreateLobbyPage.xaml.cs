@@ -28,7 +28,7 @@ namespace JurassicRisk.Views
 
                     if (connexion1.Contains("Lobby Created with name"))
                     {
-                        JoinLobby(true);
+                        await JoinLobby(true);
                     }
                     else
                     {
@@ -49,7 +49,7 @@ namespace JurassicRisk.Views
             }
         }
 
-        private async void JoinLobby(bool fromCreate = false)
+        private async Task JoinLobby(bool fromCreate = false)
         {
             try
             {
@@ -58,13 +58,12 @@ namespace JurassicRisk.Views
 
                 var WaitTime = 500;
 
-                Error.Visibility = Visibility.Hidden;
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
-
                 for (int i = 0; i < RetryTimes; i++)
                 {
+                    Error.Visibility = Visibility.Hidden;
+                    await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
 
-                    if (!JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && !JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
                     {
                         if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
                             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
@@ -75,7 +74,7 @@ namespace JurassicRisk.Views
                     {
                         Error.Text = Strings.NoExistLobby;
                         Error.Visibility = Visibility.Visible;
-                        if (JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && !JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                        if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && !JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
                         {
                             await JurassicRiskViewModel.Get.PartieVm.DisconnectPartie();
                         }

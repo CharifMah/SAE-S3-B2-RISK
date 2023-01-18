@@ -25,14 +25,14 @@ namespace JurassicRisk.Views
                 var RetryTimes = 3;
 
                 var WaitTime = 500;
-
-                Error.Visibility = Visibility.Hidden;
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
-
+         
                 for (int i = 0; i < RetryTimes; i++)
                 {
+                    Error.Visibility = Visibility.Hidden;
+                    await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
+                    await Task.Delay(WaitTime);
 
-                    if (!JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && !JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
                     {
                         if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
                             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
@@ -41,7 +41,7 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
-                        if (JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && !JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                        if (!JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
                         {
                             await JurassicRiskViewModel.Get.PartieVm.DisconnectPartie();
                         }
@@ -50,8 +50,6 @@ namespace JurassicRisk.Views
                         {
                             Error.Text = "is not connected";
                             Error.Visibility = Visibility.Visible;
-                            if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
-                                (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
                         }
                         else
                         {

@@ -168,6 +168,30 @@ namespace JurassicRisk.ViewsModels
             _isConnectedToPartie = false;
         }
 
+
+        /// <summary>
+        /// Exit actual Lobby
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> StopConnection()
+        {
+            try
+            {
+                if (_connection.State == HubConnectionState.Connected)
+                {
+                    await _connection.StopAsync();
+                }
+
+                _isConnectedToPartie = false;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error not disconnected From The Server\n" + e.Message);
+            }
+
+            return true;
+        }
+
         #region Request
         public async Task SendEndTurn()
         {
@@ -181,7 +205,9 @@ namespace JurassicRisk.ViewsModels
         /// <returns></returns>
         public async Task<bool> ExitPartie()
         {
+            await StopConnection();
             await _partieChatService.ExitPartie(_joueurVm.Joueur.Profil.Pseudo, _partie.Id);
+            await _lobbyVm.ConnectLobby();
             return true;
         }
         #endregion
