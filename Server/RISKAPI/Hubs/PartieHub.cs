@@ -127,6 +127,7 @@ namespace RISKAPI.Hubs
         public async Task StartPartie(string partieName, string joueurName, string carteName)
         {
             Partie partie = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == partieName);
+            Lobby lobby = JurasicRiskGameServer.Get.Lobbys.FirstOrDefault(l => l.Id == partieName);
             string joueursJson = "";
             string etatJson = "";
             if (partie.Owner == null)
@@ -144,10 +145,13 @@ namespace RISKAPI.Hubs
                 Console.WriteLine("Carte Created");
 
                 //Envoie de la partie Lancement pour tout les joueurs
-                if (partie.Joueurs.Count > 0)
+                if (partie.Joueurs.Count > 0 || (partie.Joueurs.Count > 0 && lobby.Joueurs.Count > 0))
                 {
                     Console.WriteLine("Serialize Object");
-
+                    foreach (Joueur j in lobby.Joueurs)
+                    {
+                        partie.JoinPartie(j);
+                    }
                     joueursJson = JsonConvert.SerializeObject(partie.Joueurs);
                     etatJson = JsonConvert.SerializeObject(partie.Etat);
                     await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, partie.NextPlayer());
