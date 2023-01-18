@@ -53,16 +53,16 @@ namespace ModelsAPI.ClassMetier.GameStatus
                 switch (random.Next(3))
                 {
                     case 1:
-                        joueur.Units.Add(f.Create("Rex");
+                        joueur.Units.Add(f.Create("Rex"));
                         break;
                     case 2:
-                        joueur.Units.Add(f.Create("Brachiosaure");
+                        joueur.Units.Add(f.Create("Brachiosaure"));
                         break;
                     case 3:
-                        joueur.Units.Add(f.Create("Baryonyx");
+                        joueur.Units.Add(f.Create("Baryonyx"));
                         break;
                     case 4:
-                        joueur.Units.Add(f.Create("Pterosaure");
+                        joueur.Units.Add(f.Create("Pterosaure"));
                         break;
                 }
             }

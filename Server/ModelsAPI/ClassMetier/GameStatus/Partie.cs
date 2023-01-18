@@ -1,13 +1,5 @@
 ﻿using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
-using ModelsAPI.ClassMetier.Units;
-using Pipelines.Sockets.Unofficial.Buffers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
@@ -80,18 +72,9 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public void Transition()
         {
             switch (etat.ToString())
-            {              
+            {
                 case "Renforcement":
-                    if (_joueurs[_playerIndex].Units.Count == 0)
-                    {
-                        (etat as Renforcement).JoueurActuel = this._joueurs[_playerIndex];
-                    }
-                    break;
-                case "Attaque":
-
-                    break;
-                case "Deplacement":
-
+                    (etat as Renforcement).JoueurActuel = this._joueurs[_playerIndex];
                     break;
             }
 
@@ -117,7 +100,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
                 if (_joueurs.Count < 4 && j.Count() == 0)
                 {
                     _joueurs.Add(joueur);
-                
+
                     res = true;
                 }
                 Console.WriteLine($"nbr joueur : {_joueurs.Count} ");
