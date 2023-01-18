@@ -7,6 +7,10 @@ namespace ModelsAPI.ClassMetier.GameStatus
 {
     public class Renforcement : Etat
     {
+        private Joueur _joueurActuel;
+
+        public Joueur JoueurActuel { get => _joueurActuel; set => _joueurActuel = value; }
+
         /// <summary>
         /// Phase de renforcement
         /// </summary>
@@ -77,7 +81,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
         {
             Etat etatSuivant;
-            if ( <= 0)
+            if (_joueurActuel.Units.Count <= 0)
             {
                 etatSuivant = new Attaque();
             }
@@ -93,6 +97,5 @@ namespace ModelsAPI.ClassMetier.GameStatus
         {
             return "Renforcement";
         }
-
     }
 }

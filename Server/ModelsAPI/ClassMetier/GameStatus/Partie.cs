@@ -80,26 +80,22 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public void Transition()
         {
             switch (etat.ToString())
-            {
-                case "Deploiment":
-                    if(_carte.GetNbTerritoireLibre == 0)
-                    {
-                        etat = etat as Renforcement;
-                    }
-                    break;
+            {              
                 case "Renforcement":
                     if (_joueurs[_playerIndex].Units.Count == 0)
                     {
-                        etat = etat as Attaque;
+                        (etat as Renforcement).JoueurActuel = this._joueurs[_playerIndex];
                     }
                     break;
                 case "Attaque":
-                    etat = etat as Deplacement;
+
                     break;
                 case "Deplacement":
-                    etat = etat as Renforcement;
+
                     break;
             }
+
+            //Change l'etat
             this.etat = etat.TransitionTo(this._joueurs, this._carte);
         }
 
