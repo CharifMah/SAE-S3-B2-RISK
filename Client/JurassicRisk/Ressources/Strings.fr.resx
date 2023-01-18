@@ -138,6 +138,9 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Deconnexion</value>
   </data>
+  <data name="EndPhase" xml:space="preserve">
+    <value>Terminer phase</value>
+  </data>
   <data name="ErrorLobbyExist" xml:space="preserve">
     <value>Un lobby avec le meme nom existe déja</value>
   </data>

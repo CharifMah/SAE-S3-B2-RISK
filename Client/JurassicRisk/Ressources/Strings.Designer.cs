@@ -433,6 +433,14 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("NotOwner", resourceCulture);
             }
         }
+
+        public static string EndPhase
+        {
+            get
+            {
+                return ResourceManager.GetString("EndPhase", resourceCulture);
+            }
+        }
     }
     
 }
