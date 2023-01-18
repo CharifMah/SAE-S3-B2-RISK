@@ -4,7 +4,6 @@ using Models.Son;
 using Models.Units;
 using Newtonsoft.Json;
 using Stockage.Converters;
-using System.Windows;
 
 namespace Models.Player
 {
@@ -98,12 +97,12 @@ namespace Models.Player
                     SoundStore.Get("Slidersound.mp3").Play();
                     territoire.AddUnit(unit);
                     territoire.Team = this._team;
-                    
+
                 }
             }
-            
+
         }
-       
+
 
         private void AddUnits(IUnit unit, ITerritoireBase territoire)
         {
@@ -128,7 +127,7 @@ namespace Models.Player
             }
         }
 
-        public void PlaceUnits(IUnit unitToPlace, ITerritoireBase territoire)
+        public void PlaceUnit(IUnit unitToPlace, ITerritoireBase territoire)
         {
             if (this._units.Count > 0)
             {

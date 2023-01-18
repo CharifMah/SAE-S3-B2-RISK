@@ -1,23 +1,16 @@
-
-using JurassicRisk.Ressource;
 using JurassicRisk.Views;
 using Models;
-using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
 using Models.Graph;
 using Models.Map;
 using Models.Son;
-using Models.Tours;
-using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -43,7 +36,6 @@ namespace JurassicRisk.ViewsModels
         private FabriqueUniteBase f;
         private int zi = 0;
         private JoueurViewModel _joueurVm;
-        private ITour tour = new TourAttente();
         private List<ITerritoireBase> _territoires;
 
         public delegate void DrawEnd();
@@ -81,8 +73,6 @@ namespace JurassicRisk.ViewsModels
                 NotifyPropertyChanged();
             }
         }
-
-        public ITour Tour { get => tour; set => tour = value; }
 
         #endregion
 
@@ -326,7 +316,7 @@ namespace JurassicRisk.ViewsModels
 
             _carteCanvas.Children.Add(myCanvas);
         }
-        private void MyCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e,TerritoireDecorator territoire)
+        private void MyCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e, TerritoireDecorator territoire)
         {
             if (e.Delta > 0)
                 JeuPage.GetInstance().ZoomIn(territoire.X, territoire.Y, 2);
@@ -427,13 +417,7 @@ namespace JurassicRisk.ViewsModels
                 {
                     await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
                     await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
-                    _joueurVm.AddUnits(new List<IUnit>() { _joueurVm.SelectedUnit }, this._carte.SelectedTerritoire);
-                    if (_joueurVm.Joueur.Units.Count <= 0)
-                    {
-                        SoundStore.Get("errorsound.mp3").Play();
-                        MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
-                    }
-                }         
+                }
             }
 
             if (e.ChangedButton == MouseButton.Left)
