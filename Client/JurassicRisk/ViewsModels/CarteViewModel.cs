@@ -8,6 +8,7 @@ using Models.Graph;
 using Models.Map;
 using Models.Son;
 using Models.Tours;
+using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
@@ -470,7 +471,6 @@ namespace JurassicRisk.ViewsModels
                 MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
             }
 
-            await SetCarte(_carte);
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
         }
