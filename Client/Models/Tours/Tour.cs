@@ -81,7 +81,7 @@ namespace Models.Tours
             Combat c = new Combat();
             */
         }
-            
+        
 
         public void Move()
         {
