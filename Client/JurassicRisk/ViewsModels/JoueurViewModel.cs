@@ -1,17 +1,8 @@
-﻿using JurassicRisk.Ressource;
-using Models.Exceptions;
+﻿using Models.Exceptions;
 using Models.Map;
 using Models.Player;
-using Models.Son;
-﻿using Models;
-using Models.Exceptions;
-using Models.GameStatus;
-using Models.Map;
-using Models.Player;
-using Models.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using IUnit = Models.Units.IUnit;
@@ -35,6 +26,7 @@ namespace JurassicRisk.ViewsModels
             set
             {
                 _joueur = value;
+
                 NotifyPropertyChanged("Joueur");
             }
         }
@@ -50,6 +42,8 @@ namespace JurassicRisk.ViewsModels
             {
                 return _units;
             }
+            set
+            { _units = value; NotifyPropertyChanged(); }
         }
 
         public IUnit SelectedUnit
@@ -110,7 +104,6 @@ namespace JurassicRisk.ViewsModels
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
                     _joueur.PlaceUnits(UniteBases, territoire);
-                    this._units.Remove(_selectedUnit);
                     if (_units.Count > 0)
                         _selectedUnit = _units[0];
                 }
@@ -135,7 +128,6 @@ namespace JurassicRisk.ViewsModels
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
                     _joueur.PlaceUnits(Unit, territoire);
-                    this._units.Remove(_selectedUnit);
                     if (_units.Count > 0)
                         _selectedUnit = _units[0];
                 }

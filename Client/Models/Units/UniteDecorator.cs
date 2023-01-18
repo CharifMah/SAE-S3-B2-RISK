@@ -16,7 +16,7 @@ namespace Models.Units
         private IUnit _uniteBase;
         public UniteDecorator(IUnit uniteBase)
         {
-            UniteBase = uniteBase;
+            _uniteBase = uniteBase;
             switch (uniteBase.Name)
             {
                 case "Brachiosaurus":

@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Models.GameStatus;
 using Models.Player;
 using Models.Services;
+using Models.Units;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -122,8 +124,10 @@ namespace JurassicRisk.ViewsModels
                 _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat, playerindex);
                 _partie.PlayerIndex = playerindex;
                 _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+
                 JurassicRiskViewModel.Get.JoueurVm.Joueur = _joueur;
                 _joueur.Profil.ConnectionId = _connection.ConnectionId;
+
                 _isConnectedToPartie = true;
 
                 await _carteVm.InitCarte();

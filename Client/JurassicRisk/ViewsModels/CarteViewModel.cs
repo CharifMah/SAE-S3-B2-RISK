@@ -431,14 +431,19 @@ namespace JurassicRisk.ViewsModels
                 {
                     await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
                     await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 });
-                }
-              
+                    _joueurVm.AddUnits(new List<IUnit>() { _joueurVm.SelectedUnit }, this._carte.SelectedTerritoire);
+                    if (_joueurVm.Joueur.Units.Count <= 0)
+                    {
+                        SoundStore.Get("errorsound.mp3").Play();
+                        MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
+                    }
+                }         
             }
 
             if (e.ChangedButton == MouseButton.Left)
             {
+                this._carte.SelectedTerritoire = territoire;
                 DrawLines(territoire);
-
             }
 
             if (e.ChangedButton == MouseButton.Middle)
@@ -461,18 +466,6 @@ namespace JurassicRisk.ViewsModels
 
             shadow.Color = Brushes.Green.Color;
             c.Effect = shadow;
-
-
-            this._carte.SelectedTerritoire = territoire;
-            if (_joueurVm.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
-            {
-                _joueurVm.AddUnits(new List<IUnit>() { _joueurVm.SelectedUnit }, this._carte.SelectedTerritoire);
-            }
-            if (_joueurVm.Joueur.Units.Count <= 0)
-            {
-                SoundStore.Get("errorsound.mp3").Play();
-                MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
-            }
 
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");

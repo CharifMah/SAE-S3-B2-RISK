@@ -101,13 +101,18 @@ namespace RISKAPI.Hubs
         public async Task ConnectedPartie(string partieName, string joueurName)
         {
             Console.WriteLine(joueurName + " start connect ");
-            Joueur? joueur = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == partieName).Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
-            await Groups.AddToGroupAsync(Context.ConnectionId, partieName);
-            if (joueur != null)
+            Partie? partie = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == partieName);
+            if (partie != null)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"{joueurName} connected to {partieName}");
-                Console.ForegroundColor = ConsoleColor.White;
+                await Groups.AddToGroupAsync(Context.ConnectionId, partieName);
+                Joueur joueur = partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
+
+                if (joueur != null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"{joueurName} connected to {partieName}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
             else
             {
@@ -115,6 +120,9 @@ namespace RISKAPI.Hubs
                 Console.WriteLine($"Not Connected");
                 Console.ForegroundColor = ConsoleColor.White;
             }
+
+
+
         }
 
         /// <summary>
@@ -130,7 +138,7 @@ namespace RISKAPI.Hubs
             Lobby lobby = JurasicRiskGameServer.Get.Lobbys.FirstOrDefault(l => l.Id == partieName);
             string joueursJson = "";
             string etatJson = "";
-            if (partie.Owner == null)
+            if (partie!= null && partie.Owner == null)
             {
                 partie.Owner = joueurName;
             }

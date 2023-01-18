@@ -225,30 +225,7 @@ namespace RISKAPI.Hubs
                         Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
                     }
 
-                    if (lobby.Joueurs.Count <= 0)
-                    {
-                        await _lobby.DeleteAsync(lobby);
-                        foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
-                        {
-                            if (l.Id == lobbyName)
-                            {
-                                JurasicRiskGameServer.Get.Lobbys.Remove(l);
-                                Console.WriteLine($"lobby {l.Id} removed");
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (lobby.Joueurs.Count == 1)
-                        {
-                            lobby.Joueurs.Clear();
-                        }
-
-                        await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
-                        Console.WriteLine($"there is {lobby.Joueurs.Count} in the lobby {lobby.Id} that mean player is null");
-                    }
-
+                    await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
                     await _lobby.UpdateAsync(lobby);
                     await RefreshLobbyToClients(lobbyName);
                 }
