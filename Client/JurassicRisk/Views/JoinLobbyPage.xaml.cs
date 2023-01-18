@@ -18,57 +18,44 @@ namespace JurassicRisk.Views
 
         private async void JoinButton_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
-                //Retry Pattern Async
-                var RetryTimes = 3;
-
                 var WaitTime = 500;
-         
-                for (int i = 0; i < RetryTimes; i++)
-                {
-                    Error.Visibility = Visibility.Hidden;
-                    await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
-                    await Task.Delay(WaitTime);
 
-                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && !JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
+                Error.Visibility = Visibility.Hidden;
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
+                await Task.Delay(WaitTime);
+
+                if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && !JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
+                {
+                    if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
+                        (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                }
+                else
+                {
+                    if (!JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
                     {
-                        if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
-                            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
-                        i = RetryTimes;
-                        break;
+                        await JurassicRiskViewModel.Get.PartieVm.StopConnection();
                     }
                     else
                     {
-                        if (!JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
+                        if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
                         {
-                            await JurassicRiskViewModel.Get.PartieVm.StopConnection();
-                        }
-
-                        if (i >= 2)
-                        {
-                            Error.Text = "is not connected";
-                            Error.Visibility = Visibility.Visible;
+                            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
                         }
                         else
                         {
-                            Error.Text = "Loading...";
                             Error.Visibility = Visibility.Visible;
+                            Error.Text = "Lobby don't exist";
                         }
-
                     }
-                    //Wait for 500 milliseconds
-                    await Task.Delay(WaitTime);
                 }
-
             }
             catch (Exception ex)
             {
-                Error.Text = ex.Message;
                 Error.Visibility = Visibility.Visible;
+                Error.Text = ex.Message;
             }
-
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

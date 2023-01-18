@@ -24,7 +24,6 @@ namespace JurassicRisk.ViewsModels
         private HubConnection _connection;
         private SignalRLobbyService _chatService;
         private Lobby? _lobby;
-        private object application;
         #endregion
 
         #region Property

@@ -37,7 +37,6 @@ namespace JurassicRisk.ViewsModels
     public class CarteViewModel : observable.Observable
     {
         #region Attributes
-        private Stopwatch _timer;
         private AdjacencySetGraph _graph;
         private Canvas _carteCanvas;
         private Carte _carte;
@@ -53,8 +52,6 @@ namespace JurassicRisk.ViewsModels
         private Progression progress;
         private long currentPosition;
         private bool drawing;
-
-        private Point previousPositionZoom;
         #endregion
 
         #region Property
@@ -105,7 +102,6 @@ namespace JurassicRisk.ViewsModels
 
             f = new FabriqueUniteBase();
             _joueurVm = joueur;
-            previousPositionZoom = new Point();
 
         }
         #endregion
