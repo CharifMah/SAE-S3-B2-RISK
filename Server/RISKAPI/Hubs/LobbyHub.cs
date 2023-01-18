@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.GameStatus;
-using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
 using NReJSON;
@@ -50,7 +49,7 @@ namespace RISKAPI.Hubs
                     await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
                 }
 
- 
+
             }
             else
             {
@@ -114,7 +113,7 @@ namespace RISKAPI.Hubs
                                 {
                                     lobbyList.Add(lobby);
                                 }
-                               
+
                                 await _lobby.UpdateAsync(lobby);
                                 await RefreshLobbyToClients(lobbyName);
                                 await Clients.Client(Context.ConnectionId).SendAsync("connected", "true");
@@ -134,7 +133,7 @@ namespace RISKAPI.Hubs
                 }
                 else
                 {
-                    await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId,"false");
+                    await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId, "false");
                     Console.WriteLine("Le lobby n'existe pas");
                 }
             }
@@ -169,7 +168,7 @@ namespace RISKAPI.Hubs
                     }
                     break;
                 }
-            }          
+            }
         }
 
         public async Task IsReady(bool ready, string joueurName, string lobbyName)
@@ -224,7 +223,7 @@ namespace RISKAPI.Hubs
                     {
                         await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
                         lobby.Joueurs.Remove(j);
-                        
+
                         Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
                     }
                     if (lobby.Joueurs.Count <= 0)
@@ -280,28 +279,22 @@ namespace RISKAPI.Hubs
                     {
                         if (j.Profil.Pseudo != lobby.Owner)
                         {
+                            p.JoinPartie(j);
 
-                            if (p.Joueurs.FirstOrDefault(jo => jo.Profil.Pseudo == j.Profil.Pseudo) == null)
-                            {
-                                p.JoinPartie(j);
-                            }
                             await Clients.Client(j.Profil.ConnectionId).SendAsync("startgame");
                             Console.WriteLine($"Game Start For {j.Profil.Pseudo}");
                         }
                         else
                         {
-                            if (p.Joueurs.FirstOrDefault(jo => jo.Profil.Pseudo == j.Profil.Pseudo) == null)
-                            {
-                                p.JoinPartie(j);
-                            }
+                            p.JoinPartie(j);
                         }
                     }
-                    
-                    
+
+
                 }
             }
 
-                
+
         }
 
         #region Override
@@ -313,7 +306,7 @@ namespace RISKAPI.Hubs
         }
 
         public async Task OnDisconnectedAsync(Exception? exception)
-        {          
+        {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected from OnDisconnectAsync ExitLobby {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;

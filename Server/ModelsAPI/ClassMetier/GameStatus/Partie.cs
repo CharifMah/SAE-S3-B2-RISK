@@ -72,7 +72,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
             }
             else
             {
-                Console.WriteLine("0 player in game");
+                Console.WriteLine($"{this._joueurs.Count} player in game");
             }
             return res;
         }
@@ -100,8 +100,10 @@ namespace ModelsAPI.ClassMetier.GameStatus
                 if (_joueurs.Count < 4 && j.Count() == 0)
                 {
                     _joueurs.Add(joueur);
+                
                     res = true;
                 }
+                Console.WriteLine($"nbr joueur : {_joueurs.Count} ");
             }
             return res;
         }
