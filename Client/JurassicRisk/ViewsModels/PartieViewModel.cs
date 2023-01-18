@@ -275,7 +275,7 @@ namespace JurassicRisk.ViewsModels
                 else
                 {
                     List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
-                    Deploiment etat = JsonConvert.DeserializeObject<Deploiment>(etatJson);
+                    Etat etat = JsonConvert.DeserializeObject<Etat>(etatJson);
 
                     _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat);
                     _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
