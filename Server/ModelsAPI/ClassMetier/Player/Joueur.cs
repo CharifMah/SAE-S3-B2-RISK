@@ -55,21 +55,21 @@ namespace ModelsAPI.ClassMetier.Player
             FabriqueUniteBase f = new FabriqueUniteBase();
             _units = new List<IUnit>();
             Random random = new Random();
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 90; i++)
             {
                 switch (random.Next(4))
                 {
                     case 0:
-                        _units.Add(new UniteDecorator(f.Create("Rex")));
+                        _units.Add(f.Create("Rex"));
                         break;
                     case 1:
-                        _units.Add(new UniteDecorator(f.Create("Brachiosaurus")));
+                        _units.Add(f.Create("Brachiosaurus"));
                         break;
                     case 2:
-                        _units.Add(new UniteDecorator(f.Create("Baryonyx")));
+                        _units.Add(f.Create("Baryonyx"));
                         break;
                     case 3:
-                        _units.Add(new UniteDecorator(f.Create("Pterosaure")));
+                        _units.Add(f.Create("Pterosaure"));
                         break;
                 }
             }

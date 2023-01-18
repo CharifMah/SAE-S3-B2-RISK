@@ -1,10 +1,4 @@
-﻿using Models.Map;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Models.Units
 {
@@ -20,17 +14,22 @@ namespace Models.Units
         [DataMember]
         protected string description;
 
-        public string Name { get => name; }
-        public string Description { get => description; }
-        public int Id { get => id; }
+        public string Name { get => name; set => name = value; }
+        public string Description { get => description; set => description = value; }
+        public int Id { get => id; set => id = value; }
         public Elements Element { get => element; set => element = value; }
+
+        public UniteBase(int Id, Elements element = Elements.EAU)
+        {
+            this.element = element;
+            this.id = id;
+            this.name = "ExempleUnite";
+            this.description = "Description d'une unite";
+        }
 
         public UniteBase()
         {
-            this.Element = Elements.EAU;
-            this.id = 0;
-            this.name = "ExempleUnite";
-            this.description = "Description d'une unite";
+
         }
     }
 }

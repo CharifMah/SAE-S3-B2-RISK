@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-
-namespace Models.Units
+﻿namespace Models.Units
 {
     /// <summary>
     /// Unite decorateur
@@ -16,7 +9,7 @@ namespace Models.Units
         private IUnit _uniteBase;
         public UniteDecorator(IUnit uniteBase)
         {
-            UniteBase = uniteBase;
+            _uniteBase = uniteBase;
             switch (uniteBase.Name)
             {
                 case "Brachiosaurus":

@@ -1,4 +1,5 @@
-﻿using ModelsAPI.ClassMetier.Map;
+﻿using ModelsAPI.ClassMetier.Fabriques.FabriqueUnite;
+using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
 using ModelsAPI.ClassMetier.Units;
 
@@ -6,24 +7,36 @@ namespace ModelsAPI.ClassMetier.GameStatus
 {
     public class Renforcement : Etat
     {
+        private Joueur _joueurActuel;
 
+        public Joueur JoueurActuel { get => _joueurActuel; set => _joueurActuel = value; }
+
+        /// <summary>
+        /// Phase de renforcement
+        /// </summary>
+        /// <param name="carte"></param>
+        /// <param name="joueur"></param>
+        /// <param name="unitList"></param>
+        /// <returns></returns>
         public bool Action(Carte carte, Joueur joueur, List<int> unitList)
         {
-            throw new NotImplementedException();
+          
+
+            // Ajout des unités sur le territoire
+            List<IUnit> unitsToPlace = new List<IUnit>();
+            foreach(int i in unitList)
+            {
+                unitsToPlace.Add(joueur.Units[i]);
+            }
+            joueur.PlaceUnits(unitsToPlace, carte.SelectedTerritoire);
+
+            return true;
         }
 
         public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
         {
-            int nbTroupe = 0;
             Etat etatSuivant;
-            foreach(Joueur j in joueurs)
-            {
-                if (j.Units.Count <= 0)
-                {
-                    nbTroupe++;
-                }
-            }
-            if (nbTroupe <= 0)
+            if (_joueurActuel.Units.Count <= 0)
             {
                 etatSuivant = new Attaque();
             }
@@ -39,6 +52,5 @@ namespace ModelsAPI.ClassMetier.GameStatus
         {
             return "Renforcement";
         }
-
     }
 }

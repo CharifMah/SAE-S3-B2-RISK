@@ -35,7 +35,7 @@ namespace ModelTestUnit
                 j1.Units.Add(u);
             }
 
-            j1.AddUnits(renforts, t2);
+            //j1.PlaceUnit(renforts, t2);
             Assert.Equal(t2.Team, j1.Team);
             Assert.Equal(41, j1.Units.Count);
             Assert.Equal(renforts.Count, t2.Units.Count);
@@ -72,7 +72,6 @@ namespace ModelTestUnit
                 t1.Units.Add(new UniteBase());
             }
             
-            Tour t = new Tour(j1);
             t.Strengthen(10);
             
             Assert.Equal(20,t1.Units.Count);

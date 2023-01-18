@@ -95,10 +95,10 @@ namespace JurassicRisk.Views
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-
             SoundStore.Get("MusicGameJurr.mp3").Stop();
             SoundStore.Get("HubJurr.mp3").Play(true);
-            await JurassicRiskViewModel.Get.PartieVm.ExitPartie();
+            await JurassicRiskViewModel.Get.PartieVm.StopConnection();
+            await JurassicRiskViewModel.Get.LobbyVm.StopConnection();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 

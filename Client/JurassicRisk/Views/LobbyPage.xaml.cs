@@ -1,9 +1,9 @@
 ﻿using JurassicRisk.Ressource;
 using JurassicRisk.ViewsModels;
-using Models;
 using Models.Player;
 using Models.Settings;
 using Models.Son;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +15,7 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class LobbyPage : Page
     {
-        private int _partieConnect;
+        private int _partieConnect = -1;
         private LobbyViewModel _lobbyVm;
         public LobbyPage()
         {
@@ -26,21 +26,36 @@ namespace JurassicRisk.Views
         }
 
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
-        {   
+        {
             SoundStore.Get("HubJurr.mp3").Stop();
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
+            SoundStore.Get("MusicGameJurr.mp3");
 
-            if (_lobbyVm.Lobby.PlayersReady)
+            if (_partieConnect == -1)
+            {
+                await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
+                await Task.Delay(1000);
+                _partieConnect = 0;
+            }
+
+            try
             {
                 await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
 
-                await JurassicRiskViewModel.Get.LobbyVm.StartGameOwnerOnly();              
+                if (_partieConnect == 0 && ProfilViewModel.Get.SelectedProfil.Pseudo == _lobbyVm.Lobby.Owner)
+                {
+                    await _lobbyVm.StartGameOwnerOnly();
+
+                    _partieConnect = 1;
+                }
+
+                //Retry Pattern Async
             }
-            else
+            catch (Exception ex)
             {
-                Error.Text = Strings.ErrorPlayerNotReady;
+                Error.Text = ex.Message;
                 Error.Visibility = Visibility.Visible;
             }
         }
@@ -56,9 +71,10 @@ namespace JurassicRisk.Views
                     Error.Visibility = Visibility.Visible;
                     Error.Text = "vous etes pret";
 
-                    if (_partieConnect == -1)
+                    if (_partieConnect != 0  && ProfilViewModel.Get.SelectedProfil.Pseudo != _lobbyVm.Lobby.Owner)
                     {
                         await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
+                        _partieConnect = 1;
                     }
 
                 }
@@ -78,14 +94,14 @@ namespace JurassicRisk.Views
         }
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             await _lobbyVm.StopConnection();
             _partieConnect = -1;
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 
         private async void SelectTeamButton_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             Teams team = Teams.NEUTRE;
             Button b = (sender as Button);
             switch (b.Name)

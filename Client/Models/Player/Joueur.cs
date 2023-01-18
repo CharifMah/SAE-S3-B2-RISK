@@ -4,7 +4,6 @@ using Models.Son;
 using Models.Units;
 using Newtonsoft.Json;
 using Stockage.Converters;
-using System.Windows;
 
 namespace Models.Player
 {
@@ -57,7 +56,7 @@ namespace Models.Player
             FabriqueUniteBase f = new FabriqueUniteBase();
             _units = new List<IUnit>();
             Random random = new Random();
-            for (int i = 0; i < 41; i++)
+            for (int i = 0; i < 86; i++)
             {
                 switch (random.Next(4))
                 {
@@ -98,26 +97,25 @@ namespace Models.Player
                     SoundStore.Get("Slidersound.mp3").Play();
                     territoire.AddUnit(unit);
                     territoire.Team = this._team;
-                    
+
                 }
             }
-            
-        }
-       
 
-        private void AddUnits(IUnit unit, ITerritoireBase territoire)
+        }
+
+
+        private bool AddUnit(int indexUnit, ITerritoireBase territoire)
         {
+            bool res = false;
             if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
             {
-                if (_units.Contains(unit))
-                {
-                    _units.Remove(unit);
+                _units.RemoveAt(indexUnit);
 
-                    territoire.AddUnit(unit);
-                    territoire.Team = _team;
-
-                }
+                territoire.AddUnit(_units[indexUnit]);
+                territoire.Team = _team;
+                res = true;
             }
+            return res;
         }
 
         public void PlaceUnits(List<IUnit> unitToPlace, ITerritoireBase territoire)
@@ -128,12 +126,14 @@ namespace Models.Player
             }
         }
 
-        public void PlaceUnits(IUnit unitToPlace, ITerritoireBase territoire)
+        public bool PlaceUnit(int indexUnit, ITerritoireBase territoire)
         {
+            bool res = false;
             if (this._units.Count > 0)
             {
-                this.AddUnits(unitToPlace, territoire);
+                res = this.AddUnit(indexUnit, territoire);
             }
+            return res;
         }
 
         public void AddUnit(IUnit unit)

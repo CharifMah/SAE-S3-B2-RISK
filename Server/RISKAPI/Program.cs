@@ -20,9 +20,9 @@ namespace RISKAPI
                 options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true).AddNewtonsoftJson();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+            //builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddSwaggerGen();
 
             builder.Services.AddSingleton(new RedisConnectionProvider(builder.Configuration["REDIS_CONNECTION_STRING"]));
 
@@ -33,18 +33,18 @@ namespace RISKAPI
             //    options.Configuration = builder.Configuration["Redis"];
             //});
 
-            builder.Services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
+            //builder.Services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
 
             builder.Services.AddSignalR();
 
             var app = builder.Build();
 
             //// Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
 
             app.UseRouting();
             app.MapControllers();

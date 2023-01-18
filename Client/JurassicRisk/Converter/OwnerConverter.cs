@@ -14,7 +14,7 @@ namespace JurassicRisk.Converter
         {
 
             var color = Color.FromRgb(0,0,0);
-            if (value.ToString() == JurassicRiskViewModel.Get.LobbyVm.Lobby.Owner)
+            if (String.IsNullOrEmpty(value.ToString()) && value.ToString() == JurassicRiskViewModel.Get.LobbyVm.Lobby.Owner)
             {
                 color = Color.FromRgb(0, 150, 150);
             }

@@ -15,14 +15,12 @@ namespace RISKAPI.Controllers
     [ApiController]
     public class CarteController : ControllerBase
     {
-        private readonly IDistributedCache _cache;
         private readonly RedisCollection<Carte> _carte;
         private readonly RedisConnectionProvider _provider;
-        public CarteController(RedisConnectionProvider provider, IDistributedCache cache)
+        public CarteController(RedisConnectionProvider provider)
         {
             _provider = provider;
             _carte = (RedisCollection<Carte>)provider.RedisCollection<Carte>();
-            _cache = cache;
         }
 
         // POST api/<CarteController>

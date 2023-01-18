@@ -24,7 +24,6 @@ namespace JurassicRisk.ViewsModels
         private HubConnection _connection;
         private SignalRLobbyService _chatService;
         private Lobby? _lobby;
-        private object application;
         #endregion
 
         #region Property
@@ -46,7 +45,7 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _lobby = null;
-            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/LobbyHub").WithAutomaticReconnect().Build();
+            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/LobbyHub").Build();
             _chatService = new SignalRLobbyService(_connection);
 
             _isConnectedToLobby = false;
@@ -173,7 +172,7 @@ namespace JurassicRisk.ViewsModels
                     await _connection.StopAsync();
                 }
 
-                JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby = false;
+                _isConnectedToLobby = false;
             }
             catch (Exception e)
             {
@@ -239,7 +238,6 @@ namespace JurassicRisk.ViewsModels
 
                     });
                 }
-
             }
         }
 
