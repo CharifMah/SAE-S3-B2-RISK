@@ -1,10 +1,14 @@
+
+using JurassicRisk.Ressource;
 using JurassicRisk.Views;
 using Models;
+using Models.Exceptions;
 using Models.Fabriques.FabriqueUnite;
 using Models.Graph;
 using Models.Map;
 using Models.Son;
 using Models.Tours;
+using Models.Units;
 using Stockage;
 using System;
 using System.Collections.Generic;
@@ -454,6 +458,18 @@ namespace JurassicRisk.ViewsModels
 
             shadow.Color = Brushes.Green.Color;
             c.Effect = shadow;
+
+
+            this._carte.SelectedTerritoire = territoire;
+            if (_joueur.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
+            {
+                _joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire);
+            }
+            if (_joueur.Joueur.Units.Count <= 0)
+            {
+                SoundStore.Get("errorsound.mp3").Play();
+                MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
+            }
 
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");

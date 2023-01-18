@@ -123,7 +123,25 @@
 
         <Button HorizontalAlignment="Right" Width="50" Grid.Row="2" Grid.Column="3" Height="50" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click" Margin="0,20,20,-2"></Button>
 
-        <Button HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" Click="FinTourButton_Click">Fin de Tour</Button>
+
+
+        <Grid  Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2.6*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="PlayerTurn" Style="{StaticResource FruitDays}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Width="300" Height="30" Text="Someone's turn" FontSize="20" TextAlignment="Center"/>
+            <TextBlock x:Name="CurrentPhase" Style="{StaticResource FruitDays}" Grid.Column="0" Grid.Row="1" Width="200" Height="30" Text="{Binding Path=PartieVm.Partie.Etat}" FontSize="20" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,0,15,0"/>
+            <Button x:Name="EndPhase" Style="{StaticResource CustomAnimationButton}" Grid.Column="1" Grid.Row="1" Width="170" Height="25"  Click="FinTourButton_Click" Content="{x:Static Ressources:Strings.EndPhase}" FontSize="20" />
+            <TextBlock x:Name="PlayerName" Style="{StaticResource FruitDays}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="300" Height="30" Text="{Binding Path=JoueurVm.Joueur.Profil.Pseudo}" FontSize="20" TextAlignment="Center"/>
+        </Grid>
+
 
     </Grid>
 </Page>

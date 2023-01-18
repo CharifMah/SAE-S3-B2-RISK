@@ -229,8 +229,7 @@ namespace JurassicRisk.ViewsModels
             _isConnectedToPartie = false;
         }
 
-
-        private void _chatService_PartieReceived(string joueursJson, string partieName)
+        private void _chatService_PartieReceived(string joueursJson, string partieName, string etatJson)
         {
             Application.Current.Dispatcher.Invoke(async () =>
             {
@@ -246,8 +245,9 @@ namespace JurassicRisk.ViewsModels
                     await ConnectPartie();
                 }
                 List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
+                Etat etat = JsonConvert.DeserializeObject<Etat>(etatJson);
 
-                _partie = new Partie(await _carteVm.InitCarte(), l, partieName);
+                _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat);
                 _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
                 await _carteVm.InitCarte();
 

@@ -11,6 +11,7 @@
 namespace JurassicRisk.Ressource
 {
     using System;
+    using System.Windows.Markup;
 
 
     /// <summary>
@@ -349,6 +350,29 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("Yellow", resourceCulture);
             }
         }
+        public static string ErrorNotUnit
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorNotUnit", resourceCulture);
+            }
+        }
+        public static string ErrorMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorMessage", resourceCulture);
+            }
+        }
+        public static string ErrorTerritory
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorTerritory", resourceCulture);
+            }
+                                        
+        }
+        
 
         public static string CreateLobby
         {
@@ -371,6 +395,52 @@ namespace JurassicRisk.Ressource
             {
                 return ResourceManager.GetString("NoExistLobby", resourceCulture);
             }
-        }      
+        }
+        public static string ErrorPseudoExist
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorPseudoExist", resourceCulture);
+            }
+        }
+        public static string ErrorPlayerNotReady
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorPlayerNotReady", resourceCulture);
+            }
+        }
+
+        public static string ErrorTeamsForReady
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorTeamsForReady", resourceCulture);
+            }
+        }
+        public static string ErrorLobbyExist
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorLobbyExist", resourceCulture);
+            }
+        }
+
+        public static string NotOwner
+        {
+            get
+            {
+                return ResourceManager.GetString("NotOwner", resourceCulture);
+            }
+        }
+
+        public static string EndPhase
+        {
+            get
+            {
+                return ResourceManager.GetString("EndPhase", resourceCulture);
+            }
+        }
     }
+    
 }

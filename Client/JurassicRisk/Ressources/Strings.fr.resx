@@ -138,6 +138,30 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Deconnexion</value>
   </data>
+  <data name="EndPhase" xml:space="preserve">
+    <value>Terminer phase</value>
+  </data>
+  <data name="ErrorLobbyExist" xml:space="preserve">
+    <value>Un lobby avec le meme nom existe déja</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Message d'erreur</value>
+  </data>
+  <data name="ErrorNotUnit" xml:space="preserve">
+    <value>Vous n'avez plus de troupes disponible</value>
+  </data>
+  <data name="ErrorPlayerNotReady" xml:space="preserve">
+    <value>Tous les joueur ne sont pas pret</value>
+  </data>
+  <data name="ErrorPseudoExist" xml:space="preserve">
+    <value>Le pseudo existe déjà</value>
+  </data>
+  <data name="ErrorTeamsForReady" xml:space="preserve">
+    <value>choisissez une equipe avant de vous mettre pret</value>
+  </data>
+  <data name="ErrorTerritory" xml:space="preserve">
+    <value>Ce territoire ne vous appartient pas !</value>
+  </data>
   <data name="FullScreen" xml:space="preserve">
     <value>Plein écran :</value>
   </data>
@@ -173,6 +197,9 @@
   </data>
   <data name="NoPseudoEnter" xml:space="preserve">
     <value>Veuillez entrer votre pseudo</value>
+  </data>
+  <data name="NotOwner" xml:space="preserve">
+    <value>Vous n'êtes pas le propriétaire du salon !</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>

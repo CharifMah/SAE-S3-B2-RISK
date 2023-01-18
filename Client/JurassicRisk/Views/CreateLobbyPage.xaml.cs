@@ -73,6 +73,8 @@ namespace JurassicRisk.Views
                     }
                     else
                     {
+                        Error.Text = Strings.NoExistLobby;
+                        Error.Visibility = Visibility.Visible;
                         if (JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && !JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
                         {
                             await JurassicRiskViewModel.Get.PartieVm.DisconnectPartie();

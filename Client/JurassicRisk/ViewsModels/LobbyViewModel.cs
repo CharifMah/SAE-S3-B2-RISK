@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.observable;
+using JurassicRisk.Ressource;
 using JurassicRisk.Views;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
@@ -23,6 +24,7 @@ namespace JurassicRisk.ViewsModels
         private HubConnection _connection;
         private SignalRLobbyService _chatService;
         private Lobby? _lobby;
+        private object application;
         #endregion
 
         #region Property
@@ -51,10 +53,11 @@ namespace JurassicRisk.ViewsModels
 
             _chatService.Connected += _chatService_Connected;
             _chatService.Disconnected += _chatService_Disconnected;
-
+            _chatService.NotOwner += _chatService_NotOwner;
             _chatService.LobbyReceived += _chatService_LobbyReceived;
             _chatService.LobbyJoined += _chatService_LobbyJoined;
         }
+
         #endregion
 
         /// <summary>
@@ -65,7 +68,7 @@ namespace JurassicRisk.ViewsModels
         {
             if (_connection.State == HubConnectionState.Connected)
             {
-                    _isConnectedToLobby = true;
+                _isConnectedToLobby = true;
             }
             else
             {
@@ -81,7 +84,7 @@ namespace JurassicRisk.ViewsModels
 
                     }
                 });
-            }        
+            }
         }
 
         /// <summary>
@@ -119,7 +122,7 @@ namespace JurassicRisk.ViewsModels
                 }
                 else
                 {
-                    res = "Un Lobby avec le meme nom existe déja";
+                    res = Strings.ErrorLobbyExist;
                 }
 
             }
@@ -151,7 +154,7 @@ namespace JurassicRisk.ViewsModels
             {
                 MessageBox.Show("profil is null");
             }
-           
+
 
             return true;
         }
@@ -213,16 +216,16 @@ namespace JurassicRisk.ViewsModels
 
         #endregion
 
-        #region Events
+        #region events
 
-        private void _chatService_Connected(string connectionId,string isConnected)
+        private void _chatService_Connected(string connectionid, string isconnected)
         {
-            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionId != String.Empty)
-                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionId;
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null && connectionid != string.Empty)
+                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = connectionid;
 
-            if (isConnected != String.Empty)
+            if (isconnected != string.Empty)
             {
-                _isConnectedToLobby = bool.Parse(isConnected);
+                _isConnectedToLobby = bool.Parse(isconnected);
                 if (_isConnectedToLobby)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
@@ -235,29 +238,37 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
-        private void _chatService_Disconnected()
-        {
-            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null)
-                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = String.Empty;
-        }
-
-        private void _chatService_LobbyReceived(string lobbyJson)
+        private void _chatService_NotOwner()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
-                this._lobby = lobby;
-                NotifyPropertyChanged("Lobby");
+                MessageBox.Show(Ressource.Strings.NotOwner);
             });
         }
 
-        private void _chatService_LobbyJoined(string lobbyJson)
+        private void _chatService_Disconnected()
+        {
+            if (JurassicRiskViewModel.Get.JoueurVm.Joueur != null)
+                JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.ConnectionId = string.Empty;
+        }
+
+        private void _chatService_LobbyReceived(string lobbyjson)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (lobbyJson != "false")
+                Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyjson);
+                this._lobby = lobby;
+                NotifyPropertyChanged("lobby");
+            });
+        }
+
+        private void _chatService_LobbyJoined(string lobbyjson)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (lobbyjson != "false")
                 {
-                    Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
+                    Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyjson);
                     this._lobby = lobby;
                     JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby = true;
                 }
@@ -265,7 +276,7 @@ namespace JurassicRisk.ViewsModels
                 {
                     JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby = false;
                 }
-                NotifyPropertyChanged("Lobby");
+                NotifyPropertyChanged("lobby");
             });
         }
 

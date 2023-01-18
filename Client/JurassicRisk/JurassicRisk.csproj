@@ -20,9 +20,12 @@
     <None Remove="Sounds\Click.mp3" />
     <None Remove="Sounds\ClickButton.mp3" />
     <None Remove="Sounds\ClickButton.wav" />
+    <None Remove="Sounds\errorsound.mp3" />
     <None Remove="Sounds\HubJurr.mp3" />
     <None Remove="Sounds\MusicGameJurr.mp3" />
     <None Remove="Sounds\PassageMap.mp3" />
+    <None Remove="Sounds\Slidersound.mp3" />
+    <None Remove="Sounds\slidersound.wav" />
     <None Remove="Sounds\SliderSounds.wav" />
     <None Remove="Sprites\Background\Background1.jpg" />
     <None Remove="Sprites\Background\Background2.jpg" />
@@ -48,6 +51,9 @@
     <Content Include="Sounds\ClickButton.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sounds\errorsound.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sounds\PassageMap.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -71,6 +77,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sounds\MusicGameJurr.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Slidersound.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\slidersound.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sounds\SliderSounds.wav">

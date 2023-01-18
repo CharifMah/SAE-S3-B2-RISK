@@ -1,4 +1,5 @@
 ﻿using JurassicRisk.ViewsModels;
+using Models.Player;
 using Models.Son;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +15,9 @@ namespace JurassicRisk.Views
     {
         private Window _mainwindow;
         private static JeuPage _instance;
+        
         public static JeuPage GetInstance() { return _instance; }
+
 
         /// <summary>
         /// Page du jeux
@@ -176,6 +179,11 @@ namespace JurassicRisk.Views
             transform.CenterY = 0.5;
             transform.ScaleX = 1;
             transform.ScaleY = 1;
+        }
+
+        public void HUD()
+        {
+
         }
     }
 }

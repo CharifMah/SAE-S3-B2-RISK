@@ -1,3 +1,8 @@
+﻿using JurassicRisk.Ressource;
+using Models.Exceptions;
+using Models.Map;
+using Models.Player;
+using Models.Son;
 ﻿using Models;
 using Models.Exceptions;
 using Models.GameStatus;
@@ -19,7 +24,7 @@ namespace JurassicRisk.ViewsModels
         private string _isReady;
         private Joueur _joueur;
         private ObservableCollection<IUnit> _units;
-        private IUnit _selectedUnit;
+        private IUnit? _selectedUnit;
         #endregion
 
         #region Property

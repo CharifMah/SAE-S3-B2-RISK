@@ -169,20 +169,21 @@ namespace RISKAPI.Hubs
 
                 List<Partie> partieList = JurasicRiskGameServer.Get.Parties;
 
+                //Create Partie For the Server
+                Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
 
                 //Ajoute la partie if don't exist
                 if (partieList.FirstOrDefault(partie => partie.Id == lobby.Id) == null)
                 {
                     Console.WriteLine("Partie Created");
-                    //Create Partie For the Server
-                    Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
-                    joueursJson = JsonConvert.SerializeObject(p.Joueurs);
-
 
                     if (lobby.Joueurs.Count > 0)
                     {
+
                         partieList.Add(p);
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName);
+                        joueursJson = JsonConvert.SerializeObject(p.Joueurs);
+
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName,p.Etat);
 
                         await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
                     }
@@ -202,7 +203,7 @@ namespace RISKAPI.Hubs
 
                     if (joueursJson != "")
                     {
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName);
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName,p.Etat);
                     }
 
                 }

@@ -1,6 +1,7 @@
 ﻿using Models.Map;
 using Models.Player;
 using Models.Units;
+using System.Windows;
 
 namespace Models.Tours
 {
@@ -20,6 +21,10 @@ namespace Models.Tours
             if (_joueur.Units.Count > 0)
             {
                 _joueur.PlaceUnits(new List<IUnit>() { unitToPlace }, territoireBase);
+            }
+            else
+            {
+                MessageBox.Show("teste");
             }
         }
 

@@ -16,6 +16,8 @@ namespace Models.Services
         public event Action<string> LobbyJoined;
         public event Action<string,string> Connected;
         public event Action Disconnected;
+        public event Action<string> ConnectedToLobby;
+        public event Action NotOwner;
         public event Action StartGame;
 
 
@@ -32,6 +34,7 @@ namespace Models.Services
             _connection.On("startgame", () => StartGame?.Invoke());
             _connection.On<string,string>("connected", (connexionId, connected) => Connected?.Invoke(connexionId, connected));
             _connection.On("disconnected", () => Disconnected?.Invoke());
+            _connection.On("NotOwner", () => NotOwner?.Invoke());
         }
 
        
