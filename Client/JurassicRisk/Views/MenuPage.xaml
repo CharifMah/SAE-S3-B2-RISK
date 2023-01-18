@@ -31,8 +31,8 @@
             <ImageBrush ImageSource="/Sprites/Background/Background3.jpg"/>
         </Grid.Background>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource Bloody}"  FontSize="20" Margin="10,2,0,0">
-            <Run Text="Connecté en tant que: "/>
+        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FruitDays}"  FontSize="17" Margin="10,2,0,0">
+            <Run Text="Connecte en tant que: "/>
             <Run Text="{Binding Path=SelectedProfil.Pseudo}"/>
         </TextBlock>
         
