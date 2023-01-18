@@ -178,10 +178,10 @@ namespace RISKAPI.Hubs
                     Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
                     joueursJson = JsonConvert.SerializeObject(p.Joueurs);
 
-                    partieList.Add(p);
+
                     if (lobby.Joueurs.Count > 0)
                     {
-
+                        partieList.Add(p);
                         await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName);
 
                         await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", p.Etat.ToString());
@@ -191,7 +191,7 @@ namespace RISKAPI.Hubs
                         Console.WriteLine("Errorrr 0 Players in lobby");
                     }
                 }
-                else
+                else if (lobby.Joueurs.Count > 0)
                 {
                     //Create Partie For the Server
                     Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);

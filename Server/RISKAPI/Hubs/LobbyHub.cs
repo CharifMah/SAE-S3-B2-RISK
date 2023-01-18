@@ -276,6 +276,7 @@ namespace RISKAPI.Hubs
                     if (j.Profil.Pseudo !=  lobby.Owner)
                     {
                         await Clients.Client(j.Profil.ConnectionId).SendAsync("startgame");
+                        Console.WriteLine($"Game Start For {j.Profil.Pseudo}");
                     }
                 }
         }
