@@ -62,17 +62,18 @@ namespace ModelsAPI.ClassMetier.GameStatus
             return _playerIndex;
         }
 
-        public void Action(List<int> unitList)
+        public bool Action(List<int> unitList)
         {
+            bool res = false;
             if (this._joueurs.Count != 0 && this._joueurs.Count >= _playerIndex)
             {
-                etat.Action(this._carte, this._joueurs[_playerIndex], unitList);
+                res = etat.Action(this._carte, this._joueurs[_playerIndex], unitList);
             }
             else
             {
                 Console.WriteLine("0 player in game");
             }
-            
+            return res;
         }
 
         public void Transition()

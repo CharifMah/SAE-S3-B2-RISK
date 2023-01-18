@@ -7,7 +7,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
     public class Renforcement : Etat
     {
 
-        public void Action(Carte carte, Joueur joueur, List<int> unitList)
+        public bool Action(Carte carte, Joueur joueur, List<int> unitList)
         {
             throw new NotImplementedException();
         }

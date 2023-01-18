@@ -59,22 +59,25 @@ namespace RISKAPI.Hubs
         public async Task Action(string partieName, List<int> unitlist)
         {
             Partie p = JurasicRiskGameServer.Get.Parties.First(l => l.Id == partieName);
-            p.Action(unitlist);
 
-            switch (p.Etat.ToString())
+            if (p.Action(unitlist))
             {
-                case "Deploiment":
-                    Deploiment d = (p.Etat as Deploiment);
-                    if (p.PlayerIndex != -1)
-                    {
-  
-                        await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
+                switch (p.Etat.ToString())
+                {
+                    case "Deploiment":
+                        Deploiment d = (p.Etat as Deploiment);
+                        if (p.PlayerIndex != -1)
+                        {
 
-                        Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
-                    }
+                            await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
 
-                    break;
+                            Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
+                        }
+
+                        break;
+                }
             }
+
         }
 
         /// <summary>
@@ -193,7 +196,7 @@ namespace RISKAPI.Hubs
                     }
 
                 }
-            
+
             }
             else
             {

@@ -1,4 +1,5 @@
-﻿using ModelsAPI.ClassMetier.Units;
+﻿using ModelsAPI.ClassMetier.Player;
+using ModelsAPI.ClassMetier.Units;
 using Newtonsoft.Json;
 using Stockage.Converters;
 

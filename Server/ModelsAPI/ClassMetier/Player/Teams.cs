@@ -1,4 +1,4 @@
-﻿namespace ModelsAPI.ClassMetier
+﻿namespace ModelsAPI.ClassMetier.Player
 {
     public enum Teams
     {

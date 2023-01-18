@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
 using Redis.OM.Modeling;
 using Stockage.Converters;
