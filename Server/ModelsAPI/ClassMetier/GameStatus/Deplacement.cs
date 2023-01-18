@@ -1,6 +1,5 @@
 ﻿using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
-using ModelsAPI.ClassMetier.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
-    public class Attaque : Etat
+    public class Deplacement : Etat
     {
         public bool Action(Carte carte, Joueur joueur, List<int> unitList)
         {
@@ -18,14 +17,8 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
         {
-            Etat etatSuivant = new Deplacement();
-            Console.WriteLine($"Passage à la phase de {etatSuivant}");
-            return etatSuivant;
+            // Passer au joueur suivant
+            throw new NotImplementedException();
         }
-        public override string? ToString()
-        {
-            return "Attaque";
-        }
-
     }
 }
