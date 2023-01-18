@@ -109,6 +109,8 @@ namespace RISKAPI.Hubs
 
                 if (joueur != null)
                 {
+                    //Important
+                    joueur.Profil.ConnectionId = Context.ConnectionId;
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"{joueurName} connected to {partieName}");
                     Console.ForegroundColor = ConsoleColor.White;
@@ -164,7 +166,7 @@ namespace RISKAPI.Hubs
                     etatJson = JsonConvert.SerializeObject(partie.Etat);
                     await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, partie.NextPlayer());
                     Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
-                    await Clients.Group(partieName).SendAsync("YourTurn", etatJson, partie.Etat.ToString());
+                    await Clients.Group(partieName).SendAsync("yourTurn", etatJson, partie.Etat.ToString());
                     Console.WriteLine($"Partie avec {partie.Joueurs.Count} players Crée");
                 }
             }

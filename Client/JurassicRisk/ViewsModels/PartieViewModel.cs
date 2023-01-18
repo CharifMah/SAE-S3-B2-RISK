@@ -239,7 +239,15 @@ namespace JurassicRisk.ViewsModels
                         _partie.Etat = etat;
                         break;
                     }
+                case "Renforcement":
+                    {
+                        Renforcement etat = JsonConvert.DeserializeObject<Renforcement>(etatJson);
+                        _partie.Etat = etat;
+                        break;
+                    }
             }
+
+            NotifyPropertyChanged("Partie");
         }
 
         private async void _chatService_EndTurn()
