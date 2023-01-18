@@ -36,40 +36,7 @@ namespace JurassicRisk.Views
             {
                 await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
 
-                await JurassicRiskViewModel.Get.LobbyVm.StartGameOwnerOnly();
-                //Retry Pattern Async
-                var RetryTimes = 3;
-
-                var WaitTime = 500;
-
-                for (int i = 0; i < RetryTimes; i++)
-                {
-                    if (JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
-                    {
-                        Error.Visibility = Visibility.Hidden;
-                        await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
-
-                        break;
-                    }
-                    else
-                    {
-                        await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
-
-                        if (i >= 2)
-                        {
-                            Error.Text = "is not connected";
-                            Error.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            Error.Text = "Loading...";
-                            Error.Visibility = Visibility.Visible;
-                        }
-
-                    }
-                    //Wait for 500 milliseconds
-                    await Task.Delay(WaitTime);
-                }
+                await JurassicRiskViewModel.Get.LobbyVm.StartGameOwnerOnly();              
             }
             else
             {
