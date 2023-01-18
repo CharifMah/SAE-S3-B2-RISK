@@ -5,6 +5,7 @@ using Models.Player;
 using Models.Services;
 using Models.Tours;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,13 @@ namespace JurassicRisk.ViewsModels
         private bool _isConnectedToPartie;
         private bool _carteLoaded;
         private double _progression;
+        private string _actualPlayer;
 
         private LobbyViewModel _lobbyVm;
         private JoueurViewModel _joueurVm;
         private CarteViewModel? _carteVm;
         private Partie? _partie;
+        
 
         #endregion
 
@@ -39,6 +42,8 @@ namespace JurassicRisk.ViewsModels
 
         public HubConnection Connection { get => _connection; set => _connection = value; }
         public SignalRPartieService ChatService { get => _partieChatService; set => _partieChatService = value; }
+
+        
 
         public CarteViewModel? CarteVm { get => _carteVm; }
         public Partie? Partie
@@ -73,6 +78,9 @@ namespace JurassicRisk.ViewsModels
                 return _partie.Joueurs.Where(j => j != _joueur).ToList();
             }
         }
+
+        public string ActualPlayer { get => _actualPlayer; set => _actualPlayer = value; }
+
         #endregion
 
         #region Constructor
@@ -82,6 +90,7 @@ namespace JurassicRisk.ViewsModels
             _joueurVm = vm.JoueurVm;
             _carteLoaded = false;
             _progression = 0;
+            //_actualPlayer = Partie.Joueurs[Partie.PlayerIndex].Profil.Pseudo;
 
             _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").WithAutomaticReconnect().Build();
             _partieChatService = new SignalRPartieService(_connection);

@@ -31,6 +31,9 @@
             <ImageBrush ImageSource="/Sprites/Background/Background3.jpg"/>
         </Grid.Background>
 
+        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource Bloody}" Text="Connecté en tant que: " FontSize="25" Margin="10,2,0,0"/>
+        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource Bloody}" Text="brian" FontSize="25"  Margin="0,4,25,0"  HorizontalAlignment="Right"/>
+
         <TextBlock Style="{StaticResource Bloody}" FontSize="85" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Top" Text="{x:Static Ressources:Strings.GameTitle}">
       
         </TextBlock>
