@@ -71,6 +71,8 @@ namespace RISKAPI.Hubs
 
                             await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
 
+                            await Clients.Client(p.Joueurs[p.PlayerIndex].Profil.ConnectionId).SendAsync("endTurn");
+
                             Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
                         }
 

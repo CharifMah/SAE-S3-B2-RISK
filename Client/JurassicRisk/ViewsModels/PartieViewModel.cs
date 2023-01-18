@@ -212,9 +212,9 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
-        private void _chatService_EndTurn()
+        private async void _chatService_EndTurn()
         {
-            //new tourAttente
+            await JurassicRiskViewModel.Get.PartieVm.SendEndTurn();
         }
 
         private void _partieChatService_Disconnected()
