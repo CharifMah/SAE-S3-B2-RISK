@@ -1,4 +1,5 @@
-﻿using ModelsAPI.ClassMetier.Map;
+﻿using ModelsAPI.ClassMetier.Fabriques.FabriqueUnite;
+using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
 
 namespace ModelsAPI.ClassMetier.GameStatus
@@ -71,15 +72,63 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         public void Transition()
         {
+            //Change l'etat
+            this.etat = etat.TransitionTo(this._joueurs, this._carte);
+
             switch (etat.ToString())
             {
                 case "Renforcement":
                     (etat as Renforcement).JoueurActuel = this._joueurs[_playerIndex];
+                    // Calcul des renforts du joueur
+                    int nbTerritoires = 0;
+                    int nbRenforts = 0;
+
+                    foreach (Continent c in this._carte.DicoContinents.Values)
+                    {
+                        foreach (TerritoireBase t in c.DicoTerritoires.Values)
+                        {
+                            if (t.Team == this._joueurs[_playerIndex].Team)
+                            {
+                                nbTerritoires++;
+                            }
+                        }
+                    }
+
+                    if (nbTerritoires / 3 < 3)
+                    {
+                        nbRenforts = 3;
+                    }
+                    else
+                    {
+                        nbRenforts = nbTerritoires / 3;
+                    }
+
+
+                    // Ajout des renforts au joueur
+                    FabriqueUniteBase f = new FabriqueUniteBase();
+                    for (int i = 0; i < nbRenforts; i++)
+                    {
+                        Random random = new Random();
+                        switch (random.Next(3))
+                        {
+                            case 1:
+                                this._joueurs[_playerIndex].Units.Add(f.Create("Rex"));
+                                break;
+                            case 2:
+                                this._joueurs[_playerIndex].Units.Add(f.Create("Brachiosaure"));
+                                break;
+                            case 3:
+                                this._joueurs[_playerIndex].Units.Add(f.Create("Baryonyx"));
+                                break;
+                            case 4:
+                                this._joueurs[_playerIndex].Units.Add(f.Create("Pterosaure"));
+                                break;
+                        }
+                    }
                     break;
             }
 
-            //Change l'etat
-            this.etat = etat.TransitionTo(this._joueurs, this._carte);
+
         }
 
         /// <summary>
