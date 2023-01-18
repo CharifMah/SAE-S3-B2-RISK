@@ -136,6 +136,5 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
             return res;
         }
-
     }
 }

@@ -97,7 +97,6 @@ namespace JurassicRisk.ViewsModels
             _isConnectedToLobby = false;
         }
 
-
         #region Requests
 
         /// <summary>
