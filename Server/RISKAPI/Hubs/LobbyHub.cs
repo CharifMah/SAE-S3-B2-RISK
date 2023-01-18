@@ -223,6 +223,7 @@ namespace RISKAPI.Hubs
 
                         Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
                     }
+
                     if (lobby.Joueurs.Count <= 0)
                     {
                         await _lobby.DeleteAsync(lobby);
@@ -242,6 +243,8 @@ namespace RISKAPI.Hubs
                         {
                             lobby.Joueurs.Clear();
                         }
+
+                        await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
                         Console.WriteLine($"there is {lobby.Joueurs.Count} in the lobby {lobby.Id} that mean player is null");
                     }
 

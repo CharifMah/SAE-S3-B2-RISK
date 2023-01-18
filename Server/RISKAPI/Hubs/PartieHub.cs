@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.GameStatus;
@@ -105,17 +104,8 @@ namespace RISKAPI.Hubs
         public async Task ConnectedPartie(string partieName, string joueurName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, partieName);
-            Partie partie = null;
-
-            foreach (Partie p in JurasicRiskGameServer.Get.Parties)
-            {
-                if (p.Id == partieName)
-                {
-                    partie = p;
-                    break;
-                }
-            }
-
+            Partie partie = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == partieName);         
+            Task.Delay(1000).Wait();
             if (partie != null && partie.Joueurs.Count > 0)
             {
                 Joueur j = partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
@@ -131,11 +121,11 @@ namespace RISKAPI.Hubs
                         }
                     }
                     if (lobby != null)
-                        partie.JoinPartie(lobby.Joueurs.FirstOrDefault(j=>j.Profil.Pseudo == joueurName));
+                        partie.JoinPartie(lobby.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName)); 
                 }
                 else
-                j.Profil.ConnectionId = Context.ConnectionId;    
-                
+                    j.Profil.ConnectionId = Context.ConnectionId;
+
             }
 
             Console.ForegroundColor = ConsoleColor.Green;
@@ -152,9 +142,7 @@ namespace RISKAPI.Hubs
         /// <returns>Task</returns>
         public async Task StartPartie(string partieName, string joueurName, string carteName)
         {
-            bool find = false;
             Lobby lobby = null;
-            Joueur joueur = null;
             Partie partie = null;
             string joueursJson = "";
             string etatJson = "";
@@ -162,30 +150,7 @@ namespace RISKAPI.Hubs
             {
                 if (l.Id == partieName)
                 {
-                    foreach (Joueur j in l.Joueurs)
-                    {
-                        if (j.Profil.Pseudo == joueurName)
-                        {
-                            joueur = j;
-                            break;
-                        }
-                    }
                     lobby = l;
-                }
-
-                if (find)
-                {
-                    break;
-                }
-            }
-
-
-
-            foreach (Partie p in JurasicRiskGameServer.Get.Parties)
-            {
-                if (p.Id == partieName)
-                {
-                    partie = p;
                     break;
                 }
             }
@@ -201,45 +166,29 @@ namespace RISKAPI.Hubs
                 //Create Partie For the Server
                 Partie p = new Partie(carte, lobby.Joueurs, lobby.Id);
 
-                //Ajoute la partie if don't exist
-                if (partie == null)
+                //Ajoute la partie
+                if (lobby.Joueurs.Count > 0)
                 {
-                    Console.WriteLine("Partie Created");
 
-                    if (lobby.Joueurs.Count > 0)
+                    if (p.Joueurs != null && p.Joueurs.Count > 0)
                     {
-
                         JurasicRiskGameServer.Get.Parties.Add(p);
                         Console.WriteLine("Serialize Object");
+
                         joueursJson = JsonConvert.SerializeObject(p.Joueurs);
                         etatJson = JsonConvert.SerializeObject(p.Etat);
-                        if (joueursJson == "")
-                        {
-                            Console.WriteLine("JsonJoueursssss VIDE");
-                        }
-                        Console.WriteLine("will SendPartie to groupe " + partieName);
+
                         await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, p.NextPlayer());
                         Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
 
-                        await Clients.Client(lobby.Joueurs[p.PlayerIndex].Profil.ConnectionId).SendAsync("YourTurn", etatJson, p.Etat.ToString());
+                        await Clients.Group(partieName).SendAsync("YourTurn", etatJson, p.Etat.ToString());
+                        Console.WriteLine($"Partie avec {p.Joueurs.Count} players Crée");
                     }
                     else
                     {
                         Console.WriteLine("Errorrr 0 Players in lobby");
                     }
                 }
-                else if (lobby.Joueurs.Count > 0)
-                {
-                    partie = p;
-                    if (p.Joueurs != null)
-                    {
-                        etatJson = JsonConvert.SerializeObject(p.Etat);
-                        joueursJson = JsonConvert.SerializeObject(p.Joueurs);
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, p.PlayerIndex);
-                    }
-
-                }
-
             }
             else
             {
@@ -276,7 +225,7 @@ namespace RISKAPI.Hubs
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
                     Console.ForegroundColor = ConsoleColor.White;
-  
+
 
                     //Supprime les partie vide
                     if (partie.Joueurs.Count <= 0)
