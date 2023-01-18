@@ -43,7 +43,7 @@ namespace JurassicRisk.ViewsModels
         private Carte _carte;
         private FabriqueUniteBase f;
         private int zi = 0;
-        private JoueurViewModel _joueur;
+        private JoueurViewModel _joueurVm;
         private ITour tour = new TourAttente();
         private List<ITerritoireBase> _territoires;
 
@@ -104,7 +104,7 @@ namespace JurassicRisk.ViewsModels
             //new SaveMap(_carte);
 
             f = new FabriqueUniteBase();
-            _joueur = joueur;
+            _joueurVm = joueur;
             previousPositionZoom = new Point();
 
         }
@@ -461,11 +461,11 @@ namespace JurassicRisk.ViewsModels
 
 
             this._carte.SelectedTerritoire = territoire;
-            if (_joueur.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
+            if (_joueurVm.Joueur.Units.Count > 0 && this._carte.SelectedTerritoire != null)
             {
-                _joueur.AddUnits(new List<IUnit>() { _joueur.SelectedUnit }, this._carte.SelectedTerritoire);
+                _joueurVm.AddUnits(new List<IUnit>() { _joueurVm.SelectedUnit }, this._carte.SelectedTerritoire);
             }
-            if (_joueur.Joueur.Units.Count <= 0)
+            if (_joueurVm.Joueur.Units.Count <= 0)
             {
                 SoundStore.Get("errorsound.mp3").Play();
                 MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);

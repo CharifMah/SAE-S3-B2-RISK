@@ -76,7 +76,7 @@ namespace JurassicRisk.Views
                         Error.Visibility = Visibility.Visible;
                         if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby && !JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
                         {
-                            await JurassicRiskViewModel.Get.PartieVm.DisconnectPartie();
+                            await JurassicRiskViewModel.Get.PartieVm.StopConnection();
                         }
 
                         if (i >= 2)

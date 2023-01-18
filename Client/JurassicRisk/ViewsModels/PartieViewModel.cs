@@ -279,6 +279,7 @@ namespace JurassicRisk.ViewsModels
 
                     _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat);
                     _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+                    JurassicRiskViewModel.Get.JoueurVm.Joueur = _joueur;
                     await _carteVm.InitCarte();
 
                     (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());

@@ -119,7 +119,23 @@ namespace RISKAPI.Hubs
             if (partie != null && partie.Joueurs.Count > 0)
             {
                 Joueur j = partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
-                j.Profil.ConnectionId = Context.ConnectionId;              
+                if (j == null)
+                {
+                    Lobby lobby = null;
+                    foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+                    {
+                        if (l.Id == partieName)
+                        {
+                            lobby = l;
+                            break;
+                        }
+                    }
+                    if (lobby != null)
+                        partie.JoinPartie(lobby.Joueurs.FirstOrDefault(j=>j.Profil.Pseudo == joueurName));
+                }
+                else
+                j.Profil.ConnectionId = Context.ConnectionId;    
+                
             }
 
             Console.ForegroundColor = ConsoleColor.Green;
