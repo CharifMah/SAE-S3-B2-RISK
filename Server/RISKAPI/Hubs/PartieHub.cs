@@ -112,7 +112,8 @@ namespace RISKAPI.Hubs
                     break;
                 }
             }
-            if (partie != null)
+
+            if (partie != null && partie.Joueurs.Count > 0)
             {
                 Joueur j = partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == joueurName);
                 j.Profil.ConnectionId = Context.ConnectionId;
@@ -232,8 +233,9 @@ namespace RISKAPI.Hubs
                 {
                     Joueur j = partie.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
                     partie.ExitPartie(j);
-
                     Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the party {partie.Id}");
+
+                    //Supprime les partie vide
                     if (partie.Joueurs.Count <= 0)
                     {
                         foreach (Partie p in JurasicRiskGameServer.Get.Parties)
@@ -241,7 +243,6 @@ namespace RISKAPI.Hubs
                             if (p.Id == partie.Id)
                             {
                                 JurasicRiskGameServer.Get.Parties.Remove(p);
-                                break;
                             }
                         }
                     }

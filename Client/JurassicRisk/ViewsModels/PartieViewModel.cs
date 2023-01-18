@@ -230,8 +230,6 @@ namespace JurassicRisk.ViewsModels
         }
 
 
-
-
         private void _chatService_PartieReceived(string joueursJson, string partieName)
         {
             Application.Current.Dispatcher.Invoke(async () =>
