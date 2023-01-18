@@ -4,6 +4,7 @@ using Models;
 using Models.Player;
 using Models.Settings;
 using Models.Son;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,25 +15,60 @@ namespace JurassicRisk.Views
     /// </summary>
     public partial class LobbyPage : Page
     {
+        private int _partieConnect;
         private LobbyViewModel _lobbyVm;
         public LobbyPage()
         {
             InitializeComponent();
             _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
             DataContext = _lobbyVm;
+            _partieConnect = -1;
         }
 
         private async void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {   
             SoundStore.Get("HubJurr.mp3").Stop();
             Settings.Get().Backgroundmusic = SoundStore.Get("MusicGameJurr.mp3");
             Settings.Get().Backgroundmusic.Volume = Settings.Get().Volume / 100;
             SoundStore.Get("MusicGameJurr.mp3").Play(true);
+
             if (_lobbyVm.Lobby.PlayersReady)
             {
-                Error.Visibility = Visibility.Hidden;
-                await JurassicRiskViewModel.Get.LobbyVm.StartPartie(_lobbyVm.Lobby.Id,ProfilViewModel.Get.SelectedProfil.Pseudo,"carte") ;
+                await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
+                await JurassicRiskViewModel.Get.LobbyVm.StartGameOwnerOnly();
+                //Retry Pattern Async
+                var RetryTimes = 3;
+
+                var WaitTime = 500;
+
+                for (int i = 0; i < RetryTimes; i++)
+                {
+                    if (JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie)
+                    {
+                        Error.Visibility = Visibility.Hidden;
+                        await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
+
+                        break;
+                    }
+                    else
+                    {
+                        await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
+
+                        if (i >= 2)
+                        {
+                            Error.Text = "is not connected";
+                            Error.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            Error.Text = "Loading...";
+                            Error.Visibility = Visibility.Visible;
+                        }
+
+                    }
+                    //Wait for 500 milliseconds
+                    await Task.Delay(WaitTime);
+                }
             }
             else
             {
@@ -41,33 +77,46 @@ namespace JurassicRisk.Views
             }
         }
 
-        private void ReadyButton_Click(object sender, RoutedEventArgs e)
+        private async void ReadyButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (JurassicRiskViewModel.Get.JoueurVm.Joueur.Team != Teams.NEUTRE)
             {
                 if (!JurassicRiskViewModel.Get.JoueurVm.Joueur.IsReady)
+                {
                     JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
+                    Error.Visibility = Visibility.Visible;
+                    Error.Text = "vous etes pret";
+
+                    if (_partieConnect == -1)
+                    {
+                        await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
+                    }
+
+                }
                 else
+                {
+                    Error.Visibility = Visibility.Hidden;
                     JurassicRiskViewModel.Get.JoueurVm.IsReady = "❌";
+                }
+
             }
             else
             {
                 Error.Text = Strings.ErrorTeamsForReady;
                 Error.Visibility = Visibility.Visible;
+                Error.Text = " choisissez une equipe avant de vous mettre pret ";
             }
         }
 
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            await _lobbyVm.ExitLobby();
+        {            
+            await _lobbyVm.StopConnection();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 
         private async void SelectTeamButton_Click(object sender, RoutedEventArgs e)
-        {
-            
+        { 
             Teams team = Teams.NEUTRE;
             Button b = (sender as Button);
             switch (b.Name)

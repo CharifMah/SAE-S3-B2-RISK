@@ -23,11 +23,12 @@ namespace JurassicRisk.Views
             (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new UserProfil());
         }
 
-        private async void DeconnectionButton_Click(object sender, RoutedEventArgs e)
+        private void DeconnectionButton_Click(object sender, RoutedEventArgs e)
         {
             
             ProfilViewModel.Get.SelectedProfil = null;
-            await JurasicRiskGameClient.Get.Disconnect();
+            JurassicRiskViewModel.Get.DestroyVm();
+            JurasicRiskGameClient.Get.DestroyClient();
             (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new HomePage());
         }
 

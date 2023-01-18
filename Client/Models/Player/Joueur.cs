@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Models.Player
 {
-    public class Joueur : IGestionTroupe
+    public class Joueur
     {
         #region Attribute
         private bool _isReady;
@@ -57,7 +57,7 @@ namespace Models.Player
             FabriqueUniteBase f = new FabriqueUniteBase();
             _units = new List<IUnit>();
             Random random = new Random();
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 41; i++)
             {
                 switch (random.Next(4))
                 {
@@ -81,17 +81,19 @@ namespace Models.Player
         }
 
         #endregion
-        public void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
+
+        private void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
         {
-            if (unites.Count > 0 && (this._team == territoire.Team || territoire.Team == Teams.NEUTRE))
+            if ((_team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
                 foreach (var unit in unites)
                 {
-                    if (_units.Find(u => u.Name == unit.Name) != null)
+                    if (_units.Contains(unit))
                     {
                         _units.Remove(unit);
 
-
+                        territoire.AddUnit(unit);
+                        territoire.Team = _team;
                     }
                     SoundStore.Get("Slidersound.mp3").Play();
                     territoire.AddUnit(unit);
@@ -102,6 +104,37 @@ namespace Models.Player
             
         }
        
+
+        private void AddUnits(IUnit unit, ITerritoireBase territoire)
+        {
+            if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
+            {
+                if (_units.Contains(unit))
+                {
+                    _units.Remove(unit);
+
+                    territoire.AddUnit(unit);
+                    territoire.Team = _team;
+
+                }
+            }
+        }
+
+        public void PlaceUnits(List<IUnit> unitToPlace, ITerritoireBase territoire)
+        {
+            if (this._units.Count > 0)
+            {
+                this.AddUnits(unitToPlace, territoire);
+            }
+        }
+
+        public void PlaceUnits(IUnit unitToPlace, ITerritoireBase territoire)
+        {
+            if (this._units.Count > 0)
+            {
+                this.AddUnits(unitToPlace, territoire);
+            }
+        }
 
         public void AddUnit(IUnit unit)
         {

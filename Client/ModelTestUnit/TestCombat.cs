@@ -1,5 +1,5 @@
-﻿using Models.Combat;
-using Models.Fabriques.FabriqueUnite;
+﻿using Models.Fabriques.FabriqueUnite;
+using Models.Fight;
 using Models.Player;
 using IUnit = Models.Units.IUnit;
 using Profil = Models.Player.Profil;

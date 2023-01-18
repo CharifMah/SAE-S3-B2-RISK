@@ -40,6 +40,7 @@ namespace Models.Player
         /// <param name="login">of the profil</param>
         public Profil(string Pseudo, string Password)
         {
+            this._connectionId = "notConnected";
             this._pseudo = Pseudo;
             this._password = Password;
         }

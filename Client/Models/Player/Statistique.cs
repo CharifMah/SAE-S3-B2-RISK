@@ -8,24 +8,25 @@ namespace Models.Player
 {
     public class Statistique
     {
-        /// <summary>
-        /// Statistique du joueur
-        /// </summary>
-        /// <param name="stats"></param>
-        public Statistique(string stats)
-        {
+        private string _partyPlay;
+        private string _trpVaincus;
+        private string _trpPerdu;
+        private string _conquis;
+        private string _conquisSmlt;
 
-            PartyPlay = stats;
-            TrpVaincus = stats + "1";
-            TrpPerdu = stats + "2";
-            Conquis = stats + "3";
-            ConquisSmlt = stats + "4";
+        public Statistique(string partyPlay, string trpVaincus, string trpPerdu, string conquis, string conquisSmlt)
+        {
+            PartyPlay = partyPlay;
+            TrpVaincus = trpVaincus;
+            TrpPerdu = trpPerdu;
+            Conquis = conquis;
+            ConquisSmlt = conquisSmlt;
         }
 
-        public string PartyPlay { get; set; }
-        public string TrpVaincus { get; set; }
-        public string TrpPerdu { get; set; }
-        public string Conquis { get; set; }
-        public string ConquisSmlt { get; set; }
+        public string PartyPlay { get => _partyPlay; set => _partyPlay = value; }
+        public string TrpVaincus { get => _trpVaincus; set => _trpVaincus = value; }
+        public string TrpPerdu { get => _trpPerdu; set => _trpPerdu = value; }
+        public string Conquis { get => _conquis; set => _conquis = value; }
+        public string ConquisSmlt { get => _conquisSmlt; set => _conquisSmlt = value; }
     }
 }

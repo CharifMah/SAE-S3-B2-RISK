@@ -5,12 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JurassicRisk.Views"
       xmlns:Ressources="clr-namespace:JurassicRisk.Ressource"
-      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewsmodels="clr-namespace:JurassicRisk.ViewsModels" xmlns:converter="clr-namespace:JurassicRisk.Converter" d:DataContext="{d:DesignInstance Type=viewsmodels:JurassicRiskViewModel}"
       mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="1920"
       x:Name="_JeuPage"
       Title="JeuPage">
-
+    <Page.Resources>
+        <converter:OwnerConverter x:Key="OwnerConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="267*"/>
@@ -24,15 +26,53 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif" Stretch="Fill" Grid.RowSpan="3" Grid.ColumnSpan="4"/>
+        <Image gif:ImageBehavior.AnimatedSource="/Sprites/Background/water.gif"  Stretch="Fill" Grid.RowSpan="3" Grid.ColumnSpan="4"/>
+       
+        <Viewbox  Stretch="Fill" x:Name="ViewboxCanvas" Grid.ColumnSpan="4" Grid.RowSpan="3">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Height="1080" Width="1920" x:Name="ScrollViewerView" Grid.RowSpan="3" Grid.ColumnSpan="4" >
+                <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="0,0,0,30">
 
-        <Viewbox Stretch="Fill" x:Name="ViewboxCanvas" Grid.RowSpan="3" Grid.ColumnSpan="4" Margin="0,35,0,0">
-            <Canvas x:Name="CarteCanvas" Height="1080" Width="1920" Margin="-50,0,20,70">
+                <ContentPresenter Panel.ZIndex="0" Content="{Binding PartieVm.CarteVm.CarteCanvas}" />
 
-                <ContentPresenter Content="{Binding CarteVm.CarteCanvas}" />
+                    <Canvas.LayoutTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="transform"/>
+                        </TransformGroup>
 
-            </Canvas>
+                    </Canvas.LayoutTransform>
+                </Canvas>
+            </ScrollViewer>
         </Viewbox>
+
+
+        <StackPanel Grid.Column="0" Grid.Row="3"  Background="Wheat" VerticalAlignment="Center" HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource FruitDays}" FontSize="20" Text="{Binding Path=LobbyVm.Lobby.Owner, Mode=OneWay , StringFormat={}Owner: {0}}"/>
+            
+            <TextBlock  Style="{StaticResource FruitDays}" Foreground="Green" FontSize="20">
+              <Run Text="{Binding PartieVm.Joueur.Profil.Pseudo}" Foreground="Green"/>
+              <Run Text="{Binding PartieVm.Joueur.Team}" Foreground="Black"/>
+              <Run Text="{Binding PartieVm.Joueur.Units.Count,Mode=OneWay}" Foreground="Black"/>
+              <Run Text="{Binding PartieVm.Joueur.Profil.ConnectionId}" Foreground="Green"/>
+            </TextBlock>
+
+            <ListBox x:Name="ListPlayer" ItemsSource="{Binding PartieVm.OtherPlayers}"  Foreground="{Binding Path=JoueurVm.Joueur.Profil.Pseudo, Converter={StaticResource OwnerConverter}}" Style="{StaticResource CustomListBox}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource FruitDays}"  FontSize="20" >
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{} {0} : {1} {2} {3}">
+                                    <Binding Path="Profil.Pseudo" Mode="OneWay"/>
+                                    <Binding Path="Team" Mode="OneWay" />
+                                    <Binding Path="Units.Count" Mode="OneWay" />
+                                    <Binding Path="Profil.ConnectionId" Mode="OneWay" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
 
         <ListBox x:Name="ListBoxUnits" Style="{StaticResource CustomListBox}" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBoxUnits_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" ItemsSource="{Binding JoueurVm.Units}">
             <ListBox.ItemTemplate>
@@ -53,7 +93,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0}: {1}">
                     <Binding Source="{x:Static Ressources:Strings.TrpNombre}"/>
-                    <Binding Path="JoueurVm.NombreTrp"/>
+                    <Binding Path="PartieVm.Joueur.Units.Count"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
@@ -62,7 +102,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0} {1}">
                     <Binding Source="{x:Static Ressources:Strings.NbTerritoireVide}"/>
-                    <Binding Path="CarteVm.Carte.GetNombreTerritoireOccupe"/>
+                    <Binding Path="PartieVm.CarteVm.Carte.GetNombreTerritoireOccupe"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
@@ -83,7 +123,7 @@
 
         <Button HorizontalAlignment="Right" Width="50" Grid.Row="2" Grid.Column="3" Height="50" Content="{x:Static Ressources:Strings.PauseEm}" FontSize="30" Style="{StaticResource CustomAnimationButton}" Click="PauseButton_Click" Margin="0,20,20,-2"></Button>
 
-        <Button HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" >Fin de Tour</Button>
+        <Button HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource CustomAnimationButton}" Width="198" Height="30" Grid.ColumnSpan="2" Click="FinTourButton_Click">Fin de Tour</Button>
 
     </Grid>
 </Page>

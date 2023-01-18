@@ -3,8 +3,15 @@ using Models.Exceptions;
 using Models.Map;
 using Models.Player;
 using Models.Son;
+﻿using Models;
+using Models.Exceptions;
+using Models.GameStatus;
+using Models.Map;
+using Models.Player;
+using Models.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using IUnit = Models.Units.IUnit;
@@ -98,22 +105,48 @@ namespace JurassicRisk.ViewsModels
         /// <param name="territoire">le territoire</param>
         public void AddUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
         {
-            if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _joueur.AddUnits(UniteBases, territoire);
-                this._units.Remove(_selectedUnit);
-                if (_units.Count > 0)
-                    _selectedUnit = _units[0];
-                
+                if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+                {
+                    _joueur.PlaceUnits(UniteBases, territoire);
+                    this._units.Remove(_selectedUnit);
+                    if (_units.Count > 0)
+                        _selectedUnit = _units[0];
+                }
+                else
+                {
+                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
+                }
+                NotifyPropertyChanged("NombreTrp");
+                NotifyPropertyChanged("Units");
+            });
+        }
 
-            }
-            if(_joueur.Team != territoire.Team)
+        /// <summary>
+        /// Ajoute des Unites a un territoire
+        /// </summary>
+        /// <param name="UniteBases">Les unite a ajouter</param>
+        /// <param name="territoire">le territoire</param>
+        public void AddUnits(IUnit Unit, ITerritoireBase territoire)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                SoundStore.Get("errorsound.mp3").Play();
-                MessageBox.Show(new NotYourTerritoryException(Strings.ErrorTerritory).Message, Strings.ErrorMessage);
-            }
-            NotifyPropertyChanged("NombreTrp");
-            NotifyPropertyChanged("Units");
+                if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+                {
+                    _joueur.PlaceUnits(Unit, territoire);
+                    this._units.Remove(_selectedUnit);
+                    if (_units.Count > 0)
+                        _selectedUnit = _units[0];
+                }
+                else
+                {
+                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
+                }
+                NotifyPropertyChanged("NombreTrp");
+                NotifyPropertyChanged("Units");
+            });
+
         }
     }
 }

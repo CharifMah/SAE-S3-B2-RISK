@@ -1,4 +1,5 @@
 ﻿using Models.Player;
+using System;
 using System.Collections.ObjectModel;
 
 namespace JurassicRisk.ViewsModels
@@ -11,10 +12,10 @@ namespace JurassicRisk.ViewsModels
         public StatsViewModel()
         {
             _statistique = new ObservableCollection<Statistique>();
-
+            Random r = new Random();
             for (int i = 0; i < 5; i++)
             {
-                Statistique statistique = new Statistique($"Adam{i}");
+                Statistique statistique = new Statistique("1" + r.Next(), "3" + r.Next(), "4" + r.Next(), "5" + r.Next(),"6" + r.Next());
                 _statistique.Add(statistique);
             }
 

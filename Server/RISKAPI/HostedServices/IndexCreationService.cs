@@ -1,5 +1,5 @@
 ﻿using ModelsAPI;
-using ModelsAPI.ClassMetier;
+using ModelsAPI.ClassMetier.GameStatus;
 using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
 using Redis.OM;

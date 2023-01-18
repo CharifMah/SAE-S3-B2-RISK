@@ -49,7 +49,7 @@ namespace RISKAPI.Services
 
                 redisPubSub.Subscribe("__keyevent@0__:json.set", (channel, message) =>
                 {
-                    if (message.StartsWith("Lobby"))
+                    if (message.StartsWith("Lobbys"))
                     {
                         message = message.ToString().Substring(message.ToString().LastIndexOf(':') + 1);
                     }
@@ -58,7 +58,7 @@ namespace RISKAPI.Services
 
                 redisPubSub.Subscribe("__keyevent@0__:json.del", (channel, message) =>
                 {
-                    if (message.StartsWith("Lobby"))
+                    if (message.StartsWith("Lobbys"))
                     {
                         message = message.ToString().Substring(message.ToString().LastIndexOf(':') + 1);
                     }

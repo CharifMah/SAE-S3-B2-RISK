@@ -69,5 +69,36 @@ namespace Models.Map
             this._dicoContinents = DicoContinents;
             this._selectedTerritoire = SelectedTerritoire;
         }
+
+        public List<TerritoireBase> getPlayerTerritory(Joueur j)
+        {
+            List<TerritoireBase> res = new List<TerritoireBase>();
+            foreach(Continent continent in _dicoContinents.Values)
+            {
+                foreach(TerritoireBase territoire in continent.DicoTerritoires.Values)
+                {
+                    if(territoire.Team == j.Team)
+                    {
+                        res.Add(territoire);
+                    }
+                }
+            }
+            return res;
+        }
+
+        public ITerritoireBase GetTerritoire(int ID)
+        {
+            foreach (Continent continent in _dicoContinents.Values)
+            {
+                foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                {
+                    if (territoire.ID == ID)
+                    {
+                        return territoire;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

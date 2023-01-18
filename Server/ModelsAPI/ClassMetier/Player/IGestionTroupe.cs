@@ -5,9 +5,8 @@ namespace ModelsAPI.ClassMetier.Player
 {
     public interface IGestionTroupe
     {
-        public void AddUnit(IUnit unit);
-        public void AddUnits(List<IUnit> unites, ITerritoireBase territoire);
-        public void RemoveUnit(IUnit unit);
-        public void RemoveUnit(List<IUnit> unites, ITerritoireBase territoire);
+         void AddUnit(IUnit unit);
+         void RemoveUnit(IUnit unit);
+         void RemoveUnit(List<IUnit> unites, ITerritoireBase territoire);
     }
 }

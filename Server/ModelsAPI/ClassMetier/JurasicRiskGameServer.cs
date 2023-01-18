@@ -1,16 +1,25 @@
-﻿namespace ModelsAPI.ClassMetier
+﻿using ModelsAPI.ClassMetier.GameStatus;
+
+namespace ModelsAPI.ClassMetier
 {
     public class JurasicRiskGameServer
     {
         #region Attributes
 
         private List<Lobby> _lobby;
-
+        private List<Partie?> _partie;
         #endregion
 
         #region Property
 
-        public List<Lobby> Lobby { get => _lobby; set => _lobby = value; }
+        public List<Lobby> Lobbys { get => _lobby; set => _lobby = value; }
+
+        public List<Partie?> Parties 
+        { 
+            get => _partie; 
+
+            set => _partie = value; 
+        }
 
         #endregion
 
@@ -30,12 +39,11 @@
             }
         }
 
-
         private JurasicRiskGameServer()
         {
-            Lobby = new List<Lobby>();
+            _lobby = new List<Lobby>();
+            _partie = new List<Partie>();
         }
-
         #endregion
     }
 }

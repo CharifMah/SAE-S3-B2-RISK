@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using ModelsAPI.ClassMetier;
 using ModelsAPI.ClassMetier.GameStatus;
@@ -13,11 +14,15 @@ using StackExchange.Redis;
 
 namespace RISKAPI.Hubs
 {
+    [HubName("LobbyHub")]
     public class LobbyHub : Hub
     {
+        #region Injection
         private readonly RedisCollection<Lobby> _lobby;
         private readonly RedisConnectionProvider _provider;
+        #endregion
 
+        #region Constructor
         public LobbyHub(RedisConnectionProvider provider)
         {
             _provider = provider;
@@ -25,23 +30,17 @@ namespace RISKAPI.Hubs
             RedisProvider.Instance.ManageSubscriber(RefreshLobbyToClients);
 
         }
+        #endregion
 
-        private async Task<Lobby> GetLobby(string lobbyName)
+        public async Task RefreshLobbyToClients(string lobbyName)
         {
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             Lobby? lobby = null;
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
             {
                 RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
                 lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
             }
-
-            return lobby;
-        }
-
-        public async Task RefreshLobbyToClients(string lobbyName)
-        {
-            Lobby? lobby = await GetLobby(lobbyName);
 
             if (lobby != null)
             {
@@ -51,98 +50,131 @@ namespace RISKAPI.Hubs
                     await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
                 }
 
+ 
+            }
+            else
+            {
+                Console.WriteLine("Lobby is null");
             }
         }
 
         /// <summary>
-        /// Send Lobby to Clients
+        /// Send Lobbys to Clients
         /// </summary>
         /// <param name="lobbyJson"></param>
         /// <returns></returns>
         public async Task SendLobby(string lobbyJson)
         {
             Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(lobbyJson);
-            Console.WriteLine($"Lobby try to send {lobby.Id}");
+            Console.WriteLine($"Lobbys try to send {lobby.Id}");
             foreach (Joueur j in lobby.Joueurs)
             {
                 await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
             }
         }
 
-        public async Task JoinLobby(string joueurJson, string lobbyName, string password)
+        public async Task JoinLobby(string profilJson, string lobbyName, string password)
         {
-            Joueur? joueur = JsonConvert.DeserializeObject<Joueur>(joueurJson);
-            Console.WriteLine($"{joueur.Profil.Pseudo} try to Join {lobbyName}");
-            string key = $"Lobby:{lobbyName}";
-            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
+            Profil? profil = JsonConvert.DeserializeObject<Profil>(profilJson);
+            if (profil != null)
             {
-                RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
-                Lobby? lobby = JsonConvert.DeserializeObject<Lobby>(result.ToString());
+                Lobby lobby = null;
+
+                foreach (Lobby p in JurasicRiskGameServer.Get.Lobbys)
+                {
+                    if (p.Id == lobbyName)
+                    {
+                        lobby = p;
+                        break;
+                    }
+                }
                 if (lobby != null)
                 {
-                    PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
-                    if (passwordHasher.VerifyHashedPassword(lobby, lobby.Password, password) != 0)
+                    Joueur j = lobby.Joueurs.Find(j => j.Profil.Pseudo == profil.Pseudo);
+                    if (j == null)
                     {
-                        joueur.Profil.ConnectionId = Context.ConnectionId;
-                        if (lobby.Joueurs.Count < 4)
-                        {
-                            lobby.JoinLobby(joueur);
-                            await _lobby.UpdateAsync(lobby);
-                            await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "true");
-                            Context.Items.Add(Context.ConnectionId, new object[] { lobby, joueur });
+                        j = new Joueur(profil, Teams.NEUTRE);
+                    }
+                    if (j != null)
+                    {
+                        Console.WriteLine($"{profil.Pseudo} try to Join {lobbyName}");
 
-                            await RefreshLobbyToClients(lobbyName);
+                        PasswordHasher<Lobby> passwordHasher = new PasswordHasher<Lobby>();
+                        if (lobby.Password == "" || passwordHasher.VerifyHashedPassword(lobby, lobby.Password, password) != 0)
+                        {
+                            if (lobby.Joueurs.Count < 4)
+                            {
+                                j.Profil.ConnectionId = Context.ConnectionId;
+                                await Groups.AddToGroupAsync(Context.ConnectionId, lobbyName);
+
+                                lobby.JoinLobby(j);
+
+                                List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
+                                if (lobbyList.Find(l => l.Id == lobby.Id) == null)
+                                {
+                                    lobbyList.Add(lobby);
+                                }
+                               
+                                await _lobby.UpdateAsync(lobby);
+                                await RefreshLobbyToClients(lobbyName);
+                                await Clients.Client(Context.ConnectionId).SendAsync("connected", "true");
+                            }
+                            else
+                            {
+                                await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId, "false");
+                                Console.WriteLine($"Plus de place dans le lobby pour que {j.Profil.Pseudo} rejoingne");
+                            }
                         }
                         else
                         {
-                            await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
-                            Console.WriteLine($"Plus de place dans le lobby pour que {joueur.Profil.Pseudo} rejoingne");
+                            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId, "false");
+                            Console.WriteLine("mauvais mot de passe");
                         }
                     }
-                    else
-                    {
-                        await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
-                        Console.WriteLine("mauvais mot de passe");
-                    }
+                }
+                else
+                {
+                    await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId,"false");
+                    Console.WriteLine("Le lobby n'existe pas");
                 }
             }
             else
             {
-                await Clients.Client(Context.ConnectionId).SendAsync("connectedToLobby", "false");
-                Console.WriteLine("Le lobby n'existe pas");
+                await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId, "false");
+                Console.WriteLine("Le profil envoyer est null");
             }
+
         }
 
         public async Task SetTeam(Teams teams, string joueurName, string lobbyName)
         {
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]";
 
-            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
+            Lobby lobby = null;
+            Joueur j = null;
+            foreach (Lobby p in JurasicRiskGameServer.Get.Lobbys)
             {
-                RedisResult result = await RedisProvider.Instance.RedisDataBase.ExecuteAsync("JSON.GET", new object[] { key, param }, CommandFlags.None);
-                try
+                if (p.Id == lobbyName)
                 {
-                    List<Joueur?> joueur = JsonConvert.DeserializeObject<List<Joueur?>>(result.ToString());
-                    if (joueur != null && joueur.Count > 0)
+                    lobby = p;
+                    j = lobby.Joueurs.Find(jo => jo.Profil.Pseudo == joueurName);
+                    if (j != null)
                     {
-                        Console.WriteLine($"{joueur[0].Profil.Pseudo} try to Set Team {joueur[0].Team} to {teams}");
-                        joueur[0].Team = teams;
-                        string? joueurJson = JsonConvert.SerializeObject(joueur[0]);
-                        await RedisProvider.Instance.RedisDataBase.JsonSetAsync(key, joueurJson, $".Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]");
+                        Console.WriteLine($"{j.Profil.Pseudo} try to Set Team {j.Team} to {teams}");
+                        j.Team = teams;
+                        string? joueurJson = JsonConvert.SerializeObject(j);
+                        await RedisProvider.Instance.RedisDataBase.JsonSetAsync(key, joueurJson, param);
                         await RefreshLobbyToClients(lobbyName);
                     }
+                    break;
                 }
-                catch (JsonSerializationException)
-                {
-                    throw;
-                }
-            }
+            }          
         }
 
         public async Task IsReady(bool ready, string joueurName, string lobbyName)
         {
-            string key = $"Lobby:{lobbyName}";
+            string key = $"Lobbys:{lobbyName}";
             string param = $"$.Joueurs[?(@Profil.Pseudo == {'"' + joueurName + '"'})]";
 
             if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
@@ -167,87 +199,105 @@ namespace RISKAPI.Hubs
             }
         }
 
+        public async Task ExitLobby(string joueurName, string lobbyName)
+        {
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine($"Disconnected from methode ExitLobby {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            Console.ForegroundColor = ConsoleColor.White;
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyName);
+            try
+            {
+                Lobby lobby = null;
+                foreach (Lobby p in JurasicRiskGameServer.Get.Lobbys)
+                {
+                    if (p.Id == lobbyName)
+                    {
+                        lobby = p;
+                        break;
+                    }
+                }
+                if (lobby != null)
+                {
+                    Joueur j = lobby.Joueurs.Find(j => j.Profil.Pseudo == joueurName);
+                    if (j != null)
+                    {
+                        await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
+                        lobby.Joueurs.Remove(j);
+                        
+                        Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
+                    }
+                    if (lobby.Joueurs.Count <= 0)
+                    {
+                        await _lobby.DeleteAsync(lobby);
+                        foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+                        {
+                            if (l.Id == lobbyName)
+                            {
+                                JurasicRiskGameServer.Get.Lobbys.Remove(l);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (lobby.Joueurs.Count == 1)
+                        {
+                            lobby.Joueurs.Clear();
+                        }
+                        Console.WriteLine($"there is {lobby.Joueurs.Count} in the lobby {lobby.Id} that mean player is null");
+                    }
+
+                    await _lobby.UpdateAsync(lobby);
+                    await RefreshLobbyToClients(lobbyName);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Failed to leave the lobby {e.Message}");
+            }
+        }
+
+        public async Task StartGameOtherPlayer(string lobbyName)
+        {
+            Lobby lobby = null;
+            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
+            {
+                if (l.Id == lobbyName)
+                {
+                    lobby = l;
+                    break;
+                }
+            }
+            if (lobby != null)
+                foreach (Joueur j in lobby.Joueurs)
+                {
+                    if (j.Profil.Pseudo !=  lobby.Owner)
+                    {
+                        await Clients.Client(j.Profil.ConnectionId).SendAsync("startgame");
+                    }
+                }
+        }
+
+        #region Override
         public override async Task OnConnectedAsync()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"Connected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
-            await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId);
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public override async Task OnDisconnectedAsync(Exception? exception)
-        {
-            await ExitLobby();
-            await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
+        public async Task OnDisconnectedAsync(Exception? exception)
+        {          
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine($"Disconnected from OnDisconnectAsync ExitLobby {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+            Console.ForegroundColor = ConsoleColor.White;
+            if (exception != null)
+            {
+                Console.WriteLine(exception.Message);
+            }
             await base.OnDisconnectedAsync(exception);
         }
-
-        public async Task ExitLobby()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine($"Disconnected {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
-            Console.ForegroundColor = ConsoleColor.White;
-
-            object[]? l = (Context.Items.First(x => x.Key == Context.ConnectionId).Value as object[]);
-            try
-            {
-                Lobby? lobby = await GetLobby((l[0] as Lobby).Id);
-                if (lobby != null)
-                {
-                    lobby.ExitLobby((l[1] as Joueur));
-                }
-                await SendLobby(JsonConvert.SerializeObject(lobby));
-                await _lobby.UpdateAsync(lobby);
-                Context.Items.Remove(Context.ConnectionId);
-                Console.WriteLine($"the player {(l[1] as Joueur).Profil.Pseudo} as succeffuluy leave the lobby {(l[0] as Lobby).Id}");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine($"Failed to leave the lobby '{(l[0] as Lobby).Id}'");
-            }
-        }
-
-        public async Task StartPartie(string lobbyName, string joueurName,string carteName)
-        {
-            string key = $"Lobby:{lobbyName}";
-            string keyCarte = $"{carteName}";
-
-
-            if (RedisProvider.Instance.RedisDataBase.KeyExists(key))
-            {
-                RedisResult result = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(key);
-                RedisResult resultCarte = await RedisProvider.Instance.RedisDataBase.JsonGetAsync(keyCarte);
-
-                try
-                {
-                    Lobby? lobby = JsonConvert.DeserializeObject<Lobby?>(result.ToString());
-                    Carte carte = JsonConvert.DeserializeObject<Carte?>(resultCarte.ToString());
-
-                    if (lobby.Owner == joueurName)
-                    {
-                        Console.WriteLine($"{joueurName} try to Start the game");
-                        lobby.Partie = new Partie(new Placement(), carte, lobby.Joueurs);
-                        JurasicRiskGameServer.Get.Lobby.Add(lobby);
-                        foreach (Joueur j in lobby.Joueurs)
-                        {
-                            await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceivePartie");
-                        }
-
-                    }
-                    else
-                    {
-                        JurasicRiskGameServer.Get.Lobby.Add(lobby);
-                        foreach (Joueur j in lobby.Joueurs)
-                        {
-                            await Clients.Client(j.Profil.ConnectionId).SendAsync("NotOwner");
-                        }
-                    }
-                }
-                catch (Exception e )
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-        }
+        #endregion
     }
 }

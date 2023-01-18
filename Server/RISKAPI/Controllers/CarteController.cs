@@ -25,14 +25,6 @@ namespace RISKAPI.Controllers
             _cache = cache;
         }
 
-        // GET api/<CarteController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            IActionResult reponse = null;
-            return reponse;
-        }
-
         // POST api/<CarteController>
 
         [HttpPost("SetCarte")]
@@ -48,22 +40,6 @@ namespace RISKAPI.Controllers
             {
                 reponse = new BadRequestObjectResult(e.Message);
             }
-            return reponse;
-        }
-
-        // PUT api/<CarteController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
-        {
-            IActionResult reponse = null;
-            return reponse;
-        }
-
-        // DELETE api/<CarteController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            IActionResult reponse = null;
             return reponse;
         }
     }

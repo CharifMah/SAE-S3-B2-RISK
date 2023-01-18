@@ -1,12 +1,10 @@
 using JurassicRisk.Ressource;
 using JurassicRisk.ViewsModels;
+using Models.GameStatus;
 using System;
 using System.Threading.Tasks;
-using Models;
 using System.Windows;
 using System.Windows.Controls;
-using Models.Son;
-using Models.GameStatus;
 
 namespace JurassicRisk.Views
 {
@@ -22,60 +20,77 @@ namespace JurassicRisk.Views
 
         private async void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            string connexion = "";
-            
-
             if (inputLobbyName.Text != "")
             {
-                    if (inputPassword.Password == inputPassword2.Password)
-                    {
-                        string connexion1 = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
+                if (inputPassword.Password == inputPassword2.Password)
+                {
+                    string connexion1 = await JurassicRiskViewModel.Get.LobbyVm.CreateLobby(new Lobby(inputLobbyName.Text, inputPassword.Password));
 
-                        if (connexion1.Contains("Lobby Created with name"))
-                        {
-                            JoinLobby();
-                        }
-                        else
-                        {
-                            Error.Text = connexion1;
-                            Error.Visibility = Visibility.Visible;
-                        }
+                    if (connexion1.Contains("Lobby Created with name"))
+                    {
+                        JoinLobby(true);
                     }
                     else
                     {
-                        Error.Text = Strings.PasswordNotMatch;
+                        Error.Text = connexion1;
                         Error.Visibility = Visibility.Visible;
                     }
-            }
+                }
                 else
                 {
-                    Error.Text = Strings.NoPseudoEnter;
+                    Error.Text = Strings.PasswordNotMatch;
                     Error.Visibility = Visibility.Visible;
                 }
+            }
+            else
+            {
+                Error.Text = Strings.NoPseudoEnter;
+                Error.Visibility = Visibility.Visible;
+            }
         }
 
-        private async void JoinLobby()
+        private async void JoinLobby(bool fromCreate = false)
         {
             try
             {
-                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
-
                 //Retry Pattern Async
                 var RetryTimes = 3;
 
                 var WaitTime = 500;
 
+                Error.Visibility = Visibility.Hidden;
+                await JurassicRiskViewModel.Get.LobbyVm.JoinLobby(inputLobbyName.Text, inputPassword.Password);
+
                 for (int i = 0; i < RetryTimes; i++)
                 {
-                    if (JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+
+                    if (!JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
                     {
-                        (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                        if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
+                            (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
+                        i = RetryTimes;
                         break;
                     }
                     else
                     {
                         Error.Text = Strings.NoExistLobby;
                         Error.Visibility = Visibility.Visible;
+                        if (JurassicRiskViewModel.Get.PartieVm.IsConnectedToPartie && !JurassicRiskViewModel.Get.LobbyVm.IsConnectedToLobby)
+                        {
+                            await JurassicRiskViewModel.Get.PartieVm.DisconnectPartie();
+                        }
+
+                        if (i >= 2)
+                        {
+                            Error.Text = "is not connected";
+                            Error.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            Error.Text = "Loading...";
+                            Error.Visibility = Visibility.Visible;
+                        }
+
                     }
                     //Wait for 500 milliseconds
                     await Task.Delay(WaitTime);
@@ -92,7 +107,6 @@ namespace JurassicRisk.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
     }

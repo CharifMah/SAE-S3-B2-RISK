@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ModelsAPI.ClassMetier.Map;
+using ModelsAPI.ClassMetier.Player;
+using ModelsAPI.ClassMetier.Units;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +9,21 @@ using System.Threading.Tasks;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
-    public class Attaque
+    public class Attaque : Etat
     {
-        protected Lobby partie;
-        public void SetContext(Lobby partie)
+        public bool Action(Carte carte, Joueur joueur, List<int> unitList)
         {
-            this.partie = partie;
+            throw new NotImplementedException();
         }
+
+        public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
+        {
+            throw new NotImplementedException();
+        }
+        public override string? ToString()
+        {
+            return "Attaque";
+        }
+
     }
 }
