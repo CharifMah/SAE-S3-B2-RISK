@@ -106,7 +106,7 @@ namespace JurassicRisk.ViewsModels
             _partieChatService.Disconnected += _partieChatService_Disconnected;
             _partieChatService.Deploiment += _partieChatService_Deploiment;
             _partieChatService.PartieReceived += _chatService_PartieReceived;
-
+            
             NotifyPropertyChanged("Partie");
 
         }
@@ -228,13 +228,14 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("Partie");
         }
 
-        private void _chatService_YourTurn(string etatJson)
+        private void _chatService_YourTurn(string etatJson,string name)
         {
-            Etat etat = JsonConvert.DeserializeObject<Etat>(etatJson);
-            switch (etat.ToString())
+
+            switch (name)
             {
                 case "Deploiment":
                     {
+                        Deploiment etat = JsonConvert.DeserializeObject<Deploiment>(etatJson);
                         _partie.Etat = etat;
                         break;
                     }
@@ -276,7 +277,8 @@ namespace JurassicRisk.ViewsModels
                 else
                 {
                     List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
-                    Etat etat = JsonConvert.DeserializeObject<Etat>(etatJson);
+
+                    Deploiment etat = JsonConvert.DeserializeObject<Deploiment>(etatJson);
 
                     _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat);
                     _joueur = _partie.Joueurs.FirstOrDefault(j => j.Profil.Pseudo == JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);

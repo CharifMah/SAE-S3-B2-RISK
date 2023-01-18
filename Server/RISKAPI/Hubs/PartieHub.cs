@@ -42,7 +42,7 @@ namespace RISKAPI.Hubs
             {
                 Joueur joueur = partie.Joueurs[partie.NextPlayer()];
                 partie.Transition();
-                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", JsonConvert.SerializeObject(partie.Etat));
+                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", JsonConvert.SerializeObject(partie.Etat), partie.Etat.ToString());
                 Console.WriteLine($"c'est au tour de {joueur.Profil.Pseudo}");
             }
             else
@@ -157,6 +157,7 @@ namespace RISKAPI.Hubs
             Joueur joueur = null;
             Partie partie = null;
             string joueursJson = "";
+            string etatJson = "";
             foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
             {
                 if (l.Id == partieName)
@@ -209,15 +210,18 @@ namespace RISKAPI.Hubs
                     {
 
                         JurasicRiskGameServer.Get.Parties.Add(p);
+                        Console.WriteLine("Serialize Object");
                         joueursJson = JsonConvert.SerializeObject(p.Joueurs);
+                        etatJson = JsonConvert.SerializeObject(p.Etat);
                         if (joueursJson == "")
                         {
                             Console.WriteLine("JsonJoueursssss VIDE");
                         }
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName,p.Etat);
+                        Console.WriteLine("will SendPartie to groupe " + partieName);
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson);
+                        Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
 
-                        
-                        await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", JsonConvert.SerializeObject(p.Etat));
+                        await Clients.Client(lobby.Joueurs[p.NextPlayer()].Profil.ConnectionId).SendAsync("YourTurn", etatJson, p.Etat.ToString());
                     }
                     else
                     {
@@ -229,7 +233,9 @@ namespace RISKAPI.Hubs
                     partie = p;
                     if (p.Joueurs != null)
                     {
-                        await Clients.Group(partieName).SendAsync("ReceivePartie", JsonConvert.SerializeObject(p.Joueurs), partieName, JsonConvert.SerializeObject(p.Etat));
+                        etatJson = JsonConvert.SerializeObject(p.Etat);
+                        joueursJson = JsonConvert.SerializeObject(p.Joueurs);
+                        await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson);
                     }
 
                 }

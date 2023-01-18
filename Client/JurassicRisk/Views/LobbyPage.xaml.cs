@@ -34,10 +34,7 @@ namespace JurassicRisk.Views
 
             try
             {
-                if (_partieConnect == -1)
-                {
-                    await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
-                }
+               
                 await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
                 if (ProfilViewModel.Get.SelectedProfil.Pseudo == _lobbyVm.Lobby.Owner)
                 {
@@ -62,6 +59,10 @@ namespace JurassicRisk.Views
                     JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
                     Error.Visibility = Visibility.Visible;
                     Error.Text = "vous etes pret";
+                    if (_partieConnect == -1)
+                    {
+                        await JurassicRiskViewModel.Get.PartieVm.ConnectPartie();
+                    }
 
                 }
                 else
