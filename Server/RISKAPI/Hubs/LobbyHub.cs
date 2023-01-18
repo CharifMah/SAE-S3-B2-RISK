@@ -235,6 +235,7 @@ namespace RISKAPI.Hubs
                             if (l.Id == lobbyName)
                             {
                                 JurasicRiskGameServer.Get.Lobbys.Remove(l);
+                                Console.WriteLine($"lobby {l.Id} removed");
                                 break;
                             }
                         }

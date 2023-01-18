@@ -110,6 +110,7 @@ namespace JurassicRisk.Views
         private async void LogOutButton_Click(object sender, RoutedEventArgs e)
         {            
             await _lobbyVm.StopConnection();
+            _partieConnect = -1;
             (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new MenuPage());
         }
 
