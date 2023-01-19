@@ -1,10 +1,5 @@
-﻿using ModelsAPI.ClassMetier.Map;
-using ModelsAPI.ClassMetier.Player;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Models.Map;
+using Models.Player;
 
 namespace Models.GameStatus
 {

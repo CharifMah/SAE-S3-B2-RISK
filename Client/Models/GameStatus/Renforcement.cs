@@ -1,7 +1,6 @@
-﻿using ModelsAPI.ClassMetier.Fabriques.FabriqueUnite;
-using ModelsAPI.ClassMetier.Map;
-using ModelsAPI.ClassMetier.Player;
-using ModelsAPI.ClassMetier.Units;
+﻿using Models.Map;
+using Models.Player;
+using Models.Units;
 
 namespace Models.GameStatus
 {
@@ -22,15 +21,8 @@ namespace Models.GameStatus
         /// <returns></returns>
         public bool Action(Carte carte, Joueur joueur, List<int> unitList)
         {
-
-
             // Ajout des unités sur le territoire
-            List<IUnit> unitsToPlace = new List<IUnit>();
-            foreach (int i in unitList)
-            {
-                unitsToPlace.Add(joueur.Units[i]);
-            }
-            joueur.PlaceUnits(unitsToPlace, carte.SelectedTerritoire);
+            joueur.PlaceUnits(unitList, carte.SelectedTerritoire);
 
             return true;
         }

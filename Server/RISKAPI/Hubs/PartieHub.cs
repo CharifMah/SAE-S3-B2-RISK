@@ -181,10 +181,7 @@ namespace RISKAPI.Hubs
                     joueursJson = JsonConvert.SerializeObject(partie.Joueurs);
                     etatJson = JsonConvert.SerializeObject(partie.Etat);
 
-                    List<Joueur?> list = JsonConvert.DeserializeObject<List<Joueur?>>(joueursJson);
-
                     int index = partie.NextPlayer();
-
                     await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, index);
                     
                     Console.WriteLine("Succeffully SendPartie to groupe " + partieName);

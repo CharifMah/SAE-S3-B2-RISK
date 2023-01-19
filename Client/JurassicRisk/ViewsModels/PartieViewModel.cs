@@ -105,7 +105,7 @@ namespace JurassicRisk.ViewsModels
             _partieChatService.Disconnected += _partieChatService_Disconnected;
             _partieChatService.Deploiment += _partieChatService_Deploiment;
             _partieChatService.PartieReceived += _chatService_PartieReceived;
-
+            _partieChatService.Renforcement += _partieChatService_Renforcement;
             NotifyPropertyChanged("Partie");
 
         }
@@ -259,7 +259,6 @@ namespace JurassicRisk.ViewsModels
             _partie.PlayerIndex = playerIndex;
             if (_partie.Joueurs[playerIndex] != null && _partie.Joueurs[playerIndex].Units.Count > 0)
             {
-                _partie.Joueurs[playerIndex].PlaceUnit(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
                 JurassicRiskViewModel.Get.JoueurVm.PlaceUnit(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
                 if (_joueurVm.Joueur.Units.Count <= 0)
                 {

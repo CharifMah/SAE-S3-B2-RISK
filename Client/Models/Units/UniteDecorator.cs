@@ -7,24 +7,26 @@
     {
         private string _sourceUri;
         private IUnit _uniteBase;
-        public UniteDecorator(IUnit uniteBase)
+        public UniteDecorator(UniteBase uniteBase)
         {
             _uniteBase = uniteBase;
-            switch (uniteBase.Name)
-            {
-                case "Brachiosaurus":
-                    _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png";
-                    break;
-                case "Baryonyx":
-                    _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png"; ;
-                    break;
-                case "Rex":
-                    _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png"; ;
-                    break;
-                case "Pterosaure":
-                    _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png"; ;
-                    break;
-            }
+            if (uniteBase != null)
+
+                switch (uniteBase.Name)
+                {
+                    case "Brachiosaurus":
+                        _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png";
+                        break;
+                    case "Baryonyx":
+                        _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png"; ;
+                        break;
+                    case "Rex":
+                        _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png"; ;
+                        break;
+                    case "Pterosaure":
+                        _sourceUri = $"pack://application:,,,/Sprites/Units/{uniteBase.Name}.png"; ;
+                        break;
+                }
         }
 
         public IUnit UniteBase { get => _uniteBase; set => _uniteBase = value; }
