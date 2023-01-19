@@ -36,10 +36,15 @@ namespace RISKAPI.Hubs
             }
             if (partie != null && partie.Joueurs.Count > 0 && partie.Joueurs[partie.PlayerIndex].Profil.Pseudo == joueurName)
             {
-                Joueur joueur = partie.Joueurs[partie.NextPlayer()];
+                int index = partie.NextPlayer();
+                Joueur joueur = partie.Joueurs[index];
                 partie.Transition();
-                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", JsonConvert.SerializeObject(partie.Etat), partie.Etat.ToString());
+                string etatJson = JsonConvert.SerializeObject(partie.Etat);
+                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", etatJson, partie.Etat.ToString(), index);
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"c'est au tour de {joueur.Profil.Pseudo}");
+                Console.ForegroundColor = ConsoleColor.White;
+
             }
             else
             {
@@ -67,7 +72,6 @@ namespace RISKAPI.Hubs
                         {
 
                             await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
-
                             await Clients.Client(p.Joueurs[p.PlayerIndex].Profil.ConnectionId).SendAsync("endTurn");
 
                             Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
@@ -164,9 +168,10 @@ namespace RISKAPI.Hubs
                     }
                     joueursJson = JsonConvert.SerializeObject(partie.Joueurs);
                     etatJson = JsonConvert.SerializeObject(partie.Etat);
-                    await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, partie.NextPlayer());
+                    int index = partie.NextPlayer();
+                    await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, index);
                     Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
-                    await Clients.Group(partieName).SendAsync("yourTurn", etatJson, partie.Etat.ToString());
+                    await Clients.Group(partieName).SendAsync("yourTurn", etatJson, partie.Etat.ToString(), index);
                     Console.WriteLine($"Partie avec {partie.Joueurs.Count} players Crée");
                 }
             }

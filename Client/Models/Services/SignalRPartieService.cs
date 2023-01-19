@@ -8,7 +8,7 @@ namespace Models.Services
     {
         private readonly HubConnection _connection;
         public event Action<string,string, string,int> PartieReceived;
-        public event Action<string,string> YourTurn;
+        public event Action<string,string, int> YourTurn;
         public event Action EndTurn;
         public event Action Disconnected;
         public event Action<int, int,int> Deploiment;
@@ -21,7 +21,7 @@ namespace Models.Services
         {
             _connection = connection;
             _connection.On<string,string,string, int>("ReceivePartie", (joueursJson,id,etatJson, playerindex)  => PartieReceived?.Invoke(joueursJson,id,etatJson, playerindex));
-            _connection.On<string, string>("yourTurn", (etatJson, name) => YourTurn?.Invoke(etatJson,name));
+            _connection.On<string, string,int>("yourTurn", (etatJson, name,indexPlayer) => YourTurn?.Invoke(etatJson,name, indexPlayer));
             _connection.On("endTurn", () => EndTurn?.Invoke());
             _connection.On("disconnected", () => Disconnected?.Invoke());
             _connection.On<int, int, int>("deploiment", (idUnit, idTerritoire, playerIndex) => Deploiment?.Invoke(idUnit, idTerritoire, playerIndex));

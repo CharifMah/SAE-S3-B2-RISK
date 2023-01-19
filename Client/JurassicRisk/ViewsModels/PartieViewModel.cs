@@ -96,7 +96,7 @@ namespace JurassicRisk.ViewsModels
             _progression = 0;
             //_actualPlayer = Partie.Joueurs[Partie.PlayerIndex].Profil.Pseudo;
 
-            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
+            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").WithAutomaticReconnect().Build();
             _partieChatService = new SignalRPartieService(_connection);
 
             _partieChatService.YourTurn += _chatService_YourTurn;
@@ -222,9 +222,9 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("Partie");
         }
 
-        private void _chatService_YourTurn(string etatJson, string name)
+        private void _chatService_YourTurn(string etatJson, string name,int playerIndex)
         {
-
+            _partie.PlayerIndex = playerIndex;
             switch (name)
             {
                 case "Deploiment":
@@ -246,6 +246,7 @@ namespace JurassicRisk.ViewsModels
 
         private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
         {
+            _partie.PlayerIndex = playerIndex;
             if (_partie.Joueurs[playerIndex] != null && _partie.Joueurs[playerIndex].Units.Count > 0)
             {
                 _partie.Joueurs[playerIndex].PlaceUnit(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));

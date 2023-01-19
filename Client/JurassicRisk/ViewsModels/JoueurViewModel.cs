@@ -129,10 +129,6 @@ namespace JurassicRisk.ViewsModels
                 {
                    _units.RemoveAt(indexUnit);
                 }
-                else
-                {
-                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
-                }
                 NotifyPropertyChanged("NombreTrp");
                 NotifyPropertyChanged("Units");
             });
