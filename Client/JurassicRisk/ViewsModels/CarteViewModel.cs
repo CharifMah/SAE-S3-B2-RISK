@@ -405,7 +405,7 @@ namespace JurassicRisk.ViewsModels
             canvas.ToolTip = $"Units: {territoire.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
         }
 
-        private async void MyCanvasTerritoire_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
+        private async void MyCanvasTerritoire_PreviewMouseUp(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
@@ -439,7 +439,7 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvasTerritoire_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
+        private void MyCanvasTerritoire_PreviewMouseDown(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas? c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
@@ -451,7 +451,7 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvasTerritoire_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MyCanvasTerritoire_MouseLeave(object sender, MouseEventArgs e)
         {
             Canvas c = (sender as Canvas);
             c.Width -= 35;
@@ -470,7 +470,7 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvasTerritoire_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MyCanvasTerritoire_MouseEnter(object sender, MouseEventArgs e)
         {
             Canvas c = (sender as Canvas);
             Canvas.SetZIndex(c, zi);
