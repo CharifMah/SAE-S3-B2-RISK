@@ -14,10 +14,10 @@
             var cert = req.CreateSelfSigned(DateTimeOffset.Now, DateTimeOffset.Now.AddYears(5));
 
             // Create PFX (PKCS #12) with private key
-            File.WriteAllBytes("c:\\temp\\RiskApiCert.pfx", cert.Export(X509ContentType.Pfx, "/Riskapi123"));
+            File.WriteAllBytes("C:\\Users\\Charif\\Documents\\Projet\\Projet_IUT\\Semestre 3\\S3.01A - saé\\Sujet\\SAE-S3-B2-RISK\\JurassicRisk\\Server\\RISKAPI\\RiskApiCert.pfx", cert.Export(X509ContentType.Pfx, "/Riskapi123"));
 
             // Create Base 64 encoded CER (public key only)
-            File.WriteAllText("c:\\temp\\RiskApiCert.cer",
+            File.WriteAllText("C:\\Users\\Charif\\Documents\\Projet\\Projet_IUT\\Semestre 3\\S3.01A - saé\\Sujet\\SAE-S3-B2-RISK\\JurassicRisk\\Server\\RISKAPI\\RiskApiCert.cer",
                 "-----BEGIN CERTIFICATE-----\r\n"
                 + Convert.ToBase64String(cert.Export(X509ContentType.Cert), Base64FormattingOptions.InsertLineBreaks)
                 + "\r\n-----END CERTIFICATE-----");
