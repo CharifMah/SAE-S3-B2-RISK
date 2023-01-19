@@ -208,9 +208,9 @@ namespace JurassicRisk.ViewsModels
             {
                 _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
 
-                List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
+                List<Joueur?> l = JsonConvert.DeserializeObject<List<Joueur?>>(joueursJson);
 
-                Deploiment etat = JsonConvert.DeserializeObject<Deploiment>(etatJson);
+                Deploiment? etat = JsonConvert.DeserializeObject<Deploiment?>(etatJson);
 
                 _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat, playerindex);
                 _partie.PlayerIndex = playerindex;
