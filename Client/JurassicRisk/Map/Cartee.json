@@ -1,9 +1,9 @@
 {
-  "DicoContinents": {
-    "0": {
+  "DicoContinents": [
+    {
       "$type": "Models.Map.Continent, Models",
-      "DicoTerritoires": {
-        "0": {
+      "Territoires": [
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -15,11 +15,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/1c1r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 0,
           "Units": []
         },
-        "1": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -31,11 +33,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/1c2r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 1,
           "Units": []
         },
-        "2": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -47,11 +51,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/1c3r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 2,
           "Units": []
         },
-        "3": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -63,11 +69,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/1c4r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 3,
           "Units": []
         },
-        "4": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -79,11 +87,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/1c5r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 4,
           "Units": []
         },
-        "5": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -95,11 +105,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/1c6r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 5,
           "Units": []
         },
-        "6": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -111,16 +123,18 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/1c7r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 6,
           "Units": []
         }
-      }
+      ]
     },
-    "1": {
+    {
       "$type": "Models.Map.Continent, Models",
-      "DicoTerritoires": {
-        "7": {
+      "Territoires": [
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -132,11 +146,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/2c1r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 7,
           "Units": []
         },
-        "8": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -148,11 +164,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/2c2r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 8,
           "Units": []
         },
-        "9": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -164,11 +182,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/2c3r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 9,
           "Units": []
         },
-        "10": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -180,11 +200,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/2c4r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 10,
           "Units": []
         },
-        "11": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -196,11 +218,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/2c5r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 11,
           "Units": []
         },
-        "12": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -212,11 +236,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/2c6r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 12,
           "Units": []
         },
-        "13": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -228,16 +254,18 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/2c7r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 13,
           "Units": []
         }
-      }
+      ]
     },
-    "2": {
+    {
       "$type": "Models.Map.Continent, Models",
-      "DicoTerritoires": {
-        "14": {
+      "Territoires": [
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -249,11 +277,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/3c1r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 14,
           "Units": []
         },
-        "15": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -265,11 +295,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/3c2r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 15,
           "Units": []
         },
-        "16": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -281,11 +313,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/3c3r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 16,
           "Units": []
         },
-        "17": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -297,11 +331,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/3c4r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 17,
           "Units": []
         },
-        "18": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -313,11 +349,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/3c5r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 18,
           "Units": []
         },
-        "19": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -329,11 +367,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/3c6r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 19,
           "Units": []
         },
-        "20": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -345,11 +385,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/3c7r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 20,
           "Units": []
         },
-        "21": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -361,16 +403,18 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/3c8r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 21,
           "Units": []
         }
-      }
+      ]
     },
-    "3": {
+    {
       "$type": "Models.Map.Continent, Models",
-      "DicoTerritoires": {
-        "22": {
+      "Territoires": [
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -382,11 +426,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/4c1r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 22,
           "Units": []
         },
-        "23": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -398,11 +444,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/4c2r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 23,
           "Units": []
         },
-        "24": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -414,11 +462,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/4c3r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 24,
           "Units": []
         },
-        "25": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -430,11 +480,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/4c4r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 25,
           "Units": []
         },
-        "26": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -446,11 +498,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/4c5r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 26,
           "Units": []
         },
-        "27": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -462,11 +516,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/4c6r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 27,
           "Units": []
         },
-        "28": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -478,16 +534,18 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/4c7r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 28,
           "Units": []
         }
-      }
+      ]
     },
-    "4": {
+    {
       "$type": "Models.Map.Continent, Models",
-      "DicoTerritoires": {
-        "29": {
+      "Territoires": [
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -499,11 +557,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/5c1r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 29,
           "Units": []
         },
-        "30": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -515,11 +575,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/5c2r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 30,
           "Units": []
         },
-        "31": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -531,11 +593,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/5c3r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 31,
           "Units": []
         },
-        "32": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -547,11 +611,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/5c4r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 32,
           "Units": []
         },
-        "33": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -563,16 +629,18 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/5c5r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 33,
           "Units": []
         }
-      }
+      ]
     },
-    "5": {
+    {
       "$type": "Models.Map.Continent, Models",
-      "DicoTerritoires": {
-        "34": {
+      "Territoires": [
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -584,11 +652,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/6c1r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 34,
           "Units": []
         },
-        "35": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -600,11 +670,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/6c2r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 35,
           "Units": []
         },
-        "36": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -616,11 +688,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/6c3r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 36,
           "Units": []
         },
-        "37": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -632,11 +706,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/6c4r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 37,
           "Units": []
         },
-        "38": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -648,11 +724,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/6c5r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 38,
           "Units": []
         },
-        "39": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -664,11 +742,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/6c6r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 39,
           "Units": []
         },
-        "40": {
+        {
           "$type": "Models.Map.TerritoireDecorator, Models",
           "TerritoireBase": {
             "Team": 4,
@@ -680,11 +760,13 @@
           "UriSource": "pack://application:,,,/Sprites/Carte2/6c7r.png",
           "Width": 0,
           "Height": 0,
+          "Lines": [],
+          "Points": [],
           "Team": 4,
           "ID": 40,
           "Units": []
         }
-      }
+      ]
     }
-  }
+  ]
 }
