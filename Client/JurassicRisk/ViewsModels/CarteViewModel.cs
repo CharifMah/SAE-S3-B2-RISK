@@ -94,7 +94,7 @@ namespace JurassicRisk.ViewsModels
             toDoWhenFinished = drawEnd;
             progress = progression;
 
-            //new SaveMap(_carte);
+            new SaveMap(null);
 
             f = new FabriqueUniteBase();
             _joueurVm = joueur;
@@ -117,15 +117,15 @@ namespace JurassicRisk.ViewsModels
             currentPosition = 0;
             progress(currentPosition);
             int i = 0;
-            foreach (Continent continent in _carte.DicoContinents.Values)
+            foreach (Continent continent in _carte.DicoContinents)
             {
-                foreach (TerritoireDecorator Territoire in continent.DicoTerritoires.Values)
+                foreach (TerritoireDecorator Territoire in continent.Territoires)
                 {
                     Territoire.ID = i;
                     i++;
                     _territoires.Add(Territoire);
                     DrawRegion(Territoire);
-                    currentPosition += (100 / continent.DicoTerritoires.Values.Count);
+                    currentPosition += (100 / continent.Territoires.Length);
                     progress(currentPosition);
                 }
             }
@@ -312,6 +312,7 @@ namespace JurassicRisk.ViewsModels
             territoire.Width = (int)myImageBrush.Size.Width;
             territoire.Height = (int)myImageBrush.Size.Height;
             myCanvas.Children.Add(myImageBrush);
+
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} Id : {territoire.ID} team : {territoire.Team}" };
             myCanvas.ToolTipOpening += (sender, e) => MyCanvasTerritoire_ToolTipOpening(sender, e, territoire, myCanvas);
@@ -324,6 +325,7 @@ namespace JurassicRisk.ViewsModels
 
             _carteCanvas.Children.Add(myCanvas);
         }
+
         private void MyCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e, TerritoireDecorator territoire)
         {
             if (e.Delta > 0)
@@ -332,6 +334,7 @@ namespace JurassicRisk.ViewsModels
             else if (e.Delta < 0)
                 JeuPage.GetInstance().ZoomOut(territoire.X, territoire.Y, 1);
         }
+
         /// <summary>
         /// DrawLines Graph need to be initialized
         /// </summary>

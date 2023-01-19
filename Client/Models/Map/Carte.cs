@@ -15,7 +15,7 @@ namespace Models.Map
     {
         #region Attributes
 
-        private Dictionary<string, IContinent> _dicoContinents;
+        private IContinent[] _continents;
         private ITerritoireBase? _selectedTerritoire;
 
         #endregion
@@ -25,11 +25,10 @@ namespace Models.Map
         ///// <summary>
         ///// Dictionary des Continents
         ///// </summary>
-        [JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, IContinent>, Continent, string, IContinent>))]
-        public Dictionary<string, IContinent> DicoContinents
+        public IContinent[] DicoContinents
         {
-            get { return _dicoContinents; }
-            set { _dicoContinents = value; }
+            get { return _continents; }
+            set { _continents = value; }
         }
 
         [DataMember]
@@ -48,15 +47,9 @@ namespace Models.Map
             get
             {
                 int res = 0;
-                foreach (Continent continent in _dicoContinents.Values)
+                foreach (Continent continent in _continents)
                 {
-                    foreach (ITerritoireBase? territoire in continent.DicoTerritoires.Values)
-                    {
-                        if (territoire.Team == Teams.NEUTRE)
-                        {
-                            res++;
-                        }
-                    }
+                    res += continent.Territoires.Length;
                 }
                 return res;
             }
@@ -64,20 +57,20 @@ namespace Models.Map
 
         #endregion
 
-        public Carte(Dictionary<string, IContinent> DicoContinents, ITerritoireBase? SelectedTerritoire)
+        public Carte(IContinent[] DicoContinents, ITerritoireBase? SelectedTerritoire)
         {
-            this._dicoContinents = DicoContinents;
+            this._continents = DicoContinents;
             this._selectedTerritoire = SelectedTerritoire;
         }
 
         public List<TerritoireBase> getPlayerTerritory(Joueur j)
         {
             List<TerritoireBase> res = new List<TerritoireBase>();
-            foreach(Continent continent in _dicoContinents.Values)
+            foreach (Continent continent in _continents)
             {
-                foreach(TerritoireBase territoire in continent.DicoTerritoires.Values)
+                foreach (TerritoireBase territoire in continent.Territoires)
                 {
-                    if(territoire.Team == j.Team)
+                    if (territoire.Team == j.Team)
                     {
                         res.Add(territoire);
                     }
@@ -88,9 +81,9 @@ namespace Models.Map
 
         public ITerritoireBase GetTerritoire(int ID)
         {
-            foreach (Continent continent in _dicoContinents.Values)
+            foreach (Continent continent in _continents)
             {
-                foreach (ITerritoireBase territoire in continent.DicoTerritoires.Values)
+                foreach (ITerritoireBase territoire in continent.Territoires)
                 {
                     if (territoire.ID == ID)
                     {

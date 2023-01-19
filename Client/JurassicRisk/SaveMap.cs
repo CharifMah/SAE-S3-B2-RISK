@@ -2,9 +2,6 @@
 using Stockage;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
 using Carte = Models.Map.Carte;
 using Continent = Models.Map.Continent;
 using GetResource = JurassicRisk.Ressources.GetResource;
@@ -19,7 +16,7 @@ namespace JurassicRisk
     public class SaveMap
     {
         private List<string> _fileEntries;
-        private Dictionary<string, ITerritoireBase> _decorations;
+        private ITerritoireBase[] _decorations;
         private int i = 0;
 
         /// <summary>
@@ -31,25 +28,19 @@ namespace JurassicRisk
             SaveCarte(carte);
         }
 
-        private Carte CreateCarte1(Dictionary<string, ITerritoireBase> _decorations)
+        private Carte CreateCarte1(ITerritoireBase[] _decorations)
         {
-            List<IContinent> _continents = new List<IContinent>
+            IContinent[] _continents = new IContinent[6]
             {
-                new Continent(_decorations.Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(_decorations.Skip(7).Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(_decorations.Skip(14).Take(8).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(_decorations.Skip(22).Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(_decorations.Skip(29).Take(5).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(_decorations.Skip(34).Take(7).ToDictionary(x => x.Key, y => y.Value))
+                new Continent(_decorations[0..7]),
+                new Continent(_decorations[7..14]),
+                new Continent(_decorations[14..22]),
+                new Continent(_decorations[22..29]),
+                new Continent(_decorations[29..34]),
+                new Continent(_decorations[34..41])
             };
-            Dictionary<string, IContinent> dic = new Dictionary<string, IContinent>();
-            for (int i = 0; i < _continents.Count; i++)
-            {
-                dic.Add(i.ToString(), _continents[i]);
-            }
 
-
-            return new Carte(dic,null);
+            return new Carte(_continents, null);
         }
 
         /// <summary>
@@ -59,11 +50,11 @@ namespace JurassicRisk
         {
             if (carte == null)
             {
-                _decorations = new Dictionary<string, ITerritoireBase>();
+                _decorations = new ITerritoireBase[41];
                 _fileEntries = GetResource.GetResourceFileName("carte2/");
                 foreach (string fileName in _fileEntries)
                 {
-                    SerializeConf($"pack://application:,,,/Sprites/Carte2/{fileName}"); 
+                    SerializeConf($"pack://application:,,,/Sprites/Carte2/{fileName}");
                 }
 
                 SauveCollection s = new SauveCollection(Environment.CurrentDirectory);
@@ -80,7 +71,8 @@ namespace JurassicRisk
 
         public void SerializeConf(string Urisource)
         {
-            _decorations.Add(i.ToString(), new TerritoireDecorator(new Models.Map.TerritoireBase(i),Urisource));
+
+            _decorations[i] = new TerritoireDecorator(new Models.Map.TerritoireBase(i), Urisource);
             i++;
         }
     }

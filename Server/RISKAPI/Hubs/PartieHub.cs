@@ -58,7 +58,7 @@ namespace RISKAPI.Hubs
         /// <param name="partieName">nom de la partie</param>
         /// <param name="unitlist">list index d'unité</param>
         /// <returns>Task</returns>
-        public async Task Action(string partieName, List<int> unitlist,string joueurName)
+        public async Task Action(string partieName, List<int> unitlist, string joueurName)
         {
             Partie p = JurasicRiskGameServer.Get.Parties.First(l => l.Id == partieName);
             if (p.Joueurs[p.PlayerIndex].Profil.Pseudo == joueurName)
@@ -74,7 +74,7 @@ namespace RISKAPI.Hubs
 
                                 await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
                                 await Clients.Group(partieName).SendAsync("endTurn", p.NextPlayer());
-                                
+
                                 Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
                             }
                             break;
@@ -90,7 +90,7 @@ namespace RISKAPI.Hubs
                             break;
                     }
                 }
-            }           
+            }
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace RISKAPI.Hubs
         public async Task SetSelectedTerritoire(string partieName, int ID)
         {
             Partie p = JurasicRiskGameServer.Get.Parties.First(partie => partie.Id == partieName);
-            p.Carte.SelectedTerritoire = p.Carte.GetTerritoire(ID);
+            p.Carte.SelectedTerritoire = (TerritoireBase?)p.Carte.GetTerritoire(ID);
             Console.WriteLine("Selected Territoire set to " + ID);
         }
 
@@ -154,7 +154,7 @@ namespace RISKAPI.Hubs
             Lobby lobby = JurasicRiskGameServer.Get.Lobbys.FirstOrDefault(l => l.Id == partieName);
             string joueursJson = "";
             string etatJson = "";
-            if (partie!= null && partie.Owner == null)
+            if (partie != null && partie.Owner == null)
             {
                 partie.Owner = joueurName;
             }
@@ -267,33 +267,34 @@ namespace RISKAPI.Hubs
         #endregion
 
         #region Private
-
         private Carte CreateCarte1()
         {
-            Dictionary<string, ITerritoireBase> territoires = new Dictionary<string, ITerritoireBase>();
-            for (int i = 0; i < 41; i++)
+            ITerritoireBase[] territoires = new ITerritoireBase[41];
+            for (int i = 0; i < territoires.Length; i++)
             {
-                territoires.Add(i.ToString(), new TerritoireBase(i, null));
+                territoires[i] = new TerritoireBase(i, null);
             }
-            List<IContinent> _continents = new List<IContinent>
+            IContinent[] _continents = new IContinent[6]
             {
-                new Continent(territoires.Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(7).Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(14).Take(8).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(22).Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(29).Take(5).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(34).Take(7).ToDictionary(x => x.Key, y => y.Value))
+                 //Ajout de 7 territoires au premier continent en utilisant les index 0 à 6 du dictionnaire "territoires"
+                new Continent(territoires[0..7]),
+                //Ajout de 7 territoires au deuxième continent en utilisant les index 7 à 13 du dictionnaire "territoires"
+                new Continent(territoires[7..14]),
+                //Ajout de 8 territoires au troisième continent en utilisant les index 14 à 21 du dictionnaire "territoires"
+                new Continent(territoires[14..22]),
+                //Ajout de 7 territoires au quatrième continent en utilisant les index 22 à 28 du dictionnaire "territoires"
+                new Continent(territoires[22..29]),
+                //Ajout de 5 territoires au cinquième continent en utilisant les index 29 à 33 du dictionnaire "territoires"
+                new Continent(territoires[29..34]),
+                //Ajout de 7 territoires au sixième continent en utilisant les index 34 à 40"territoires"
+                new Continent(territoires[34..41])
             };
-            Dictionary<string, IContinent> dic = new Dictionary<string, IContinent>();
-            for (int i = 0; i < _continents.Count; i++)
-            {
-                dic.Add(i.ToString(), _continents[i]);
-            }
 
-
-            return new Carte(dic, null);
+            return new Carte(_continents, null);
         }
 
         #endregion
+
+
     }
 }

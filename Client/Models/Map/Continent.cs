@@ -16,25 +16,24 @@ namespace Models.Map
     {
         #region Attributes
 
-        private Dictionary<string, ITerritoireBase> _dicoTerritoires;
+        private ITerritoireBase[] _territoires;
         #endregion
 
         #region Property
 
         [DataMember]
-        [JsonConverter(typeof(ConcreteDictionnaryTypeConverter<Dictionary<string, ITerritoireBase>, TerritoireDecorator, string, ITerritoireBase>))]
-        public Dictionary<string, ITerritoireBase> DicoTerritoires
+        public ITerritoireBase[] Territoires
         {
-            get { return _dicoTerritoires; }
-            set { _dicoTerritoires = value; }
+            get { return _territoires; }
+            set { _territoires = value; }
         }
 
         #endregion
 
         #region Constructor
-        public Continent(Dictionary<string, ITerritoireBase> DicoTerritoires)
+        public Continent(ITerritoireBase[] DicoTerritoires)
         {
-            this._dicoTerritoires = DicoTerritoires;
+            this._territoires = DicoTerritoires;
         }
         #endregion
     }
