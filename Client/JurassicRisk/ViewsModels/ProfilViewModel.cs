@@ -116,10 +116,18 @@ namespace JurassicRisk.ViewsModels
         public async Task<bool> VerifProfilCreation(string pseudo)
         {
             bool res = false;
-            HttpResponseMessage reponseMessage = await JurasicRiskGameClient.Get.Client.GetAsync($"https://{JurasicRiskGameClient.Get.Ip}/Users/verifUser?pseudo={pseudo}");
-            if (reponseMessage.IsSuccessStatusCode)
+            try
             {
-                res = Boolean.Parse(await reponseMessage.Content.ReadAsStringAsync());
+                HttpResponseMessage reponseMessage = await JurasicRiskGameClient.Get.Client.GetAsync($"https://{JurasicRiskGameClient.Get.Ip}/Users/verifUser?pseudo={pseudo}");
+                if (reponseMessage.IsSuccessStatusCode)
+                {
+                    res = Boolean.Parse(await reponseMessage.Content.ReadAsStringAsync());
+                }
+
+            }
+            catch(Exception e)
+            {
+                res = e.Message;
             }
             return res;
         }
