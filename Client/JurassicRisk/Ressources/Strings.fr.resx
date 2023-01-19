@@ -144,6 +144,9 @@
   <data name="ErrorLobbyExist" xml:space="preserve">
     <value>Un lobby avec le meme nom existe déja</value>
   </data>
+  <data name="ErrorLobbyJoin" xml:space="preserve">
+    <value>Le lobby n'existe pas ou le mot de passe est incorrect</value>
+  </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>Message d'erreur</value>
   </data>
@@ -177,6 +180,9 @@
   <data name="JoinLobby" xml:space="preserve">
     <value>Rejoindre une partie</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Chargement...</value>
+  </data>
   <data name="Lobby" xml:space="preserve">
     <value>Hall de Jeux</value>
   </data>
@@ -198,6 +204,9 @@
   <data name="NoPseudoEnter" xml:space="preserve">
     <value>Veuillez entrer votre pseudo</value>
   </data>
+  <data name="NotConnect" xml:space="preserve">
+    <value>n'est pas connecté</value>
+  </data>
   <data name="NotOwner" xml:space="preserve">
     <value>Vous n'êtes pas le propriétaire du salon !</value>
   </data>
@@ -218,6 +227,9 @@
   </data>
   <data name="Play" xml:space="preserve">
     <value>Jouer</value>
+  </data>
+  <data name="PlayerReady" xml:space="preserve">
+    <value>Vous êtes prêts</value>
   </data>
   <data name="Profil" xml:space="preserve">
     <value>Profil</value>

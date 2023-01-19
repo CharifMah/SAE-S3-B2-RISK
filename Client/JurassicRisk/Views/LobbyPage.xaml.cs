@@ -44,7 +44,7 @@ namespace JurassicRisk.Views
             }
 
             try
-            {              
+            {
                 if (_partieConnect == 0 && ProfilViewModel.Get.SelectedProfil.Pseudo == _lobbyVm.Lobby.Owner)
                 {
                     await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
@@ -71,7 +71,7 @@ namespace JurassicRisk.Views
                 {
                     JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
                     Error.Visibility = Visibility.Visible;
-                    Error.Text = "vous etes pret";
+                    Error.Text = Strings.PlayerReady;
 
                     if (_partieConnect != 0  && ProfilViewModel.Get.SelectedProfil.Pseudo != _lobbyVm.Lobby.Owner)
                     {
@@ -89,9 +89,8 @@ namespace JurassicRisk.Views
             }
             else
             {
-                Error.Text = Strings.ErrorTeamsForReady;
                 Error.Visibility = Visibility.Visible;
-                Error.Text = " choisissez une equipe avant de vous mettre pret ";
+                Error.Text = Strings.ErrorTeamsForReady;
             }
         }
 

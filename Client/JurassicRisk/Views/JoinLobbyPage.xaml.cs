@@ -1,4 +1,5 @@
-﻿using JurassicRisk.ViewsModels;
+﻿using JurassicRisk.Ressource;
+using JurassicRisk.ViewsModels;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,7 +47,7 @@ namespace JurassicRisk.Views
                         else
                         {
                             Error.Visibility = Visibility.Visible;
-                            Error.Text = "Lobby don't exist";
+                            Error.Text = Strings.ErrorLobbyJoin;
                         }
                     }
                 }
