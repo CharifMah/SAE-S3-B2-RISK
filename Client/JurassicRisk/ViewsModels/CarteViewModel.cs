@@ -17,9 +17,9 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
 using Continent = Models.Map.Continent;
 using TerritoireDecorator = Models.Map.TerritoireDecorator;
 
@@ -338,9 +338,28 @@ namespace JurassicRisk.ViewsModels
         /// <param name="territoire"></param>
         private void DrawLines(TerritoireDecorator territoire)
         {
+            SolidColorBrush brush;
             IEnumerable<ITerritoireBase> AdjacentT = _graph.GetAdjacentVertices(territoire);
-            Random rand = new Random();
-            Brush brush = new SolidColorBrush(Color.FromRgb((byte)rand.Next(0, 256), (byte)rand.Next(0, 256), (byte)rand.Next(0, 256)));
+            switch (territoire.Team.ToString())
+            {
+                case "BLEU":
+                    brush = Brushes.Blue;
+                    break;
+                case "ROUGE":
+                    brush = Brushes.Red;
+                    break;
+                case "VERT":
+                    brush = Brushes.Green;
+                    break;
+                case "JAUNE":
+
+                    brush = Brushes.Yellow;
+                    break;
+                default:
+                    brush = Brushes.LightGray;
+                    break;
+            }
+
             foreach (TerritoireDecorator territoire1 in AdjacentT)
             {
                 Line l = new Line();
@@ -364,6 +383,9 @@ namespace JurassicRisk.ViewsModels
             {
                 _carteCanvas.Children.Remove(l);
             }
+
+            territoire.Lines.Clear();
+
         }
 
         /// <summary>
@@ -418,7 +440,6 @@ namespace JurassicRisk.ViewsModels
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
 
-
             shadow.Color = Brushes.Black.Color;
             c.Effect = shadow;
             this._carte.SelectedTerritoire = null;
@@ -438,8 +459,6 @@ namespace JurassicRisk.ViewsModels
 
             if (e.ChangedButton == MouseButton.Right)
             {
-                this._carte.SelectedTerritoire = territoire;
-                _selectedTerritoire = territoire;
                 if (JurassicRiskViewModel.Get.PartieVm.Partie.Joueurs[JurassicRiskViewModel.Get.PartieVm.Partie.PlayerIndex].Profil.Pseudo == JurassicRiskViewModel.Get.PartieVm.Joueur.Profil.Pseudo)
                 {
                     await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
@@ -449,11 +468,14 @@ namespace JurassicRisk.ViewsModels
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                this._carte.SelectedTerritoire = territoire;
-                _selectedTerritoire = territoire;
-                DrawLines(territoire);
-
-
+                if (territoire.Lines.Count > 0)
+                {
+                    EraseLine(territoire);
+                }
+                else
+                {
+                    DrawLines(territoire);
+                }
             }
 
             if (e.ChangedButton == MouseButton.Middle)
@@ -461,7 +483,6 @@ namespace JurassicRisk.ViewsModels
                 this._carte.SelectedTerritoire = territoire;
                 _selectedTerritoire = territoire;
                 JeuPage.GetInstance().ResetZoom();
-                EraseLine(territoire);
             }
 
             NotifyPropertyChanged("Carte");
