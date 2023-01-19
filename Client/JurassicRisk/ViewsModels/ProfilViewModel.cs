@@ -127,7 +127,6 @@ namespace JurassicRisk.ViewsModels
             }
             catch(Exception e)
             {
-                res = e.Message;
             }
             return res;
         }
