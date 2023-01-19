@@ -5,13 +5,9 @@ namespace Models.Units
     [DataContract]
     public class UniteBase : IUnit
     {
-        [DataMember]
-        private Elements element;
-        [DataMember]
+        protected Elements element;
         protected int id;
-        [DataMember]
         protected string name;
-        [DataMember]
         protected string description;
 
         public string Name { get => name; set => name = value; }
@@ -19,17 +15,15 @@ namespace Models.Units
         public int Id { get => id; set => id = value; }
         public Elements Element { get => element; set => element = value; }
 
-        public UniteBase(int Id, Elements element = Elements.EAU)
+        public UniteBase(int Id,string Description, string Name,Elements Element = Elements.EAU)
         {
-            this.element = element;
-            this.id = id;
-            this.name = "ExempleUnite";
-            this.description = "Description d'une unite";
+            this.element = Element;
+            this.id = Id;
+            this.name = Name;
+            this.description = Description;
         }
 
-        public UniteBase()
-        {
-
-        }
+        public UniteBase() 
+        { }
     }
 }

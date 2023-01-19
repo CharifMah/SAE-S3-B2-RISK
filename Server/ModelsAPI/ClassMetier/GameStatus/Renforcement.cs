@@ -13,7 +13,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public int IdTerritoireUpdate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int IdUniteRemove { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        /// <summary>
+        // <summary>
         /// Phase de renforcement
         /// </summary>
         /// <param name="carte"></param>
@@ -22,15 +22,8 @@ namespace ModelsAPI.ClassMetier.GameStatus
         /// <returns></returns>
         public bool Action(Carte carte, Joueur joueur, List<int> unitList)
         {
-          
-
             // Ajout des unités sur le territoire
-            List<IUnit> unitsToPlace = new List<IUnit>();
-            foreach(int i in unitList)
-            {
-                unitsToPlace.Add(joueur.Units[i]);
-            }
-            joueur.PlaceUnits(unitsToPlace, carte.SelectedTerritoire);
+            joueur.PlaceUnits(unitList, carte.SelectedTerritoire);
 
             return true;
         }

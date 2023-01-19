@@ -3,7 +3,7 @@ using Models.Player;
 
 namespace Models.GameStatus
 {
-    public class Attaque : Etat
+    public class Deplacement : Etat
     {
         public int IdTerritoireUpdate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int IdUniteRemove { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -15,14 +15,8 @@ namespace Models.GameStatus
 
         public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
         {
-            Etat etatSuivant = new Deplacement();
-            Console.WriteLine($"Passage à la phase de {etatSuivant}");
-            return etatSuivant;
+            // Passer au joueur suivant
+            throw new NotImplementedException();
         }
-        public override string? ToString()
-        {
-            return "Attaque";
-        }
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Models.Units
 {
-    internal class Pterosaure : UniteBase
+    public class Pterosaure : UniteBase
     {
         public Pterosaure()
         {

@@ -31,9 +31,13 @@ namespace Models.Map
         #endregion
 
         #region Constructor
-        public Continent(ITerritoireBase[] DicoTerritoires)
+        /// <summary>
+        /// Contient 
+        /// </summary>
+        /// <param name="Territoires">Les territoire du continent</param>
+        public Continent(ITerritoireBase[] Territoires)
         {
-            this._territoires = DicoTerritoires;
+            this._territoires = Territoires;
         }
         #endregion
     }

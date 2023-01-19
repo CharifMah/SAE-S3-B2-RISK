@@ -26,7 +26,7 @@ namespace ModelTestUnit
 
             //}
             //Carte carte = new Carte(continent);
-            //Assert.Equal(carte.DicoContinents.Values.ElementAt(0).Territoires.ElementAt(0).Value.Team, Teams.ROUGE);
+            //Assert.Equal(carte.Continents.Values.ElementAt(0).Territoires.ElementAt(0).Value.Team, Teams.ROUGE);
 
 
         }

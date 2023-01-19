@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelsAPI.ClassMetier.Units
 {
-    internal class Baryonyx : UniteBase
+    public class Baryonyx : UniteBase
     {
         public Baryonyx()
         {

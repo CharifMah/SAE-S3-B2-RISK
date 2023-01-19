@@ -54,25 +54,15 @@ namespace ModelsAPI.ClassMetier.Player
             _isReady = false;
             FabriqueUniteBase f = new FabriqueUniteBase();
             _units = new List<IUnit>();
-            Random random = new Random();
-            for (int i = 0; i < 35; i++)
+
+            for (int i = 0; i < 9; i++)
             {
-                switch (random.Next(4))
-                {
-                    case 0:
-                        _units.Add(f.Create("Rex"));
-                        break;
-                    case 1:
-                        _units.Add(f.Create("Brachiosaurus"));
-                        break;
-                    case 2:
-                        _units.Add(f.Create("Baryonyx"));
-                        break;
-                    case 3:
-                        _units.Add(f.Create("Pterosaure"));
-                        break;
-                }
+                _units.Add(f.Create("Rex"));
+                _units.Add(f.Create("Brachiosaurus"));
+                _units.Add(f.Create("Baryonyx"));
+                _units.Add(f.Create("Pterosaure"));
             }
+            _units.Add(f.Create("Pterosaure"));
 
             _profil = profil;
             _team = team;
@@ -80,39 +70,35 @@ namespace ModelsAPI.ClassMetier.Player
 
         #endregion
 
-        private void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
+        private void AddUnits(List<int> unites, ITerritoireBase territoire)
         {
             if ((_team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
                 foreach (var unit in unites)
                 {
-                    if (_units.Contains(unit))
-                    {
-                        _units.Remove(unit);
-
-                        territoire.AddUnit(unit);
-                        territoire.Team = _team;
-                    }
-                }
-            }
-        }
-
-        private void AddUnits(IUnit unit, ITerritoireBase territoire)
-        {
-            if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
-            {
-                if (_units.Contains(unit))
-                {
-                    _units.Remove(unit);
-
-                    territoire.AddUnit(unit);
+                    territoire.AddUnit(_units[unit]);
                     territoire.Team = _team;
-
+                    _units.RemoveAt(unit);
                 }
             }
+
         }
 
-        public void PlaceUnits(List<IUnit> unitToPlace, ITerritoireBase territoire)
+
+        private bool AddUnit(int indexUnit, ITerritoireBase territoire)
+        {
+            bool res = false;
+            if (_units.Count > 0 && _team == territoire.Team || (_units.Count > 0 && territoire.Team == Teams.NEUTRE))
+            {
+                territoire.AddUnit(_units[indexUnit]);
+                territoire.Team = _team;
+                _units.RemoveAt(indexUnit);
+                res = true;
+            }
+            return res;
+        }
+
+        public void PlaceUnits(List<int> unitToPlace, ITerritoireBase territoire)
         {
             if (this._units.Count > 0)
             {
@@ -120,12 +106,14 @@ namespace ModelsAPI.ClassMetier.Player
             }
         }
 
-        public void PlaceUnits(IUnit unitToPlace, ITerritoireBase territoire)
+        public bool PlaceUnit(int indexUnit, ITerritoireBase territoire)
         {
+            bool res = false;
             if (this._units.Count > 0)
             {
-                this.AddUnits(unitToPlace, territoire);
+                res = this.AddUnit(indexUnit, territoire);
             }
+            return res;
         }
 
         public void RemoveUnit(IUnit unit)

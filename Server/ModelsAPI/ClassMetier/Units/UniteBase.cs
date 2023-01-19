@@ -17,13 +17,12 @@
         #endregion
 
 
-
-        public UniteBase(int Id, Elements element = Elements.EAU)
+        public UniteBase(int Id, string Description, string Name, Elements Element = Elements.EAU)
         {
-            this.element = element;
+            this.element = Element;
             this.id = Id;
-            name = "ExempleUnite";
-            description = "Description d'une unite";
+            this.name = Name;
+            this.description = Description;
         }
 
         public UniteBase()
