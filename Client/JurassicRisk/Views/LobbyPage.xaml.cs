@@ -54,7 +54,7 @@ namespace JurassicRisk.Views
                 {
                     JurassicRiskViewModel.Get.JoueurVm.IsReady = "✅";
                     Error.Visibility = Visibility.Visible;
-                    Error.Text = "vous etes pret";
+                    Error.Text = Strings.PlayerReady;
 
                     if (_partieConnect == -1)
                     {
@@ -71,9 +71,8 @@ namespace JurassicRisk.Views
             }
             else
             {
-                Error.Text = Strings.ErrorTeamsForReady;
                 Error.Visibility = Visibility.Visible;
-                Error.Text = " choisissez une equipe avant de vous mettre pret ";
+                Error.Text = Strings.ErrorTeamsForReady;
             }
         }
 

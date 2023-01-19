@@ -1,4 +1,5 @@
-﻿using JurassicRisk.ViewsModels;
+﻿using JurassicRisk.Ressource;
+using JurassicRisk.ViewsModels;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -48,14 +49,14 @@ namespace JurassicRisk.Views
 
                         if (i >= 2)
                         {
-                            Error.Text = "is not connected";
+                            Error.Text = Strings.NotConnect;
                             Error.Visibility = Visibility.Visible;
                             if (JurassicRiskViewModel.Get.LobbyVm.Lobby != null)
                                 (Window.GetWindow(App.Current.MainWindow) as MainWindow).frame.NavigationService.Navigate(new LobbyPage());
                         }
                         else
                         {
-                            Error.Text = "Loading...";
+                            Error.Text = Strings.Loading;
                             Error.Visibility = Visibility.Visible;
                         }
 

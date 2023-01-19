@@ -82,12 +82,12 @@ namespace JurassicRisk.Views
 
                         if (i >= 2)
                         {
-                            Error.Text = "is not connected";
+                            Error.Text = Strings.NotConnect;
                             Error.Visibility = Visibility.Visible;
                         }
                         else
                         {
-                            Error.Text = "Loading...";
+                            Error.Text = Strings.Loading;
                             Error.Visibility = Visibility.Visible;
                         }
 

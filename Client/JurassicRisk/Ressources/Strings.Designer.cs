@@ -441,6 +441,28 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("EndPhase", resourceCulture);
             }
         }
+        public static string PlayerReady
+        {
+            get
+            {
+                return ResourceManager.GetString("PlayerReady", resourceCulture);
+            }
+        }
+        public static string NotConnect
+        {
+            get
+            {
+                return ResourceManager.GetString("NotConnect", resourceCulture);
+            }
+        }
+        public static string Loading
+        {
+            get
+            {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+
     }
     
 }
