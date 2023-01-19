@@ -77,6 +77,14 @@ namespace RISKAPI.Hubs
                                 
                                 Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
                             }
+                        case "Renforcement":
+                            Renforcement r = (p.Etat as Renforcement);
+                            if (p.PlayerIndex != -1)
+                            {
+                                await Clients.Group(partieName).SendAsync("renforcement", r.IdUniteRemove, r.IdTerritoireUpdate, r.PlayerIndex);
+
+                                Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
+                            }
 
                             break;
                     }

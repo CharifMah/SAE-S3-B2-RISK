@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Models.GameStatus;
 using System.Windows;
 
 namespace Models.Services
@@ -12,6 +13,7 @@ namespace Models.Services
         public event Action<int> EndTurn;
         public event Action Disconnected;
         public event Action<int, int,int> Deploiment;
+        public event Action<List<int>, int, int> Renforcement;
 
         /// <summary>
         /// SignalRPartieService
@@ -25,6 +27,7 @@ namespace Models.Services
             _connection.On<int>("endTurn", (indexPlayer) => EndTurn?.Invoke(indexPlayer));
             _connection.On("disconnected", () => Disconnected?.Invoke());
             _connection.On<int, int, int>("deploiment", (idUnit, idTerritoire, playerIndex) => Deploiment?.Invoke(idUnit, idTerritoire, playerIndex));
+            _connection.On<List<int>, int, int>("renforcement", (idUnits, idTerritoire, playerIndex) => Renforcement?.Invoke(idUnits, idTerritoire, playerIndex));
 
         }
 

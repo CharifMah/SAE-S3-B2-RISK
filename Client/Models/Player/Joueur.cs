@@ -81,23 +81,17 @@ namespace Models.Player
 
         #endregion
 
-        private void AddUnits(List<IUnit> unites, ITerritoireBase territoire)
+        private void AddUnits(List<int> unites, ITerritoireBase territoire)
         {
             if ((_team == territoire.Team || territoire.Team == Teams.NEUTRE))
             {
                 foreach (var unit in unites)
                 {
-                    if (_units.Contains(unit))
-                    {
-                        _units.Remove(unit);
+                    _units.RemoveAt(unit);
 
-                        territoire.AddUnit(unit);
-                        territoire.Team = _team;
-                    }
+                    territoire.AddUnit(_units[unit]);
+                    territoire.Team = _team;
                     SoundStore.Get("Slidersound.mp3").Play();
-                    territoire.AddUnit(unit);
-                    territoire.Team = this._team;
-
                 }
             }
 
@@ -118,7 +112,7 @@ namespace Models.Player
             return res;
         }
 
-        public void PlaceUnits(List<IUnit> unitToPlace, ITerritoireBase territoire)
+        public void PlaceUnits(List<int> unitToPlace, ITerritoireBase territoire)
         {
             if (this._units.Count > 0)
             {

@@ -274,6 +274,26 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("ActualPlayer");
         }
 
+        private void _partieChatService_Renforcement(List<int> idUnit, int idTerritoire, int playerIndex)
+        {
+            _partie.PlayerIndex = playerIndex;
+            if (_partie.Joueurs[playerIndex] != null && _partie.Joueurs[playerIndex].Units.Count > 0)
+            {
+                _partie.Joueurs[playerIndex].PlaceUnits(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
+                JurassicRiskViewModel.Get.JoueurVm.PlaceUnits(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
+                if (_joueurVm.Joueur.Units.Count <= 0)
+                {
+                    SoundStore.Get("errorsound.mp3").Play();
+                    MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
+                }
+
+            }
+
+            NotifyPropertyChanged("Joueur");
+            NotifyPropertyChanged("OtherPlayers");
+            NotifyPropertyChanged("ActualPlayer");
+        }
+
         private async void _chatService_EndTurn(int indexPlayer)
         {
             _partie.PlayerIndex = indexPlayer;
