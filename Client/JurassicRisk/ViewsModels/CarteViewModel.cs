@@ -19,7 +19,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
-using Carte = Models.Map.Carte;
 using Color = System.Windows.Media.Color;
 using Continent = Models.Map.Continent;
 using TerritoireDecorator = Models.Map.TerritoireDecorator;
@@ -30,13 +29,14 @@ namespace JurassicRisk.ViewsModels
     public class CarteViewModel : observable.Observable
     {
         #region Attributes
+        private TerritoireDecorator? _selectedTerritoire;
         private AdjacencySetGraph _graph;
         private Canvas _carteCanvas;
         private Carte _carte;
         private FabriqueUniteBase f;
         private int zi = 0;
         private JoueurViewModel _joueurVm;
-        private List<ITerritoireBase> _territoires;
+        private List<TerritoireDecorator> _territoires;
 
         public delegate void DrawEnd();
         public delegate void Progression(double rate);
@@ -74,6 +74,12 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
+        public List<TerritoireDecorator> Territoires { get => _territoires; set => _territoires = value; }
+        public TerritoireDecorator? SelectedTerritoire
+        {
+            get => _selectedTerritoire;
+            set { _selectedTerritoire = value; NotifyPropertyChanged(); }
+        }
         #endregion
 
         #region Constructor
@@ -105,8 +111,8 @@ namespace JurassicRisk.ViewsModels
             ChargerCollection c = new ChargerCollection(Environment.CurrentDirectory);
             _carte = c.Charger<Carte>("Map/Cartee");
             _carteCanvas = new Canvas();
-
-            _territoires = new List<ITerritoireBase>();
+            _selectedTerritoire = (TerritoireDecorator?)_carte.SelectedTerritoire;
+            _territoires = new List<TerritoireDecorator>();
             drawing = true;
             currentPosition = 0;
             progress(currentPosition);
@@ -127,6 +133,7 @@ namespace JurassicRisk.ViewsModels
             InitGraph();
 
             await Task.CompletedTask;
+            NotifyPropertyChanged("SelectedTerritoire");
             NotifyPropertyChanged("CarteCanvas");
             NotifyPropertyChanged("Carte");
             return _carte;
@@ -137,7 +144,8 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         private void InitGraph()
         {
-            _graph = new AdjacencySetGraph(_territoires);
+            List<ITerritoireBase> t = new List<ITerritoireBase>(_territoires);
+            _graph = new AdjacencySetGraph(t);
 
             currentPosition = 1;
             progress(currentPosition);
@@ -305,7 +313,7 @@ namespace JurassicRisk.ViewsModels
             territoire.Height = (int)myImageBrush.Size.Height;
             myCanvas.Children.Add(myImageBrush);
             //Add All ElementUI to Carte Canvas
-            myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
+            myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} Id : {territoire.ID} team : {territoire.Team}" };
             myCanvas.ToolTipOpening += (sender, e) => MyCanvasTerritoire_ToolTipOpening(sender, e, territoire, myCanvas);
             myCanvas.MouseEnter += (sender, e) => MyCanvasTerritoire_MouseEnter(sender, e);
             myCanvas.MouseLeave += (sender, e) => MyCanvasTerritoire_MouseLeave(sender, e);
@@ -402,17 +410,36 @@ namespace JurassicRisk.ViewsModels
         #region Event
         private void MyCanvasTerritoire_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
         {
-            canvas.ToolTip = $"Units: {territoire.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
+            canvas.ToolTip = $"Units: {territoire.Units.Count} Id : {territoire.ID} team : {territoire.Team}";
         }
 
-        private async void MyCanvasTerritoire_PreviewMouseUp(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
+        private void MyCanvasTerritoire_PreviewMouseUp(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
 
+
+            shadow.Color = Brushes.Black.Color;
+            c.Effect = shadow;
+            this._carte.SelectedTerritoire = null;
+            _selectedTerritoire = null;
+            NotifyPropertyChanged("Carte");
+            NotifyPropertyChanged("SelectedTerritoire");
+            NotifyPropertyChanged("CarteCanvas");
+        }
+
+        private async void MyCanvasTerritoire_PreviewMouseDown(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
+        {
+            Canvas? c = sender as Canvas;
+            DropShadowEffect shadow = new DropShadowEffect();
+
+            shadow.Color = Brushes.Green.Color;
+            c.Effect = shadow;
+
             if (e.ChangedButton == MouseButton.Right)
             {
                 this._carte.SelectedTerritoire = territoire;
+                _selectedTerritoire = territoire;
                 if (JurassicRiskViewModel.Get.PartieVm.Partie.Joueurs[JurassicRiskViewModel.Get.PartieVm.Partie.PlayerIndex].Profil.Pseudo == JurassicRiskViewModel.Get.PartieVm.Joueur.Profil.Pseudo)
                 {
                     await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
@@ -423,32 +450,23 @@ namespace JurassicRisk.ViewsModels
             if (e.ChangedButton == MouseButton.Left)
             {
                 this._carte.SelectedTerritoire = territoire;
+                _selectedTerritoire = territoire;
                 DrawLines(territoire);
+
+
             }
 
             if (e.ChangedButton == MouseButton.Middle)
             {
+                this._carte.SelectedTerritoire = territoire;
+                _selectedTerritoire = territoire;
                 JeuPage.GetInstance().ResetZoom();
                 EraseLine(territoire);
             }
 
-            shadow.Color = Brushes.Black.Color;
-            c.Effect = shadow;
-            this._carte.SelectedTerritoire = null;
             NotifyPropertyChanged("Carte");
             NotifyPropertyChanged("CarteCanvas");
-        }
-
-        private void MyCanvasTerritoire_PreviewMouseDown(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
-        {
-            Canvas? c = sender as Canvas;
-            DropShadowEffect shadow = new DropShadowEffect();
-
-            shadow.Color = Brushes.Green.Color;
-            c.Effect = shadow;
-
-            NotifyPropertyChanged("Carte");
-            NotifyPropertyChanged("CarteCanvas");
+            NotifyPropertyChanged("SelectedTerritoire");
         }
 
         private void MyCanvasTerritoire_MouseLeave(object sender, MouseEventArgs e)

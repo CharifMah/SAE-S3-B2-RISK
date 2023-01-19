@@ -35,7 +35,7 @@
             <Run Text="Connecte en tant que: "/>
             <Run Text="{Binding Path=SelectedProfil.Pseudo}"/>
         </TextBlock>
-        
+
 
         <TextBlock Style="{StaticResource Bloody}" FontSize="85" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Top" Text="{x:Static Ressources:Strings.GameTitle}">
       
