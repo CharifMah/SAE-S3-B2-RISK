@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -194,7 +195,13 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Event
-
+        /// <summary>
+        /// Receive la partie + update data
+        /// </summary>
+        /// <param name="joueursJson"></param>
+        /// <param name="partieName"></param>
+        /// <param name="etatJson"></param>
+        /// <param name="playerindex"></param>
         private void _chatService_PartieReceived(string joueursJson, string partieName, string etatJson, int playerindex)
         {
             Application.Current.Dispatcher.Invoke(async () =>
@@ -215,7 +222,8 @@ namespace JurassicRisk.ViewsModels
                 _isConnectedToPartie = true;
 
                 await _carteVm.InitCarte();
-
+                Progression(100);
+                DrawEnd();
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
 
             }, DispatcherPriority.Render);
@@ -282,6 +290,7 @@ namespace JurassicRisk.ViewsModels
             }
               (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
             _isConnectedToPartie = false;
+            _carteLoaded = false;
         }
 
         #region Delegate
@@ -300,7 +309,9 @@ namespace JurassicRisk.ViewsModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 _carteLoaded = true;
+                _progression= 0;
                 NotifyPropertyChanged("CarteLoaded");
+                NotifyPropertyChanged("Progress");
             }, DispatcherPriority.Render);
         }
 
