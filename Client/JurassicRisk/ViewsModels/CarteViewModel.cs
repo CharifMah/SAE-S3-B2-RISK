@@ -306,12 +306,12 @@ namespace JurassicRisk.ViewsModels
             myCanvas.Children.Add(myImageBrush);
             //Add All ElementUI to Carte Canvas
             myCanvas.ToolTip = new ToolTip() { Content = $"Units: {territoire.TerritoireBase.Units.Count} ID : {territoire.ID} team : {territoire.Team}" };
-            myCanvas.ToolTipOpening += (sender, e) => MyCanvas_ToolTipOpening(sender, e, territoire, myCanvas);
-            myCanvas.MouseEnter += (sender, e) => MyCanvas_MouseEnter(sender, e);
-            myCanvas.MouseLeave += (sender, e) => MyCanvas_MouseLeave(sender, e);
-            myCanvas.PreviewMouseDown += (sender, e) => MyCanvas_PreviewMouseDown(sender, e, territoire);
+            myCanvas.ToolTipOpening += (sender, e) => MyCanvasTerritoire_ToolTipOpening(sender, e, territoire, myCanvas);
+            myCanvas.MouseEnter += (sender, e) => MyCanvasTerritoire_MouseEnter(sender, e);
+            myCanvas.MouseLeave += (sender, e) => MyCanvasTerritoire_MouseLeave(sender, e);
+            myCanvas.PreviewMouseDown += (sender, e) => MyCanvasTerritoire_PreviewMouseDown(sender, e, territoire);
             myCanvas.PreviewMouseWheel += (sender, e) => MyCanvas_PreviewMouseWheel(sender, e, territoire);
-            myCanvas.PreviewMouseUp += (sender, e) => MyCanvas_PreviewMouseUp(sender, e, territoire);
+            myCanvas.PreviewMouseUp += (sender, e) => MyCanvasTerritoire_PreviewMouseUp(sender, e, territoire);
             ToolTipService.SetInitialShowDelay(myCanvas, 1);
 
             _carteCanvas.Children.Add(myCanvas);
@@ -400,12 +400,12 @@ namespace JurassicRisk.ViewsModels
         #endregion
 
         #region Event
-        private void MyCanvas_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
+        private void MyCanvasTerritoire_ToolTipOpening(object sender, ToolTipEventArgs e, TerritoireDecorator territoire, Canvas canvas)
         {
             canvas.ToolTip = $"Units: {territoire.Units.Count} ID : {territoire.ID} team : {territoire.Team}";
         }
 
-        private async void MyCanvas_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
+        private async void MyCanvasTerritoire_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
@@ -439,7 +439,7 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvas_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
+        private void MyCanvasTerritoire_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas? c = sender as Canvas;
             DropShadowEffect shadow = new DropShadowEffect();
@@ -451,7 +451,7 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MyCanvasTerritoire_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Canvas c = (sender as Canvas);
             c.Width -= 35;
@@ -470,7 +470,7 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("CarteCanvas");
         }
 
-        private void MyCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MyCanvasTerritoire_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Canvas c = (sender as Canvas);
             Canvas.SetZIndex(c, zi);
