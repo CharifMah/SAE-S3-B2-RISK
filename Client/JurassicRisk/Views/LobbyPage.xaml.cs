@@ -45,10 +45,9 @@ namespace JurassicRisk.Views
 
             try
             {
-                await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
-
                 if (_partieConnect == 0 && ProfilViewModel.Get.SelectedProfil.Pseudo == _lobbyVm.Lobby.Owner)
                 {
+                    await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
                     await _lobbyVm.StartGameOwnerOnly();
 
                     _partieConnect = 1;

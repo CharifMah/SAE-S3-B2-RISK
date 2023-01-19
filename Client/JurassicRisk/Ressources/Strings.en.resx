@@ -144,6 +144,9 @@
   <data name="ErrorLobbyExist" xml:space="preserve">
     <value>A lobby with the same name already exist</value>
   </data>
+  <data name="ErrorLobbyJoin" xml:space="preserve">
+    <value>Wrong password or the lobby not exist</value>
+  </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>Error message</value>
   </data>

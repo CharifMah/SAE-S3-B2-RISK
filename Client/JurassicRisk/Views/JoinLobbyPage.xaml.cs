@@ -47,7 +47,7 @@ namespace JurassicRisk.Views
                         else
                         {
                             Error.Visibility = Visibility.Visible;
-                            Error.Text = "Lobby don't exist";
+                            Error.Text = Strings.ErrorLobbyJoin;
                         }
                     }
                 }

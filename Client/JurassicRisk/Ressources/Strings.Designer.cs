@@ -462,6 +462,13 @@ namespace JurassicRisk.Ressource
                 return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
+        public static string ErrorLobbyJoin
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorLobbyJoin", resourceCulture);
+            }
+        }
 
     }
     
