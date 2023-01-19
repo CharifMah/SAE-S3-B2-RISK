@@ -45,7 +45,7 @@ namespace JurassicRisk.ViewsModels
         public LobbyViewModel()
         {
             _lobby = null;
-            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/LobbyHub").Build();
+            _connection = new HubConnectionBuilder().WithUrl($"wss://{JurasicRiskGameClient.Get.Ip}/JurrasicRisk/LobbyHub").Build();
             _chatService = new SignalRLobbyService(_connection);
 
             _isConnectedToLobby = false;
