@@ -110,10 +110,6 @@ namespace JurassicRisk.ViewsModels
 
                     _joueur.PlaceUnits(UniteBases, territoire);
                 }
-                else
-                {
-                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
-                }
                 NotifyPropertyChanged("NombreTrp");
                 NotifyPropertyChanged("Units");
             });

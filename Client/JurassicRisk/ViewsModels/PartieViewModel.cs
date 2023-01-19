@@ -263,7 +263,6 @@ namespace JurassicRisk.ViewsModels
                 if (_joueurVm.Joueur.Units.Count <= 0)
                 {
                     SoundStore.Get("errorsound.mp3").Play();
-                    MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
                 }
 
             }
@@ -283,7 +282,6 @@ namespace JurassicRisk.ViewsModels
                 if (_joueurVm.Joueur.Units.Count <= 0)
                 {
                     SoundStore.Get("errorsound.mp3").Play();
-                    MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
                 }
 
             }
