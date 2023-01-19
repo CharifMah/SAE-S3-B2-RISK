@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.Views
 {
@@ -17,11 +18,13 @@ namespace JurassicRisk.Views
     {
         private int _partieConnect = -1;
         private LobbyViewModel _lobbyVm;
+
         public LobbyPage()
         {
             InitializeComponent();
             _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
             DataContext = _lobbyVm;
+            progression.DataContext = JurassicRiskViewModel.Get.PartieVm;
             _partieConnect = -1;
         }
 
