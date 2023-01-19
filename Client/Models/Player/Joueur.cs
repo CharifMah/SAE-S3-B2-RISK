@@ -107,7 +107,7 @@ namespace Models.Player
         private bool AddUnit(int indexUnit, ITerritoireBase territoire)
         {
             bool res = false;
-            if (_team == territoire.Team || territoire.Team == Teams.NEUTRE)
+            if (_units.Count > 0 && _team == territoire.Team || territoire.Team == Teams.NEUTRE)
             {
                 _units.RemoveAt(indexUnit);
 
