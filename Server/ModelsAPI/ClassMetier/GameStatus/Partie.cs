@@ -83,9 +83,9 @@ namespace ModelsAPI.ClassMetier.GameStatus
                     int nbTerritoires = 0;
                     int nbRenforts = 0;
 
-                    foreach (Continent c in this._carte.DicoContinents.Values)
+                    foreach (Continent c in this._carte.Continent)
                     {
-                        foreach (TerritoireBase t in c.DicoTerritoires.Values)
+                        foreach (TerritoireBase t in c.Territoires)
                         {
                             if (t.Team == this._joueurs[_playerIndex].Team)
                             {

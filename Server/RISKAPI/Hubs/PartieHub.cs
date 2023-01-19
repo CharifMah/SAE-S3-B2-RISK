@@ -36,10 +36,15 @@ namespace RISKAPI.Hubs
             }
             if (partie != null && partie.Joueurs.Count > 0 && partie.Joueurs[partie.PlayerIndex].Profil.Pseudo == joueurName)
             {
-                Joueur joueur = partie.Joueurs[partie.NextPlayer()];
+                int index = partie.NextPlayer();
+                Joueur joueur = partie.Joueurs[index];
                 partie.Transition();
-                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", JsonConvert.SerializeObject(partie.Etat), partie.Etat.ToString());
+                string etatJson = JsonConvert.SerializeObject(partie.Etat);
+                await Clients.Client(joueur.Profil.ConnectionId).SendAsync("yourTurn", etatJson, partie.Etat.ToString(), index);
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"c'est au tour de {joueur.Profil.Pseudo}");
+                Console.ForegroundColor = ConsoleColor.White;
+
             }
             else
             {
@@ -53,30 +58,39 @@ namespace RISKAPI.Hubs
         /// <param name="partieName">nom de la partie</param>
         /// <param name="unitlist">list index d'unité</param>
         /// <returns>Task</returns>
-        public async Task Action(string partieName, List<int> unitlist)
+        public async Task Action(string partieName, List<int> unitlist, string joueurName)
         {
             Partie p = JurasicRiskGameServer.Get.Parties.First(l => l.Id == partieName);
-
-            if (p.Action(unitlist))
+            if (p.Joueurs[p.PlayerIndex].Profil.Pseudo == joueurName)
             {
-                switch (p.Etat.ToString())
+                if (p.Action(unitlist))
                 {
-                    case "Deploiment":
-                        Deploiment d = (p.Etat as Deploiment);
-                        if (p.PlayerIndex != -1)
-                        {
+                    switch (p.Etat.ToString())
+                    {
+                        case "Deploiment":
+                            Deploiment d = (p.Etat as Deploiment);
+                            if (p.PlayerIndex != -1)
+                            {
 
-                            await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
+                                await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
+                                await Clients.Group(partieName).SendAsync("endTurn", p.NextPlayer());
 
-                            await Clients.Client(p.Joueurs[p.PlayerIndex].Profil.ConnectionId).SendAsync("endTurn");
+                                Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
+                            }
+                            break;
+                        case "Renforcement":
+                            Renforcement r = (p.Etat as Renforcement);
+                            if (p.PlayerIndex != -1)
+                            {
+                                await Clients.Group(partieName).SendAsync("renforcement", r.IdUniteRemove, r.IdTerritoireUpdate, p.PlayerIndex);
 
-                            Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
-                        }
+                                Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
+                            }
 
-                        break;
+                            break;
+                    }
                 }
             }
-
         }
 
         /// <summary>
@@ -88,7 +102,7 @@ namespace RISKAPI.Hubs
         public async Task SetSelectedTerritoire(string partieName, int ID)
         {
             Partie p = JurasicRiskGameServer.Get.Parties.First(partie => partie.Id == partieName);
-            p.Carte.SelectedTerritoire = p.Carte.GetTerritoire(ID);
+            p.Carte.SelectedTerritoire = (TerritoireBase?)p.Carte.GetTerritoire(ID);
             Console.WriteLine("Selected Territoire set to " + ID);
         }
 
@@ -140,7 +154,7 @@ namespace RISKAPI.Hubs
             Lobby lobby = JurasicRiskGameServer.Get.Lobbys.FirstOrDefault(l => l.Id == partieName);
             string joueursJson = "";
             string etatJson = "";
-            if (partie!= null && partie.Owner == null)
+            if (partie != null && partie.Owner == null)
             {
                 partie.Owner = joueurName;
             }
@@ -164,9 +178,10 @@ namespace RISKAPI.Hubs
                     }
                     joueursJson = JsonConvert.SerializeObject(partie.Joueurs);
                     etatJson = JsonConvert.SerializeObject(partie.Etat);
-                    await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, partie.NextPlayer());
+                    int index = partie.NextPlayer();
+                    await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, index);
                     Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
-                    await Clients.Group(partieName).SendAsync("yourTurn", etatJson, partie.Etat.ToString());
+                    await Clients.Group(partieName).SendAsync("yourTurn", etatJson, partie.Etat.ToString(), index);
                     Console.WriteLine($"Partie avec {partie.Joueurs.Count} players Crée");
                 }
             }
@@ -252,33 +267,34 @@ namespace RISKAPI.Hubs
         #endregion
 
         #region Private
-
         private Carte CreateCarte1()
         {
-            Dictionary<string, ITerritoireBase> territoires = new Dictionary<string, ITerritoireBase>();
-            for (int i = 0; i < 41; i++)
+            ITerritoireBase[] territoires = new ITerritoireBase[41];
+            for (int i = 0; i < territoires.Length; i++)
             {
-                territoires.Add(i.ToString(), new TerritoireBase(i, null));
+                territoires[i] = new TerritoireBase(i, null);
             }
-            List<IContinent> _continents = new List<IContinent>
+            IContinent[] _continents = new IContinent[6]
             {
-                new Continent(territoires.Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(7).Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(14).Take(8).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(22).Take(7).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(29).Take(5).ToDictionary(x => x.Key, y => y.Value)),
-                new Continent(territoires.Skip(34).Take(7).ToDictionary(x => x.Key, y => y.Value))
+                 //Ajout de 7 territoires au premier continent en utilisant les index 0 à 6 du dictionnaire "territoires"
+                new Continent(territoires[0..7]),
+                //Ajout de 7 territoires au deuxième continent en utilisant les index 7 à 13 du dictionnaire "territoires"
+                new Continent(territoires[7..14]),
+                //Ajout de 8 territoires au troisième continent en utilisant les index 14 à 21 du dictionnaire "territoires"
+                new Continent(territoires[14..22]),
+                //Ajout de 7 territoires au quatrième continent en utilisant les index 22 à 28 du dictionnaire "territoires"
+                new Continent(territoires[22..29]),
+                //Ajout de 5 territoires au cinquième continent en utilisant les index 29 à 33 du dictionnaire "territoires"
+                new Continent(territoires[29..34]),
+                //Ajout de 7 territoires au sixième continent en utilisant les index 34 à 40"territoires"
+                new Continent(territoires[34..41])
             };
-            Dictionary<string, IContinent> dic = new Dictionary<string, IContinent>();
-            for (int i = 0; i < _continents.Count; i++)
-            {
-                dic.Add(i.ToString(), _continents[i]);
-            }
 
-
-            return new Carte(dic, null);
+            return new Carte(_continents, null);
         }
 
         #endregion
+
+
     }
 }

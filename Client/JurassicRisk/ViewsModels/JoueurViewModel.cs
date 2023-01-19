@@ -97,15 +97,16 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="UniteBases">Les unite a ajouter</param>
         /// <param name="territoire">le territoire</param>
-        public void PlaceUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
+        public void PlaceUnits(List<int> UniteBases, ITerritoireBase territoire)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
-                    _joueur.PlaceUnits(UniteBases, territoire);
                     if (_units.Count > 0)
                         _selectedUnit = _units[0];
+
+                    _joueur.PlaceUnits(UniteBases, territoire);
                 }
                 else
                 {
@@ -128,10 +129,6 @@ namespace JurassicRisk.ViewsModels
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
                    _units.RemoveAt(indexUnit);
-                }
-                else
-                {
-                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
                 }
                 NotifyPropertyChanged("NombreTrp");
                 NotifyPropertyChanged("Units");

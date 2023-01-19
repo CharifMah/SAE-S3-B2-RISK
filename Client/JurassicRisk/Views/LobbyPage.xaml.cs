@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.Views
 {
@@ -17,11 +18,13 @@ namespace JurassicRisk.Views
     {
         private int _partieConnect = -1;
         private LobbyViewModel _lobbyVm;
+
         public LobbyPage()
         {
             InitializeComponent();
             _lobbyVm = JurassicRiskViewModel.Get.LobbyVm;
             DataContext = _lobbyVm;
+            progression.DataContext = JurassicRiskViewModel.Get.PartieVm;
             _partieConnect = -1;
         }
 
@@ -41,11 +44,10 @@ namespace JurassicRisk.Views
             }
 
             try
-            {
-                await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
-
+            {              
                 if (_partieConnect == 0 && ProfilViewModel.Get.SelectedProfil.Pseudo == _lobbyVm.Lobby.Owner)
                 {
+                    await JurassicRiskViewModel.Get.PartieVm.StartPartie(_lobbyVm.Lobby.Id, ProfilViewModel.Get.SelectedProfil.Pseudo, "carte");
                     await _lobbyVm.StartGameOwnerOnly();
 
                     _partieConnect = 1;

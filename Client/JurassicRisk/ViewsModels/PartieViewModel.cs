@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using static JurassicRisk.ViewsModels.CarteViewModel;
 
 namespace JurassicRisk.ViewsModels
 {
@@ -83,7 +84,7 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
-        public string ActualPlayer { get => _actualPlayer; set => _actualPlayer = value; }
+        public Joueur ActualPlayer { get => _partie.Joueurs[_partie.PlayerIndex]; set { _partie.Joueurs[_partie.PlayerIndex] = value; NotifyPropertyChanged(); } }
 
         #endregion
 
@@ -96,7 +97,7 @@ namespace JurassicRisk.ViewsModels
             _progression = 0;
             //_actualPlayer = Partie.Joueurs[Partie.PlayerIndex].Profil.Pseudo;
 
-            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
+            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").WithAutomaticReconnect().Build();
             _partieChatService = new SignalRPartieService(_connection);
 
             _partieChatService.YourTurn += _chatService_YourTurn;
@@ -189,11 +190,18 @@ namespace JurassicRisk.ViewsModels
         public async Task SendEndTurn()
         {
             await _partieChatService.SendEndTurn(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+            NotifyPropertyChanged("ActualPlayer");
         }
         #endregion
 
         #region Event
-
+        /// <summary>
+        /// Receive la partie + update data
+        /// </summary>
+        /// <param name="joueursJson"></param>
+        /// <param name="partieName"></param>
+        /// <param name="etatJson"></param>
+        /// <param name="playerindex"></param>
         private void _chatService_PartieReceived(string joueursJson, string partieName, string etatJson, int playerindex)
         {
             Application.Current.Dispatcher.Invoke(async () =>
@@ -214,7 +222,8 @@ namespace JurassicRisk.ViewsModels
                 _isConnectedToPartie = true;
 
                 await _carteVm.InitCarte();
-
+                Progression(100);
+                DrawEnd();
                 (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new JeuPage());
 
             }, DispatcherPriority.Render);
@@ -222,9 +231,9 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("Partie");
         }
 
-        private void _chatService_YourTurn(string etatJson, string name)
+        private void _chatService_YourTurn(string etatJson, string name,int playerIndex)
         {
-
+            _partie.PlayerIndex = playerIndex;
             switch (name)
             {
                 case "Deploiment":
@@ -242,10 +251,12 @@ namespace JurassicRisk.ViewsModels
             }
 
             NotifyPropertyChanged("Partie");
+            NotifyPropertyChanged("ActualPlayer");
         }
 
         private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
         {
+            _partie.PlayerIndex = playerIndex;
             if (_partie.Joueurs[playerIndex] != null && _partie.Joueurs[playerIndex].Units.Count > 0)
             {
                 _partie.Joueurs[playerIndex].PlaceUnit(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
@@ -260,11 +271,33 @@ namespace JurassicRisk.ViewsModels
 
             NotifyPropertyChanged("Joueur");
             NotifyPropertyChanged("OtherPlayers");
+            NotifyPropertyChanged("ActualPlayer");
         }
 
-        private async void _chatService_EndTurn()
+        private void _partieChatService_Renforcement(List<int> idUnit, int idTerritoire, int playerIndex)
         {
-            await JurassicRiskViewModel.Get.PartieVm.SendEndTurn();
+            _partie.PlayerIndex = playerIndex;
+            if (_partie.Joueurs[playerIndex] != null && _partie.Joueurs[playerIndex].Units.Count > 0)
+            {
+                _partie.Joueurs[playerIndex].PlaceUnits(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
+                JurassicRiskViewModel.Get.JoueurVm.PlaceUnits(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
+                if (_joueurVm.Joueur.Units.Count <= 0)
+                {
+                    SoundStore.Get("errorsound.mp3").Play();
+                    MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
+                }
+
+            }
+
+            NotifyPropertyChanged("Joueur");
+            NotifyPropertyChanged("OtherPlayers");
+            NotifyPropertyChanged("ActualPlayer");
+        }
+
+        private async void _chatService_EndTurn(int indexPlayer)
+        {
+            _partie.PlayerIndex = indexPlayer;
+            NotifyPropertyChanged("ActualPlayer");
         }
 
         private void _partieChatService_Disconnected()
@@ -277,6 +310,7 @@ namespace JurassicRisk.ViewsModels
             }
               (Window.GetWindow(App.Current.MainWindow) as MainWindow)?.frame.NavigationService.Navigate(new MenuPage());
             _isConnectedToPartie = false;
+            _carteLoaded = false;
         }
 
         #region Delegate
@@ -295,7 +329,9 @@ namespace JurassicRisk.ViewsModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 _carteLoaded = true;
+                _progression= 0;
                 NotifyPropertyChanged("CarteLoaded");
+                NotifyPropertyChanged("Progress");
             }, DispatcherPriority.Render);
         }
 
