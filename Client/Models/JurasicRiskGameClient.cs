@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Models.Services;
 using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Models
 {
@@ -42,8 +44,25 @@ namespace Models
 
         private JurasicRiskGameClient()
         {
+            var cert = new X509Certificate2("RiskApiCert.pfx", "/Riskapi123");
+
+            var handler = new HttpClientHandler()
+            {
+                ServerCertificateCustomValidationCallback = (request, certificate, chain, errors) => {
+                    if (errors != SslPolicyErrors.None) return false;
+
+                    // Here is your code...
+
+                    return true;
+                }, 
+                
+            };
+            handler.ClientCertificates.Add(cert);
+
+
             _ip = "localhost:7215";
-            _client = new HttpClient();
+            _client = new HttpClient(handler);
+
         }
 
         #endregion

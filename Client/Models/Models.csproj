@@ -17,4 +17,13 @@
     <ProjectReference Include="..\Stockage\Stockage.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="RiskApiCert.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="RiskApiCert.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

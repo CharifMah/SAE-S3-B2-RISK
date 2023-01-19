@@ -1,6 +1,7 @@
 ﻿using JurassicRisk.Ressource;
 using JurassicRisk.Views;
 using Microsoft.AspNetCore.SignalR.Client;
+using Models;
 using Models.Exceptions;
 using Models.GameStatus;
 using Models.Player;
@@ -96,7 +97,7 @@ namespace JurassicRisk.ViewsModels
             _progression = 0;
             //_actualPlayer = Partie.Joueurs[Partie.PlayerIndex].Profil.Pseudo;
 
-            _connection = new HubConnectionBuilder().WithUrl($"wss://localhost:7215/JurrasicRisk/PartieHub").Build();
+            _connection = new HubConnectionBuilder().WithUrl($"wss://{JurasicRiskGameClient.Get.Ip}/JurrasicRisk/PartieHub").Build();
             _partieChatService = new SignalRPartieService(_connection);
 
             _partieChatService.YourTurn += _chatService_YourTurn;
