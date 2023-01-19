@@ -117,7 +117,7 @@ namespace JurassicRisk.ViewsModels
             currentPosition = 0;
             progress(currentPosition);
             int i = 0;
-            foreach (Continent continent in _carte.DicoContinents)
+            foreach (Continent continent in _carte.Continents)
             {
                 foreach (TerritoireDecorator Territoire in continent.Territoires)
                 {
