@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -117,7 +118,7 @@ namespace JurassicRisk.ViewsModels
             currentPosition = 0;
             progress(currentPosition);
             int i = 0;
-            foreach (Continent continent in _carte.DicoContinents)
+            foreach (Continent continent in _carte.Continents)
             {
                 foreach (TerritoireDecorator Territoire in continent.Territoires)
                 {
@@ -438,20 +439,6 @@ namespace JurassicRisk.ViewsModels
             canvas.ToolTip = $"Units: {territoire.Units.Count} Id : {territoire.ID} team : {territoire.Team}";
         }
 
-        private void MyCanvasTerritoire_PreviewMouseUp(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
-        {
-            Canvas c = sender as Canvas;
-            DropShadowEffect shadow = new DropShadowEffect();
-
-            shadow.Color = Brushes.Black.Color;
-            c.Effect = shadow;
-            this._carte.SelectedTerritoire = null;
-            _selectedTerritoire = null;
-            NotifyPropertyChanged("Carte");
-            NotifyPropertyChanged("SelectedTerritoire");
-            NotifyPropertyChanged("CarteCanvas");
-        }
-
         private async void MyCanvasTerritoire_PreviewMouseDown(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
         {
             Canvas? c = sender as Canvas;
@@ -465,7 +452,7 @@ namespace JurassicRisk.ViewsModels
                 if (JurassicRiskViewModel.Get.PartieVm.Partie.Joueurs[JurassicRiskViewModel.Get.PartieVm.Partie.PlayerIndex].Profil.Pseudo == JurassicRiskViewModel.Get.PartieVm.Joueur.Profil.Pseudo)
                 {
                     await JurassicRiskViewModel.Get.PartieVm.ChatService.SetSelectedTerritoire(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, territoire.ID);
-                    await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 },_joueurVm.Joueur.Profil.Pseudo);
+                    await JurassicRiskViewModel.Get.PartieVm.ChatService.Action(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, new List<int>() { 0 }, _joueurVm.Joueur.Profil.Pseudo);
                 }
             }
 
@@ -493,6 +480,22 @@ namespace JurassicRisk.ViewsModels
             NotifyPropertyChanged("SelectedTerritoire");
         }
 
+
+        private void MyCanvasTerritoire_PreviewMouseUp(object sender, MouseButtonEventArgs e, TerritoireDecorator territoire)
+        {
+            Canvas c = sender as Canvas;
+            DropShadowEffect shadow = new DropShadowEffect();
+
+            shadow.Color = Brushes.Black.Color;
+            c.Effect = shadow;
+            this._carte.SelectedTerritoire = null;
+            _selectedTerritoire = null;
+            NotifyPropertyChanged("Carte");
+            NotifyPropertyChanged("SelectedTerritoire");
+            NotifyPropertyChanged("CarteCanvas");
+        }
+
+        
         private void MyCanvasTerritoire_MouseLeave(object sender, MouseEventArgs e)
         {
             Canvas c = (sender as Canvas);
@@ -514,15 +517,19 @@ namespace JurassicRisk.ViewsModels
 
         private void MyCanvasTerritoire_MouseEnter(object sender, MouseEventArgs e)
         {
-            Canvas c = (sender as Canvas);
-            Canvas.SetZIndex(c, zi);
-            c.Width += 35;
-            c.Height += 35;
-            zi++;
+            Application.Current.Dispatcher.Invoke((Action)(() =>
+            {
+                Canvas c = (sender as Canvas);
+                Canvas.SetZIndex(c, zi);
+                c.Width += 35;
+                c.Height += 35;
+                zi++;
 
-            SoundStore.Get("PassageMap.mp3").Play();
-            NotifyPropertyChanged("Carte");
-            NotifyPropertyChanged("CarteCanvas");
+                SoundStore.Get("PassageMap.mp3").Play();
+                NotifyPropertyChanged("Carte");
+                NotifyPropertyChanged("CarteCanvas");
+            }));
+            
         }
         #endregion
     }

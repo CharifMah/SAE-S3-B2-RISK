@@ -105,7 +105,7 @@ namespace JurassicRisk.ViewsModels
             _partieChatService.Disconnected += _partieChatService_Disconnected;
             _partieChatService.Deploiment += _partieChatService_Deploiment;
             _partieChatService.PartieReceived += _chatService_PartieReceived;
-
+            _partieChatService.Renforcement += _partieChatService_Renforcement;
             NotifyPropertyChanged("Partie");
 
         }
@@ -208,9 +208,9 @@ namespace JurassicRisk.ViewsModels
             {
                 _carteVm = new CarteViewModel(JurassicRiskViewModel.Get.JoueurVm, DrawEnd, Progression);
 
-                List<Joueur> l = JsonConvert.DeserializeObject<List<Joueur>>(joueursJson);
+                List<Joueur?> l = JsonConvert.DeserializeObject<List<Joueur?>>(joueursJson);
 
-                Deploiment etat = JsonConvert.DeserializeObject<Deploiment>(etatJson);
+                Deploiment? etat = JsonConvert.DeserializeObject<Deploiment?>(etatJson);
 
                 _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat, playerindex);
                 _partie.PlayerIndex = playerindex;
@@ -259,12 +259,10 @@ namespace JurassicRisk.ViewsModels
             _partie.PlayerIndex = playerIndex;
             if (_partie.Joueurs[playerIndex] != null && _partie.Joueurs[playerIndex].Units.Count > 0)
             {
-                _partie.Joueurs[playerIndex].PlaceUnit(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
                 JurassicRiskViewModel.Get.JoueurVm.PlaceUnit(idUnit, _carteVm.Carte.GetTerritoire(idTerritoire));
                 if (_joueurVm.Joueur.Units.Count <= 0)
                 {
                     SoundStore.Get("errorsound.mp3").Play();
-                    MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
                 }
 
             }
@@ -284,7 +282,6 @@ namespace JurassicRisk.ViewsModels
                 if (_joueurVm.Joueur.Units.Count <= 0)
                 {
                     SoundStore.Get("errorsound.mp3").Play();
-                    MessageBox.Show(new NotUniteException(Strings.ErrorNotUnit).Message, Strings.ErrorMessage);
                 }
 
             }

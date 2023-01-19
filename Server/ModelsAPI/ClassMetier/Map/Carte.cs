@@ -1,8 +1,5 @@
-﻿using Microsoft.Graph;
-using ModelsAPI.ClassMetier.Player;
-using Newtonsoft.Json;
+﻿using ModelsAPI.ClassMetier.Player;
 using Redis.OM.Modeling;
-using Stockage.Converters;
 
 namespace ModelsAPI.ClassMetier.Map
 {
@@ -41,7 +38,7 @@ namespace ModelsAPI.ClassMetier.Map
             set => _selectedTerritoire = value;
         }
 
-      
+
         [Indexed]
         public int GetNbTerritoireLibre
         {
@@ -64,14 +61,23 @@ namespace ModelsAPI.ClassMetier.Map
 
         #endregion
 
+        /// <summary>
+        /// Carte du jeux
+        /// </summary>
+        /// <param name="Continents"> Continent de la carte</param>
+        /// <param name="SelectedTerritoire">territoire selectionnée</param>
         public Carte(IContinent[] Continents, TerritoireDecorator? SelectedTerritoire)
         {
             this._continents = Continents;
             this._selectedTerritoire = SelectedTerritoire;
         }
 
-
-        public List<TerritoireBase> getPlayerTerritory(Joueur j)
+        /// <summary>
+        /// Recupère les terriroire d'un joueur
+        /// </summary>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        public List<TerritoireBase> GetPlayerTerritory(Joueur j)
         {
             List<TerritoireBase> res = new List<TerritoireBase>();
             foreach (Continent continent in _continents)
@@ -86,7 +92,11 @@ namespace ModelsAPI.ClassMetier.Map
             }
             return res;
         }
-
+        /// <summary>
+        /// Get un territoire
+        /// </summary>
+        /// <param name="ID">l'id du territoir</param>
+        /// <returns></returns>
         public ITerritoireBase GetTerritoire(int ID)
         {
             foreach (Continent continent in _continents)

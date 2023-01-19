@@ -1,6 +1,8 @@
 ﻿using Models.Exceptions;
+using Models.GameStatus;
 using Models.Map;
 using Models.Player;
+using Models.Units;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -108,10 +110,6 @@ namespace JurassicRisk.ViewsModels
 
                     _joueur.PlaceUnits(UniteBases, territoire);
                 }
-                else
-                {
-                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
-                }
                 NotifyPropertyChanged("NombreTrp");
                 NotifyPropertyChanged("Units");
             });
@@ -128,7 +126,12 @@ namespace JurassicRisk.ViewsModels
             {
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
-                   _units.RemoveAt(indexUnit);
+                    Partie p = JurassicRiskViewModel.Get.PartieVm.Partie;
+                    p.Joueurs[p.PlayerIndex].RemoveUnit(indexUnit);
+                    territoire.AddUnit(_units[indexUnit]);
+                    territoire.Team = _joueur.Team;
+                    _units.RemoveAt(indexUnit);
+
                 }
                 NotifyPropertyChanged("NombreTrp");
                 NotifyPropertyChanged("Units");

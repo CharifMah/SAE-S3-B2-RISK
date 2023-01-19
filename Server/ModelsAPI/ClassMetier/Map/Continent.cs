@@ -23,6 +23,10 @@ namespace ModelsAPI.ClassMetier.Map
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Contient 
+        /// </summary>
+        /// <param name="Territoires">Les territoire du continent</param>
         public Continent(ITerritoireBase[] Territoires)
         {
             this._territoires = Territoires;

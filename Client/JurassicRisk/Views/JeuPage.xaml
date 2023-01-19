@@ -129,7 +129,7 @@
             <TextBlock.Text>
                 <MultiBinding  StringFormat="{}{0} {1}">
                     <Binding Source="{x:Static Ressources:Strings.NbTerritoireVide}"/>
-                    <Binding Path="PartieVm.CarteVm.Carte.GetNombreTerritoireOccupe"/>
+                    <Binding Path="PartieVm.CarteVm.Carte.GetNbTerritoireLibre"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

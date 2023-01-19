@@ -55,25 +55,16 @@ namespace Models.Player
             _isReady = false;
             FabriqueUniteBase f = new FabriqueUniteBase();
             _units = new List<IUnit>();
-            Random random = new Random();
-            for (int i = 0; i < 86; i++)
+
+            for (int i = 0; i < 9; i++)
             {
-                switch (random.Next(4))
-                {
-                    case 0:
-                        _units.Add(new UniteDecorator(f.Create("Rex")));
-                        break;
-                    case 1:
-                        _units.Add(new UniteDecorator(f.Create("Brachiosaurus")));
-                        break;
-                    case 2:
-                        _units.Add(new UniteDecorator(f.Create("Baryonyx")));
-                        break;
-                    case 3:
-                        _units.Add(new UniteDecorator(f.Create("Pterosaure")));
-                        break;
-                }
+                _units.Add(new UniteDecorator(f.Create("Rex")));
+                _units.Add(new UniteDecorator(f.Create("Brachiosaurus")));
+                _units.Add(new UniteDecorator(f.Create("Baryonyx")));
+                _units.Add(new UniteDecorator(f.Create("Pterosaure")));
             }
+            _units.Add(new UniteDecorator(f.Create("Pterosaure")));
+
             _connectionId = "NotConnected";
             _profil = profil;
             _team = team;
@@ -87,10 +78,9 @@ namespace Models.Player
             {
                 foreach (var unit in unites)
                 {
-                    _units.RemoveAt(unit);
-
                     territoire.AddUnit(_units[unit]);
                     territoire.Team = _team;
+                    _units.RemoveAt(unit);
                     SoundStore.Get("Slidersound.mp3").Play();
                 }
             }
@@ -101,12 +91,11 @@ namespace Models.Player
         private bool AddUnit(int indexUnit, ITerritoireBase territoire)
         {
             bool res = false;
-            if (_units.Count > 0 && _team == territoire.Team || territoire.Team == Teams.NEUTRE)
+            if (_units.Count > 0 && _team == territoire.Team || (_units.Count > 0 && territoire.Team == Teams.NEUTRE))
             {
-                _units.RemoveAt(indexUnit);
-
                 territoire.AddUnit(_units[indexUnit]);
                 territoire.Team = _team;
+                _units.RemoveAt(indexUnit);
                 res = true;
             }
             return res;
@@ -135,9 +124,9 @@ namespace Models.Player
             this._units.Add(unit);
         }
 
-        public void RemoveUnit(IUnit unit)
+        public void RemoveUnit(int unit)
         {
-            this._units.Remove(unit);
+            this._units.RemoveAt(unit);
         }
 
         public void RemoveUnit(List<IUnit> unites, ITerritoireBase territoire)

@@ -4,6 +4,7 @@ using ModelsAPI;
 using ModelsAPI.ClassMetier.GameStatus;
 using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
+using ModelsAPI.ClassMetier.Units;
 using Newtonsoft.Json;
 using Redis.OM;
 
@@ -152,8 +153,9 @@ namespace RISKAPI.Hubs
         {
             Partie partie = JurasicRiskGameServer.Get.Parties.FirstOrDefault(p => p.Id == partieName);
             Lobby lobby = JurasicRiskGameServer.Get.Lobbys.FirstOrDefault(l => l.Id == partieName);
-            string joueursJson = "";
+            string joueursJson = String.Empty;
             string etatJson = "";
+            string unitsPlayersJson = "";
             if (partie != null && partie.Owner == null)
             {
                 partie.Owner = joueurName;
@@ -163,7 +165,6 @@ namespace RISKAPI.Hubs
             if (partie != null && partie.Owner == joueurName)
             {
                 Console.WriteLine($"{joueurName} try to Start the game");
-
                 Carte carte = CreateCarte1();
                 partie.Carte = carte;
                 Console.WriteLine("Carte Created");
@@ -176,11 +177,15 @@ namespace RISKAPI.Hubs
                     {
                         partie.JoinPartie(j);
                     }
+
                     joueursJson = JsonConvert.SerializeObject(partie.Joueurs);
                     etatJson = JsonConvert.SerializeObject(partie.Etat);
+
                     int index = partie.NextPlayer();
                     await Clients.Group(partieName).SendAsync("ReceivePartie", joueursJson, partieName, etatJson, index);
+                    
                     Console.WriteLine("Succeffully SendPartie to groupe " + partieName);
+
                     await Clients.Group(partieName).SendAsync("yourTurn", etatJson, partie.Etat.ToString(), index);
                     Console.WriteLine($"Partie avec {partie.Joueurs.Count} players Crée");
                 }
