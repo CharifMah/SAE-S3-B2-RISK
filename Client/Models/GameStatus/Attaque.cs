@@ -1,13 +1,12 @@
-﻿using ModelsAPI.ClassMetier.Map;
-using ModelsAPI.ClassMetier.Player;
-using ModelsAPI.ClassMetier.Units;
+﻿using Models.Map;
+using Models.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelsAPI.ClassMetier.GameStatus
+namespace Models.GameStatus
 {
     public class Attaque : Etat
     {
@@ -18,14 +17,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         public Etat TransitionTo(List<Joueur> joueurs, Carte carte)
         {
-            Etat etatSuivant = new Deplacement();
-            Console.WriteLine($"Passage à la phase de {etatSuivant}");
-            return etatSuivant;
+            throw new NotImplementedException();
         }
-        public override string? ToString()
-        {
-            return "Attaque";
-        }
-
     }
 }

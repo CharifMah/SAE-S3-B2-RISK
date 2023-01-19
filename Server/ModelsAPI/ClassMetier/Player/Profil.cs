@@ -29,7 +29,6 @@ namespace ModelsAPI.ClassMetier.Player
         /// <summary>
         /// ConnectionId SignalR
         /// </summary>
-        [Indexed]
         public string ConnectionId { get => _connectionId; set => _connectionId = value; }
 
         #endregion

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Units
 {
-    internal class Baryonyx : UniteBase
+    public class Baryonyx : UniteBase
     {
         public Baryonyx()
         {

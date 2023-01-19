@@ -1,6 +1,6 @@
 ﻿using Redis.OM;
 
-namespace ModelsAPI
+namespace ModelsAPI.ClassMetier
 {
     public class StaticIncrementStrategy : IIdGenerationStrategy
     {

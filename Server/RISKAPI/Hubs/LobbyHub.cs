@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using ModelsAPI.ClassMetier;
+using ModelsAPI;
 using ModelsAPI.ClassMetier.GameStatus;
-using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
 using Newtonsoft.Json;
 using NReJSON;
@@ -28,7 +27,6 @@ namespace RISKAPI.Hubs
             _provider = provider;
             _lobby = (RedisCollection<Lobby>)provider.RedisCollection<Lobby>();
             RedisProvider.Instance.ManageSubscriber(RefreshLobbyToClients);
-
         }
         #endregion
 
@@ -45,12 +43,10 @@ namespace RISKAPI.Hubs
             if (lobby != null)
             {
                 string? lobbyJson = JsonConvert.SerializeObject(lobby);
-                foreach (Joueur j in lobby.Joueurs)
-                {
-                    await Clients.Client(j.Profil.ConnectionId).SendAsync("ReceiveLobby", lobbyJson);
-                }
 
- 
+                 await Clients.Group(lobbyName).SendAsync("ReceiveLobby", lobbyJson);
+                
+
             }
             else
             {
@@ -109,12 +105,13 @@ namespace RISKAPI.Hubs
 
                                 lobby.JoinLobby(j);
 
+                             
                                 List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
                                 if (lobbyList.Find(l => l.Id == lobby.Id) == null)
                                 {
                                     lobbyList.Add(lobby);
                                 }
-                               
+
                                 await _lobby.UpdateAsync(lobby);
                                 await RefreshLobbyToClients(lobbyName);
                                 await Clients.Client(Context.ConnectionId).SendAsync("connected", "true");
@@ -134,7 +131,7 @@ namespace RISKAPI.Hubs
                 }
                 else
                 {
-                    await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId,"false");
+                    await Clients.Client(Context.ConnectionId).SendAsync("connected", Context.ConnectionId, "false");
                     Console.WriteLine("Le lobby n'existe pas");
                 }
             }
@@ -169,7 +166,7 @@ namespace RISKAPI.Hubs
                     }
                     break;
                 }
-            }          
+            }
         }
 
         public async Task IsReady(bool ready, string joueurName, string lobbyName)
@@ -224,31 +221,11 @@ namespace RISKAPI.Hubs
                     {
                         await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
                         lobby.Joueurs.Remove(j);
-                        
+
                         Console.WriteLine($"the player {j.Profil.Pseudo} as succeffuluy leave the lobby {lobby.Id}");
                     }
-                    if (lobby.Joueurs.Count <= 0)
-                    {
-                        await _lobby.DeleteAsync(lobby);
-                        foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
-                        {
-                            if (l.Id == lobbyName)
-                            {
-                                JurasicRiskGameServer.Get.Lobbys.Remove(l);
-                                Console.WriteLine($"lobby {l.Id} removed");
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (lobby.Joueurs.Count == 1)
-                        {
-                            lobby.Joueurs.Clear();
-                        }
-                        Console.WriteLine($"there is {lobby.Joueurs.Count} in the lobby {lobby.Id} that mean player is null");
-                    }
 
+                    await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
                     await _lobby.UpdateAsync(lobby);
                     await RefreshLobbyToClients(lobbyName);
                 }
@@ -262,23 +239,7 @@ namespace RISKAPI.Hubs
         public async Task StartGameOtherPlayer(string lobbyName)
         {
             Lobby lobby = null;
-            foreach (Lobby l in JurasicRiskGameServer.Get.Lobbys)
-            {
-                if (l.Id == lobbyName)
-                {
-                    lobby = l;
-                    break;
-                }
-            }
-            if (lobby != null)
-                foreach (Joueur j in lobby.Joueurs)
-                {
-                    if (j.Profil.Pseudo !=  lobby.Owner)
-                    {
-                        await Clients.Client(j.Profil.ConnectionId).SendAsync("startgame");
-                        Console.WriteLine($"Game Start For {j.Profil.Pseudo}");
-                    }
-                }
+            await Groups.AddToGroupAsync(Context.ConnectionId, lobbyName);
         }
 
         #region Override
@@ -290,7 +251,7 @@ namespace RISKAPI.Hubs
         }
 
         public async Task OnDisconnectedAsync(Exception? exception)
-        {          
+        {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Disconnected from OnDisconnectAsync ExitLobby {Context.ConnectionId} {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             Console.ForegroundColor = ConsoleColor.White;

@@ -31,11 +31,11 @@
             <ImageBrush ImageSource="/Sprites/Background/Background3.jpg"/>
         </Grid.Background>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FruitDays}"  FontSize="17" Margin="10,2,0,0">
+        <TextBlock VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="2" Style="{StaticResource FruitDays}"  FontSize="17" Margin="10,2,0,10">
             <Run Text="Connecte en tant que: "/>
             <Run Text="{Binding Path=SelectedProfil.Pseudo}"/>
         </TextBlock>
-        
+
 
         <TextBlock Style="{StaticResource Bloody}" FontSize="85" Background="Transparent" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Top" Text="{x:Static Ressources:Strings.GameTitle}">
       

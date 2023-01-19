@@ -1,6 +1,6 @@
 ﻿using ModelsAPI.ClassMetier.GameStatus;
 
-namespace ModelsAPI.ClassMetier
+namespace ModelsAPI
 {
     public class JurasicRiskGameServer
     {
@@ -14,11 +14,11 @@ namespace ModelsAPI.ClassMetier
 
         public List<Lobby> Lobbys { get => _lobby; set => _lobby = value; }
 
-        public List<Partie?> Parties 
-        { 
-            get => _partie; 
+        public List<Partie?> Parties
+        {
+            get => _partie;
 
-            set => _partie = value; 
+            set => _partie = value;
         }
 
         #endregion

@@ -1,13 +1,6 @@
-﻿using ModelsAPI.ClassMetier.Map;
+﻿using ModelsAPI.ClassMetier.Fabriques.FabriqueUnite;
+using ModelsAPI.ClassMetier.Map;
 using ModelsAPI.ClassMetier.Player;
-using ModelsAPI.ClassMetier.Units;
-using Pipelines.Sockets.Unofficial.Buffers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelsAPI.ClassMetier.GameStatus
 {
@@ -31,6 +24,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public List<Joueur> Joueurs
         {
             get { return _joueurs; }
+            set { _joueurs = value; }
         }
 
         public Etat Etat { get { return etat; } }
@@ -42,9 +36,9 @@ namespace ModelsAPI.ClassMetier.GameStatus
 
         #region Constructor
 
-        public Partie(Carte carte, List<Joueur> joueurs, string id)
+        public Partie(Carte carte = null, List<Joueur> joueurs = null, string id = "")
         {
-            this._carte = carte;
+            this._carte = null;
             this._joueurs = joueurs;
             this._id = id;
             this.etat = new Deploiment();
@@ -71,14 +65,70 @@ namespace ModelsAPI.ClassMetier.GameStatus
             }
             else
             {
-                Console.WriteLine("0 player in game");
+                Console.WriteLine($"{this._joueurs.Count} player in game");
             }
             return res;
         }
 
         public void Transition()
         {
+            //Change l'etat
             this.etat = etat.TransitionTo(this._joueurs, this._carte);
+
+            switch (etat.ToString())
+            {
+                case "Renforcement":
+                    (etat as Renforcement).JoueurActuel = this._joueurs[_playerIndex];
+                    // Calcul des renforts du joueur
+                    int nbTerritoires = 0;
+                    int nbRenforts = 0;
+
+                    foreach (Continent c in this._carte.DicoContinents.Values)
+                    {
+                        foreach (TerritoireBase t in c.DicoTerritoires.Values)
+                        {
+                            if (t.Team == this._joueurs[_playerIndex].Team)
+                            {
+                                nbTerritoires++;
+                            }
+                        }
+                    }
+
+                    if (nbTerritoires / 3 < 3)
+                    {
+                        nbRenforts = 3;
+                    }
+                    else
+                    {
+                        nbRenforts = nbTerritoires / 3;
+                    }
+
+
+                    // Ajout des renforts au joueur
+                    FabriqueUniteBase f = new FabriqueUniteBase();
+                    for (int i = 0; i < nbRenforts; i++)
+                    {
+                        Random random = new Random();
+                        switch (random.Next(3))
+                        {
+                            case 1:
+                                this._joueurs[_playerIndex].Units.Add(f.Create("Rex"));
+                                break;
+                            case 2:
+                                this._joueurs[_playerIndex].Units.Add(f.Create("Brachiosaure"));
+                                break;
+                            case 3:
+                                this._joueurs[_playerIndex].Units.Add(f.Create("Baryonyx"));
+                                break;
+                            case 4:
+                                this._joueurs[_playerIndex].Units.Add(f.Create("Pterosaure"));
+                                break;
+                        }
+                    }
+                    break;
+            }
+
+
         }
 
         /// <summary>
@@ -89,7 +139,7 @@ namespace ModelsAPI.ClassMetier.GameStatus
         public bool JoinPartie(Joueur joueur)
         {
             bool res = false;
-            IEnumerable<Joueur?> j = _joueurs.Where(x => x.Profil.Pseudo == joueur.Profil.Pseudo);
+            List<Joueur?> j = _joueurs.Where(x => x.Profil.Pseudo == joueur.Profil.Pseudo).ToList();
             if (_joueurs != null)
             {
                 if (_joueurs.Count == 4 && j.Count() == 1)
@@ -99,8 +149,10 @@ namespace ModelsAPI.ClassMetier.GameStatus
                 if (_joueurs.Count < 4 && j.Count() == 0)
                 {
                     _joueurs.Add(joueur);
+
                     res = true;
                 }
+                Console.WriteLine($"nbr joueur : {_joueurs.Count} ");
             }
             return res;
         }

@@ -7,10 +7,9 @@ namespace Models.Services
     public class SignalRPartieService
     {
         private readonly HubConnection _connection;
-        public event Action<string,string, string> PartieReceived;
-        public event Action<string> YourTurn;
-        public event Action EndTurn;
-        public event Action<string> Connected;
+        public event Action<string,string, string,int> PartieReceived;
+        public event Action<string,string, int> YourTurn;
+        public event Action<int> EndTurn;
         public event Action Disconnected;
         public event Action<int, int,int> Deploiment;
 
@@ -21,10 +20,9 @@ namespace Models.Services
         public SignalRPartieService(HubConnection connection)
         {
             _connection = connection;
-            _connection.On<string,string,string>("ReceivePartie", (joueursJson,id,etatJson)  => PartieReceived?.Invoke(joueursJson,id,etatJson));
-            _connection.On<string>("yourTurn", (turnType) => YourTurn?.Invoke(turnType));
-            _connection.On("endTurn", () => EndTurn?.Invoke());
-            _connection.On<string>("connectedgame", (connexionId) => Connected?.Invoke(connexionId));
+            _connection.On<string,string,string, int>("ReceivePartie", (joueursJson,id,etatJson, playerindex)  => PartieReceived?.Invoke(joueursJson,id,etatJson, playerindex));
+            _connection.On<string, string,int>("yourTurn", (etatJson, name,indexPlayer) => YourTurn?.Invoke(etatJson,name, indexPlayer));
+            _connection.On<int>("endTurn", (indexPlayer) => EndTurn?.Invoke(indexPlayer));
             _connection.On("disconnected", () => Disconnected?.Invoke());
             _connection.On<int, int, int>("deploiment", (idUnit, idTerritoire, playerIndex) => Deploiment?.Invoke(idUnit, idTerritoire, playerIndex));
 
@@ -40,9 +38,9 @@ namespace Models.Services
             await _connection.SendAsync("EndTurn", lobbyName, joueurName);
         }
 
-        public async Task Action(string lobbyName, List<int> units)
+        public async Task Action(string lobbyName, List<int> units,string joueurName)
         {
-            await _connection.SendAsync("Action", lobbyName, units);
+            await _connection.SendAsync("Action", lobbyName, units,joueurName);
         }
 
         public async Task SetSelectedTerritoire(string lobbyName, int ID)

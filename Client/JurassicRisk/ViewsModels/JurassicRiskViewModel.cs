@@ -36,11 +36,15 @@ namespace JurassicRisk.ViewsModels
 
         public JoueurViewModel JoueurVm { get => _joueurVm; }
         public LobbyViewModel LobbyVm { get => _lobbyVm; set => _lobbyVm = value; }
-        public PartieViewModel PartieVm { get => _partieVm; set => _partieVm = value; }
+        public PartieViewModel PartieVm 
+        { 
+            get => _partieVm; 
+            set => _partieVm = value; 
+        }
         #endregion
 
         #region Singleton
-        private static JurassicRiskViewModel _instance;
+        private static JurassicRiskViewModel? _instance;
         public static JurassicRiskViewModel Get
         {
             get

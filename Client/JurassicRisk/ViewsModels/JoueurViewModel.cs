@@ -1,17 +1,8 @@
-﻿using JurassicRisk.Ressource;
-using Models.Exceptions;
+﻿using Models.Exceptions;
 using Models.Map;
 using Models.Player;
-using Models.Son;
-﻿using Models;
-using Models.Exceptions;
-using Models.GameStatus;
-using Models.Map;
-using Models.Player;
-using Models.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using IUnit = Models.Units.IUnit;
@@ -35,6 +26,7 @@ namespace JurassicRisk.ViewsModels
             set
             {
                 _joueur = value;
+
                 NotifyPropertyChanged("Joueur");
             }
         }
@@ -50,6 +42,8 @@ namespace JurassicRisk.ViewsModels
             {
                 return _units;
             }
+            set
+            { _units = value; NotifyPropertyChanged(); }
         }
 
         public IUnit SelectedUnit
@@ -103,14 +97,13 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="UniteBases">Les unite a ajouter</param>
         /// <param name="territoire">le territoire</param>
-        public void AddUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
+        public void PlaceUnits(List<IUnit> UniteBases, ITerritoireBase territoire)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
                     _joueur.PlaceUnits(UniteBases, territoire);
-                    this._units.Remove(_selectedUnit);
                     if (_units.Count > 0)
                         _selectedUnit = _units[0];
                 }
@@ -128,20 +121,13 @@ namespace JurassicRisk.ViewsModels
         /// </summary>
         /// <param name="UniteBases">Les unite a ajouter</param>
         /// <param name="territoire">le territoire</param>
-        public void AddUnits(IUnit Unit, ITerritoireBase territoire)
+        public void PlaceUnit(int indexUnit, ITerritoireBase territoire)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
-                    _joueur.PlaceUnits(Unit, territoire);
-                    this._units.Remove(_selectedUnit);
-                    if (_units.Count > 0)
-                        _selectedUnit = _units[0];
-                }
-                else
-                {
-                    MessageBox.Show(new NotYourTerritoryException("Not your territory !").Message);
+                   _units.RemoveAt(indexUnit);
                 }
                 NotifyPropertyChanged("NombreTrp");
                 NotifyPropertyChanged("Units");
