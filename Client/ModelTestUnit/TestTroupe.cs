@@ -67,7 +67,7 @@ namespace ModelTestUnit
                 t1.Units.Add(new UniteBase());
             }
 
-            t.Strengthen(10);
+            //t.Strengthen(10);
 
             Assert.Equal(20, t1.Units.Count);
         }

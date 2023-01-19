@@ -163,7 +163,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="PlayerTurn" Style="{StaticResource FruitDays}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Width="300" Height="30" Text="{Binding Path=PartieVm.ActualPlayer}" FontSize="20" TextAlignment="Center"/>
+            <TextBlock x:Name="PlayerTurn" Style="{StaticResource FruitDays}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Width="300" Height="30" Text="{Binding Path=PartieVm.ActualPlayer.Profil.Pseudo}" FontSize="20" TextAlignment="Center"/>
             <TextBlock x:Name="CurrentPhase" Style="{StaticResource FruitDays}" Grid.Column="0" Grid.Row="1" Width="200" Height="30" Text="{Binding Path=PartieVm.Partie.Etat,Converter={StaticResource ToStringConverter}}" FontSize="20" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,0,15,0"/>
             <Button x:Name="EndPhase" Style="{StaticResource CustomAnimationButton}" Grid.Column="1" Grid.Row="1" Width="170" Height="25"  Click="FinTourButton_Click" Content="{x:Static Ressources:Strings.EndPhase}" FontSize="20" />
             <TextBlock x:Name="PlayerName" Style="{StaticResource FruitDays}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="300" Height="30" Text="{Binding Path=JoueurVm.Joueur.Profil.Pseudo}" FontSize="20" TextAlignment="Center"/>

@@ -83,7 +83,7 @@ namespace JurassicRisk.ViewsModels
             }
         }
 
-        public string ActualPlayer { get => _actualPlayer; set => _actualPlayer = value; }
+        public Joueur ActualPlayer { get => _partie.Joueurs[_partie.PlayerIndex]; set { _partie.Joueurs[_partie.PlayerIndex] = value; NotifyPropertyChanged(); } }
 
         #endregion
 
@@ -189,6 +189,7 @@ namespace JurassicRisk.ViewsModels
         public async Task SendEndTurn()
         {
             await _partieChatService.SendEndTurn(JurassicRiskViewModel.Get.LobbyVm.Lobby.Id, JurassicRiskViewModel.Get.JoueurVm.Joueur.Profil.Pseudo);
+            NotifyPropertyChanged("ActualPlayer");
         }
         #endregion
 
@@ -242,6 +243,7 @@ namespace JurassicRisk.ViewsModels
             }
 
             NotifyPropertyChanged("Partie");
+            NotifyPropertyChanged("ActualPlayer");
         }
 
         private void _partieChatService_Deploiment(int idUnit, int idTerritoire, int playerIndex)
@@ -261,11 +263,13 @@ namespace JurassicRisk.ViewsModels
 
             NotifyPropertyChanged("Joueur");
             NotifyPropertyChanged("OtherPlayers");
+            NotifyPropertyChanged("ActualPlayer");
         }
 
-        private async void _chatService_EndTurn()
+        private async void _chatService_EndTurn(int indexPlayer)
         {
-            await JurassicRiskViewModel.Get.PartieVm.SendEndTurn();
+            _partie.PlayerIndex = indexPlayer;
+            NotifyPropertyChanged("ActualPlayer");
         }
 
         private void _partieChatService_Disconnected()

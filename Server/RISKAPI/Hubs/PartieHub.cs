@@ -58,29 +58,30 @@ namespace RISKAPI.Hubs
         /// <param name="partieName">nom de la partie</param>
         /// <param name="unitlist">list index d'unité</param>
         /// <returns>Task</returns>
-        public async Task Action(string partieName, List<int> unitlist)
+        public async Task Action(string partieName, List<int> unitlist,string joueurName)
         {
             Partie p = JurasicRiskGameServer.Get.Parties.First(l => l.Id == partieName);
-
-            if (p.Action(unitlist))
+            if (p.Joueurs[p.PlayerIndex].Profil.Pseudo == joueurName)
             {
-                switch (p.Etat.ToString())
+                if (p.Action(unitlist))
                 {
-                    case "Deploiment":
-                        Deploiment d = (p.Etat as Deploiment);
-                        if (p.PlayerIndex != -1)
-                        {
+                    switch (p.Etat.ToString())
+                    {
+                        case "Deploiment":
+                            Deploiment d = (p.Etat as Deploiment);
+                            if (p.PlayerIndex != -1)
+                            {
 
-                            await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
-                            await Clients.Client(p.Joueurs[p.PlayerIndex].Profil.ConnectionId).SendAsync("endTurn");
+                                await Clients.Group(partieName).SendAsync("deploiment", d.IdUniteRemove, d.IdTerritoireUpdate, p.PlayerIndex);
+                                await Clients.Group(partieName).SendAsync("endTurn", p.NextPlayer());
+                                
+                                Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
+                            }
 
-                            Console.WriteLine($"Deployement Update from {Context.ConnectionId}");
-                        }
-
-                        break;
+                            break;
+                    }
                 }
-            }
-
+            }           
         }
 
         /// <summary>

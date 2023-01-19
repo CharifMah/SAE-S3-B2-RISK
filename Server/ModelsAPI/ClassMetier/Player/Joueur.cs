@@ -55,7 +55,7 @@ namespace ModelsAPI.ClassMetier.Player
             FabriqueUniteBase f = new FabriqueUniteBase();
             _units = new List<IUnit>();
             Random random = new Random();
-            for (int i = 0; i < 90; i++)
+            for (int i = 0; i < 35; i++)
             {
                 switch (random.Next(4))
                 {
