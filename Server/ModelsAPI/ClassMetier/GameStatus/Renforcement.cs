@@ -10,6 +10,8 @@ namespace ModelsAPI.ClassMetier.GameStatus
         private Joueur _joueurActuel;
 
         public Joueur JoueurActuel { get => _joueurActuel; set => _joueurActuel = value; }
+        public int IdTerritoireUpdate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int IdUniteRemove { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <summary>
         /// Phase de renforcement
