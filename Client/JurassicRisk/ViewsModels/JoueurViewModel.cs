@@ -127,10 +127,7 @@ namespace JurassicRisk.ViewsModels
             {
                 if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
                 {
-                    if (_joueur.PlaceUnit(indexUnit, territoire))
-                    {
-                        _units.RemoveAt(indexUnit);
-                    }
+                   _units.RemoveAt(indexUnit);
                 }
                 else
                 {
