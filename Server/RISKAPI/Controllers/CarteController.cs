@@ -23,8 +23,7 @@ namespace RISKAPI.Controllers
             _carte = (RedisCollection<Carte>)provider.RedisCollection<Carte>();
         }
 
-        // POST api/<CarteController>
-
+        //POST api/<CarteController>
         [HttpPost("SetCarte")]
         public IActionResult Post(Carte carte)
         {

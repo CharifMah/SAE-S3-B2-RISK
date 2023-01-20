@@ -213,11 +213,6 @@ namespace JurassicRisk.ViewsModels
             return true;
         }
 
-        public async Task StartGameOwnerOnly()
-        {
-            await _chatService.StartGameOtherPlayer(_lobby.Id);
-        }
-
         #endregion
 
         #region events
