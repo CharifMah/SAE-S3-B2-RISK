@@ -27,13 +27,6 @@ namespace RISKAPI
             builder.Services.AddSingleton(new RedisConnectionProvider(builder.Configuration["REDIS_CONNECTION_STRING"]));
 
             builder.Services.AddHostedService<IndexCreationService>();
-            // Register the RedisCache service
-            //builder.Services.AddStackExchangeRedisCache(options =>
-            //{
-            //    options.Configuration = builder.Configuration["Redis"];
-            //});
-
-            //builder.Services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
 
             builder.Services.AddSignalR();
 
@@ -49,6 +42,7 @@ namespace RISKAPI
             app.UseRouting();
             app.MapControllers();
 
+            //Map Hubs SignalR with endpoints
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<LobbyHub>("/JurrasicRisk/LobbyHub");

@@ -36,26 +36,57 @@ namespace Models.Services
             await _connection.SendAsync("StartPartie", lobbyName, joueurName, carteName);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lobbyName"></param>
+        /// <param name="joueurName"></param>
+        /// <returns></returns>
         public async Task SendEndTurn(string lobbyName, string joueurName)
         {
             await _connection.SendAsync("EndTurn", lobbyName, joueurName);
         }
 
+        /// <summary>
+        /// Envoie l'action demandée par l'utilisateur 
+        /// </summary>
+        /// <param name="lobbyName"></param>
+        /// <param name="units"></param>
+        /// <param name="joueurName"></param>
+        /// <returns></returns>
         public async Task Action(string lobbyName, List<int> units,string joueurName)
         {
             await _connection.SendAsync("Action", lobbyName, units,joueurName);
         }
 
+        /// <summary>
+        /// Set le territoire selectionnée pour tout les joueur de la partie
+        /// </summary>
+        /// <param name="lobbyName"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public async Task SetSelectedTerritoire(string lobbyName, int ID)
         {
             await _connection.SendAsync("SetSelectedTerritoire", lobbyName, ID);
         }
 
-        public async Task ConnectedPartie(string lobbyName, string joueurName)
+        /// <summary>
+        /// Envoie au serveur que le joueur a bien ete connecter a la partie
+        /// </summary>
+        /// <param name="partieName">nom de la partie == nom du lobby</param>
+        /// <param name="joueurName"></param>
+        /// <returns></returns>
+        public async Task ConnectedPartie(string partieName, string joueurName)
         {
-            await _connection.SendAsync("ConnectedPartie", lobbyName, joueurName);
+            await _connection.SendAsync("ConnectedPartie", partieName, joueurName);
         }
 
+        /// <summary>
+        /// Quitte la partie
+        /// </summary>
+        /// <param name="joueurName">joueur qui quitte</param>
+        /// <param name="lobbyName">le nom du lobby du joueur</param>
+        /// <returns></returns>
         public async Task ExitPartie(string joueurName,string lobbyName)
         {
             try

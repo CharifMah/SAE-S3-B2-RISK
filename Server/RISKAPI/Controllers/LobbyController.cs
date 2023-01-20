@@ -24,6 +24,11 @@ namespace RISKAPI.Controllers
             _lobby = (RedisCollection<Lobby>)provider.RedisCollection<Lobby>();
         }
 
+        /// <summary>
+        /// Crée un lobby dans la base de donnée et dans le serveur
+        /// </summary>
+        /// <param name="lobby">lobby</param>
+        /// <returns>Task</returns>
         [HttpPost("CreateLobby")]
         public async Task<IActionResult> CreateLobby(Lobby lobby)
         {

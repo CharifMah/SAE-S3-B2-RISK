@@ -30,6 +30,11 @@ namespace RISKAPI.Hubs
         }
         #endregion
 
+        /// <summary>
+        /// RefreshLobby to all clients
+        /// </summary>
+        /// <param name="lobbyName"></param>
+        /// <returns>Task</returns>
         public async Task RefreshLobbyToClients(string lobbyName)
         {
             string key = $"Lobbys:{lobbyName}";
@@ -44,8 +49,8 @@ namespace RISKAPI.Hubs
             {
                 string? lobbyJson = JsonConvert.SerializeObject(lobby);
 
-                 await Clients.Group(lobbyName).SendAsync("ReceiveLobby", lobbyJson);
-                
+                await Clients.Group(lobbyName).SendAsync("ReceiveLobby", lobbyJson);
+
 
             }
             else
@@ -69,6 +74,13 @@ namespace RISKAPI.Hubs
             }
         }
 
+        /// <summary>
+        /// John lobby 
+        /// </summary>
+        /// <param name="profilJson">profil json who join</param>
+        /// <param name="lobbyName">the lobby name</param>
+        /// <param name="password">password of the lobby</param>
+        /// <returns></returns>
         public async Task JoinLobby(string profilJson, string lobbyName, string password)
         {
             Profil? profil = JsonConvert.DeserializeObject<Profil>(profilJson);
@@ -105,7 +117,7 @@ namespace RISKAPI.Hubs
 
                                 lobby.JoinLobby(j);
 
-                             
+
                                 List<Lobby> lobbyList = JurasicRiskGameServer.Get.Lobbys;
                                 if (lobbyList.Find(l => l.Id == lobby.Id) == null)
                                 {
@@ -143,6 +155,13 @@ namespace RISKAPI.Hubs
 
         }
 
+        /// <summary>
+        /// Set team for the player
+        /// </summary>
+        /// <param name="teams">Team of the player</param>
+        /// <param name="joueurName">name of the player</param>
+        /// <param name="lobbyName">lobby name where the player is</param>
+        /// <returns></returns>
         public async Task SetTeam(Teams teams, string joueurName, string lobbyName)
         {
             string key = $"Lobbys:{lobbyName}";
@@ -169,6 +188,13 @@ namespace RISKAPI.Hubs
             }
         }
 
+        /// <summary>
+        /// Set ready for the player
+        /// </summary>
+        /// <param name="ready">status ready or not</param>
+        /// <param name="joueurName">joueurName</param>
+        /// <param name="lobbyName">lobby Name</param>
+        /// <returns></returns>
         public async Task IsReady(bool ready, string joueurName, string lobbyName)
         {
             string key = $"Lobbys:{lobbyName}";
@@ -196,6 +222,12 @@ namespace RISKAPI.Hubs
             }
         }
 
+        /// <summary>
+        /// Exit Lobby
+        /// </summary>
+        /// <param name="joueurName">joueur Name</param>
+        /// <param name="lobbyName">lobby Name</param>
+        /// <returns>Task</returns>
         public async Task ExitLobby(string joueurName, string lobbyName)
         {
 
@@ -234,12 +266,6 @@ namespace RISKAPI.Hubs
             {
                 Console.WriteLine($"Failed to leave the lobby {e.Message}");
             }
-        }
-
-        public async Task StartGameOtherPlayer(string lobbyName)
-        {
-            Lobby lobby = null;
-            await Groups.AddToGroupAsync(Context.ConnectionId, lobbyName);
         }
 
         #region Override

@@ -125,12 +125,18 @@ namespace Models.Settings
 
         #endregion
 
+        /// <summary>
+        /// Save Settings in a json file
+        /// </summary>
         public void SaveSettings()
         {
             _saveSettings = new SauveCollection(Environment.CurrentDirectory);
             _saveSettings.Sauver(this, "Settings");
         }
 
+        /// <summary>
+        /// Load Settigns from json file
+        /// </summary>
         public void LoadSettings()
         {
             _loadSettings = new ChargerCollection(Environment.CurrentDirectory);

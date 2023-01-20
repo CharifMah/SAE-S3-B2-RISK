@@ -12,8 +12,14 @@ namespace ModelsAPI
 
         #region Property
 
+        /// <summary>
+        /// List des lobby du serveur actuel
+        /// </summary>
         public List<Lobby> Lobbys { get => _lobby; set => _lobby = value; }
 
+        /// <summary>
+        /// List des partie actuel
+        /// </summary>
         public List<Partie?> Parties
         {
             get => _partie;
