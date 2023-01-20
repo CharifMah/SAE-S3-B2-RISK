@@ -6,6 +6,7 @@ using Models.GameStatus;
 using Models.Player;
 using Models.Services;
 using Models.Son;
+using Models.Units;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -210,6 +211,12 @@ namespace JurassicRisk.ViewsModels
 
                 List<Joueur?> l = JsonConvert.DeserializeObject<List<Joueur?>>(joueursJson);
 
+                List<Joueur?> pLAYERS = new List<Joueur?>();
+
+                foreach (var joueur in l)
+                {
+                    pLAYERS.Add(new Joueur(joueur.Profil, joueur.Team));
+                }
                 Deploiment? etat = JsonConvert.DeserializeObject<Deploiment?>(etatJson);
 
                 _partie = new Partie(await _carteVm.InitCarte(), l, partieName, etat, playerindex);
@@ -220,6 +227,7 @@ namespace JurassicRisk.ViewsModels
                 _joueur.Profil.ConnectionId = _connection.ConnectionId;
 
                 _isConnectedToPartie = true;
+
 
                 await _carteVm.InitCarte();
                 Progression(100);

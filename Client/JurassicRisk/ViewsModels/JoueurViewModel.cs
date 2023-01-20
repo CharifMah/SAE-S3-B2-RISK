@@ -124,12 +124,12 @@ namespace JurassicRisk.ViewsModels
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if ((_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE) && _selectedUnit != null)
+                if (_units.Count > 0 && (_joueur.Team == territoire.Team || territoire.Team == Teams.NEUTRE && _selectedUnit != null))
                 {
                     Partie p = JurassicRiskViewModel.Get.PartieVm.Partie;
                     p.Joueurs[p.PlayerIndex].RemoveUnit(indexUnit);
                     territoire.AddUnit(_units[indexUnit]);
-                    territoire.Team = _joueur.Team;
+                    territoire.Team = p.Joueurs[p.PlayerIndex].Team;
                     _units.RemoveAt(indexUnit);
 
                 }
