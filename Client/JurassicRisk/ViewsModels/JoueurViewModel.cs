@@ -129,7 +129,7 @@ namespace JurassicRisk.ViewsModels
                     Partie p = JurassicRiskViewModel.Get.PartieVm.Partie;
                     p.Joueurs[p.PlayerIndex].RemoveUnit(indexUnit);
                     territoire.AddUnit(_units[indexUnit]);
-                    territoire.Team = _joueur.Team;
+                    territoire.Team = p.Joueurs[p.PlayerIndex].Team;
                     _units.RemoveAt(indexUnit);
 
                 }
