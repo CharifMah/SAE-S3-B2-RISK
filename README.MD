@@ -13,7 +13,7 @@ Vous devez installer la dependance avant de lancer le projet.
    
 ## Redis Setup
 ### Prérequise (REDISJSON , REDISEARCH , REDIS-SERVER)
-### Add apt redis
+### Add apt redis + install cargo + rustup
 ```
 curl https://sh.rustup.rs/ -sSf | sh
 
